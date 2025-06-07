@@ -1263,6 +1263,14 @@ return {
                     "{C:inactive,f:5}引きこもり絶対ジャスティス俺の私だけの折の中で{}",
                 }
             },
+            j_akyrs_goodbye_sengen_absurd = {
+                name = "Goodbye Sengen",
+                text = { 
+                    "Doubles level of {C:attention}High Card{}",
+                    "When a {C:tarot}Justice{} is used",
+                    "{C:inactive,f:5}引きこもり絶対ジャスティス俺の私だけの折の中で{}",
+                }
+            },
             j_akyrs_liar_dancer = {
                 name = "Liar Dancer",
                 text = { 
@@ -1274,12 +1282,28 @@ return {
                     "{C:inactive,f:5}(踊れ 踊れ 嘘に踊れ){}",
                 }
             },
+            j_akyrs_liar_dancer_absurd = {
+                name = "Liar Dancer",
+                text = { 
+                    "Upgrade every {C:attention}Poker Hands{}",
+                    "the {C:attention}played hand{} does {C:attention}NOT{} contain",
+                    "{C:inactive,f:5}(踊れ 踊れ 嘘に踊れ){}",
+                }
+            },
             j_akyrs_pissandshittium = {
                 name = "Pissandshittium",
                 text = { 
                     "Tells the URL where to download",
                     "{X:akyrs_pissandshittium,C:white}Pissandshittium{}",
                     "{C:akyrs_pissandshittium}+#1#{} Mult",
+                }
+            },
+            j_akyrs_pissandshittium_absurd = {
+                name = "Pissandshittium",
+                text = { 
+                    "Tells the URL where to download",
+                    "{X:akyrs_pissandshittium,C:white}Pissandshittium{}",
+                    "{C:akyrs_pissandshittium}^^^#1#{} Mult",
                 }
             },
             j_akyrs_pandora_paradoxxx = {
@@ -1820,6 +1844,7 @@ return {
             k_akyrs_burn = "Burn!",
             k_akyrs_constellation = "Constellation",
             k_words_long = "12+-letter Words",
+            k_akyrs_multiple_hands = "Multiple Hands",
             k_akyrs_hibana_change = "Nanana...",
             k_akyrs_with = "with",
             k_akyrs_credits = "Credits",
@@ -1926,6 +1951,7 @@ return {
                 'is demonstrated. If you are experiencing crashes related to "blind" being',
                 'nil when hovering on certain Jokers. Turning this off might mitigate that issue.',
             },
+            k_akyrs_supercommon = "Supercommon",
         },
         high_scores={},
         labels={
@@ -1935,7 +1961,8 @@ return {
             akyrs_texelated = "Texelated",
             akyrs_noire = "Noire",
             akyrs_sliced = "Sliced",
-            akyrs_burnt = "Burnt"
+            akyrs_burnt = "Burnt",
+            k_akyrs_supercommon = "Supercommon",
         },
         poker_hand_descriptions={
             ["akyrs_3-letter Word"] =  {'Create a valid '.. 3 ..'-letter English word', 'without extra letters'},

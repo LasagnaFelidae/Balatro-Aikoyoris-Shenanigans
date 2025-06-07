@@ -1338,6 +1338,93 @@ end
 
 AKYRS.pos_to_val = function(ind,targ)
     if not ind or not targ then return end
-    local calc_ind = ind - targ / 2 
+    local calc_ind = ind - (targ+1) / 2 
     return Talisman and (to_big(1.1):pow(calc_ind)) or 1.1 ^ calc_ind
+end
+
+
+function AKYRS.bulk_level_up(center, card, area, copier, number, silent)
+	local used_consumable = copier or card
+	if not number then
+		number = 1
+	end
+	for _, v in pairs(card.config.center.config.akyrs_hand_types) do
+		update_hand_text({ sound = "button", volume = 0.7, pitch = 0.8, delay = 0.3 }, {
+			handname = localize(v, "poker_hands"),
+			chips = G.GAME.hands[v].chips,
+			mult = G.GAME.hands[v].mult,
+			level = G.GAME.hands[v].level,
+		})
+		level_up_hand(used_consumable, v, silent, number)
+	end
+	update_hand_text(
+		{ sound = "button", volume = 0.7, pitch = 1.1, delay = 0 },
+		{ mult = 0, chips = 0, handname = "", level = "" }
+	)
+end
+
+function AKYRS.silent_bulk_level_up(center, card, area, copier, number)
+	local used_consumable = copier or card
+	if not number then
+		number = 1
+	end
+
+    update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize('k_words_long'),chips = '...', mult = '...', level=''})
+    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2, func = function()
+        play_sound('tarot1')
+        card:juice_up(0.8, 0.5)
+        G.TAROT_INTERRUPT_PULSE = true
+        return true end }))
+    update_hand_text({delay = 0}, {mult = '+', StatusText = true})
+    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.9, func = function()
+        play_sound('tarot1')
+        card:juice_up(0.8, 0.5)
+        return true end }))
+    update_hand_text({delay = 0}, {chips = '+', StatusText = true})
+    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.9, func = function()
+        play_sound('tarot1')
+        card:juice_up(0.8, 0.5)
+        G.TAROT_INTERRUPT_PULSE = nil
+        return true end }))
+    update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level='+1'})
+    delay(1.3)
+    for k, v in pairs(card.config.center.config.akyrs_hand_types) do
+		level_up_hand(used_consumable, v, true, number)
+    end
+    update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
+end
+
+function AKYRS.blk_lvl_up(hands, card, number)
+	local used_consumable = card
+	if not number then
+		number = 1
+	end
+
+    update_hand_text({sound = 'button', volume = 0.7, pitch = 0.8, delay = 0.3}, {handname=localize('k_akyrs_multiple_hands'),chips = '...', mult = '...', level=''})
+    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.2, func = function()
+        play_sound('tarot1')
+        if card then card:juice_up(0.8, 0.5) end
+        G.TAROT_INTERRUPT_PULSE = true
+        return true end }))
+    update_hand_text({delay = 0}, {mult = '+', StatusText = true})
+    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.9, func = function()
+        play_sound('tarot1')
+        if card then card:juice_up(0.8, 0.5) end
+        return true end }))
+    update_hand_text({delay = 0}, {chips = '+', StatusText = true})
+    G.E_MANAGER:add_event(Event({trigger = 'after', delay = 0.9, func = function()
+        play_sound('tarot1')
+        if card then card:juice_up(0.8, 0.5) end
+        G.TAROT_INTERRUPT_PULSE = nil
+        return true end }))
+    update_hand_text({sound = 'button', volume = 0.7, pitch = 0.9, delay = 0}, {level='+1'})
+    delay(1.3)
+    for k, v in pairs(hands) do
+		level_up_hand(used_consumable, k, true, number)
+    end
+    update_hand_text({sound = 'button', volume = 0.7, pitch = 1.1, delay = 0}, {mult = 0, chips = 0, handname = '', level = ''})
+end
+
+function AKYRS.balala(joker, poker)
+    AKYRS.simple_event_add(function()error("it's balala time!",4) return true end,0)
 end

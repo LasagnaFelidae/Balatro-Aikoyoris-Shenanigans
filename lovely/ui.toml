@@ -396,3 +396,23 @@ payload = """blind_amt = AKYRS.mod_blind_requirement(blind_choice.config,blind_a
 overwrite = true
 match_indent = true
 
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/button_callbacks.lua"
+pattern = """          G.shop.alignment.offset.y = G.ROOM.T.y + 29"""
+position = "before"
+payload = """if G.shop then"""
+overwrite = true
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/button_callbacks.lua"
+pattern = """          G.shop.alignment.offset.y = G.ROOM.T.y + 29"""
+position = "after"
+payload = """end"""
+overwrite = true
+match_indent = true
+

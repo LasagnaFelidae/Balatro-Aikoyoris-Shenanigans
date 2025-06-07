@@ -28,6 +28,9 @@ end
 AKYRS.other_mods_blind_icons_pos = function(key)
 end
 
+AKYRS.other_mods_is_star = function(key)
+end
+
 
 -- below are how i do them
 
@@ -41,6 +44,12 @@ AKYRS.plural_centers = function(word)
     if word == "spectrals" then return "spectral" end
     if AKYRS.other_mods_plural_centers(word) then return AKYRS.other_mods_plural_centers(word) end
     return nil
+end
+
+function AKYRS.is_star(center_key)
+    if center_key == "c_star" then return true end
+    if center_key == "c_mf_rot_star" then return true end
+    return AKYRS.other_mods_is_star(center_key)
 end
 
 function AKYRS.maxwell_card_to_area_map(word)
