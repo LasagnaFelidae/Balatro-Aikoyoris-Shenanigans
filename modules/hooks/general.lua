@@ -141,6 +141,7 @@ function Card:update(dt)
         self.ability.akyrs_stay_sigma = true
         self.children.center.pinch.x = false
         self.children.center.pinch.y = false
+        self.ability.perishable = false
     end
     
     if self.config.center_key == "j_akyrs_emerald" and self.sell_cost ~= self.cost * self.ability.extras.xcost then

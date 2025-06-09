@@ -2169,7 +2169,6 @@ SMODS.Joker{
         }
     },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         if AKYRS.bal("absurd") then
             return {
                 key = self.key .. "_absurd",
@@ -2208,7 +2207,6 @@ SMODS.Joker{
         }
     },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         return {
             vars = {
                 card.ability.extras.create_factor,
