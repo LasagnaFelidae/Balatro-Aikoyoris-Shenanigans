@@ -211,10 +211,6 @@ SMODS.PokerHand{
         G.GAME.aikoyori_evaluation_replace = false
         if (G.STATE == G.STATES.HAND_PLAYED) then
 
-            if value ~= value then
-                error("Galaxy Collapse!",4)
-                return {}
-            end
             G.GAME.aikoyori_evaluation_value = value
            
         end
@@ -266,10 +262,6 @@ SMODS.PokerHand{
 
         if (G.STATE == G.STATES.HAND_PLAYED) then
 
-            if value ~= value then
-                error("Galaxy Collapse!",4)
-                return {}
-            end
             G.GAME.aikoyori_evaluation_value = value
            
         end

@@ -698,7 +698,12 @@ G.FUNCS.evaluate_play = function(e)
     for i, c in ipairs(G.play.cards) do
         c.ability.akyrs_played_this_round = true
     end
+    if G.GAME.aikoyori_evaluation_value ~= G.GAME.aikoyori_evaluation_value then
+        error("Galaxy Collapse!",4)
+        return {}
+    end
     if G.GAME.aikoyori_evaluation_value then
+        
         attention_text({
             scale =  1.5, text = ""..G.GAME.aikoyori_evaluation_value, hold = 15, align = 'tm',
             major = G.play, offset = {x = 0, y = -1}
