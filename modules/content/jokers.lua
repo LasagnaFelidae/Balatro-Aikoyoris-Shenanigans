@@ -97,6 +97,40 @@ SMODS.Joker {
         }
     end,
     calculate = function(self, card, context)
+        if context.akyrs_score_change then
+            card.ability.extra.times = card.ability.extra.times - 1
+            return {
+                func = function()
+                    card_eval_status_text(card, 'jokers', nil, 0.5, nil, {
+                        instant = true,
+                        card_align = "m",
+                        message = localize {
+                            type = 'variable',
+                            key = 'a_remaining',
+                            vars = { card.ability.extra.times }
+                        },
+                    })
+                    --update_hand_text({ immediate = true, nopulse = true, delay = 0 }, { mult_stored = stored })
+
+                    if card.ability.extra.times <= 0 then
+                        card_eval_status_text(card, 'jokers', nil, 0.5, nil, {
+                            instant = true,
+                            card_align = "m",
+                            message = localize {
+                                type = 'variable',
+                                key = 'a_remaining',
+                                vars = { card.ability.extra.times }
+                            },
+                        })
+                        card.ability.extra.total_times = card.ability.extra.total_times + card.ability.extra.times_increment
+                        card.ability.extra.times = card.ability.extra.total_times
+                        card.ability.extra.xmult_stored = card.ability.extra.xmult_stored + card.ability.extra.xmult
+                    end
+                    card.ability.extra.mult_change = mult
+                    card.ability.extra.chip_change = chips
+                end
+            }
+        end
         if context.individual and AKYRS.bal("adequate") then
             SMODS.calculate_effect({
                 message = localize { type = 'variable', key = 'a_remaining', vars = { card.ability.extra.times }},
@@ -649,18 +683,18 @@ SMODS.Joker {
             gain_Xmult = 0.05,
             -- absurd
             chips_absurd = 150,
-            Xchips_absurd = 1.5,
-            mult_absurd = 15,
-            Xmult_absurd = 1.5,
+            Xchips_absurd = 15,
+            mult_absurd = 150,
+            Xmult_absurd = 15,
             base_chips_absurd = 150,
             base_Xchips_absurd = 1.5,
             base_mult_absurd = 15,
             base_Xmult_absurd = 1.5,
             
-            gain_chips_absurd = 15,
-            gain_Xchips_absurd = 1.5,
-            gain_mult_absurd = 15,
-            gain_Xmult_absurd = 1.5,
+            gain_chips_absurd = 150,
+            gain_Xchips_absurd = 15,
+            gain_mult_absurd = 150,
+            gain_Xmult_absurd = 15,
         }
     },
     calculate = function(self, card, context)
@@ -958,6 +992,12 @@ SMODS.Joker {
         if (context.joker_main or context.forcetrigger) and AKYRS.bal("adequate") then
             return {
                 chips = card.ability.extra.chips
+            }
+        end
+        if (context.joker_main or context.forcetrigger) and AKYRS.bal("absurd") then
+            return {
+                xchips = card.ability.extra.xchips,
+                xmult = card.ability.extra.xmult
             }
         end
         if context.end_of_round and context.cardarea == G.jokers and AKYRS.bal("adequate") then
@@ -1595,7 +1635,7 @@ SMODS.Joker{
         name = "Happy Ghast",
         extras = {
             xmult = 4.32,
-            emult_absurd = 2.16
+            eemult_absurd = 2.16
         }
     },
     in_pool = function (self, args)
@@ -1614,7 +1654,7 @@ SMODS.Joker{
             return AKYRS.bal_val({
                 xmult = card.ability.extras.xmult
             },{
-                emult = card.ability.extras.emult_absurd
+                eemult = card.ability.extras.eemult_absurd
             })
         end
     end,
@@ -2071,9 +2111,9 @@ SMODS.Joker{
     },
     loc_vars = function (self, info_queue, card)
         if AKYRS.bal("absurd") then
-            info_queue[#info_queue+1] = {key = 'dd_akyrs_mukuroju_en_absurd', vars = { card.ability.extras.xmult_add, card.ability.extras.xmult }, set = "DescriptionDummy"}
+            info_queue[#info_queue+1] = {key = 'dd_akyrs_mukuroju_en_absurd', vars = { card.ability.extras.xmult_absurd }, set = "DescriptionDummy"}
         else
-            info_queue[#info_queue+1] = {key = 'dd_akyrs_mukuroju_en', vars = { card.ability.extras.xmult_absurd }, set = "DescriptionDummy"}
+            info_queue[#info_queue+1] = {key = 'dd_akyrs_mukuroju_en', vars = { card.ability.extras.xmult_add, card.ability.extras.xmult }, set = "DescriptionDummy"}
         end
 
         info_queue[#info_queue+1] = G.P_CENTERS['c_star']

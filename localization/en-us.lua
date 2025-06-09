@@ -746,7 +746,7 @@ return {
                 name = "eat pant",
                 text = { 
                     "If played hand contains exactly {C:attention}#1#{} cards",
-                    "This joker gains {X:mult,C:white} X#2# {} Mult for every scored cards",
+                    "This joker gains {X:mult,C:white} X#2# {} Mult for every scored card",
                     "{C:red}Destroys all played cards{}",
                     "{C:inactive}(Currently {X:mult,C:white} X#3# {C:inactive} Mult)",
                 }
@@ -755,7 +755,7 @@ return {
                 name = "eat pant",
                 text = { 
                     "If played hand contains a {C:attention}Two Pair{}",
-                    "This joker gains {X:mult,C:white} X#2# {} Mult for every scored cards",
+                    "This joker gains {X:mult,C:white} X#2# {} Mult for every scored card",
                     "{C:red}Destroys all played cards{}",
                     "{C:inactive}(Currently {X:mult,C:white} X#3# {C:inactive} Mult)",
                 }
@@ -763,9 +763,9 @@ return {
             j_akyrs_tsunagite = {
                 name = "{f:5,C:akyrs_luminous}系ぎて",
                 text = { 
-                    "Gives value listed",
+                    "Gives value listed in {C:attention}Gives{}",
                     "if played hand sum does not exceed {C:attention}#1#{}",
-                    "Joker gain the value listed",
+                    "Joker gain the value listed in {C:attention}Joker Gains{}",
                     "When a {C:tarot,T:c_wheel_of_fortune}Wheel of Fortune{} is used",
                 }
             },
@@ -947,45 +947,71 @@ return {
             j_akyrs_neurosama = {
                 name = "Neuro Sama",
                 text = { 
-                    "This Joker gains {X:mult,C:white} X#2# {} Mult",
-                    "for every {C:hearts}Hearts{} scored",
-                    "and if {T:j_akyrs_evilneuro,C:red}Evil Neuro{} is present,",
-                    "also gains {X:mult,C:white} X#2# {} Mult",
-                    "for every {C:spades}Spades{} scored",
-                    "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)",
+                    {
+                        "This Joker gains {X:mult,C:white} X#2# {} Mult",
+                        "for every {C:hearts}Hearts{} scored -",
+                    },
+                    {
+                        
+                        "If {T:j_akyrs_evilneuro,C:red}Evil Neuro{} is present,",
+                        "also gains {X:mult,C:white} X#2# {} Mult",
+                        "for every {C:spades}Spades{} scored",
+                    },
+                    {
+                        "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)",
+                    }
                 }
             },
             j_akyrs_neurosama_absurd = {
                 name = "Neuro Sama",
                 text = { 
-                    "This Joker {C:attention}multiplies{} its {X:mult,C:white}XMult{} by {X:mult,C:white} X#2# {}",
-                    "for every {C:hearts}Hearts{} scored",
-                    "and if {T:j_akyrs_evilneuro,C:red}Evil Neuro{} is present,",
-                    "also {C:attention}multiplies{} its {X:mult,C:white}XMult{} by {X:mult,C:white} X#2# {}",
-                    "for every {C:spades}Spades{} scored",
-                    "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)",
+                    {
+                        "This Joker {C:attention}multiplies{} its {X:mult,C:white}XMult{} by {X:mult,C:white} X#2# {}",
+                        "for every {C:hearts}Hearts{} scored",
+                    },{
+                        "If {T:j_akyrs_evilneuro,C:red}Evil Neuro{} is present,",
+                        "also {C:attention}multiplies{} its {X:mult,C:white}XMult{} by {X:mult,C:white} X#2# {}",
+                        "for every {C:spades}Spades{} scored",
+                    },
+                    {
+
+                        "{C:inactive}(Currently {X:mult,C:white} X#1# {C:inactive} Mult)",
+                    }
                 }
             },
             j_akyrs_evilneuro = {
                 name = "Evil Neuro",
                 text = { 
-                    "This Joker gains {X:chips,C:white} X#2# {} Chips",
-                    "for every {C:clubs}Clubs{} scored",
-                    "and if {T:j_akyrs_neurosama,C:red}Neuro Sama{} is present,",
-                    "also gains {X:chips,C:white} X#2# {} Chips",
-                    "for every {C:diamonds}Diamonds{} scored",
-                    "{C:inactive}(Currently {X:chips,C:white} X#1# {C:inactive} Chips)",
+                    {
+                        "This Joker gains {X:chips,C:white} X#2# {} Chips",
+                        "for every {C:clubs}Clubs{} scored",
+                    },
+                        {
+                        "If {T:j_akyrs_neurosama,C:red}Neuro Sama{} is present,",
+                        "also gains {X:chips,C:white} X#2# {} Chips",
+                        "for every {C:diamonds}Diamonds{} scored",
+                    },
+                    {
+                        "{C:inactive}(Currently {X:chips,C:white} X#1# {C:inactive} Chips)",
+                    }
                 }
             },
             j_akyrs_evilneuro_absurd = {
                 name = "Evil Neuro",
                 text = { 
-                    "This Joker {C:attention}expotentiates{} its {X:chips,C:white}XChips{} by {X:edition,C:purple} ^#2# {}",
-                    "for every {C:clubs}Clubs{} scored",
-                    "and if {T:j_akyrs_neurosama,C:red}Neuro Sama{} is present,",
-                    "also {C:attention}expotentiates{} its {X:chips,C:white}XChips{} by {X:edition,C:purple} ^#2# {}",
-                    "for every {C:diamonds}Diamonds{} scored",
-                    "{C:inactive}(Currently {X:chips,C:white} X#1# {C:inactive} Chips)",
+                    {
+                        "This Joker {C:attention}expotentiates{} its {X:chips,C:white}XChips{} by {X:edition,C:purple} ^#2# {}",
+                        "for every {C:clubs}Clubs{} scored",
+                    },
+                    {
+                        "If {T:j_akyrs_neurosama,C:red}Neuro Sama{} is present,",
+                        "also {C:attention}expotentiates{} its {X:chips,C:white}XChips{} by {X:edition,C:purple} ^#2# {}",
+                        "for every {C:diamonds}Diamonds{} scored",
+                    },
+                    {
+                        "{C:inactive}(Currently {X:chips,C:white} X#1# {C:inactive} Chips)",
+                    }
+
                 }
             },
             j_akyrs_dried_ghast = {
@@ -1017,7 +1043,7 @@ return {
             j_akyrs_happy_ghast_absurd = {
                 name = "Happy Ghast",
                 text = { 
-                    "{X:dark_edition,C:white}^#1#{} Mult",
+                    "{C:edition,X:dark_edition} ^^#1# {} Mult",
                 }
             },
             j_akyrs_charred_roach = {

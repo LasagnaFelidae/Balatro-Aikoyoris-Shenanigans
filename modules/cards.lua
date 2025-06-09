@@ -63,7 +63,7 @@ SMODS.Back{
         akyrs_selection = -1,
         akyrs_gain_selection_per_ante = 1,
         discards = 1,
-        akyrs_always_skip_shops = true,
+        --akyrs_always_skip_shops = true,
         akyrs_math_threshold = 1,
         hand_size = 6,
         akyrs_power_of_x_scaling = 13.69,

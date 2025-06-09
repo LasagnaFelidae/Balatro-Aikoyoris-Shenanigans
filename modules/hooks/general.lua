@@ -210,15 +210,16 @@ function AKYRS.expensive_calculation()
 
         if G.GAME.aiko_last_chips ~= G.GAME.current_round.current_hand.chips or G.GAME.aiko_last_mult ~=
             G.GAME.current_round.current_hand.mult then
+            SMODS.calculate_context(
+            {
+                akyrs_score_change = true,
+                last_mult = G.GAME.aiko_last_mult, 
+                last_chips = G.GAME.aiko_last_chips,
+                current_mult = G.GAME.current_round.current_hand.mult,
+                current_chips  = G.GAME.current_round.current_hand.chips
+            })
             G.GAME.aiko_last_mult = G.GAME.current_round.current_hand.mult
             G.GAME.aiko_last_chips = G.GAME.current_round.current_hand.chips
-
-            for i = 1, #G.jokers.cards do
-                if (G.jokers.cards[i].aiko_trigger_external) and not G.jokers.cards[i].debuff then
-                    G.jokers.cards[i]:aiko_trigger_external()
-                    --print("CHANGED !!!")
-                end
-            end
         end
         if G.GAME.blind.debuff.akyrs_perma_selection then
             for i, k in ipairs(G.play.cards) do
@@ -230,7 +231,6 @@ function AKYRS.expensive_calculation()
                 G.GAME.current_round.current_hand.chips = 0
                 G.GAME.current_round.current_hand.mult = 0
             end
-            
             update_hand_text({immediate = true, nopulse = true, delay = 0}, {mult = 0, chips = 0})
         end
     end
