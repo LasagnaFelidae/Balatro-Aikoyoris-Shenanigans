@@ -1108,7 +1108,7 @@ return {
                 text = { 
                     "Every {C:red}Popcorn{} obtained",
                     "while this Joker is present",
-                    "Starts at {C:red}#4#{} Mult and",
+                    "starts at {C:red}#4#{} Mult and",
                     "decreases Mult by {C:red}-#3#{} per round instead",
                     "Gain {X:dark_edition,C:white}^#1#{} Mult per",
                     "{C:red}Popcorn{} eaten.",

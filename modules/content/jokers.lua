@@ -2257,7 +2257,6 @@ SMODS.Joker{
         }
     },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         card.ability.extras.phase = math.floor(card.ability.extras.phase)
         card.ability.extras.target_play = math.floor(card.ability.extras.target_play)
         
@@ -2335,7 +2334,6 @@ SMODS.Joker{
     rarity = 2,
     cost = 4, 
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         if G.jokers then
             local index = AKYRS.find_index(G.jokers.cards,card)
             if index and #G.jokers.cards > 1 and G.jokers.cards[index+1] and index < #G.jokers.cards then
@@ -2386,7 +2384,6 @@ SMODS.Joker{
         }
     },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         return {
             vars = {
                 
@@ -2429,7 +2426,6 @@ SMODS.Joker{
         extras = { xmult = 2, emult = 1, immutable = {index = 1} }
     },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         if AKYRS.bal("absurd") then
             local current = nil
             if card.area then
