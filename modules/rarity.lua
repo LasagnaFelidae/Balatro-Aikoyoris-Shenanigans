@@ -6,7 +6,8 @@ SMODS.Rarity{
         ["Joker"] = true
     },
     get_weight = function(self, weight, object_type)
-        return (G.GAME and next(SMODS.find_card("j_akyrs_emerald"))) and 0.45 or 0.1
+        local x = SMODS.find_card("j_akyrs_emerald")
+        return (G.GAME and next(x)) and 0.45 + 0.05 * #x or 0.02
     end,
 
 }

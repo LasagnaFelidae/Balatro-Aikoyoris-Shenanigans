@@ -433,7 +433,15 @@ return {
             dd_akyrs_bakery_ability={
                 name="Bakery Ability",
                 text={
-                    "{X:dark_edition,C:white} +1 {}{C:attention} Charm{} available in shop{}",
+                    "{C:dark_edition} +1 {}{C:attention} Charm{} available in shop{}",
+                },
+            },
+            dd_akyrs_astronomica_ability={
+                name="Astronomica Ability",
+                text={
+                    "{C:purple}Multiply score{} by",
+                    "number of cards played",
+                    "below hand size",
                 },
             },
             dd_akyrs_mukuroju_en = {
@@ -1240,7 +1248,7 @@ return {
                     "to move on to the next {C:attention}Phase",
                     "Completing each {C:attention}Phase",
                     "grants you a {C:dark_edition}Negative Spectral Card",
-                    "Finishing Phase {C:blue}6",
+                    "Finishing Phase {C:blue}5",
                     "grants you a {C:dark_edition}Negative Soul Card",
                     "and resets to Phase {C:blue}1",
                 }
@@ -1452,19 +1460,43 @@ return {
             j_akyrs_bocchi = {
                 name = "{f:5}後藤ひとり{} (Gotoh Hitori)",
                 text = { 
-                    "This Joker gains {C:white,X:mult} X#1# {} Mult",
-                    "if played hand contains {C:attention}at most 1 {}card",
-                    "and only {C:attention}1{} Joker is held",
-                    "{C:inactive}(Currently {C:white,X:mult} X#2# {C:inactive} Mult)",
+                    {
+                        "This Joker gains {C:white,X:mult} X#1# {} Mult",
+                        "if played hand contains {C:attention}a single {C:spades}Spade",
+                        "and only {C:attention}Kessoku Band{} Jokers are held",
+                        "{C:inactive}(Currently {C:white,X:mult} X#2# {C:inactive} Mult)",
+                    }
                 }
             },
             j_akyrs_bocchi_absurd = {
                 name = "{f:5}後藤ひとり{} (Gotoh Hitori)",
                 text = { 
-                    "This Joker {C:attention}multiplies{} its {C:white,X:mult} XMult {} by {C:white,X:mult} X#1# {}",
-                    "if played hand contains {C:attention}at most 1 {}card",
-                    "and only {C:attention}1{} Joker is held",
-                    "{C:inactive}(Currently {C:white,X:mult} X#2# {C:inactive} Mult)",
+                    {
+                        "This Joker {C:attention}explonentiates{} its {C:white,X:mult} XMult {} by {C:white,X:dark_edition} ^#1# {}",
+                        "if played hand contains only {C:spades}Spades",
+                        "and only {C:attention}Kessoku Band{} Jokers are held",
+                        "{C:inactive}(Currently {C:white,X:mult} X#2# {C:inactive} Mult)",
+                    },
+                }
+            },
+            j_akyrs_kita = {
+                name = "{f:5}郁代喜多{} (Ikuyo Kita)",
+                text = { 
+                    {
+                        "If played hand contains a {C:attention}Flush{}",
+                        "and a card with {C:hearts}Hearts{} suit,",
+                        "Create {C:tarot}The Lovers{}",
+                        "{C:inactive}(Must have room){}",
+                    }
+                }
+            },
+            j_akyrs_kita_absurd = {
+                name = "{f:5}郁代喜多{} (Ikuyo Kita)",
+                text = { 
+                    {
+                        "Create {C:dark_edition}Negative {C:tarot}The Lovers{}",
+                        "per {C:hearts}Hearts{} scored",
+                    },
                 }
             },
         },
@@ -2029,6 +2061,12 @@ return {
             ph_akyrs_math_score_1 = "Score within ",
             ph_akyrs_math_score_2 = "% of",
             k_akyrs_power_ante = "ante",
+
+            k_akyrs_score_mult_pre = "X",
+            k_akyrs_score_mult_append = " Score",
+
+            k_akyrs_wild_card = "Wild Card",
+            k_akyrs_kitan = "Kita~n",
 
             k_akyrs_balance_dialog_intro_next = "Next",
             k_akyrs_balance_dialog_cryptid_accept = "Sounds Good. (End)",

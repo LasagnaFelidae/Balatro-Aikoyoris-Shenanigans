@@ -11,7 +11,9 @@ assert(SMODS.load_file("./func/numbers.lua"))()
 assert(SMODS.load_file("./func/words/words.lua"))()
 assert(SMODS.load_file("./func/word_utils.lua"))()
 
-assert(SMODS.load_file("./modules/misc.lua"))()
+assert(SMODS.load_file("./modules/utils/misc.lua"))()
+assert(SMODS.load_file("./modules/utils/utils_mod.lua"))()
+assert(SMODS.load_file("./modules/utils/value_replacement.lua"))()
 assert(SMODS.load_file("./modules/custom_minigames/solitaire_card_type.lua"))()
 assert(SMODS.load_file("./modules/hooks/general.lua"))() -- misc hook
 assert(SMODS.load_file("./modules/hooks/card.lua"))() -- misc hook
@@ -27,6 +29,7 @@ assert(SMODS.load_file("./modules/pseudocard.lua"))()
 assert(SMODS.load_file("./modules/custom_minigames/solitaire.lua"))() -- solitaire boss
 assert(SMODS.load_file("./modules/custom_minigames/solitaire_ui.lua"))()
 
+assert(SMODS.load_file("./modules/api.lua"))()
 assert(SMODS.load_file("./modules/draw_step.lua"))()
 assert(SMODS.load_file("./modules/card_attrib.lua"))()
 assert(SMODS.load_file("./modules/rarity.lua"))()
@@ -40,7 +43,6 @@ assert(SMODS.load_file("./modules/vouchers.lua"))()
 assert(SMODS.load_file("./modules/edition.lua"))()
 assert(SMODS.load_file("./modules/ui.lua"))()
 assert(SMODS.load_file("./modules/trades.lua"))()
-assert(SMODS.load_file("./modules/api.lua"))()
 assert(SMODS.load_file("./modules/challenges_ui.lua"))()
 assert(SMODS.load_file("./modules/content/jokers.lua"))()
 assert(SMODS.load_file("./modules/content/letterjokers.lua"))()

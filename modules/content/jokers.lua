@@ -2000,6 +2000,9 @@ SMODS.Joker {
         if Bakery_API then
             info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_bakery_ability"}
         end
+        if SMODS.Mods.Astronomica then
+            info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_astronomica_ability"}
+        end
         return {
         }
     end,
@@ -2054,6 +2057,20 @@ SMODS.Joker {
                 end
             end
         end 
+        if SMODS.Mods.Astronomica then
+            if context.after then
+                local cards_below_hand = math.max(G.hand.config.card_limit - #G.play.cards ,1)
+                if cards_below_hand > 1 then
+                    return {
+                        message = localize("k_akyrs_score_mult_pre")..cards_below_hand..localize("k_akyrs_score_mult_append"),
+                        colour = G.C.PURPLE,
+                        func = function ()
+                            AKYRS.mod_score({mult = cards_below_hand})
+                        end
+                    }
+                end
+            end
+        end
         if SMODS.Mods.finity and context.blind_defeated and G.GAME.blind and G.GAME.blind.boss and G.GAME.blind.config.blind.boss.showdown then
             SMODS.add_card({set = "Spectral", area = G.consumeables, edition = "e_negative", key = "c_finity_finity"})
         end
@@ -2260,7 +2277,7 @@ SMODS.Joker{
         card.ability.extras.phase = math.floor(card.ability.extras.phase)
         card.ability.extras.target_play = math.floor(card.ability.extras.target_play)
         
-        if card.ability.extras.phase > 6 or card.ability.extras.phase < 1 then 
+        if card.ability.extras.phase > 5 or card.ability.extras.phase < 1 then 
             card.ability.extras.phase = 1
         end
         return {
@@ -2300,7 +2317,7 @@ SMODS.Joker{
                             card.ability.extras.target_rank = r.key
                             card.ability.extras.ranks_chosen[r.key] = true
                         end
-                        if card.ability.extras.phase > 6 then
+                        if card.ability.extras.phase > 5 then
                             SMODS.add_card{ key = "c_soul", set = "Spectral", edition = "e_negative"}
                             card.ability.extras.phase = 1
                         else
@@ -3001,7 +3018,7 @@ SMODS.Joker{
 SMODS.Joker{
     key = "bocchi",
     atlas = 'AikoyoriJokers',
-    pools = { ["Anime"] = true, ["Bocchi the Rock"] = true, },
+    pools = { ["Anime"] = true, ["Bocchi the Rock"] = true, ["Kessoku Band"] = true, },
     pos = {
         x = 3, y = 5
     },
@@ -3010,9 +3027,9 @@ SMODS.Joker{
     config = {
         extras = {
             xmult = 1,
-            xmult_absurd = 1,
+            xmult_absurd = 1.1,
             xmult_g = 1,
-            xmult_g_absurd = 1.8,
+            xmult_g_absurd = 1.2,
         }
     },
     loc_vars = function (self, info_queue, card)
@@ -3034,12 +3051,22 @@ SMODS.Joker{
         }
     end,
     calculate = function (self, card, context)
-        if (context.before and (#G.jokers.cards == 1) and (#G.play.cards) <= 1) or context.forcetrigger then
+        if context.before or context.forcetrigger then
             return {
-                message = localize("k_upgrade_ex"),
                 func = function ()
-                    card.ability.extras.xmult_absurd = card.ability.extras.xmult_absurd * card.ability.extras.xmult_g_absurd
-                    card.ability.extras.xmult = card.ability.extras.xmult + card.ability.extras.xmult_g
+                    local x = AKYRS.filter_table(G.jokers.cards,function(t) return not AKYRS.is_in_pool(t,"Kessoku Band") end, true, true)
+                    local sts, stschk = AKYRS.get_suits(G.play.cards)
+                    if (#x == 0 and AKYRS.bal_val((#G.play.cards) == 1 and G.play.cards[1]:is_suit("Spades"),stschk["Spades"])) or context.forcetrigger then
+                        SMODS.calculate_effect({
+                            message = localize("k_upgrade_ex"),
+                        }, card)
+                        if Talisman then
+                        card.ability.extras.xmult_absurd = to_big(card.ability.extras.xmult_absurd):pow(card.ability.extras.xmult_g_absurd)
+                        else
+                            card.ability.extras.xmult_absurd = card.ability.extras.xmult_absurd ^ card.ability.extras.xmult_g_absurd
+                        end
+                        card.ability.extras.xmult = card.ability.extras.xmult + card.ability.extras.xmult_g
+                    end
                 end
             }
         end
@@ -3051,6 +3078,64 @@ SMODS.Joker{
             end
             return {
                 xmult = card.ability.extras.xmult
+            }
+        end
+    end,
+	demicoloncompat = true,
+}
+
+SMODS.Joker{
+    key = "kita",
+    atlas = 'AikoyoriJokers',
+    pools = { ["Anime"] = true, ["Bocchi the Rock"] = true, ["Kessoku Band"] = true, },
+    pos = {
+        x = 4, y = 5
+    },
+    rarity = 3,
+    cost = 9,
+    config = {
+        extras = {
+            xmult = 1,
+            xmult_absurd = 1,
+            xmult_g = 1,
+            xmult_g_absurd = 1.8,
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
+        info_queue[#info_queue+1] = {set = "Tarot", key = "c_lovers", vars = {1, localize("k_akyrs_wild_card")}}
+        if AKYRS.bal("absurd") then
+            return {
+                key = self.key .. "_absurd",
+            }
+        end
+        return {
+        }
+    end,
+    calculate = function (self, card, context)
+        if (context.before or context.forcetrigger) and AKYRS.bal("adequate") then
+            return {
+                message = localize("k_akyrs_kitan"),
+                colour = G.C.RED,
+                func = function ()
+                    local sts, stschk = AKYRS.get_suits(G.play.cards)
+                    if (next(context.poker_hands["Flush"]) and stschk["Hearts"]) or context.forcetrigger then
+                        if (#G.consumeables.cards + 1 <= G.consumeables.config.card_limit) then
+                            SMODS.add_card({key = "c_lovers", set = "Tarot"})
+                        end
+                    end
+                end
+            }
+        end
+        if (context.individual and context.cardarea == G.play or context.forcetrigger) and AKYRS.bal("absurd") then
+            return {
+                message = localize("k_akyrs_kitan"),
+                colour = G.C.RED,
+                func = function ()
+                    if context.other_card:is_suit("Hearts") then
+                        SMODS.add_card({key = "c_lovers", set = "Tarot", edition = "e_negative"})
+                    end
+                end
             }
         end
     end,
