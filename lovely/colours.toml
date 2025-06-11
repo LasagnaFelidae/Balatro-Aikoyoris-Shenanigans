@@ -9,7 +9,8 @@ priority = 0
 target = "game.lua"
 pattern = """    initSteamodded()"""
 position = "after"
-payload = """-- AKYRS.add_colours(G.C)"""
+payload = """AKYRS.add_colours(G.C)
+AKYRS.add_formatting_colours(G.ARGS.LOC_COLOURS)"""
 overwrite = true
 match_indent = true
 
