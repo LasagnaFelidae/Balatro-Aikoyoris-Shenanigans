@@ -132,8 +132,8 @@ if JokerDisplay then
     }
     jod["j_akyrs_utage_charts"] = {
         text = {
-            { text = "+", colour = G.C.PLAYABLE },
-            { ref_table = "card.joker_display_values", ref_value = "play_mod", colour = G.C.PLAYABLE }
+            { text = "+", colour = G.C.AKYRS_PLAYABLE },
+            { ref_table = "card.joker_display_values", ref_value = "play_mod", colour = G.C.AKYRS_PLAYABLE }
         },
         reminder_text = {
             { text = "(selectable Card)"},

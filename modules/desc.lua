@@ -241,3 +241,6 @@ AKYRS.DescriptionDummy{
 AKYRS.DescriptionDummy{
     key = "endless_blind"
 }
+AKYRS.DescriptionDummy{
+    key = "kessoku_band",
+}

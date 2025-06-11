@@ -416,3 +416,14 @@ payload = """end"""
 overwrite = true
 match_indent = true
 
+[[patches]]
+[patches.pattern]
+target = '''=[SMODS _ "src/game_object.lua"]'''
+pattern = '''desc_nodes.background_colour = res.background_colour'''
+position = 'before'
+payload = '''
+if card and AKYRS.is_in_pool(card,"Kessoku Band") then
+	info_queue[#info_queue+1] = AKYRS.DescriptionDummies["dd_akyrs_kessoku_band"]
+end
+'''
+match_indent = true

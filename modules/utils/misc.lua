@@ -745,6 +745,8 @@ end
 
 
 AKYRS.is_in_pool = function(card,pool)
+    if not card then return false end
+    if not card.config then return false end
     if not card.config.center or not card.config.center.pools then return false end
     return card.config.center.pools[pool]
 end

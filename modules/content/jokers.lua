@@ -2239,12 +2239,12 @@ SMODS.Joker{
                     return {
                         func = function ()
                             local rarity = othercard.config.center.rarity
-                            othercard:start_dissolve({G.C.PLAYABLE},1.1)
+                            othercard:start_dissolve({G.C.AKYRS_AKYRS_PLAYABLE},1.1)
                             othercard:remove_from_deck()
                             for i=1, card.ability.extras.create_factor do
                                 SMODS.add_card{rarity = rarity, set = "Joker", legendary = (rarity == 4)}
                             end
-                            card:start_dissolve({G.C.PLAYABLE},1.1)
+                            card:start_dissolve({G.C.AKYRS_PLAYABLE},1.1)
                         end
                     }
                 end

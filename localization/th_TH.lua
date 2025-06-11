@@ -3,7 +3,7 @@ return {
         Back={
             b_akyrs_letter_deck = {
                 name = 'สำรับอักษร',
-                text = { 'เล่นโดย{C:red}ไม่นับหน้าและแต้ม{}', 'เปิดตัวอักษรตั้งแต่แรก', "เล่น {C:playable}กี่ใบก็ได้{} เท่าที่อยากเล่น" },
+                text = { 'เล่นโดย{C:red}ไม่นับหน้าและแต้ม{}', 'เปิดตัวอักษรตั้งแต่แรก', "เล่น {C:akyrs_playable}กี่ใบก็ได้{} เท่าที่อยากเล่น" },
             }
         },
         Blind={},
@@ -13,7 +13,7 @@ return {
             j_akyrs_utage_charts = {
                 name = "ชาร์ทอูทาเกะ",
                 text = {
-                    "เลือกไพ่ได้ {C:playable}+#1#{} ใบ"
+                    "เลือกไพ่ได้ {C:akyrs_playable}+#1#{} ใบ"
                 }
             },
             j_akyrs_netherite_pickaxe = {

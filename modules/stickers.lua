@@ -41,7 +41,7 @@ SMODS.Sticker{
     atlas = "aikoyoriStickers",
     pos = {x = 3, y = 0},
     rate = 0,
-    badge_colour = G.C.PLAYABLE,
+    badge_colour = G.C.AKYRS_PLAYABLE,
     sets =  all_sets,
     calculate = function(self, card, context)
     end,

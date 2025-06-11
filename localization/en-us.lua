@@ -9,7 +9,7 @@ return {
                 text = { 'Letters-Only Deck',
                         "with Scrabble Distribution", 
                         "{C:mult}Mult{} and {C:white,X:mult}XMult{} Enabled", 
-                        "Play {C:playable}as many{} cards", 
+                        "Play {C:akyrs_playable}as many{} cards", 
                         "as you want per hand",
                         "{C:red}X#1#{} base Blind Size",
                         "{C:red}+#2#{} Discards",
@@ -21,8 +21,8 @@ return {
                 text = { 'Make Maths Expressions',
                 'Get within {C:red,f:6}±{C:red}#1#%{}',
                 'of the Blind Requirements',
-                'Can only play {C:playable}#2#{} cards',
-                'Gain {C:playable}+#3#{} selection per Ante',
+                'Can only play {C:akyrs_playable}#2#{} cards',
+                'Gain {C:akyrs_playable}+#3#{} selection per Ante',
                 },
             },
             b_akyrs_hardcore_challenges={
@@ -564,6 +564,13 @@ return {
                     "in Endless Mode",
                 },
             },
+            dd_akyrs_kessoku_band  = {
+                name="結束バンド (Ziptie Band)",
+                text={
+                    "This Joker looks like it",
+                    "wants to {C:akyrs_bocchi}R{C:akyrs_kita}o{C:akyrs_nijika}c{C:akyrs_ryou}k{}!",
+                },
+            },
         },
         Edition={
             e_akyrs_texelated = {
@@ -721,7 +728,7 @@ return {
             j_akyrs_utage_charts = {
                 name = "Utage Charts",
                 text = {
-                    "{C:playable}+#1#{} Hand Selection"
+                    "{C:akyrs_playable}+#1#{} Hand Selection"
                 }
             },
             j_akyrs_maxwells_notebook = {
@@ -821,15 +828,15 @@ return {
             j_akyrs_tldr_joker_absurd = {
                 name = "TL;DR Joker",
                 text = {
-                    "In the beginning, there was {C:attention,E:1,s:1.1}Balatro{} - not a deity, but something more complex - an ever-shuffling embodiment of {C:playable}chaos{} wrapped in crisp, digital playing cards. The game exists",
+                    "In the beginning, there was {C:attention,E:1,s:1.1}Balatro{} - not a deity, but something more complex - an ever-shuffling embodiment of {C:akyrs_playable}chaos{} wrapped in crisp, digital playing cards. The game exists",
                     "in a liminal space between logic and {C:tarot}lunacy{}, math and mirage, where {C:green}probability{} becomes pliable and poker mutates into myth with each {C:blue}hand{}. In {C:attention,E:1,s:1.1}Balatro{}, one doesn’t merely {E:2,C:attention}play{}",
-                    "poker. One communes with the improbable. Here, {C:attention}straights{} stretch into the surreal, and {C:attention}flushes whisper forbidden geometry. {C:playable}The{} deck is alive, vibrating with potential energy",
+                    "poker. One communes with the improbable. Here, {C:attention}straights{} stretch into the surreal, and {C:attention}flushes whisper forbidden geometry. {C:akyrs_playable}The{} deck is alive, vibrating with potential energy",
                     "and pixelated menace, as every draw feels like yanking {C:attention}Ceremonial Dagger{} from a haunted {C:attention}Mega Buffoon Pack{}. And looming large above the fray is the pantheon of the unholy: the",
-                    "Jokers. They are not jesters; they are gods. Mathematical spirits dressed as {C:playable}clown{}s. Each Joker bends the rules, breaks them, and sometimes eats them whole, fueling strategies",
+                    "Jokers. They are not jesters; they are gods. Mathematical spirits dressed as {C:akyrs_playable}clown{}s. Each Joker bends the rules, breaks them, and sometimes eats them whole, fueling strategies",
                     "built on hubris, spreadsheets, and primal instinct alike. Enter the {C:attention}TL;DR Joker{}, a Joker whispered of in halls of madness and theory: a rectangular rune inscribed with a",
                     "singular prophecy: “{C:white,X:mult} X#1# {} Mult if hand contains a high card” It is simple. It is divine. It is arbitrarily brilliant. Why {C:white,X:mult} X#1# {}? Why not {C:white,X:mult} X1.19542 {} Mult? Or {C:white,X:mult} X638.95 {}? Or {C:white,X:mult,f:6} Xπ {}",
                     "Mult? Because {C:white,X:mult} X#1# {} is the sacred number of drama. Because three is the number of the holy sprit,  {C:attention}face cards{}, triangles in triforce, wheels on tricycles. Because to look upon a",
-                    "hand and see a {C:attention}King{}, and be told, {C:attention,E:1}“You may multiply,”{} is to witness design at the intersection of {C:playable}chaos{} theory and stylish arrogance. The {C:attention}TL;DR Joker{} does not beg for synergy.",
+                    "hand and see a {C:attention}King{}, and be told, {C:attention,E:1}“You may multiply,”{} is to witness design at the intersection of {C:akyrs_playable}chaos{} theory and stylish arrogance. The {C:attention}TL;DR Joker{} does not beg for synergy.",
                     "It {C:attention}demands{} reverence and vigilance. It turns high cards into sacred relics, their mere presence {C:spectral}summoning{} power. No longer are {C:attention}Jacks{} just teenage nobility in a velvet blazer of",
                     "mid-value. Now they are conduits of cosmic {C:white,X:mult} XMult {}, bridges to {C:dark_edition}exponentia{}l escalation. And let us speak plainly of {C:attention}“high cards”{} - those royal specters of cardboard rank. The",
                     "{C:attention}Jack{}, swaggering in adolescent cunning. The {C:attention}Queen{}, dangerous and divine. The {C:attention}King{}, a heavy-headed monarch wielding {C:attention}tax{} burdens and {C:white,X:mult} XMult {}ipliers alike. And the {C:attention}Ace{} -",
@@ -1168,7 +1175,7 @@ return {
                     "If counter is at least {C:attention}40{} when a hand is played,",
                     "Create a {C:dark_edition}Negative{} {C:spectral}Gateway{} and {C:attention}reduce{} the counter by {C:attention}40{}",
                     "If counter is at least {C:attention}50{} when a hand is played,",
-                    "Create a {C:dark_edition}Negative{} {C:playable}Beyond{} and {C:attention}reduce{} the counter by {C:attention}50{}",
+                    "Create a {C:dark_edition}Negative{} {C:akyrs_playable}Beyond{} and {C:attention}reduce{} the counter by {C:attention}50{}",
                     "{C:inactive}(Lines Cleared : {X:attention,C:white} #1# {C:inactive})",
                 }
             },
@@ -1472,7 +1479,7 @@ return {
                 name = "{f:5}後藤ひとり{} (Gotoh Hitori)",
                 text = { 
                     {
-                        "This Joker {C:attention}explonentiates{} its {C:white,X:mult} XMult {} by {C:white,X:dark_edition} ^#1# {}",
+                        "This Joker {C:attention}exponentiates{} its {C:white,X:mult} XMult {} by {C:white,X:dark_edition} ^#1# {}",
                         "if played hand contains only {C:spades}Spades",
                         "and only {C:attention}Kessoku Band{} Jokers are held",
                         "{C:inactive}(Currently {C:white,X:mult} X#2# {C:inactive} Mult)",
