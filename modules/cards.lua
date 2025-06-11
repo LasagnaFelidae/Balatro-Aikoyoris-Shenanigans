@@ -50,7 +50,7 @@ SMODS.Back{
     loc_vars = function (self, info_queue, card)
         return { vars = {
             self.config.akyrs_math_threshold,
-            5 - self.config.akyrs_selection,
+            5 + self.config.akyrs_selection,
             self.config.akyrs_gain_selection_per_ante
         } }
     end,

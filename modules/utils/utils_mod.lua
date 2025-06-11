@@ -428,6 +428,7 @@ AKYRS.get_suits = function(tbl_o_cards)
 end
 
 AKYRS.add_colours = function(colours_table)
+    if not colours_table then return nil end
     colours_table.AKYRS_PLAYABLE = HEX("ee36ff")
     colours_table.AKYRS_PISSANDSHITTIUM = HEX("68211d")
     colours_table.AKYRS_BOCCHI = HEX("ff61d2")
@@ -437,6 +438,7 @@ AKYRS.add_colours = function(colours_table)
 end
 
 AKYRS.add_formatting_colours = function(colours_table)
+    if not colours_table then return nil end
     colours_table.akyrs_playable = G.C.AKYRS_PLAYABLE
     colours_table.akyrs_pissandshittium = G.C.AKYRS_PISSANDSHITTIUM
     colours_table.akyrs_bocchi = G.C.AKYRS_BOCCHI
