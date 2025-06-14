@@ -1117,7 +1117,7 @@ SMODS.Joker{
     end,
     calculate = function(self, card, context)
         if AKYRS.bal("absurd") and (context.joker_main or context.forcetrigger) then
-            local odder = pseudorandom("akyrs_gaslighting_absurd") > G.GAME.probabilities.normal / card.ability.extra.chance
+            local odder = pseudorandom("akyrs_gaslighting_absurd") > to_big(G.GAME.probabilities.normal / card.ability.extra.chance)
             if odder then
                 return {
                     eemult = card.ability.extra.eemult

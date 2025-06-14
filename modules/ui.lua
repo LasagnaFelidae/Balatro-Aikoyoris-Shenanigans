@@ -227,12 +227,15 @@ G.FUNCS.akyrs_change_wildcard_behaviour = function (e)
 end
 
 G.FUNCS.akyrs_change_balance_toggle = function (e)
+  local text_col = G.C.UI.TEXT_LIGHT
   G.PROFILES[G.SETTINGS.profile].akyrs_balance = AKYRS.rev_balance_map[e.to_key]
   if G.PROFILES[G.SETTINGS.profile].akyrs_balance == "absurd" and not Talisman then
     G.PROFILES[G.SETTINGS.profile].akyrs_balance = "adequate"
+    text_col = G.C.RED
   end
   G:save_settings()
   AKYRS.config_balance_text_txt = localize('k_akyrs_balance_descriptions')[AKYRS.balance_map[G.PROFILES[G.SETTINGS.profile].akyrs_balance]]
+  AKYRS.config_balance_text.colours = {text_col}
   AKYRS.config_balance_text:update_text(true)
   AKYRS.config_balance_text:update()
 end
