@@ -427,3 +427,11 @@ if card and AKYRS.is_in_pool(card,"Kessoku Band") then
 end
 '''
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''functions/UI_definitions.lua'''
+pattern = '''      one_press = args.one_press,'''
+position = 'before'
+payload = '''  akyrs_osk = args.akyrs_osk,'''
+match_indent = true

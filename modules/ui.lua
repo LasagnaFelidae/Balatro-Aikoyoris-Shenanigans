@@ -460,7 +460,7 @@ function AKYRS.create_better_keyboard_input(args)
   local keyboard_rows = {
     '`1234567890-=',
     'qwertyuiop[]\\',
-    'asdfghjkl;\'"',
+    'asdfghjkl;\'',
     'zxcvbnm,./',
     args.space_key and ' ' or nil
   }
@@ -470,11 +470,8 @@ function AKYRS.create_better_keyboard_input(args)
   for k, v in ipairs(keyboard_rows) do
       for i = 1, #v do
           local c = v:sub(i,i)
-          if c == ' ' then
-            keyboard_button_rows[k][#keyboard_button_rows[k] +1] = AKYRS.create_better_keyboard_button(c, c == ' ' and 'y' or nil)
-          else
-            keyboard_button_rows[k][#keyboard_button_rows[k] +1] = AKYRS.create_dynamic_keyboard_button(c, c == ' ' and 'y' or nil)
-          end
+          keyboard_button_rows[k][#keyboard_button_rows[k] +1] = AKYRS.create_better_keyboard_button(c, c == ' ' and 'y' or nil, args.osk)
+
       end
   end
   return {n=G.UIT.ROOT, config={align = "cm", padding = 0.1, r = 0.1, colour = {G.C.GREY[1], G.C.GREY[2], G.C.GREY[3],0.7}}, nodes={
@@ -482,18 +479,18 @@ function AKYRS.create_better_keyboard_input(args)
       {n=G.UIT.C, config={align = "cm", padding = 0.05, colour = G.C.BLACK, emboss = 0.05, r = 0.1, mid = true}, nodes = {
         {n=G.UIT.R, config={align = "cm", padding = 0.05}, nodes = {
           {n=G.UIT.C, config={align = "cm", padding = 0.05, colour = G.C.CLEAR}, nodes = {
-              {n=G.UIT.R, config={align = "cm", padding = 0.07, colour = G.C.CLEAR}, nodes=keyboard_button_rows[1]},
-              {n=G.UIT.R, config={align = "cm", padding = 0.07, colour = G.C.CLEAR}, nodes=keyboard_button_rows[2]},
-              {n=G.UIT.R, config={align = "cm", padding = 0.07, colour = G.C.CLEAR}, nodes=keyboard_button_rows[3]},
-              {n=G.UIT.R, config={align = "cm", padding = 0.07, colour = G.C.CLEAR}, nodes=keyboard_button_rows[4]},
-              {n=G.UIT.R, config={align = "cm", padding = 0.07, colour = G.C.CLEAR}, nodes=keyboard_button_rows[5]},
-              {n=G.UIT.R, config={align = "cm", padding = 0.07, colour = G.C.CLEAR}, nodes=keyboard_button_rows[6]}
+              {n=G.UIT.R, config={align = "cm",padding = 0.04, colour = G.C.CLEAR}, nodes=keyboard_button_rows[1]},
+              {n=G.UIT.R, config={align = "cm",padding = 0.04, colour = G.C.CLEAR}, nodes=keyboard_button_rows[2]},
+              {n=G.UIT.R, config={align = "cm",padding = 0.04, colour = G.C.CLEAR}, nodes=keyboard_button_rows[3]},
+              {n=G.UIT.R, config={align = "cm",padding = 0.04, colour = G.C.CLEAR}, nodes=keyboard_button_rows[4]},
+              {n=G.UIT.R, config={align = "cm",padding = 0.04, colour = G.C.CLEAR}, nodes=keyboard_button_rows[5]},
+              {n=G.UIT.R, config={align = "cm",padding = 0.04, colour = G.C.CLEAR}, nodes=keyboard_button_rows[6]}
           }},
-          (args.backspace_key or args.return_key) and {n=G.UIT.C, config={align = "cm", padding = 0.05, colour = G.C.CLEAR}, nodes = {
-              args.backspace_key and {n=G.UIT.R, config={align = "cm", padding = 0.05, colour = G.C.CLEAR}, nodes={AKYRS.create_better_keyboard_button('backspace', 'x')}} or nil,
-              args.return_key and {n=G.UIT.R, config={align = "cm", padding = 0.05, colour = G.C.CLEAR}, nodes={AKYRS.create_better_keyboard_button('return', 'start')}} or nil,
-              args.shift_key and {n=G.UIT.R, config={align = "cm", padding = 0.05, colour = G.C.CLEAR}, nodes={AKYRS.create_toggle_keyboard_button('lshift', 'leftstick')}} or nil,
-              {n=G.UIT.R, config={align = "cm", padding = 0.05, colour = G.C.CLEAR}, nodes={AKYRS.create_better_keyboard_button('back', 'b')}}
+          (args.backspace_key or args.return_key) and {n=G.UIT.C, config={align = "r", padding = 0.05, colour = G.C.CLEAR, minw = 5}, nodes = {
+              args.backspace_key and {n=G.UIT.R, config={align = "r", padding = 0.05, colour = G.C.CLEAR}, nodes={AKYRS.create_better_keyboard_button('backspace', 'x', args.osk)}} or nil,
+              args.return_key and {n=G.UIT.R, config={align = "r", padding = 0.05, colour = G.C.CLEAR}, nodes={AKYRS.create_better_keyboard_button('return', 'start', args.osk)}} or nil,
+              args.shift_key and {n=G.UIT.R, config={align = "r", padding = 0.05, colour = G.C.CLEAR}, nodes={AKYRS.create_toggle_keyboard_button('lshift', 'leftstick', args.osk)}} or nil,
+              {n=G.UIT.R, config={align = "r", padding = 0.05, colour = G.C.CLEAR}, nodes={AKYRS.create_better_keyboard_button('back', 'b', args.osk)}}
           }} or nil
         }},
       }}
@@ -504,29 +501,21 @@ end
 
 -- mainly for shift button support
 
-function AKYRS.create_better_keyboard_button(key, binding)
-  local key_label = (key == 'backspace' and 'Backspace') or (key == ' ' and 'Space') or (key == 'back' and 'Back') or (key == 'return' and 'Enter')  or (key == 'lshift' and 'Shift') or key
+function AKYRS.create_better_keyboard_button(key, binding, osk)
+  local key_label = (key == 'backspace' and 'Backspace') or (key == ' ' and 'Space') or (key == 'back' and 'Back') or (key == 'return' and 'Enter')  or (key == 'lshift' and 'Shift') or (AKYRS.shift_toggled and AKYRS.get_shifted_from_key(key)) or key
   local is_one_of_those = key == 'backspace' or key == ' ' or key == 'back' or key == 'return' or key == 'lshift' and true or false
-  return UIBox_button{ label = {key_label}, button = "key_button", func = not is_one_of_those and 'akyrs_shifted_keyboard_keys' or nil, ref_table = {key = key == 'back' and 'return' or key},
-      minw = key == ' ' and 6 or key == 'return' and 2.5 or key == 'backspace' and 2.5 or key == 'back' and 2.5 or key == 'shift' and 3 or 0.5,
-      minh = key == 'return' and 1 or key == 'backspace' and 1 or key == 'back' and 0.5 or key == 'shift' and 0.7 or 0.4,
-      col = true, colour = G.C.GREY, scale = 0.3, focus_args = binding and {button = binding, orientation = 'cr', set_button_pip= true} or nil}
+  return UIBox_button{ akyrs_osk = osk,label = {key_label}, button = "akyrs_key_update", func = not is_one_of_those and 'akyrs_shifted_keyboard_keys' or nil, ref_table = {key = key == 'back' and 'return' or key},
+      minw = key == ' ' and 9 or key == 'return' and 3 or key == 'backspace' and 3.5 or key == 'back' and 3.5 or key == 'lshift' and 4 or 0.8,
+      minh = key == 'return' and 1 or key == 'backspace' and 1 or key == 'back' and 0.5 or key == 'lshift' and 1 or 0.7,
+      col = true, colour = G.C.GREY, scale = 0.4, focus_args = binding and {button = binding, orientation = 'cr', set_button_pip= true, snap_to = key == ' ' and true or false} or nil,
+    }
 end
-function AKYRS.create_dynamic_keyboard_button(key, binding)
-  local key_label = (key == 'backspace' and 'Backspace') or (key == ' ' and 'Space') or (key == 'back' and 'Back') or (key == 'return' and 'Enter')  or (key == 'lshift' and 'Shift') or key
-  local is_one_of_those = key == 'backspace' or key == ' ' or key == 'back' or key == 'return' or key == 'lshift' and true or false
-  return AKYRS.UIBox_dynatext_button{ label = {key_label}, button = "key_button", func = not is_one_of_those and 'akyrs_shifted_keyboard_keys' or nil, ref_table = {key = key == 'back' and 'return' or key},
-      minw = key == ' ' and 6 or key == 'return' and 2.5 or key == 'backspace' and 2.5 or key == 'back' and 2.5 or key == 'shift' and 3 or 0.5,
-      minh = key == 'return' and 1 or key == 'backspace' and 1 or key == 'back' and 0.5 or key == 'shift' and 0.7 or 0.4,
-      key = "keyboardKey_"..key,
-      col = true, colour = G.C.GREY, scale = 0.3, focus_args = binding and {button = binding, orientation = 'cr', set_button_pip= true} or nil}
-end
-function AKYRS.create_toggle_keyboard_button(key, binding)
+function AKYRS.create_toggle_keyboard_button(key, binding, osk)
   local key_label = (key == 'lshift' and 'Shift') or key
-  return UIBox_button{ label = {key_label}, button = "akyrs_toggle_key_button", func = key=="lshift" and "akyrs_shift_enabled" or nil, ref_table = {key = key == 'back' and 'return' or key},
-      minw = key == ' ' and 6 or key == 'return' and 2.5 or key == 'backspace' and 2.5 or key == 'back' and 2.5 or key == 'lshift' and 3 or 0.5,
-      minh = key == 'return' and 1 or key == 'backspace' and 1 or key == 'back' and 0.5 or key == 'lshift' and 0.7 or 0.4,
-      col = true, colour = G.C.GREY, scale = 0.3, focus_args = binding and {button = binding, orientation = 'cr', set_button_pip= true} or nil}
+  return UIBox_button{ akyrs_osk = osk,label = {key_label}, button = "akyrs_toggle_key_button", func = key=="lshift" and "akyrs_shift_enabled" or nil, ref_table = {key = key == 'back' and 'return' or key},
+      minw = key == ' ' and 9 or key == 'return' and 3 or key == 'backspace' and 3.5 or key == 'back' and 3.5 or key == 'lshift' and 4 or 0.8,
+      minh = key == 'return' and 1 or key == 'backspace' and 1 or key == 'back' and 0.5 or key == 'lshift' and 1 or 0.7,
+      col = true, colour = G.C.GREY, scale = 0.4, focus_args = binding and {button = binding, orientation = 'cr', set_button_pip= true, snap_to = key == ' ' and true or false} or nil}
 end
 
 
@@ -550,28 +539,20 @@ G.FUNCS.akyrs_wildcard_check = function(e)
   e.config.colour = colour
 end
 
-G.FUNCS.akyrs_shift_enabled = function(e)
-  if AKYRS.shift_toggled then
+G.FUNCS.akyrs_shift_enabled = function(e)  if AKYRS.shift_toggled then
     e.config.colour = G.C.PURPLE
   else
     e.config.colour = G.C.GREY
   end
+
 end
 G.FUNCS.akyrs_shifted_keyboard_keys = function(e)
-  local args = e.config.ref_table
-  local old = e.children[1].children[1].config.object.config.string
-  local new = nil
-  if AKYRS.shift_toggled and args.key then
-    new = AKYRS.get_shifted_from_key(args.key)
-  elseif AKYRS.shift_toggled and old:upper() ~= old then
-    new = old:upper()
-  else
-    new = args.key
-  end
+  
+  --[[
   if new and old ~= new then
     e.children[1].children[1].config.object.config.string = {new}
     e.children[1].children[1].config.object:update_text(true)
-  end
+  end]]
 end
 
 --[[
@@ -603,6 +584,30 @@ G.FUNCS.akyrs_toggle_key_button = function(e)
   local args = e.config.ref_table
   if args.key and args.key == "lshift" then
     AKYRS.shift_toggled = not AKYRS.shift_toggled
+    local OSkeyboard_e = e.config.akyrs_osk.parent.parent.parent
+    local x = e.config.akyrs_osk
+    if OSkeyboard_e.children.controller_keyboard then
+      
+      G.CONTROLLER:mod_cursor_context_layer(-1)
+      OSkeyboard_e.children.controller_keyboard:remove()
+      G.CONTROLLER.screen_keyboard = nil
+      OSkeyboard_e.children.controller_keyboard = UIBox{
+      definition = AKYRS.create_better_keyboard_input{backspace_key = true, return_key = true, space_key = true, shift_key = true, osk = x},
+      config = {
+        align= 'cm',
+        offset = {x = 0, y = G.CONTROLLER.text_input_hook.config.ref_table.keyboard_offset or -4},
+        major = x.UIBox, parent = OSkeyboard_e}
+      }
+      
+      G.CONTROLLER.screen_keyboard = OSkeyboard_e.children.controller_keyboard
+      G.CONTROLLER:mod_cursor_context_layer(1)
+    end
+  end
+end
+G.FUNCS.akyrs_key_update = function(e)
+  local args = e.config.ref_table
+  if args.key then 
+    G.CONTROLLER:key_press_update(args.key) 
   end
 end
 -- so it support shift and disables the fullscreen dim
@@ -664,7 +669,7 @@ G.FUNCS.akyrs_text_input = function(e)
   if G.CONTROLLER.text_input_hook == e and G.CONTROLLER.HID.controller then
     if not OSkeyboard_e.children.controller_keyboard then 
       OSkeyboard_e.children.controller_keyboard = UIBox{
-        definition = AKYRS.create_better_keyboard_input{backspace_key = true, return_key = true, space_key = true, shift_key = true},
+        definition = AKYRS.create_better_keyboard_input{backspace_key = true, return_key = true, space_key = true, shift_key = true, osk = e},
         config = {
           align= 'cm',
           offset = {x = 0, y = G.CONTROLLER.text_input_hook.config.ref_table.keyboard_offset or -4},
