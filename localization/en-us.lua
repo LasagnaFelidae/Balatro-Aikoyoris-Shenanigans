@@ -1108,27 +1108,36 @@ return {
             },
             j_akyrs_chicken_jockey = {
                 name = "Chicken Jockey",
-                text = { 
-                    "Every {C:red}Popcorn{} obtained",
-                    "while this Joker is present",
-                    "decreases Mult by {C:red}-#3#{} per round instead",
-                    "Gain {X:mult,C:white}X#1#{} Mult per",
-                    "{C:red}Popcorn{} eaten.",
-                    "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
-                    "{s:0.7,C:inactive}Absolute Cinema.{}"
+                text = {
+                    { 
+                        "Every {C:red}Popcorn{} obtained",
+                        "while this Joker is present",
+                        "decreases Mult by {C:red}-#3#{} per round instead",
+                        "Gain {X:mult,C:white}X#1#{} Mult per",
+                        "{C:red}Popcorn{} eaten.",
+                        "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
+                    }
                 }
             },
             j_akyrs_chicken_jockey_absurd = {
                 name = "Chicken Jockey",
                 text = { 
-                    "Every {C:red}Popcorn{} obtained",
-                    "while this Joker is present",
-                    "starts at {C:red}#4#{} Mult and",
-                    "decreases Mult by {C:red}-#3#{} per round instead",
-                    "Gain {X:dark_edition,C:white}^#1#{} Mult per",
-                    "{C:red}Popcorn{} eaten.",
-                    "{C:inactive}(Currently {X:dark_edition,C:white} ^#2# {C:inactive} Mult)",
-                    "{s:0.7,C:inactive}They want me to fight the chicken?{}"
+                    {
+                        "Every {C:red}Popcorn{} obtained",
+                        "while this Joker is present",
+                        "starts at {C:red}#4#{} Mult and",
+                        "decreases Mult by {C:red}-#3#{} per round instead",
+                        "Gain {X:dark_edition,C:white}^#1#{} Mult per",
+                        "{C:red}Popcorn{} eaten.",
+                        "{C:inactive}(Currently {X:dark_edition,C:white} ^#2# {C:inactive} Mult)",
+                        "{s:0.7,C:inactive}They want me to fight the chicken?{}"
+                    },
+                    {
+                        "Creates a {C:red}Popcorn{}",
+                        "when Blind is selected",
+                        "{C:inactive}(Must have room)",
+                        "{s:0.7,C:inactive}Absolute Cinema.{}"
+                    }
                 }
             },
             j_akyrs_tetoris = {
@@ -1226,7 +1235,7 @@ return {
                 text = { 
                     "This joker sells for {X:money,C:black}X#1#{}",
                     "its buy cost ({C:money}$#2#{})",
-                    "{C:inactive}(Buying this might unlock something)",
+                    "{C:inactive}(I wonder what this will do one day)",
                 }
             },
             j_akyrs_emerald_absurd = {
@@ -1234,7 +1243,7 @@ return {
                 text = { 
                     "This joker sells for {X:akyrs_money_x,C:akyrs_money_c}(x+#1#)^#2#{}",
                     "where {X:akyrs_money_x,C:akyrs_money_c}x{} is its buy cost ({C:money}$#2#{})",
-                    "{C:inactive}(Buying this might unlock something)",
+                    "{C:inactive}(I wonder what this will do one day)",
                 }
             },
             j_akyrs_shimmer_bucket = {

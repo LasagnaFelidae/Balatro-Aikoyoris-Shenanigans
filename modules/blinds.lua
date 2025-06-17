@@ -277,14 +277,14 @@ SMODS.Blind{
     boss = {min = 3, max = 10},
     pos = { x = 0, y = 5 },
     debuff = {
-        disable_chip_x = 4
+        disable_chip_x = 2
     },
     loc_vars = function(self)
-        local orig_chips = Talisman and to_big(get_blind_amount(G.GAME.round_resets.ante)*self.mult*G.GAME.starting_params.ante_scaling) or get_blind_amount(G.GAME.round_resets.ante)*self.mult*G.GAME.starting_params.ante_scaling
+        local orig_chips = (Talisman and to_big(SMODS.get_blind_amount(G.GAME.round_resets.ante)*self.mult*G.GAME.starting_params.ante_scaling) or get_blind_amount(G.GAME.round_resets.ante)*self.mult*G.GAME.starting_params.ante_scaling) * G.GAME.round_resets.ante
         return { vars = {orig_chips * self.debuff.disable_chip_x}, key = self.key }
     end,
     collection_loc_vars = function(self)
-        return { vars = { "X4"}, key = self.key }
+        return { vars = { "2X"..localize("k_akyrs_power_ante")}, key = self.key }
     end,
     set_blind = function(self)
     end,
@@ -295,7 +295,7 @@ SMODS.Blind{
         return true
     end,
     disable = function(self)
-        G.GAME.blind.chips = Talisman and to_big(get_blind_amount(G.GAME.round_resets.ante)*self.mult*G.GAME.starting_params.ante_scaling) or get_blind_amount(G.GAME.round_resets.ante)*self.mult*G.GAME.starting_params.ante_scaling
+        G.GAME.blind.chips = (Talisman and to_big(SMODS.get_blind_amount(G.GAME.round_resets.ante)*self.mult*G.GAME.starting_params.ante_scaling) or get_blind_amount(G.GAME.round_resets.ante)*self.mult*G.GAME.starting_params.ante_scaling ) * G.GAME.round_resets.ante
         G.GAME.blind.chip_text = number_format(G.GAME.blind.chips)
             
     end,

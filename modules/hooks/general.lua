@@ -36,6 +36,11 @@ function Game:init_game_object()
     ret.current_round.hands_sub = 0
     ret.current_round.aiko_infinite_hack = "8"
     ret.current_round.advanced_blind = false
+    ret.akyrs_last_ante = nil
+
+    -- this one prevents crashes
+    ret.modifiers.scaling = ret.modifiers.scaling or 1
+
     -- this one will get set to true once player has bought an Emerald OR used one of the Workstation Card
     ret.akyrs_has_capability_to_trade = false
     -- 
@@ -52,7 +57,6 @@ function Game:init_game_object()
     --    
     ret.akyrs_curent_trades = {}
     ret.akyrs_trade_unlocked = {}
-    ret.akyrs_last_ante = nil
 
     return ret
 end
@@ -79,6 +83,7 @@ local gameUpdate = Game.update
 
 function Game:update(dt)
     if G.GAME then
+        G.GAME.modifiers.scaling = G.GAME.modifiers.scaling or 1
         local s = gameUpdate(self, dt)
         G.GAME.alphabet_rate = G.GAME.alphabet_rate or 0
         if (G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled) and G.GAME.alphabet_rate == 0 then

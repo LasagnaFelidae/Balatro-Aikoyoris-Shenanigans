@@ -1812,6 +1812,13 @@ SMODS.Joker{
         }
     end,
     calculate = function (self, card, context)
+        if AKYRS.bal("absurd") then
+            if context.setting_blind then
+                if #G.jokers.cards < G.jokers.config.card_limit then
+                    SMODS.add_card{key = "j_popcorn"}
+                end
+            end
+        end
         if context.joker_main then
             return {
                 xmult = AKYRS.bal_val(card.ability.extras.xmult,card.ability.extras.emult)
@@ -2184,6 +2191,9 @@ SMODS.Joker{
             ecost = 2,
         }
     },
+    add_to_deck = function (self, card, from_debuff)
+        G.GAME.akyrs_has_capability_to_trade = true
+    end,
     loc_vars = function (self, info_queue, card)
         if AKYRS.bal("absurd") then
             return {
@@ -3137,67 +3147,6 @@ SMODS.Joker{
                 end
             }
         end
-    end,
-	demicoloncompat = true,
-}
-
-SMODS.Joker{
-    key = "ryou",
-    atlas = 'AikoyoriJokers',
-    pools = { ["Anime"] = true, ["Bocchi the Rock"] = true, ["Kessoku Band"] = true, },
-    pos = {
-        x = 5, y = 5
-    },
-    rarity = 3,
-    cost = 9,
-    config = {
-        extras = {
-            
-        }
-    },
-    loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
-        info_queue[#info_queue+1] = {set = "Tarot", key = "c_lovers", vars = {1, localize("k_akyrs_wild_card")}}
-        if AKYRS.bal("absurd") then
-            return {
-                key = self.key .. "_absurd",
-            }
-        end
-        return {
-        }
-    end,
-    calculate = function (self, card, context)
-    end,
-	demicoloncompat = true,
-}
-
-SMODS.Joker{
-    key = "nijika",
-    atlas = 'AikoyoriJokers',
-    pools = { ["Anime"] = true, ["Bocchi the Rock"] = true, ["Kessoku Band"] = true, },
-    pos = {
-        x = 6, y = 5
-    },
-    rarity = 3,
-    cost = 9,
-    config = {
-        extras = {
-            debt = 5,
-            add_debt = 5,
-        }
-    },
-    loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
-        info_queue[#info_queue+1] = {set = "Tarot", key = "c_lovers", vars = {1, localize("k_akyrs_wild_card")}}
-        if AKYRS.bal("absurd") then
-            return {
-                key = self.key .. "_absurd",
-            }
-        end
-        return {
-        }
-    end,
-    calculate = function (self, card, context)
     end,
 	demicoloncompat = true,
 }
