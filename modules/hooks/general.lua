@@ -194,7 +194,7 @@ function Card:update(dt)
     if self.ability.akyrs_perma_debuff and not self.ability.akyrs_undebuffable then
         self:set_debuff(true)
     end
-    if self.ability.akyrs_forced_selection and not self.ability.akyrs_undebuffable then
+    if self.ability.akyrs_forced_selection and not self.ability.akyrs_undebuffable and self.area and self.area.highlighted then
         local isAlreadyInHighlighted = false
         for gg,gk in ipairs(self.area.highlighted) do
             if gk == self then
