@@ -25,8 +25,8 @@ SMODS.Edition{
     loc_vars = function (self, info_queue, card)
         return {
             vars = {
-                card.edition.extra.x_chip,
-                card.edition.extra.x_mult,
+                self.config.extra.x_chip,
+                self.config.extra.x_mult,
             }
         }
     end,
@@ -59,8 +59,8 @@ SMODS.Edition{
     loc_vars = function (self, info_queue, card)
         return {
             vars = {
-                card.edition.card_limit,
-                card.edition.extra.x_mult,
+                self.config.card_limit,
+                self.config.extra.x_mult,
             }
         }
     end,
@@ -112,7 +112,7 @@ SMODS.Edition{
         return {
             vars = {
                 G.GAME and G.GAME.probabilities.normal or 1,
-                card.edition.extras.odds,
+                self.config.extras.odds,
             }
         }
     end,
