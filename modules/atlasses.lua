@@ -168,8 +168,8 @@ SMODS.Atlas {
 SMODS.Atlas {
     key = 'aikoyori_intro',
     path = 'aikoyoriintro.png',
-    px = 761,
-    py = 1051
+    px = 114,
+    py = 174
 }
 -- we glsling so hard rn 
 

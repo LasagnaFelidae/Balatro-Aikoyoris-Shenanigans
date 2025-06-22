@@ -962,11 +962,11 @@ function AKYRS.UIBox_balancing_intro(page)
 end
 
 
-AKYRS.start_onboarding = function ()
+AKYRS.start_onboarding = function (forced)
   
     AKYRS.simple_event_add(
         function()
-            if not G.PROFILES[G.SETTINGS.profile].akyrs_balance then
+            if not G.PROFILES[G.SETTINGS.profile].akyrs_balance or forced then
                 G.SETTINGS.paused = true
                 G.FUNCS.overlay_menu({
                     definition = AKYRS.UIBox_balancing_intro("intro"),
@@ -979,7 +979,7 @@ AKYRS.start_onboarding = function ()
                     }
                 })
                 local atl = G.ASSET_ATLAS['akyrs_aikoyori_intro']
-                local scale = 10
+                local scale = 60
                 G.AKYRS_AIKOYORI = G.AKYRS_AIKOYORI or Sprite(16,12,scale*atl.px/1000,scale*atl.py/1000, atl,{ x = 0, y = 0 })
                 G.AKYRS_AIKOYORI.T.y = 3
             end
