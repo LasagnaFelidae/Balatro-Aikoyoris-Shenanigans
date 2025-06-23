@@ -36,7 +36,6 @@ SMODS.Back{
         discards = 2,
         akyrs_start_with_no_cards = true,
         akyrs_letters_mult_enabled = true,
-        akyrs_letters_xmult_enabled = true,
         akyrs_hide_normal_hands = true,
         ante_scaling = 2,
         hand_size = 2,
