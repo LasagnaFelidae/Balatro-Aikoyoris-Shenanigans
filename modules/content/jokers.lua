@@ -3260,7 +3260,7 @@ SMODS.Joker{
     end,
     calculate = function (self, card, context)
         if AKYRS.bal("absurd") then
-            if context.individual and context.cardarea == G.play and context.other_card and context.other_card:is_suit("Diamonds") then
+            if context.individual and context.cardarea == G.play and context.other_card and context.other_card:is_suit("Diamonds") and next(context.poker_hands.Straight) then
                 return {
                     message = localize("k_akyrs_nijika_planet"),
                     func = function ()
@@ -3270,7 +3270,7 @@ SMODS.Joker{
                 }
             end
         else
-            if context.joker_main then
+            if context.joker_main and next(context.poker_hands.Straight) then
                 local diac = 0
                 for _,cr in ipairs(G.play.cards) do
                     if cr:is_suit("Diamonds") then
