@@ -2201,14 +2201,14 @@ SMODS.Joker{
                 vars = {
                     card.ability.extras.pluscost,
                     card.ability.extras.ecost,
-                    card.sell_cost,
+                    card.cost,
                 }
             }
         end
         return {
             vars = {
                 card.ability.extras.xcost,
-                card.sell_cost,
+                card.cost,
             }
         }
     end,

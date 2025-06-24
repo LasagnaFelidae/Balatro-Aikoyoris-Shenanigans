@@ -749,12 +749,6 @@ function AKYRS.UIBox_dynatext_button(args)
     }}}
 end
 
-function AKYRS.UIBox_HUD_villager_trading()
-  return {
-    
-  }
-end
-
 AKYRS.akyrs_selection = {
   adequate = nil,
   absurd = nil
@@ -963,7 +957,6 @@ end
 
 
 AKYRS.start_onboarding = function (forced)
-  
     AKYRS.simple_event_add(
         function()
             if not G.PROFILES[G.SETTINGS.profile].akyrs_balance or forced then
@@ -986,5 +979,18 @@ AKYRS.start_onboarding = function (forced)
             return true
         end
     )
-  
+end
+
+function AKYRS.UIBox_HUD_villager_trading()
+  return {
+    n = G.UIT.ROOT,
+    config = {},
+    nodes = {
+      {
+        n = G.UIT.C,
+        config = {},
+
+      }
+    }
+  }
 end
