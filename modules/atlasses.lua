@@ -197,3 +197,7 @@ SMODS.Shader{
     key = "burnt",
     path = "burnt.fs",
 }
+SMODS.Shader{
+    key = "enchanted",
+    path = "enchanted.fs",
+}

@@ -603,6 +603,12 @@ return {
                     "at the end of the round"
                 }
             },
+            e_akyrs_enchanted = {
+                name = "Enchanted",
+                text = {
+                    "[WIP]",
+                }
+            },
         },
         Enhanced={
             m_akyrs_brick_card = {
@@ -2189,6 +2195,7 @@ return {
             akyrs_noire = "Noire",
             akyrs_sliced = "Sliced",
             akyrs_burnt = "Burnt",
+            akyrs_enchanted = "Enchanted",
             k_akyrs_emerald = "Emerald",
             k_akyrs_supercommon = "Emerald",
         },
