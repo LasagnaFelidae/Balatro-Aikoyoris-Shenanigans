@@ -1820,9 +1820,11 @@ SMODS.Joker{
             end
         end
         if context.joker_main then
-            return {
-                xmult = AKYRS.bal_val(card.ability.extras.xmult,card.ability.extras.emult)
-            }
+            return AKYRS.bal_val({
+                xmult = card.ability.extras.xmult
+            },{
+                emult = card.ability.extras.emult
+            })
         end
 
         if context.akyrs_card_remove 
