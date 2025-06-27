@@ -1,3 +1,4 @@
+to_number = to_number or function(x) return x end
 
 -- repeater
 SMODS.Joker {
@@ -303,7 +304,7 @@ SMODS.Joker {
         end
         if context.individual and context.cardarea == G.play then
             if context.other_card.config.center_key == "m_stone" then
-                for i = 1, AKYRS.bal_val(card.ability.extra.chip_add_stack,card.ability.extra.chip_add_stack_absurd) do
+                for i = 1, to_number(AKYRS.bal_val(card.ability.extra.chip_add_stack,card.ability.extra.chip_add_stack_absurd)) do
                     context.other_card:juice_up(0.5, 2)
                     SMODS.calculate_effect({
                         chips = card.ability.extra.chip_add,
@@ -402,7 +403,7 @@ SMODS.Joker {
                         end
                     },card)
                 else
-                    for i = 1, card.ability.extra.chip_add_stack do
+                    for i = 1, to_number(AKYRS.bal_val(card.ability.extra.chip_add_stack,card.ability.extra.chip_add_stack_absurd)) do
                         SMODS.calculate_effect({
                             chips = card.ability.extra.chip_add,
                             juice_card = context.other_card,
@@ -559,10 +560,10 @@ SMODS.Joker {
     end,
     config = {
         extra = {
-            extra = 16,
+            extra = 0.4,
             extra_absurd = 2,
             card_target = 4,
-            Xmult = 2,
+            Xmult = 1,
             Xmult_absurd = 1,
         }
     },
@@ -589,15 +590,15 @@ SMODS.Joker {
                 end
             end
         else
-            if context.individual and (context.cardarea == G.play or context.cardarea == 'unscored') and #context.full_hand == math.floor(card.ability.extra.card_target) or context.forcetrigger  then
-                card.ability.extra.Xmult = card.ability.extra.Xmult * (1-(1)/card.ability.extra.extra)
+            if context.individual and context.cardarea == G.play and #context.full_hand == math.floor(card.ability.extra.card_target) or context.forcetrigger  then
+                card.ability.extra.Xmult = card.ability.extra.Xmult + card.ability.extra.extra
                 return {
-                    message = localize('k_akyrs_downgrade_ex'),
+                    message = localize('k_upgrade_ex'),
                     colour = G.C.MULT,
                     card = card
                 }
             end
-            if context.destroy_card and (context.cardarea == G.play) and not context.blueprint and not context.destroy_card.ability.eternal and not context.forcetrigger then
+            if context.destroy_card and (context.cardarea == G.play or context.cardarea == 'unscored') and not context.blueprint and not context.destroy_card.ability.eternal and not context.forcetrigger then
                 if #context.full_hand == math.floor(card.ability.extra.card_target) then
                     return { remove = true }
                 end
@@ -1683,7 +1684,7 @@ SMODS.Joker{
         
     end,
     calculate = function (self, card, context)
-        if context.akyrs_card_remove and context.card_getting_removed.config.center_key ~= "j_akyrs_charred_roach" and not (context.card_getting_removed.edition and context.card_getting_removed.edition.key == "e_akyrs_burnt")
+        if context.akyrs_card_remove and context.card_getting_removed ~= card and not (context.card_getting_removed.edition and context.card_getting_removed.edition.key == "e_akyrs_burnt")
         then
             return {
                 func = function ()
@@ -1820,11 +1821,9 @@ SMODS.Joker{
             end
         end
         if context.joker_main then
-            return AKYRS.bal_val({
-                xmult = card.ability.extras.xmult
-            },{
-                emult = card.ability.extras.emult
-            })
+            return {
+                xmult = AKYRS.bal_val(card.ability.extras.xmult,card.ability.extras.emult)
+            }
         end
 
         if context.akyrs_card_remove 
