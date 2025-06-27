@@ -1,4 +1,4 @@
-to_number = to_number or function(x) return x end
+local to_number = to_number or function(x) return x end
 
 -- repeater
 SMODS.Joker {
