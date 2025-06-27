@@ -82,3 +82,9 @@ AKYRS.parser_set_var = function(varname, value)
 end
 
 AKYRS.reset_math_parser({})
+
+
+AKYRS.emplace_funcs = {}
+
+
+AKYRS.emplace_funcs.always_placeable = function(ca,card) return G.OVERLAY_MENU and false or true end

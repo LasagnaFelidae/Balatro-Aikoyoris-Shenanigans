@@ -31,6 +31,9 @@ end
 AKYRS.other_mods_is_star = function(key)
 end
 
+AKYRS.card_conf_any_drag = function(area, card)
+    return false
+end
 
 -- below are how i do them
 

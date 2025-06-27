@@ -48,14 +48,14 @@ function Card:stop_drag()
     self.akyrs_oldarea = self.area or self.akyrs_oldarea
     for i, k in ipairs(G.CONTROLLER.collision_list) do
         if (k:is(CardArea)) then
-            if (k.config.akyrs_emplace_func and k.config.akyrs_emplace_func(k, self)) or AKYRS.card_any_drag() then
+            if (k.config.akyrs_emplace_func and AKYRS.emplace_funcs[k.config.akyrs_emplace_func](k, self)) or AKYRS.card_conf_any_drag(k,self) or AKYRS.card_any_drag() then
                 area = k
                 break
             end
         end
         
         if (k:is(Card)) and false then
-            if (k.area and k.area.config.akyrs_emplace_func and k.area.config.akyrs_emplace_func(k.area, self)) or AKYRS.card_any_drag() then
+            if (k.area and k.area.config.akyrs_emplace_func and AKYRS.emplace_funcs[k.config.akyrs_emplace_func](k.area, self)) or AKYRS.card_conf_any_drag(k,self) or AKYRS.card_any_drag() then
                 area = k.area
                 break
             end
