@@ -977,7 +977,7 @@ AKYRS.start_onboarding = function (forced)
                 G.AKYRS_AIKOYORI.T.y = 3
             end
             return true
-        end
+        end, 0,"akyrs_desc"
     )
 end
 
