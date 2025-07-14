@@ -815,12 +815,15 @@ end
 G.FUNCS.akyrs_advance_balance_intro = function(e)
   --print(inspect(e.config))
   if G.akyrs_current_balancing_page == "intro" then
-    if Cryptid then
+    if Playbook then
+      
+      AKYRS.balance_box("playbook")
+    elseif Cryptid then
       AKYRS.balance_box("cryptid")
     else
       AKYRS.balance_box("details")
     end
-  elseif G.akyrs_current_balancing_page == "cryptid" then
+  elseif G.akyrs_current_balancing_page == "cryptid" or G.akyrs_current_balancing_page == "playbook" then
     if e.config.id == "accept" then
       AKYRS.balance_intro_end("absurd")
     else
@@ -856,6 +859,27 @@ function AKYRS.UIBox_balancing_intro(page)
         button = 'akyrs_advance_balance_intro',
         page = page,
         colour = G.C.BLUE,
+        minw = 4
+      }),
+    }
+  elseif page == "playbook" then
+    localize{type = "descriptions", key = "akyrs_balance_dialog_playbook", set = "Akyrs_Dialog", default_col = G.C.WHITE, nodes = shx, vars = {}, scale = 2}
+    child_elements = {transparent_multiline_text(shx)}
+    buttons = {
+      UIBox_button({
+        label = {localize('k_akyrs_balance_dialog_cryptid_decline')},
+        button = 'akyrs_advance_balance_intro',
+        page = page,
+        id = 'decline',
+        colour = G.C.RED,
+        minw = 4
+      }),
+      UIBox_button({
+        label = {localize('k_akyrs_balance_dialog_cryptid_accept')},
+        button = 'akyrs_advance_balance_intro',
+        page = page,
+        id = 'accept',
+        colour = G.C.GREEN,
         minw = 4
       }),
     }

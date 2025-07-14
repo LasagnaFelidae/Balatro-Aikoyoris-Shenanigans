@@ -459,3 +459,10 @@ AKYRS.get_suits = function(tbl_o_cards)
     end
     return s,st
 end
+
+AKYRS.mod_debug_info_set = function ()
+    AKYRS.debug_info = {
+        ["Balance"] = AKYRS.bal() or "BALANCE NOT SET."
+    }
+end
+AKYRS.mod_debug_info_set()

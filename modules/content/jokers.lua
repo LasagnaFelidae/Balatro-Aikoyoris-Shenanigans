@@ -2433,7 +2433,7 @@ SMODS.Joker{
                 local edition = pseudorandom_element(G.P_CENTER_POOLS.Edition,pseudoseed("akyrs_aether_chance"))
                 repeat
                 local edition = pseudorandom_element(G.P_CENTER_POOLS.Edition,pseudoseed("akyrs_aether_chance"))
-                until edition and edition.weight > 0 
+                until edition and edition.weight and edition.weight > 0 
                 if edition then
                     other:set_edition(edition.key)
                 end
@@ -2646,7 +2646,7 @@ SMODS.Joker{
                 colour = AKYRS.C.PISSANDSHITTIUM,
                 remove_default_message = true,
                 mult = AKYRS.bal_val(card.ability.extras.mult,nil),
-                eeemult = AKYRS.bal_val(nil,card.ability.extras.eeemult),
+                emult = AKYRS.bal_val(nil,card.ability.extras.eeemult),
             }
         end
     end,

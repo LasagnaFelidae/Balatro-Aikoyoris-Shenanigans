@@ -1622,6 +1622,15 @@ return {
                     "You can change it in the mod configuration at any time.",
                 }
             },
+            akyrs_balance_dialog_playbook = {
+                name = "", 
+                text = {
+                    "Oh wow! It seems like {E:2,C:dark_edition}Playbook{} has been installed.",
+                    "I'll go ahead and apply the {E:1,C:red}Absurd{} Balance.",
+                    "If you want to change it to {E:2,C:green}Adequate{},",
+                    "You can change it in the mod configuration at any time.",
+                }
+            },
             akyrs_balance_dialog_details = {
                 name = "", 
                 text = {

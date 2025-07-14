@@ -82,6 +82,10 @@ end
 local gameUpdate = Game.update
 
 function Game:update(dt)
+    if AKYRS.bal_cur_val ~= AKYRS.bal() then
+        AKYRS.mod_debug_info_set()
+        AKYRS.bal_cur_val = AKYRS.bal()
+    end
     if G.GAME then
         G.GAME.modifiers.scaling = G.GAME.modifiers.scaling or 1
         local s = gameUpdate(self, dt)
