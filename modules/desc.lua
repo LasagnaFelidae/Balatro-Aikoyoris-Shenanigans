@@ -227,6 +227,9 @@ AKYRS.DescriptionDummy{
     key = "no_overriding"
 }
 AKYRS.DescriptionDummy{
+    key = "no_skipping"
+}
+AKYRS.DescriptionDummy{
     key = "word_blind"
 }
 AKYRS.DescriptionDummy{

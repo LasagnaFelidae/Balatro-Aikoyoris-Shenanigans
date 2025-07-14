@@ -211,6 +211,7 @@ AKYRS.blind_icons_pos = function (key)
     if key == "postwin_blind" then   return  { x = 8, y = 1} end
     if key == "endless_blind" then   return  { x = 9, y = 1} end
     if key == "no_overriding" then   return  { x = 1, y = 2} end
+    if key == "no_skipping" then     return  { x = 2, y = 2} end
     if AKYRS.other_mods_blind_icons_pos(key) then return AKYRS.other_mods_blind_icons_pos(key) end
     return {x = 9, y = 9}
 end
@@ -275,6 +276,9 @@ AKYRS.add_blind_extra_info = function(blind,ability_text_table,extras)
         end
         if blind.debuff.akyrs_cannot_be_overridden and not hide.no_overriding then
             AKYRS.generate_icon_blinds("no_overriding",{table = z,cache = cache,icon_size = icon_size,full_ui = full_ui,font_size = fsz,text_size_for_full = dfctysz, info_queue = info_queue})
+        end
+        if blind.debuff.akyrs_cannot_be_skipped and not hide.no_overriding then
+            AKYRS.generate_icon_blinds("no_skipping",{table = z,cache = cache,icon_size = icon_size,full_ui = full_ui,font_size = fsz,text_size_for_full = dfctysz, info_queue = info_queue})
         end
         AKYRS.other_mods_blind_icons(blind,ability_text_table,extras)
     end

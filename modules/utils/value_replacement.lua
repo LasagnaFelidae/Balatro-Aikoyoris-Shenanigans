@@ -248,3 +248,16 @@ function AKYRS.getCashOutText(config,scale,stake_sprite)
         }}
     end
 end
+
+function AKYRS.mod_skip_box(blind_type, ax, original)
+    
+    blind_type = blind_type or 'Small'
+    local blind_choice = {
+        config = G.P_BLINDS[G.GAME.round_resets.blind_choices[blind_type]],
+    }
+
+    if blind_choice.config.debuff.akyrs_cannot_be_skipped then
+        return nil
+    end
+    return original
+end

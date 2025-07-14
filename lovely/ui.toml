@@ -189,6 +189,7 @@ target = "functions/UI_definitions.lua"
 pattern = """    extras = create_UIBox_blind_tag(type, run_info)"""
 position = "after"
 payload = """
+    extras = AKYRS.mod_skip_box(type, run_info, extras)
 end
 """
 overwrite = true

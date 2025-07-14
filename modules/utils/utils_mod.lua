@@ -233,6 +233,7 @@ AKYRS.remove_formatting = function(string_in)
 end
 AKYRS.full_ui_add = function(nodes, key, scale)
     local m = G.localization.descriptions["DescriptionDummy"][key]
+    if not m then assert("You forgot the localization!") end
     local l = {
         {
             n = G.UIT.R,

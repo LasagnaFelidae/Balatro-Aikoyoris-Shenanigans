@@ -258,7 +258,8 @@ return {
                 name = "Faraway Island",
                 text = {
                     "Hand must contain at least",
-                    "one card with no suit and rank",
+                    "one card with no suit or rank",
+                    "(For example, Stone cards)"
                 }
             },
             bl_akyrs_master_plywood_forest = {
@@ -529,6 +530,12 @@ return {
                     "until it's defeated",
                 },
             },
+            dd_akyrs_no_skipping  = {
+                name="No Skipping",
+                text={
+                    "This blind cannot be skipped",
+                },
+            },
             dd_akyrs_forgotten_blind  = {
                 name="Forgotten Blind",
                 text={
@@ -658,7 +665,17 @@ return {
                     "{C:attention}Always{} disintegrating into nothing",
                     "at the end of the round"
                 },
-            }
+            },
+            m_akyrs_hatena = {
+                name="? Card",
+                text={
+                    "{C:green}#1# in #2#{} chance to gain {C:money}$#3#",
+                    "{C:green}#4# in #5#{} chance to gain {C:money}$#6#",
+                    "{C:green}#7# in #8#{} chance to give {C:mult}+#9#{} Mult",
+                    "on initial scoring and {X:mult,C:white} X#10# {} on retriggers",
+                    "No rank or suit",
+                },
+            },
         },
         Joker={
             j_akyrs_redstone_repeater = {

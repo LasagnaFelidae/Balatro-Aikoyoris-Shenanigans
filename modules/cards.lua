@@ -178,10 +178,10 @@ SMODS.Enhancement{
                 }
             }
         end
+        local n,d = SMODS.get_probability_vars(card,1,card.ability.extras.odds,"akyrs_ash_card")
         return { vars = {
             card.ability.extras.chips,
-            G.GAME.probabilities.normal or 1,
-            card.ability.extras.odds,
+            n,d
         } }
     end,
     config = {
@@ -207,4 +207,73 @@ SMODS.Enhancement{
     no_suit = true,
     always_scores = true,
     replace_base_card = true,
+}
+
+SMODS.Enhancement{
+    key = "hatena",
+    atlas = 'cardUpgrades',
+    pos = {x = 3, y = 0},
+    no_rank = true,
+    no_suit = true,
+    always_scores = true,
+    replace_base_card = true,
+    config = {
+        extras = {
+            odds_d = 2,
+            d = 1, 
+            odds_d10 = 10,
+            d10 = 10,
+            nom_mults = 4,
+            denom_mults = 5,
+            mult_init = 6,
+            xmult_retrig = 1.3
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        local n_dollar_1, d_dollar_1 = SMODS.get_probability_vars(card,1,card.ability.extras.odds_d,"akyrs_hatena_d1") -- odds of getting 1 money
+        local n_dollar_10, d_dollar_10 = SMODS.get_probability_vars(card,1,card.ability.extras.odds_d10,"akyrs_hatena_d10") -- odds of getting 10 money
+        local n_dollar_mult, d_dollar_mult = SMODS.get_probability_vars(card,card.ability.extras.nom_mults,card.ability.extras.denom_mults,"akyrs_hatena_mults") -- odds of getting mults
+        return {
+            vars = {
+                n_dollar_1, d_dollar_1,card.ability.extras.d,
+                n_dollar_10, d_dollar_10,card.ability.extras.d10,
+                n_dollar_mult, d_dollar_mult,card.ability.extras.mult_init,card.ability.extras.xmult_retrig,
+            }
+        }
+    end,
+    calculate = function (self, card, context)
+        if context.main_scoring and context.cardarea == G.play then
+            if SMODS.pseudorandom_probability(card,"akyrs_hatena_d1",1,card.ability.extras.odds_d) then
+                return {
+                    dollars = card.ability.extras.d
+                }
+            end
+            if SMODS.pseudorandom_probability(card,"akyrs_hatena_d10",1,card.ability.extras.odds_d10) then
+                return {
+                    dollars = card.ability.extras.d10
+                }
+            end
+            if SMODS.pseudorandom_probability(card,"akyrs_hatena_mults",card.ability.extras.nom_mults,card.ability.extras.denom_mults) then
+                if card.akyrs_triggered then
+                    return {
+                        xmult = card.ability.extras.xmult_retrig
+                    }
+                else
+                    return {
+                        mult = card.ability.extras.mult_init,
+                        func = function()
+                            card.akyrs_triggered = true
+                        end
+                    }
+                end
+            end
+            if context.final_scoring_step then
+                return {
+                    func = function()
+                        card.akyrs_triggered = nil
+                    end
+                }
+            end
+        end
+    end
 }

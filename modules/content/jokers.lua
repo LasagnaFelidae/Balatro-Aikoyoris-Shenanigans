@@ -1100,13 +1100,14 @@ SMODS.Joker{
     },
     loc_vars = function(self, info_queue, card)
         if AKYRS.bal("absurd") then
+            local num, denom = SMODS.get_probability_vars(card, 1, card.ability.extra.chance, 'akyrs_gaslighting_absurd')
             return {
                 key = self.key .. "_absurd",
                 vars = {
                     card.ability.extra.eemult,
                     card.ability.extra.eemult_negative,
-                    (G.GAME.probabilities.normal or 1)*card.ability.extra.super_mario,
-                    card.ability.extra.chance,
+                    num,
+                    denom,
                 }
             }
         end
@@ -1119,7 +1120,7 @@ SMODS.Joker{
     end,
     calculate = function(self, card, context)
         if AKYRS.bal("absurd") and (context.joker_main or context.forcetrigger) then
-            local odder = to_big(pseudorandom("akyrs_gaslighting_absurd")) > to_big(G.GAME.probabilities.normal / card.ability.extra.chance)
+            local odder = SMODS.pseudorandom_probability(card, "akyrs_gaslighting_absurd",1, card.ability.extra.chance, 'akyrs_gaslighting_absurd')
             if odder then
                 return {
                     eemult = card.ability.extra.eemult
@@ -1747,11 +1748,12 @@ SMODS.Joker{
                 }
             }
         end
+        local n, d = SMODS.get_probability_vars(card, 1, card.ability.extra.odds, 'akyrs_ash_joker_adequate')
         return {
             vars = {
                 card.ability.extras.chips,
-                G.GAME.probabilities.normal,
-                card.ability.extras.odds,
+                n,
+                d,
             }
         }
     end,
@@ -1764,7 +1766,8 @@ SMODS.Joker{
             })
         end
         if context.end_of_round and context.cardarea == G.jokers then
-            local odder = pseudorandom("burnt") < G.GAME.probabilities.normal / card.ability.extras.odds or AKYRS.bal("absurd")
+            local odder = AKYRS.bal("absurd") or 
+                SMODS.pseudorandom_probability(card,"akyrs_ash_joker_adequate", 1, card.ability.extra.odds)
             card.ability.akyrs_ash_disintegrate = odder
         end
     end,
@@ -2416,11 +2419,11 @@ SMODS.Joker{
         }
     },
     loc_vars = function (self, info_queue, card)
+        local n,d = SMODS.get_probability_vars(card, 1, card.ability.extras.odds,"akyrs_aether_chance")
         return {
             vars = {
-                
-                (G.GAME.probabilities.normal or 1),
-                card.ability.extras.odds
+                n,
+                d
             }
         }
     end,
@@ -2437,7 +2440,7 @@ SMODS.Joker{
                 if edition then
                     other:set_edition(edition.key)
                 end
-                if pseudorandom('akyrs_aether_portal') < G.GAME.probabilities.normal/card.ability.extras.odds then
+                if SMODS.pseudorandom_probability(card,"akyrs_aether_portal",1,card.ability.extra.odds) then
                     card:start_dissolve({G.C.BLUE},1.6)
                 end
             end
@@ -2670,10 +2673,11 @@ SMODS.Joker{
     loc_vars = function (self, info_queue, card)
         info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         info_queue[#info_queue+1] = {set = "Tag", key = "tag_standard"}
+        -- numerator & denominator :3
+        local n, d = SMODS.get_probability_vars(card,1,AKYRS.bal_val(card.ability.extras.odds,card.ability.extras.odds_absurd),"akyrs_pandora_paradoxx")
         return {
             vars = {
-                (G.GAME.probabilities.normal or 1),
-                AKYRS.bal_val(card.ability.extras.odds,card.ability.extras.odds_absurd)
+                n,d
             }
         }
     end,
@@ -2683,7 +2687,7 @@ SMODS.Joker{
                 message = localize("k_akyrs_pandora_give_tag"),
                 func = function ()
                     for i = 1, #context.cards do
-                        if pseudorandom('akyrs_pandora_paradoxx') < G.GAME.probabilities.normal/AKYRS.bal_val(card.ability.extras.odds,card.ability.extras.odds_absurd) then
+                        if SMODS.pseudorandom_probability(card,"akyrs_pandora_paradoxxx",1,AKYRS.bal_val(card.ability.extras.odds,card.ability.extras.odds_absurd)) then
                             local tag = Tag("tag_standard")
                             add_tag(tag)
                         end

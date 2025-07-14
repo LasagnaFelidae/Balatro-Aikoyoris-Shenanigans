@@ -1134,6 +1134,7 @@ SMODS.Blind {
         akyrs_blind_difficulty = "master",
         akyrs_is_endless_blind = true,
         akyrs_cannot_be_overridden = true,
+        akyrs_cannot_be_skipped = true,
     },
     
     in_pool = function (self)
@@ -1144,7 +1145,7 @@ SMODS.Blind {
     pos = { x = 0, y = 3 },
     debuff_hand = function (self, cards, hand, handname, check)
         for i, c in ipairs(cards) do
-            if SMODS.has_no_rank(c) and SMODS.has_no_suit(c) then
+            if SMODS.has_no_rank(c) or SMODS.has_no_suit(c) then
                 return false
             end
         end
@@ -1163,6 +1164,7 @@ SMODS.Blind {
         akyrs_is_endless_blind = true,
         akyrs_destroy_unplayed = true,
         akyrs_cannot_be_overridden = true,
+        akyrs_cannot_be_skipped = true,
     },
     
     in_pool = function (self)
@@ -1184,6 +1186,7 @@ SMODS.Blind {
         akyrs_is_endless_blind = true,
         akyrs_cannot_be_overridden = true,
         akyrs_deduct_mult = 0.1,
+        akyrs_cannot_be_skipped = true,
     },
     loc_vars = function (self)
         return {
@@ -1227,6 +1230,7 @@ SMODS.Blind {
         akyrs_blind_difficulty = "master",
         akyrs_is_endless_blind = true,
         akyrs_cannot_be_overridden = true,
+        akyrs_cannot_be_skipped = true,
     },
     
     in_pool = function (self)
@@ -1256,6 +1260,7 @@ SMODS.Blind {
         akyrs_blind_difficulty = "master",
         akyrs_is_endless_blind = true,
         akyrs_cannot_be_overridden = true,
+        akyrs_cannot_be_skipped = true,
     },
     
     in_pool = function (self)

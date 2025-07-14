@@ -455,7 +455,7 @@ function end_round()
                         }), 'base')
                     end
                     if SMODS.get_enhancements(card)["m_akyrs_ash_card"] or card.config.center_key == "j_akyrs_ash_joker" then
-                        local odder = pseudorandom("ashed") < G.GAME.probabilities.normal / card.ability.extras.odds or AKYRS.bal("absurd")
+                        local odder = AKYRS.bal("absurd") or SMODS.pseudorandom_probability(card,"akyrs_ash_card",1,card.ability.extras.odds)
                         if odder then
                             G.E_MANAGER:add_event(Event({
                                 func = function()
@@ -468,7 +468,7 @@ function end_round()
 
                     end
                     if card.edition and card.edition.key == "e_akyrs_burnt" then
-                        local odder = pseudorandom("burnt") < G.GAME.probabilities.normal / card.edition.extras.odds
+                        local odder = SMODS.pseudorandom_probability(card,"akyrs_ash_card",1,card.edition.extras.odds)
                         if odder then
                             G.E_MANAGER:add_event(Event({
                                 func = function()

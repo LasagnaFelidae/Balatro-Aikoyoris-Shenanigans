@@ -109,10 +109,10 @@ SMODS.Edition{
     loc_vars = function (self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS["m_akyrs_ash_card"]
         info_queue[#info_queue+1] = G.P_CENTERS["j_akyrs_ash_joker"]
+        local n,d = SMODS.get_probability_vars(card,1,self.config.extras.odds,"akyrs_burnt_edition")
         return {
             vars = {
-                G.GAME and G.GAME.probabilities.normal or 1,
-                self.config.extras.odds,
+                n,d
             }
         }
     end,
