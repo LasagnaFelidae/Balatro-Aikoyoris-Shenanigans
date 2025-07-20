@@ -512,11 +512,14 @@ function AKYRS.adjust_rounding(num)
     return math.floor(num*10)/10
 end
 
-AKYRS.simple_event_add = function (func, delay, queue)
+AKYRS.simple_event_add = function (func, delay, queue, config)
+    config = config or {}
     G.E_MANAGER:add_event(Event{
         trigger = 'after',
         delay = delay or 0.1,
-        func = func
+        func = func,
+        blocking = config.blocking,
+        blockable = config.blockable,
     }, queue)
 end
 
@@ -813,22 +816,132 @@ AKYRS.get_most_played = function()
         end
     end
     if _hand then
-        for k, v in pairs(G.P_CENTER_POOLS.Planet) do
-            if v.config.hand_type == _hand then
-                _planet = v.key
-            end
-            if v.config.akyrs_hand_types then
-                for i,v2 in ipairs(v.config.akyrs_hand_types) do
-                    if v2 == v then
-                        _planet = v.key
-                    end
-                end
-            end
-        end
+        AKYRS.get_planet_for_hand(_hand)
     end
     return _planet, _hand, _tally
 end
 
+AKYRS.get_planet_for_hand = function(_hand)
+    local _planet
+    for k, v in pairs(G.P_CENTER_POOLS.Planet) do
+        if v.config.hand_type == _hand then
+            _planet = v.key
+        end
+        if v.config.akyrs_hand_types then
+            for i,v2 in ipairs(v.config.akyrs_hand_types) do
+                if v2 == v then
+                    _planet = v.key
+                end
+            end
+        end
+    end
+    return _planet
+end
+
 AKYRS.is_mod_loaded = function(var) 
     return (SMODS.Mods[var] and not SMODS.Mods[var].disabled) and true or false
+end
+function AKYRS.juice_like_tarot(card)
+    play_sound('tarot1')
+    card:juice_up(0.3, 0.5)
+end
+function AKYRS.do_things_to_card(cards, func, config) -- func(card)
+    config = config or {}
+    for i, card in ipairs(cards) do
+        AKYRS.simple_event_add(
+            function ()
+                
+                if not config.no_sound then
+                    play_sound('card1')
+                end
+                if not config.no_juice then
+                    card:juice_up(0.3, 0.3)
+                end
+                card:flip()
+                if not config.fifo then
+                    if(config.stay_flipped_delay) then
+                        delay(config.stay_flipped_delay)
+                    end
+                    AKYRS.simple_event_add(
+                        function ()
+                            func(card)
+                            if not config.no_sound then
+                                play_sound("card1",math.abs(1.15 - (i-0.999)/(#cards-0.998)*0.3))
+                            end
+                            if not config.no_juice then
+                                card:juice_up(0.3, 0.3)
+                            end
+                            card:flip()
+                            if not config.dont_unhighlight and card.highlighted and card.area then
+                                card.area:remove_from_highlighted(card)
+                            end
+                            return true
+                        end,config.finish_flipped_delay or 0.5
+                    )
+                end
+
+                return true
+            end,config.stagger or 0
+        )
+        if config.fifo and config.fifo_wait_for_finish then
+            AKYRS.simple_event_add(
+                function ()
+                    func(card)
+                    if not config.no_sound then
+                        play_sound("card1",math.abs(1.15 - (i-0.999)/(#cards-0.998)*0.3))
+                    end
+                    if not config.no_juice then
+                        card:juice_up(0.3, 0.3)
+                    end
+                    card:flip()
+                    if not config.dont_unhighlight and card.highlighted and card.area then
+                        card.area:remove_from_highlighted(card)
+                    end
+                    return true
+                end,config.finish_flipped_delay or 0.5
+            )
+        end
+    end
+    if(config.fifo and config.stay_flipped_delay) then
+        delay(config.stay_flipped_delay or 0)
+        for i, card in ipairs(cards) do
+            if config.fifo and not config.fifo_wait_for_finish then
+                AKYRS.simple_event_add(
+                    function ()
+                        func(card)
+                        if not config.no_sound then
+                            play_sound("card1",math.abs(1.15 - (i-0.999)/(#cards-0.998)*0.3))
+                        end
+                        if not config.no_juice then
+                            card:juice_up(0.3, 0.3)
+                        end
+                        card:flip()
+                        if not config.dont_unhighlight and card.highlighted and card.area then
+                            card.area:remove_from_highlighted(card)
+                        end
+                        return true
+                    end,config.finish_flipped_delay or 0.5
+                )
+            end
+        end
+    end
+
+end
+
+function AKYRS.pseudorandom_elements(tables, count, seed, args)
+    if not count then count = 1 end
+    if count >= #tables then
+        return tables
+    end
+    local outp = {}
+    local tb = {}
+    for i,j in ipairs(tables) do
+        table.insert(tb,j)
+    end
+    for i = 1,count do
+        local elem = pseudorandom_element(tb,seed,args)
+        table.insert(outp,elem)
+        AKYRS.remove_value_from_table(tb,elem)
+    end
+    return outp
 end

@@ -194,6 +194,47 @@ function AKYRS.maxwell_generate_card(cardtype, context)
 
 end
 
+
+AKYRS.suit_to_atlas = function (suit_key)
+    if suit_key == "Hearts" then
+        -- print("<3")
+        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (G.SETTINGS.colourblind_option and 4 or 0), y = 0}
+    end
+    if suit_key == "Clubs" then
+        -- print("|-8o")
+        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (G.SETTINGS.colourblind_option and 5 or 1), y = 0}
+    end
+    if suit_key == "Diamonds" then
+        -- print("<>")
+        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (G.SETTINGS.colourblind_option and 6 or 2), y = 0}
+    end
+    if suit_key == "Spades" then
+        -- print("|-C>")
+        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (G.SETTINGS.colourblind_option and 7 or 3), y = 0}
+    end
+    return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = 8, y = 0}
+end
+AKYRS.rank_to_atlas = function (rank_key)
+    
+    if rank_key == "Jack" then
+        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = 9, y = 0}
+    end
+    if rank_key == "Queen" then
+        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = 10, y = 0}
+    end
+    if rank_key == "King" then
+        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = 11, y = 0}
+    end
+    if rank_key == "Ace" then
+        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = 0, y = 1}
+    end
+    --          nan check v                           
+    if tonumber(rank_key) and (tonumber(rank_key) == tonumber(rank_key)) and tonumber(rank_key) >= 2 and tonumber(rank_key) <= 10 then
+        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = 11 - tonumber(rank_key), y = 1}
+    end
+    return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = 10, y = 1}
+end
+
 AKYRS.blind_icons_pos = function (key)
     
     if key == "expert" then          return  { x = 0, y = 1} end

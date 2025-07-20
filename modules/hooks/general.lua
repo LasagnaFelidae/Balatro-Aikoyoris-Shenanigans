@@ -898,8 +898,32 @@ local setCardAbilityHook = Card.set_ability
 
 function Card:set_ability(c,i,d)
     if self and self.ability and self.ability.akyrs_sigma then return end
+    -- this one is for collection
     local r = setCardAbilityHook(self,c,i,d)
-    
+    AKYRS.simple_event_add(
+        function ()
+        if self.config.card and self.config.center.set == "Enhanced" or self.config.center.set == "Default" then
+            self:set_base(self.config.card, i)
+            if self.config.center.key == "m_akyrs_rankless" then
+                self.base.nominal = 0
+            elseif SMODS.Ranks[self.config.card.value] then
+                self.base.nominal = SMODS.Ranks[self.config.card.value].nominal
+            end
+        end
+            return true
+        end, 0
+    )
+
+    if self.config.center.key == "m_akyrs_rankless" or self.config.center.key == "m_akyrs_suitless" then
+        AKYRS.simple_event_add(
+            function ()
+                if self.area and self.area.config and self.area.config.collection then
+                    self:set_base(G.P_CARDS[AKYRS.randomCard()], i)
+                end
+                return true
+            end, 0, "other"
+        )
+    end
     if(i) then
         self.akyrs_old_ability = AKYRS.deep_copy(self.ability)
     end
@@ -916,11 +940,20 @@ function Card:set_base(card, initial)
         self:set_letters_random()
         self.ability.forced_letter_render = false
     end
+    
+    if self.config.card and self.config.center.set == "Enhanced" or self.config.center.set == "Default" then
+        if self.config.center.key == "m_akyrs_rankless" then
+            self.base.nominal = 0
+        elseif SMODS.Ranks[self.config.card.value] then
+            self.base.nominal = SMODS.Ranks[self.config.card.value].nominal
+        end
+    end
     return ret
 end
 local cardInitHook = Card.init
 function Card:init(X, Y, W, H, card, center, params)
     local ret = cardInitHook(self, X, Y, W, H, card, center, params)
+
     
     self:akyrs_mod_card_value_init()
     self.akyrs_upgrade_sliced = false
@@ -1025,6 +1058,9 @@ local getNominalHook = Card.get_nominal
 function Card:get_nominal(mod)
     if self.is_null and self.ability.aikoyori_letters_stickers then
         return -10 - string.byte(self.ability.aikoyori_letters_stickers)
+    end
+    if not AKYRS.should_score_chips(self.config.center) and not mod then
+        return -10
     end
     local ret = getNominalHook(self, mod)
     return ret
@@ -1174,7 +1210,6 @@ function CardArea:align_cards()
     if G.GAME.akyrs_ultimate_freedom and self == G.play and self.states.collide.can then
         self.states.collide.can = false
     end
-    return r
 end
 
 local cardAreaDrawHook = CardArea.draw

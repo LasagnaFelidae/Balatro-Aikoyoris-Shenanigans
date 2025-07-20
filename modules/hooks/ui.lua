@@ -762,15 +762,19 @@ function create_UIBox_blind_choice(type, run_info)
         local blindloc = AKYRS.getBlindText(G.GAME.round_resets.blind_choices[type] or "nololxd")
         local stake_sprite = get_stake_sprite(G.GAME.stake or 1, 0.5)
         if blindloc[1] then
-            elem.nodes[2].nodes[1].nodes[1].config.text = blindloc[1]
+            pcall(function ()
+                elem.nodes[2].nodes[1].nodes[1].config.text = blindloc[1]
+            end)
         end
         if blindloc[2] then
+            pcall(function ()
             elem.nodes[2].nodes[2].nodes = {
             
                 { n = G.UIT.O, config = { w = 0.5, h = 0.5, colour = G.C.BLUE, object = stake_sprite, hover = true, can_collide = false } },
                 { n = G.UIT.B, config = { h = 0.1, w = 0.1 } },
                 { n = G.UIT.T, config = { text = blindloc[2], scale = 0.4, colour = G.C.RED, shadow = true } }
             }
+            end)
         end
 
     end

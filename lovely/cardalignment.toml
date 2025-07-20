@@ -69,3 +69,28 @@ payload = """            G.E_MANAGER:add_event(Event({ --Add bonus chips from th
             }), 'base', card_trigger_before)"""
 overwrite = true
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = """    if not self.states.focus.is and self.children.focused_ui then"""
+position = "before"
+payload = """
+if self.flipping == 'akyrs_f2b_y' then
+    if self.sprite_facing == 'front' or true then
+        if self.VT.h <= 0 then
+            self.sprite_facing = 'back'
+            self.pinch.y =false
+        end
+    end
+end
+if self.flipping == 'akyrs_b2f_y' then
+    if self.sprite_facing == 'back' or true then
+        if self.VT.h <= 0 then
+            self.sprite_facing = 'front'
+            self.pinch.y =false
+        end
+    end
+end"""
+overwrite = true
+match_indent = true

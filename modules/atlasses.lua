@@ -171,6 +171,31 @@ SMODS.Atlas {
     px = 114,
     py = 174
 }
+
+SMODS.Atlas {
+    key = "umbra",
+    path = "aikoUmbraTarot.png",
+    px = 71,
+    py = 95
+}
+SMODS.Atlas {
+    key = "umbra_2",
+    path = "aikoUmbraTarotAlt.png",
+    px = 71,
+    py = 95
+}
+SMODS.Atlas {
+    key = "umbra_undisc",
+    path = "undiscoveredUmbra.png",
+    px = 71,
+    py = 95
+}
+SMODS.Atlas {
+    key = "rank_suit_cards",
+    path = "rankSuitCards.png",
+    px = 71,
+    py = 95
+}
 -- we glsling so hard rn 
 
 SMODS.Shader{
@@ -200,4 +225,8 @@ SMODS.Shader{
 SMODS.Shader{
     key = "enchanted",
     path = "enchanted.fs",
+}
+SMODS.Shader{
+    key = "color_shift",
+    path = "color_shift.fs",
 }

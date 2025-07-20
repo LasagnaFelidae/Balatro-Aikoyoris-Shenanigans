@@ -689,12 +689,58 @@ return {
                         "{C:inactive}(Must have room)"
                     },
                     {
-                        "{C:red,E:1}Self-destructs{} if successfully triggered"
+                        "{C:red,E:1}Self-destructs{} and the end of the round",
+                        "if successfully triggered"
                     },
                     {
                         "No rank, no suit, always scores"
                     }
                 }
+            },
+            m_akyrs_insolate_card = {
+                name = "Insolate Card",
+                text = {
+                    "This card gains {C:white,X:mult} X#1# {} Mult when scored",
+                    "if played hand {C:attention}does not contain{} a suit more than {C:attention}once",
+                    "{C:inactive}(Currently {C:white,X:mult} X#2# {} {C:mult}Mult{}{C:inactive}){}" 
+                }
+            },
+            m_akyrs_canopy_card = {
+                name = "Canopy Card",
+                text = {
+                    "Reduce the rank of this card by {C:attention}1{}",
+                    "if {C:attention}held in hand{} after scoring",
+                }
+            },
+            m_akyrs_thai_tea_card = {
+                name = "Thai Tea Card",
+                text = {
+                    "{X:mult,C:white} X#1# {} Mult",
+                    "{C:inactive,s:0.8}The {s:0.8}absurd{C:inactive,s:0.8}ly good smell of it {s:0.8}alone",
+                    "{C:inactive,s:0.8}is sure to make any {s:0.8}Mouth{s:0.8} water{C:inactive,s:0.8}s" 
+
+                }
+            },
+            m_akyrs_matcha_card = {
+                name = "Matcha Card",
+                text = {
+                    "{X:chips,C:white} X#1# {} Chips",
+                }
+            },
+            m_akyrs_earl_grey_tea_card = {
+                name = "Earl Grey Tea Card",
+                text = {
+                    "{C:money} +$#1#{} if this card is played",
+                    "but not scored",
+                }
+            },
+            m_akyrs_rankless = {
+                name = "Suit",
+                text = {"No rank"}
+            },
+            m_akyrs_suitless = {
+                name = "Rank",
+                text = {"No Suit"}
             },
         },
         Joker={
@@ -1742,6 +1788,33 @@ return {
                     "Hardcore Challenge mode",
                 },
             },
+            undiscovered_umbral = {
+                name="Not Discovered",
+                text={
+                    "Purchase or use",
+                    "this card in an",
+                    "unseeded run to",
+                    "learn what it does",
+                },
+            },
+            pinned_left={
+                name="Pinned",
+                text={
+                    "This card stays",
+                    "pinned to the",
+                    "leftmost position",
+                },
+            },
+            akyrs_playing_card_suit={
+                text={
+                    "{V:1}#2#",
+                },
+            },
+            akyrs_playing_card_rank={
+                text={
+                    "{C:light_black}#1#",
+                },
+            },
         },
         Planet={
             c_akyrs_p_ara={
@@ -2074,6 +2147,62 @@ return {
                     "The challenge is to not crash the game."
 				},
             },
+        },
+        Umbral = {
+            c_akyrs_umbral_graduate = {
+                name="Graduate",
+				text = {
+                    "Creates the last",
+                    "{C:akyrs_umbral_p,X:akyrs_umbral_y}Umbral{} card",
+                    "used during this run",
+                    "{s:0.8,C:akyrs_umbral_p,X:akyrs_umbral_y}Graduate{s:0.8} excluded",
+				},
+            },
+            c_akyrs_umbral_realist = {
+                name="Realist",
+				text = {
+                    "Enhances up to {C:attention}#1#{} selected card",
+                    "into {C:attention}Insolate Cards{}",
+				},
+            },
+            c_akyrs_umbral_tribal = {
+                name="Tribal",
+				text = {
+                    "Create a {C:planet}Planet Card{}",
+                    "for the selected {C:attention}poker hand",
+				},
+            },
+            c_akyrs_umbral_gambit = {
+                name="Gambit",
+				text = {
+                    "Converts up to {C:attention}#1#{} random cards",
+                    "in hand into either {C:attention}Kings{}, {C:attention}Queens{}",
+                    "or {C:attention}Aces{}"
+				},
+            },
+            c_akyrs_umbral_kingpin = {
+                name="Kingpin",
+				text = {
+                    "Adds {C:attention}#1#{} sealed {C:attention}Pinned{} Kings",
+                    "to hand",
+				},
+            },
+            c_akyrs_umbral_tea_time = {
+                name="Tea Time",
+                text={
+                    "Enhances {C:attention}#1#",
+                    "selected card to",
+                    "{C:attention}Tea Cards{}",
+                },
+            },
+            c_akyrs_umbral_break_up = {
+                name="Break Up",
+                text={
+                    "Splits {C:attention}#1#{} selected card",
+                    "into {C:attention}Suit{} and {C:attention}Rank{} cards",
+                    "{C:inactive}(If possible)"
+                },
+            },
         }
     },
     misc = {
@@ -2105,6 +2234,9 @@ return {
         },
         collabs={},
         dictionary={
+            b_umbral_cards = "Umbral Cards",
+            k_umbral = "Umbral Card",
+
             b_akyrs_alphabets="Alphabet Cards",
             k_aikoyoriextrabases = "Extra Base",
             k_akyrs_alphabets = "Alphabet",
@@ -2265,6 +2397,7 @@ return {
             akyrs_enchanted = "Enchanted",
             k_akyrs_emerald = "Emerald",
             k_akyrs_supercommon = "Emerald",
+            umbral = "Umbral"
         },
         poker_hand_descriptions={
             ["akyrs_3-letter Word"] =  {'Create a valid '.. 3 ..'-letter English word', 'without extra letters'},

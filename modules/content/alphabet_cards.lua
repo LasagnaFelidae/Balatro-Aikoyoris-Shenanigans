@@ -1,3 +1,9 @@
+SMODS.UndiscoveredSprite{
+    atlas = "consumablesAlphabetPacks",
+    key = "Alphabet",
+    pos = {x = 6, y = 2} 
+    
+}
 
 SMODS.ConsumableType{
     atlas = "consumablesAlphabetPacks",

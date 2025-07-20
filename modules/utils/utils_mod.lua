@@ -300,17 +300,20 @@ AKYRS.get_ranks_freq_from_cards = function(listofcards)
     return wordArray
 end
 
-AKYRS.get_suits_freq_from_cards = function(listofcards)
+AKYRS.get_suit_freq_from_cards = function(listofcards, no_count_wild)
     
     local wordArray = {}
     for i,v in ipairs(listofcards) do
         if not SMODS.has_no_suit(v) then
-            for j,st in pairs(SMODS.Suits) do
-                if v:is_suit(j) then
-                    wordArray[j] = wordArray[j] and wordArray[j] + 1 or 1
+            if no_count_wild and v.base and v.base.suit then
+                wordArray[v.base.suit] = wordArray[v.base.suit] and wordArray[v.base.suit] + 1 or 1
+            else
+                for j,st in pairs(SMODS.Suits) do
+                    if v:is_suit(j) then
+                        wordArray[j] = wordArray[j] and wordArray[j] + 1 or 1
+                    end
                 end
             end
-
         end
     end
     return wordArray

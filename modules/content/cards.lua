@@ -320,3 +320,157 @@ SMODS.Enhancement{
         end
     end
 }
+
+
+
+SMODS.Enhancement{
+    key = "insolate_card",
+    atlas = 'cardUpgrades',
+    pos = {x = 5, y = 0},
+    config = {
+        extras = {
+            xmult = 1,
+            xmult_add = 0.2,
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.xmult_add,
+                card.ability.extras.xmult,
+            }
+        }
+    end,
+    calculate = function (self, card, context)
+        if context.before then
+        end
+        if context.main_scoring and context.cardarea == G.play then
+            SMODS.calculate_effect()
+            return {
+                xmult = card.ability.extras.xmult
+            }
+        end
+    end
+}
+
+SMODS.Enhancement{
+    key = "canopy_card",
+    atlas = 'cardUpgrades',
+    pos = {x = 6, y = 0},
+    loc_vars = function (self, info_queue, card)
+        return {
+        }
+    end,
+    calculate = function (self, card, context)
+        if context.after and context.cardarea == G.hand then
+            return {
+                func = function ()
+                    AKYRS.simple_event_add(
+                        function ()
+                            card:akyrs_flip_y()
+                            AKYRS.simple_event_add(
+                                function ()
+                                    card:akyrs_flip_y()
+                                    card = SMODS.modify_rank(card, -1)
+                                    return true
+                                end
+                            )
+                            return true
+                        end
+                    )
+                end
+            }
+        end
+    end
+}
+SMODS.Enhancement{
+    key = "thai_tea_card",
+    atlas = 'cardUpgrades',
+    pos = {x = 7, y = 0},
+    config = {
+        extras = {
+            xmult = 1.6,
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.xmult
+            }
+        }
+    end,
+    calculate = function (self, card, context)
+        if context.main_scoring and context.cardarea == G.play then
+            if AKYRS.bal("absurd") and AKYRS.checkBlindKey("bl_mouth") and #G.play.cards == 1 then
+                SMODS.calculate_effect(
+                    {
+                        func = function ()
+                            G.GAME.blind:set_blind(G.P_BLINDS['bl_water'])
+                        end
+                    },card
+                )
+            end
+            return {
+                xmult = card.ability.extras.xmult
+            }
+        end
+    end
+}
+SMODS.Enhancement{
+    key = "matcha_card",
+    atlas = 'cardUpgrades',
+    pos = {x = 8, y = 0},
+    config = {
+        extras = {
+            xchips = 1.4,
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.xchips
+            }
+        }
+    end,
+    calculate = function (self, card, context)
+        if context.main_scoring and context.cardarea == G.play then
+            return {
+                xchips = card.ability.extras.xchips
+            }
+        end
+    end
+}
+SMODS.Enhancement{
+    key = "earl_grey_tea_card",
+    atlas = 'cardUpgrades',
+    pos = {x = 9, y = 0},
+    config = {
+        extras = {
+            dollars = 3,
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.dollars
+            }
+        }
+    end,
+    calculate = function (self, card, context)
+        if context.main_scoring and context.cardarea == 'unscored' then
+            return {
+                dollars = card.ability.extras.dollars
+            }
+        end
+    end
+}
+
+SMODS.Enhancement{
+    key = "rankless",
+    pos = {x = 1, y = 0},
+}
+SMODS.Enhancement{
+    key = "suitless",
+    pos = {x = 1, y = 0},
+    no_suit = true,
+}
