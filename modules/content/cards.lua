@@ -464,13 +464,3 @@ SMODS.Enhancement{
         end
     end
 }
-
-SMODS.Enhancement{
-    key = "rankless",
-    pos = {x = 1, y = 0},
-}
-SMODS.Enhancement{
-    key = "suitless",
-    pos = {x = 1, y = 0},
-    no_suit = true,
-}
