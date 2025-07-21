@@ -183,6 +183,7 @@ SMODS.Consumable{
     atlas = "umbra",
     pos = {x=5,y=0},
     config = {
+        min_highlighted = 1,
         max_highlighted = 1
     },
     loc_vars = function (self, info_queue, card)
@@ -234,22 +235,16 @@ SMODS.Consumable{
         AKYRS.juice_like_tarot(card)
         for _, c in ipairs(G.hand.highlighted) do
             if not SMODS.has_no_suit(c) then
-                G.playing_card = (G.playing_card and G.playing_card + 1) or 1
-                local c2 = copy_card(c, nil, nil, G.playing_card)
+                local c2 = AKYRS.copy_p_card(c, nil, nil, G.playing_card)
                 c2.ability.akyrs_special_card_type = "rank"
-                table.insert(G.playing_cards,c2)
                 c2:set_sprites(c2.config.center,c2.config.card)
-                G.hand:emplace(c2)
             end
             if not SMODS.has_no_rank(c) then
-                G.playing_card = (G.playing_card and G.playing_card + 1) or 1
-                local c2 = copy_card(c, nil, nil, G.playing_card)
+                local c2 = AKYRS.copy_p_card(c, nil, nil, G.playing_card)
                 c2.ability.akyrs_special_card_type = "suit"
-                table.insert(G.playing_cards,c2)
                 c2:set_sprites(c2.config.center,c2.config.card)
-                G.hand:emplace(c2)
             end
-            c:start_dissolve({ G.C.AKYRS_UMBRAL_P, G.C.AKYRS_UMBRAL_Y, }, 0.5   )
+            c:start_dissolve({ G.C.AKYRS_UMBRAL_P, G.C.AKYRS_UMBRAL_Y, }, 1 )
         end
         
     end,
@@ -260,12 +255,52 @@ SMODS.Consumable{
     key = "umbral_public_transport",
     atlas = "umbra",
     pos = {x=7,y=0},
+    config = {
+        max_highlighted = 1,
+        akyrs_create = 2,
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.akyrs_create,
+                card.ability.max_highlighted
+            }
+        }
+    end,
+    use = function (z, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        local ud = pseudorandom_element({1,-1},pseudoseed("akyrs_umbral_pubtp_updown"))
+        for _,_c in ipairs(G.hand.highlighted) do
+            for i = 1, card.ability.akyrs_create do
+                local c2 = AKYRS.copy_p_card(_c, nil, nil, G.playing_card)
+                c2 = SMODS.modify_rank(c2, ud*i)
+                if c2 then c2:juice_up(0.3,0.3) end
+            end
+            
+        end
+        AKYRS.deselect_from_area(card)
+    end
 }
 SMODS.Consumable{
     set = "Umbral",
     key = "umbral_corruption",
     atlas = "umbra",
     pos = {x=8,y=0},
+    can_use = function (self, card)
+        return #G.hand.cards > 0 
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        local ud = pseudorandom_element({"dupe","destroy"},pseudoseed("akyrs_umbral_corrupt_pick"))
+        local cds = AKYRS.pseudorandom_elements(G.hand.cards,math.ceil(#G.hand.cards/2),pseudoseed("akyrs_umbral_corrupt_cards"))
+        for _,_card in ipairs(cds) do
+            if ud == "dupe" then
+                AKYRS.copy_p_card(_card)
+            else
+                _card:start_dissolve({G.C.AKYRS_UMBRAL_P,G.C.AKYRS_UMBRAL_P},1)
+            end
+        end
+    end
 }
 SMODS.Consumable{
     set = "Umbral",

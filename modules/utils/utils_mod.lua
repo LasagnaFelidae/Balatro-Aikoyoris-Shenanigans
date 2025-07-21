@@ -470,3 +470,10 @@ AKYRS.mod_debug_info_set = function ()
     }
 end
 AKYRS.mod_debug_info_set()
+
+AKYRS.should_draw_letter = function(card)
+    return G.GAME.akyrs_character_stickers_enabled or (card.ability and card.ability.forced_letter_render) or AKYRS.word_blind()
+end
+AKYRS.should_calculate_word = function(card)
+    return (G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled) or AKYRS.word_blind()
+end

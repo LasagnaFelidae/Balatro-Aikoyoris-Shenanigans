@@ -75,9 +75,30 @@ end
 
 AKYRS.mod_card_displays = function(_c,card,desc_nodes,specific_vars)
     if card and card.ability and card.ability.akyrs_special_card_type == "rank" then
-        localize{type = 'other', key = 'akyrs_no_rank', nodes = desc_nodes}
-    end
-    if card and card.ability and card.ability.akyrs_special_card_type == "suit" then
         localize{type = 'other', key = 'akyrs_no_suit', nodes = desc_nodes}
     end
+    if card and card.ability and card.ability.akyrs_special_card_type == "suit" then
+        localize{type = 'other', key = 'akyrs_no_rank', nodes = desc_nodes}
+    end
+end
+
+
+local cardSetSpriteHook = Card.set_sprites
+function Card:set_sprites(_c,_f)
+    local x = cardSetSpriteHook(self,_c,_f)
+    
+    if AKYRS.should_draw_letter(self) then
+        local letter_to_render = self:get_letter_with_pretend()
+        local _atlas, _pos = AKYRS.get_sprite_for_letter(self,letter_to_render)
+        if _atlas and _pos then
+            if self.akyrs_letter then self.akyrs_letter:remove() end
+            self.akyrs_letter = Sprite(self.T.x, self.T.y, self.T.w, self.T.h, _atlas, _pos)
+            self.akyrs_letter.states.hover = self.states.hover
+            self.akyrs_letter.states.click = self.states.click
+            self.akyrs_letter.states.drag = self.states.drag
+            self.akyrs_letter.states.collide.can = false
+            self.akyrs_letter:set_role({major = self, role_type = 'Glued', draw_major = self})
+        end
+    end
+    return x
 end

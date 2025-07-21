@@ -367,6 +367,13 @@ function Card:sell_card()
     end
 end
 
+local cardRemoveHookFirst = Card.remove
+function Card:remove()
+    
+    if self.akyrs_letter then self.akyrs_letter:remove() end
+    return cardRemoveHookFirst(self)
+end
+
 local cardRemoveHook = Card.remove
 function Card:remove()
     local area = self.area or self.akyrs_lastcardarea

@@ -20,10 +20,12 @@ end
 aiko_alphabets = {}
 aiko_alphabets_no_wilds = {}
 aiko_alphabets_to_num = {}
+aiko_alphabets_to_num_no_wild = {}
 for i = 97, 122 do
     table.insert(aiko_alphabets, string.char(i))
     table.insert(aiko_alphabets_no_wilds, string.char(i))
     aiko_alphabets_to_num[string.char(i)] = i - 96
+    aiko_alphabets_to_num_no_wild[string.char(i)] = i - 96
 end
 table.insert(aiko_alphabets,"#")
 aiko_alphabets_to_num["#"] = 27
@@ -131,8 +133,8 @@ AKYRS.non_letter_symbols = {
     "_", "-", "@", "!", "?", "+", "/", "\\", "*", ".", "'", '"', "&", " ", ":", ";", "=", ",", "(",")","[","]","{","}","$","%","^", "`", "~", "|", "<", ">"
 }
 AKYRS.non_letter_symbols_reverse = {}
-for _, symbol in ipairs(AKYRS.non_letter_symbols) do
-    AKYRS.non_letter_symbols_reverse[symbol] = true
+for v, symbol in ipairs(AKYRS.non_letter_symbols) do
+    AKYRS.non_letter_symbols_reverse[symbol] = v
 end
 
 
@@ -141,31 +143,12 @@ function AKYRS.aiko_mod_startup(self)
     if not AKYRS.aikoyori_letters_stickers then
         AKYRS.aikoyori_letters_stickers = {}
     end
-    for i, v in ipairs(aiko_alphabets_no_wilds) do
-        --print("PREPPING STICKERS "..v, " THE LETTER IS NUMBER "..i.. "should be index x y ",(i - 1) % 10 , math.floor((i-1) / 10))
-        AKYRS.aikoyori_letters_stickers[v:upper()] = Sprite(0, 0, self.CARD_W, self.CARD_H, G.ASSET_ATLAS
-            ["akyrs_lettersStickers"], { x = (i - 1) % 10, y = math.floor((i - 1) / 10) })
-        AKYRS.aikoyori_letters_stickers[v] = Sprite(0, 0, self.CARD_W, self.CARD_H, G.ASSET_ATLAS
-            ["akyrs_lettersStickers"], { x = (i - 1) % 10, y = 3 + math.floor((i - 1) / 10) })
-    end
-    AKYRS.aikoyori_letters_stickers["#"] = Sprite(0, 0, self.CARD_W, self.CARD_H,
-        G.ASSET_ATLAS["akyrs_lettersStickers"], { x = 6, y = 2 })
     AKYRS.aikoyori_letters_stickers["correct"] = Sprite(0, 0, self.CARD_W, self.CARD_H,
         G.ASSET_ATLAS["akyrs_lettersStickers"], { x = 7, y = 2 })
     AKYRS.aikoyori_letters_stickers["misalign"] = Sprite(0, 0, self.CARD_W, self.CARD_H,
         G.ASSET_ATLAS["akyrs_lettersStickers"], { x = 8, y = 2 })
     AKYRS.aikoyori_letters_stickers["incorrect"] = Sprite(0, 0, self.CARD_W, self.CARD_H,
         G.ASSET_ATLAS["akyrs_lettersStickers"], { x = 9, y = 2 })
-    for v = 0, 9 do
-        --print("PREPPING STICKERS "..v, " THE LETTER IS NUMBER "..i.. "should be index x y ",(i - 1) % 10 , math.floor((i-1) / 10))
-        AKYRS.aikoyori_letters_stickers[v..""] = Sprite(0, 0, self.CARD_W, self.CARD_H, G.ASSET_ATLAS
-            ["akyrs_lettersStickers"], { x = (v) % 10, y = 6 + math.floor((v) / 10) })
-    end
-    for i, v in ipairs(AKYRS.non_letter_symbols) do
-        --print("PREPPING STICKERS "..v, " THE LETTER IS NUMBER "..i.. "should be index x y ",(i - 1) % 10 , math.floor((i-1) / 10))
-        AKYRS.aikoyori_letters_stickers[v] = Sprite(0, 0, self.CARD_W, self.CARD_H, G.ASSET_ATLAS
-            ["akyrs_lettersStickers"], { x = (i - 1) % 10, y = 7 + math.floor((i - 1) / 10) })
-    end
 end
 
 
@@ -685,7 +668,7 @@ AKYRS.remove_dupes = function(tabled)
 end
 
 AKYRS.word_blind = function()
-    return (G.GAME.blind and G.GAME.blind.debuff.akyrs_is_word_blind)
+    return (G.GAME.blind and G.GAME.blind.debuff and G.GAME.blind.debuff.akyrs_is_word_blind)
 end
 
 AKYRS.pos_to_val = function(ind,targ)
@@ -930,13 +913,14 @@ end
 
 function AKYRS.pseudorandom_elements(tables, count, seed, args)
     if not count then count = 1 end
-    if count >= #tables then
-        return tables
-    end
     local outp = {}
     local tb = {}
     for i,j in ipairs(tables) do
         table.insert(tb,j)
+    end
+    
+    if count >= #tb then
+        return tb
     end
     for i = 1,count do
         local elem = pseudorandom_element(tb,seed,args)
@@ -944,4 +928,22 @@ function AKYRS.pseudorandom_elements(tables, count, seed, args)
         AKYRS.remove_value_from_table(tb,elem)
     end
     return outp
+end
+
+function AKYRS.copy_p_card(original, new_card, card_scale, playing_card, strip_edition, area_to_add_to)
+    area_to_add_to = area_to_add_to or G.hand
+    playing_card = playing_card or G.playing_card
+    playing_card = (playing_card and playing_card + 1) or 1
+    local card = copy_card(original, new_card, card_scale, playing_card, strip_edition)
+    table.insert(G.playing_cards,card)
+    if area_to_add_to then
+        area_to_add_to:emplace(card)
+    end
+    card:set_sprites(card.config.center,card.config.card)
+    return card
+end
+function AKYRS.deselect_from_area(card)
+    if card.area then
+        card.area:remove_from_highlighted(card)
+    end
 end

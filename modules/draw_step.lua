@@ -1,19 +1,17 @@
 function AKYRS.aikoyori_draw_extras(card, layer)
-    if not card or not AKYRS.aikoyori_letters_stickers then return end
-    if not (G.GAME.akyrs_character_stickers_enabled or card.ability.forced_letter_render or AKYRS.word_blind()) then return end
+    if not card then return end
+    if not (AKYRS.should_draw_letter(card)) then return end
 
     local letter_key = card.ability.aikoyori_letters_stickers
+    if not letter_key then return end
     local stickers = AKYRS.aikoyori_letters_stickers
-    if not (letter_key and stickers[letter_key]) then return end
 
     local movement_mod = 0.05 * math.sin(1.1 * (G.TIMERS.REAL + card.aiko_draw_delay)) - 0.07
     local center = card.children.center
-    local vt = card.VT
-    local draw_major = card
 
     local function draw_status(status)
-        stickers[status].role.draw_major = draw_major
-        stickers[status].VT = vt
+        stickers[status].role.draw_major = card
+        stickers[status].VT = card.VT
         stickers[status]:draw_shader('dissolve', 0, nil, nil, center, 0.1)
         stickers[status]:draw_shader('dissolve', nil, nil, nil, center, nil, nil, nil, -0.02 + movement_mod * 0.9)
     end
@@ -27,22 +25,16 @@ function AKYRS.aikoyori_draw_extras(card, layer)
     elseif round.aiko_round_incorrect_letter and round.aiko_round_incorrect_letter[lkey_lower] then
         draw_status("incorrect")
     end
-
-    local render_key = letter_key
     local tint = false
     if letter_key == "#" and card.ability.aikoyori_pretend_letter and stickers[card.ability.aikoyori_pretend_letter] then
-        render_key = card.ability.aikoyori_pretend_letter
         tint = true
     end
 
-    if stickers[render_key] then
-        stickers[render_key].role.draw_major = draw_major
-        stickers[render_key].VT = vt
-        stickers[render_key]:draw_shader('dissolve', 0, nil, nil, center, 0.1)
+    if card.akyrs_letter then
         if tint then
-            stickers[render_key]:draw_shader('akyrs_magenta_tint', nil, nil, nil, center, nil, nil, nil, -0.02 + movement_mod * 0.9)
+            card.akyrs_letter:draw_shader('akyrs_magenta_tint', nil, nil, nil, center, nil, nil, nil, -0.02 + movement_mod * 0.9)
         else
-            stickers[render_key]:draw_shader('dissolve', nil, nil, nil, center, nil, nil, nil, -0.02 + movement_mod * 0.9)
+            card.akyrs_letter:draw_shader('dissolve', nil, nil, nil, center, nil, nil, nil, -0.02 + movement_mod * 0.9)
         end
     end
 end

@@ -23,7 +23,6 @@ return {
                 text = { 'Make Maths Expressions',
                 'Get within {C:red,f:6}±{C:red}#1#%{}',
                 'of the Blind Requirements',
-                'Can only play {C:akyrs_playable}#2#{} cards',
                 'Gain {C:akyrs_playable}+#3#{} selection per Ante',
                 },
             },
@@ -1808,10 +1807,10 @@ return {
                 },
             },
             akyrs_no_rank = {
-                text = {"No rank"}
+                text = { "No rank" }
             },
             akyrs_no_suit = {
-                text = {"No Suit"}
+                text = { "No Suit" }
             },
         },
         Planet={
@@ -2204,7 +2203,17 @@ return {
             c_akyrs_umbral_public_transport = {
                 name="Public Transport",
                 text={
-                    "",
+                    "Create {C:attention}#1#{} cards",
+                    "with ranks {C:attention}consecutive{} to",
+                    "{C:attention}#2#{} selected card",
+                    "{C:inactive}(Can go in either direction)",
+                },
+            },
+            c_akyrs_umbral_corruption = {
+                name="Corruption",
+                text={
+                    "{C:green}50-50 chance{} to either {C:attention}duplicate",
+                    "or {C:red}destroy {C:attention}half{} of the cards in your hand"
                 },
             },
         }

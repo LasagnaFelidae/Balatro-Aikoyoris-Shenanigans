@@ -28,6 +28,7 @@ end
 
 function Card:set_letters(letter)
     self.ability.aikoyori_letters_stickers = letter
+    self:set_sprites(self.config.center,self.config.card)
 end
 
 function Card:set_pretend_letters(letter)
@@ -108,6 +109,7 @@ function Card:stop_drag()
 end 
 
 function Card:get_letter_with_pretend()
+    if not self.ability then return nil end
     local letter = self.ability.aikoyori_letters_stickers
     if letter == "#" and self.ability.aikoyori_pretend_letter and self.ability.aikoyori_pretend_letter ~= '' then
         letter = self.ability.aikoyori_pretend_letter
@@ -159,6 +161,7 @@ function copy_card(...)
     elseif c[1].base and c[1].base.value and SMODS.Ranks[c[1].base.value] then
         c[1].base.nominal = SMODS.Ranks[c[1].base.value].nominal
     end
+    c[1]:set_sprites()
     if c[1].ability.akyrs_special_card_type then
         c[1]:set_sprites(c[1].config and c[1].config.center,c[1].config and c[1].config.card)
     end
@@ -220,7 +223,9 @@ function SMODS.has_no_rank(card)
     if card.is_null then return true end
     --if card.base.value and card.base.value == "akyrs_non_playing" then return true end
     if card.ability.akyrs_special_card_type == "suit" then
-        return true
+        if not SMODS.has_any_suit(card) then -- lol
+            return true
+        end
     end
     local ret = noRankHook(card)
     return ret

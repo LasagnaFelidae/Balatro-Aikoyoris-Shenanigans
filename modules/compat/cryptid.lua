@@ -1,4 +1,4 @@
-if Cryptid then -- TODO: Ask Cryptid Discord so I can hook this up properly
+if AKYRS.is_mod_loaded("Cryptid") then -- TODO: Ask Cryptid Discord so I can hook this up properly
 
     Cryptid.mod_whitelist["Aikoyori's Shenanigans"] = true
     Cryptid.big_num_blacklist["j_akyrs_hibana"] = true

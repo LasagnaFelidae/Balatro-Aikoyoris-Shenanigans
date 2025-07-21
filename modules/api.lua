@@ -257,6 +257,31 @@ AKYRS.blind_icons_pos = function (key)
     return {x = 9, y = 9}
 end
 
+local int_checks = {["0"] = true, ["1"] = true, ["2"] = true, ["3"] = true, ["4"] = true, ["5"] = true, ["6"] = true, ["7"] = true, ["8"] = true, ["9"] = true, }
+
+function AKYRS.get_sprite_for_letter(card, letter) -- quote on quote, can actually be any length, returns G.ASSET_ATLAS[youatlas], pos
+    if not letter then return end
+    if aiko_alphabets_to_num_no_wild[string.lower(letter)] then
+        local i = aiko_alphabets_to_num_no_wild[string.lower(letter)]
+        if letter:upper() == letter then -- this is for uppercase
+            return G.ASSET_ATLAS["akyrs_lettersStickers"], { x = (i - 1) % 10, y = math.floor((i - 1) / 10) }
+        else
+            return G.ASSET_ATLAS["akyrs_lettersStickers"], { x = (i - 1) % 10, y = 3 + math.floor((i - 1) / 10) } 
+        end
+    end
+    if letter == "#" then
+        return G.ASSET_ATLAS["akyrs_lettersStickers"], { x = 6, y = 2 }
+    end
+    if int_checks[letter] then
+        local v = tonumber(letter)
+        return G.ASSET_ATLAS["akyrs_lettersStickers"], { x = v, y = 6 }
+    end
+    if AKYRS.non_letter_symbols_reverse[letter] then
+        local i = AKYRS.non_letter_symbols_reverse[letter]
+        return G.ASSET_ATLAS["akyrs_lettersStickers"], { x = (i - 1) % 10, y = 7 + math.floor((i - 1) / 10) }
+    end
+end
+
 
 AKYRS.add_blind_extra_info = function(blind,ability_text_table,extras)
     extras = extras or {}
