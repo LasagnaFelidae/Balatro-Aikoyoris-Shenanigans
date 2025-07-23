@@ -207,6 +207,7 @@ AKYRS.base_cm_mod = function(hand,poker_info,b_chip,b_mult)
         end
         G.GAME.akyrs_pure_unlocked = true
         G.GAME.akyrs_pure_hand_modifier = G.GAME.akyrs_pure_hand_modifier or { multiplier = 2, power = 1, level = 1, played = 0 }
+        -- this function runs twice so
         G.GAME.akyrs_pure_hand_modifier.played = (G.GAME.akyrs_pure_hand_modifier.played or 0) + 0.5
         -- what the fuck balatro why is this tostring function essential to it working????
         local _ = tostring(rawget(G.GAME.hands[text], "mult") or 1)
@@ -235,4 +236,19 @@ AKYRS.base_cm_mod = function(hand,poker_info,b_chip,b_mult)
         update_hand_text({immediate = true, delay = 0 }, {handname=hand_name, chips = hand_chips, mult = mult})
         return true
     end
+end
+
+function Card:akyrs_get_perma_score()
+    
+    if self.debuff then return 0 end
+    local ret = (self.ability.akyrs_perma_score or 0)
+    -- TARGET: akyrs_get_perma_score
+    return ret
+end
+function Card:akyrs_get_perma_h_score()
+    
+    if self.debuff then return 0 end
+    local ret = (self.ability.akyrs_perma_h_score or 0)
+    -- TARGET: akyrs_get_perma_h_score
+    return ret
 end

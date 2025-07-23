@@ -84,6 +84,7 @@ end
 
 
 function AKYRS.draw_card(from, to, percent, dir, sort, card, delay, mute, stay_flipped, vol, discarded_only, forced_facing)
+    if not to or not to.cards then return true end
     percent = percent or 50
     delay = delay or 0.1 
     if dir == 'down' then 
@@ -98,6 +99,7 @@ function AKYRS.draw_card(from, to, percent, dir, sort, card, delay, mute, stay_f
         blocking = not (G.SETTINGS.GAMESPEED >= 999 and ((to == G.hand and from == G.deck) or (to == G.deck and from == G.hand))), -- Has to be these specific draws only, otherwise it's buggy
         
         func = function()
+            if not to or not to.cards then return true end
             if card then 
                 if from then card = from:remove_card(card) end
                 if card then drawn = true end
@@ -115,6 +117,7 @@ function AKYRS.draw_card(from, to, percent, dir, sort, card, delay, mute, stay_f
                     card.facing = forced_facing
                 end
             else
+            if not to then return true end
                 card = to:draw_card_from(from, stay_flipped, discarded_only)
                 if card then drawn = true end
                 if card and to == G.hand and not card.states.visible then
@@ -143,7 +146,7 @@ function AKYRS.draw_card(from, to, percent, dir, sort, card, delay, mute, stay_f
             end
             return true
         end
-      }))
+      }),"akyrs_desc")
 end
 function AKYRS.instant_draw_card(from, to, percent, dir, sort, card, mute, stay_flipped, vol, discarded_only, forced_facing)
     percent = percent or 50

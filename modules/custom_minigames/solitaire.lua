@@ -91,7 +91,7 @@ AKYRS.SOL.fill_stock_with_fresh_cards = function()
     end
 end
 AKYRS.SOL.initial_setup = function()
-    
+    G.E_MANAGER:clear_queue("akyrs_desc")
     AKYRS.SOL.current_state = AKYRS.SOL.states.START_DRAW
     if #AKYRS.SOL.cardAreas.tableau > 0 and AKYRS.SOL.stockCardArea then
         G.E_MANAGER:add_event(
@@ -101,6 +101,7 @@ AKYRS.SOL.initial_setup = function()
                 func = function ()
                     
                     for i, ca in ipairs(AKYRS.SOL.cardAreas.tableau) do
+                        if not ca then return true end
                         AKYRS.SOL.draw_from_stock_to_tableau(i,i)
                     end
                     delay(0.01)
@@ -108,27 +109,30 @@ AKYRS.SOL.initial_setup = function()
                         function ()
                             AKYRS.SOL.current_state = AKYRS.SOL.states.PLAY
                             return true
-                        end, 0.1
+                        end, 0.1,"akyrs_desc"
                     )
                     return true
                 end
-            }
+            },"akyrs_desc"
         )
     end
 end
 AKYRS.SOL.draw_from_stock_to_tableau = function(tableau_no, amount)
     delay(0.01)
+    if not AKYRS.SOL.cardAreas.tableau[tableau_no] or not AKYRS.SOL.stockCardArea or not AKYRS.SOL.cardAreas.tableau[tableau_no].cards or not AKYRS.SOL.stockCardArea.cards then return end
     for i=1, amount do
         AKYRS.draw_card(AKYRS.SOL.stockCardArea,AKYRS.SOL.cardAreas.tableau[tableau_no], i*100/amount, 'down', false, nil, 0.03, false, true, nil,nil, "back")
     end
     AKYRS.simple_event_add(
         function ()
-            AKYRS.SOL.cardAreas.tableau[tableau_no]:align_cards()
+            if not AKYRS.SOL.cardAreas.tableau[tableau_no] or not AKYRS.SOL.cardAreas.tableau[tableau_no].cards then return true end
+                AKYRS.SOL.cardAreas.tableau[tableau_no]:align_cards()
             return true
         end, 0
     )
 end
 AKYRS.SOL.draw_from_stock_to_waste = function(amount)
+    if not AKYRS.SOL.wasteCardArea or not AKYRS.SOL.stockCardArea or not AKYRS.SOL.wasteCardArea.cards or not AKYRS.SOL.stockCardArea.cards then return end
     for i=1, amount do
         AKYRS.draw_card(AKYRS.SOL.stockCardArea,AKYRS.SOL.wasteCardArea, i*100/amount, 'up', false, nil, 0)
     end
@@ -144,6 +148,7 @@ AKYRS.SOL.draw_from_waste_to_stock = function(amount)
 
     
     for i=1, amount do
+    if not AKYRS.SOL.wasteCardArea or not AKYRS.SOL.stockCardArea or not AKYRS.SOL.wasteCardArea.cards or not AKYRS.SOL.stockCardArea.cards then return end
         AKYRS.draw_card(AKYRS.SOL.wasteCardArea,AKYRS.SOL.stockCardArea, i*100/amount, 'down', false, nil, 0.01)
     end
 end

@@ -1,5 +1,5 @@
 -- talisman exclusive hooks
-if Talisman then
+if Talisman and false then
     -- these are for null cards
     
     local getchipxbonusHookAiko = Card.get_chip_x_bonus

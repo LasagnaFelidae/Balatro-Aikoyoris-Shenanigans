@@ -481,3 +481,43 @@ SMODS.Enhancement{
         end
     end
 }
+
+SMODS.Enhancement{
+    key = "zap_card",
+    atlas = 'cardUpgrades',
+    pos = {x = 0, y = 1},
+    config = {
+        extras = {
+            trigger_triggered = 0,
+            trigger_needed = 3,
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.trigger_needed,
+                card.ability.extras.trigger_triggered
+            }
+        }
+    end,
+    calculate = function (self, card, context)
+        if context.main_scoring and context.cardarea == G.play then
+            return {
+                func = function ()
+                    card.ability.extras.trigger_triggered = card.ability.extras.trigger_triggered + 1
+                    if card.ability.extras.trigger_triggered >= card.ability.extras.trigger_needed then
+                        SMODS.calculate_effect({
+                            message = localize("k_duplicated_ex"),
+                            func = function ()
+                                card.ability.extras.trigger_triggered = 0
+                                local c2 = AKYRS.copy_p_card(card,nil,nil,nil,nil,G.hand)
+                                c2:set_ability(G.P_CENTERS.c_base)
+                            end
+                        }, card)
+                    end
+                end,
+                message = localize("k_upgrade_ex")
+            }
+        end
+    end
+}

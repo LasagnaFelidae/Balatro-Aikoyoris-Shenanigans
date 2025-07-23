@@ -1,4 +1,4 @@
-if togabalatro then
+if AKYRS.is_mod_loaded("TOGAPack") then
     SMODS.Joker{
         key = "toga_charmap",
         atlas = "togasstuff_crossmod",

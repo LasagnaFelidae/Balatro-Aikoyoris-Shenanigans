@@ -21,11 +21,17 @@ function Game:init_game_object()
     ret.aiko_current_word_table = {}
     ret.aiko_words_played = {}
     ret.letters_to_give = {}
+    ret.akyrs_ranks_played = {}
+    ret.akyrs_suits_played = {}
     ret.akyrs_pure_hand_modifier = { multiplier = 2, power = 1, level = 1, played = 0 }
     ret.akyrs_pure_unlocked = false
     ret.akyrs_generated_but_not_redeemed_vouchers_check = {}
     ret.akyrs_list_of_generated_but_not_redeemed_vouchers = {}
     ret.aiko_letters_consumable_rate = 0
+    -- table of key { n_add = 0, d_add = 1, n_mult = 1, d_mult = 1 } // tho only one of these should exist
+    ret.akyrs_prob_mod = {
+
+    }
     AKYRS.replenishLetters()
     ret.current_round.akyrs_round_played_cards = {}
     ret.current_round.aiko_round_played_words = {}
@@ -731,6 +737,16 @@ local eval_hook = G.FUNCS.evaluate_play
 G.FUNCS.evaluate_play = function(e)
     for i, c in ipairs(G.play.cards) do
         c.ability.akyrs_played_this_round = true
+    end
+    G.GAME.akyrs_ranks_played = ret.akyrs_ranks_played or {}
+    G.GAME.akyrs_suits_played = ret.akyrs_suits_played or {}
+    for i,c in ipairs(G.play.cards) do
+        if not SMODS.has_no_rank(c) then
+            G.GAME.akyrs_ranks_played[c:get_id()] = (G.GAME.akyrs_ranks_played[c:get_id()] or 0) + 1
+        end
+        if not SMODS.has_no_suit(c) and c.base and c.base.suit then
+            G.GAME.akyrs_suits_played[c.base.suit] = (G.GAME.akyrs_suits_played[c.base.suit] or 0) + 1
+        end
     end
     if G.GAME.aikoyori_evaluation_value ~= G.GAME.aikoyori_evaluation_value then
         error("Galaxy Collapse!",4)
@@ -1669,12 +1685,4 @@ function Blind:set_blind(blind, initial, silent)
     else
         return setBlindHook(self,blind, initial, silent)
     end
-end
-
-local calcindivfx = SMODS.calculate_individual_effect
-SMODS.calculate_individual_effect = function (effect, scored_card, key, amount, from_edition)
-    if effect == 'akyrs_no_calculate' then
-        G.GAME.akyrs_no_calculate = true
-    end
-    return calcindivfx(effect, scored_card, key, amount, from_edition)
 end

@@ -200,7 +200,7 @@ SMODS.current_mod.extra_tabs = function()
       end
     },
     {
-      label = "SOLITAIRE TEST",
+      label = localize("k_akyrs_solitaire"),
       tab_definition_function = AKYRS.SOL.get_UI_definition
     },
   }

@@ -244,6 +244,8 @@ SMODS.Consumable{
                 c2.ability.akyrs_special_card_type = "suit"
                 c2:set_sprites(c2.config.center,c2.config.card)
             end
+            -- requested by autumm
+            c.no_graveyard = true
             c:start_dissolve({ G.C.AKYRS_UMBRAL_P, G.C.AKYRS_UMBRAL_Y, }, 1 )
         end
         
@@ -474,10 +476,23 @@ SMODS.Consumable{
     config = {
         extras = {
             n = 1,
-            d = 4,
+            d = 2,
             emoney = 2
         }
     },
+    
+    calculate = function (self, card, context)
+        if context.selling_card and context.card == card then
+            local die_question_mark = SMODS.pseudorandom_probability(card,"akyrs_umbral_intrusive",card.ability.extras.n,card.ability.extras.d)
+            return {
+                message = localize("k_akyrs_umbral_intrusive_"..(die_question_mark and "would_die" or "would_win")),
+                colour = (die_question_mark and G.C.GREEN or G.C.RED),
+                func = function ()
+                    AKYRS.force_save()
+                end
+            }
+        end
+    end,
     loc_vars = function (self, info_queue, card)
         local n, d = SMODS.get_probability_vars(card,card.ability.extras.n,card.ability.extras.d, "akyrs_umbral_intrusive")
         return {
@@ -492,6 +507,7 @@ SMODS.Consumable{
         return true
     end,
     use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
         local die_question_mark = SMODS.pseudorandom_probability(card,"akyrs_umbral_intrusive",card.ability.extras.n,card.ability.extras.d)
         if die_question_mark then
             if G.STAGE == G.STAGES.RUN then G.STATE = G.STATES.GAME_OVER; G.STATE_COMPLETE = false end
@@ -503,6 +519,7 @@ SMODS.Consumable{
             local d_dollar = G.GAME.dollars ^ card.ability.extras.emoney - G.GAME.dollars
             ease_dollars(d_dollar)
         end
+        AKYRS.force_save()
     end
 }
 SMODS.Consumable{
@@ -510,66 +527,380 @@ SMODS.Consumable{
     key = "umbral_weeping_angel",
     atlas = "umbra",
     pos = {x=5,y=1},
+    config = {
+        extras = 2
+    },
+    can_use = function (self, card)
+        return #G.hand.cards > 0
+    end,
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras
+            }
+        }
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        for _,_c in ipairs(G.hand.cards) do
+            AKYRS.simple_event_add(
+                function ()
+                    play_sound('card1')
+                    _c:juice_up(0.3, 0.3)
+                    _c:flip()
+                    return true
+                end, 0.25
+            )
+        end
+        AKYRS.simple_event_add(
+            function ()
+                local money_obtain = 0
+                for _,_c in ipairs(G.hand.cards) do
+                    if _c.facing == "back" then
+                        money_obtain = money_obtain + card.ability.extras
+                    end
+                end
+                if money_obtain ~= 0 then
+                    ease_dollars(money_obtain)
+                end
+                return true
+            end, 0.25
+        )
+    end
 }
 SMODS.Consumable{
     set = "Umbral",
     key = "umbral_bunker",
     atlas = "umbra",
     pos = {x=6,y=1},
+    config = {
+        max_highlighted = 1
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.max_highlighted
+            }
+        }
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        AKYRS.do_things_to_card(
+            G.hand.highlighted,
+            function (_card)
+                local ench = SMODS.poll_enhancement({guaranteed = true, key = "akyrs_umbral_bunker_ench"})
+                local edition = poll_edition("akyrs_umbral_bunker_edition", nil, nil, true)
+                local seal = SMODS.poll_seal({guaranteed = true, key = "akyrs_umbral_bunker_seal"})
+                _card:set_ability(G.P_CENTERS[ench])
+                _card:set_seal(seal)
+                _card:set_edition(edition)
+                _card.ability.akyrs_forced_selection = true
+            end
+        )
+    end
 }
+
 SMODS.Consumable{
     set = "Umbral",
     key = "umbral_rock",
     atlas = "umbra",
     pos = {x=7,y=1},
+    config = {
+        extras = 10
+    },
+    can_use = function (self, card)
+        return #G.hand.cards > 0
+    end,
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras
+            }
+        }
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        for _,_c in ipairs(G.hand.cards) do
+            AKYRS.simple_event_add(
+                function ()
+                    _c.ability.perma_bonus = _c.ability.perma_bonus + card.ability.extras
+                    _c:juice_up(0.3, 0.3)
+                    play_sound("tarot1")
+                    return true
+                end
+            )
+        end
+    end
 }
+
 SMODS.Consumable{
     set = "Umbral",
     key = "umbral_crust",
     atlas = "umbra",
     pos = {x=8,y=1},
+    config = {
+        extras = 0.1
+    },
+    can_use = function (self, card)
+        return #G.hand.cards > 0
+    end,
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras
+            }
+        }
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        for _,_c in ipairs(G.hand.cards) do
+            if _c:is_suit("Clubs") then
+                AKYRS.simple_event_add(
+                    function ()
+                        _c.ability.perma_x_mult = _c.ability.perma_x_mult + card.ability.extras
+                        _c:juice_up(0.3, 0.3)
+                        play_sound("tarot1")
+                        return true
+                    end
+                )
+            end
+        end
+    end
 }
 SMODS.Consumable{
     set = "Umbral",
     key = "umbral_mantle",
     atlas = "umbra",
     pos = {x=9,y=1},
+    config = {
+        extras = 1
+    },
+    can_use = function (self, card)
+        return #G.hand.cards > 0
+    end,
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras
+            }
+        }
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        for _,_c in ipairs(G.hand.cards) do
+            if _c:is_suit("Hearts") then
+                AKYRS.simple_event_add(
+                    function ()
+                        _c.ability.perma_p_dollars = _c.ability.perma_p_dollars + card.ability.extras
+                        _c:juice_up(0.3, 0.3)
+                        play_sound("tarot1")
+                        return true
+                    end
+                )
+            end
+        end
+    end
 }
 SMODS.Consumable{
     set = "Umbral",
     key = "umbral_core",
     atlas = "umbra",
     pos = {x=0,y=2},
+    config = {
+        extras = 0.1
+    },
+    can_use = function (self, card)
+        return #G.hand.cards > 0
+    end,
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras
+            }
+        }
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        for _,_c in ipairs(G.hand.cards) do
+            if _c:is_suit("Spades") then
+                AKYRS.simple_event_add(
+                    function ()
+                        _c.ability.perma_x_chips = _c.ability.perma_x_chips + card.ability.extras
+                        _c:juice_up(0.3, 0.3)
+                        play_sound("tarot1")
+                        return true
+                    end
+                )
+            end
+        end
+    end
 }
 SMODS.Consumable{
     set = "Umbral",
     key = "umbral_atmosphere",
     atlas = "umbra",
     pos = {x=1,y=2},
+    config = {
+        extras = 100
+    },
+    can_use = function (self, card)
+        return #G.hand.cards > 0
+    end,
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras
+            }
+        }
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        for _,_c in ipairs(G.hand.cards) do
+            if _c:is_suit("Diamonds") then
+                AKYRS.simple_event_add(
+                    function ()
+                        _c.ability.akyrs_perma_score = _c.ability.akyrs_perma_score + card.ability.extras
+                        _c:juice_up(0.3, 0.3)
+                        play_sound("tarot1")
+                        return true
+                    end
+                )
+            end
+        end
+    end
 }
 SMODS.Consumable{
     set = "Umbral",
     key = "umbral_nyctophobia",
     atlas = "umbra",
     pos = {x=2,y=2},
+    can_use = function (self, card)
+        return true
+    end,
+    config = {
+        extra = 2
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extra
+            }
+        }
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        for i = 1, card.ability.extra do
+            local c = SMODS.add_card{ edition = "e_negative", set = "Tarot"}
+            c:juice_up(0.3, 0.3)
+        end
+    end
 }
 SMODS.Consumable{
     set = "Umbral",
     key = "umbral_puzzle",
     atlas = "umbra",
     pos = {x=3,y=2},
+    config = {
+        min_highlighted = 2,
+        max_highlighted = 2,
+        immutable = true
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.min_highlighted
+            }
+        }
+    end,
+    can_use = function (self, card)
+        return #G.hand.highlighted >= math.max(2,card.ability.min_highlighted) and #G.hand.highlighted <= card.ability.max_highlighted
+    end, 
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        table.sort(G.hand.highlighted,AKYRS.hand_sort_function_immute)
+        AKYRS.do_things_to_card(
+            G.hand.highlighted,
+            function (_card, index)
+                if index == 1 then
+                    if G.hand.highlighted[2] then
+                        local c2 = G.hand.highlighted[2]
+                        if c2.edition then
+                            _card:set_edition(c2.key)
+                        end
+                        if c2.seal then
+                            _card:set_edition(c2.seal)
+                        end
+                        if not SMODS.has_no_suit(c2) and c2.base and c2.base.suit then
+                            _card = SMODS.change_base(_card, c2.base.suit )
+                            if _card and _card.ability.akyrs_special_card_type == "rank" then
+                                _card.ability.akyrs_special_card_type = nil
+                                _card:set_sprites(_card.config.center,_card.config.card)
+                            end
+                        end
+                    end
+                else
+                    _card:start_dissolve({G.C.AKYRS_UMBRAL_P, G.C.AKYRS_UMBRAL_Y})
+                end
+            end
+        )
+    end
 }
 SMODS.Consumable{
     set = "Umbral",
     key = "umbral_electrify",
     atlas = "umbra",
     pos = {x=4,y=2},
+    config = {
+        max_highlighted = 1,
+    },
+    loc_vars = function (self, info_queue, card)
+        
+        info_queue[#info_queue+1] = G.P_CENTERS["m_akyrs_zap_card"]
+        return {
+            vars = {
+                card.ability.max_highlighted
+            }
+        }
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        AKYRS.do_things_to_card(
+            G.hand.highlighted,
+            function (_card)
+                _card:set_ability(G.P_CENTERS["m_akyrs_zap_card"])
+            end
+        )
+    end
+    
+
 }
 SMODS.Consumable{
     set = "Umbral",
     key = "umbral_d1",
     atlas = "umbra",
     pos = {x=5,y=2},
+    config = {
+        extras = {
+            d = 1,
+            n = 1
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.n,
+                card.ability.extras.d,
+            }
+        }
+    end,
+    can_use = function (self, card)
+        return true
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        G.GAME.akyrs_prob_mod = G.GAME.akyrs_prob_mod or {}
+        table.insert(G.GAME.akyrs_prob_mod, {n_add = card.ability.extras.n, d_add = card.ability.extras.d})
+    end
 }
 SMODS.Consumable{
     set = "Umbral",
@@ -589,4 +920,24 @@ SMODS.Consumable{
     hidden = true,
     soul_rate = 0.003,
     can_repeat_soul = true,
+    config = {
+        extras = {
+            mod = 1
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.mod
+            }
+        }
+    end,
+    can_use = function (self, card)
+        return true
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        SMODS.change_play_limit(card.ability.extras.mod)
+        SMODS.change_discard_limit(card.ability.extras.mod)
+    end
 }

@@ -87,3 +87,6 @@ AKYRS.emplace_funcs = {}
 
 
 AKYRS.emplace_funcs.always_placeable = function(ca,card) return G.OVERLAY_MENU and false or true end
+
+table.insert(SMODS.calculation_keys, "akyrs_score")
+table.insert(SMODS.calculation_keys, "akyrs_h_score")

@@ -733,6 +733,15 @@ return {
                     "but not scored",
                 }
             },
+            m_akyrs_zap_card = {
+                name = "Zap Card",
+                text = {
+                    "{C:attention}Duplicates{} itself",
+                    "without the enhancement",
+                    "every {C:attention}#1#{} {C:inactive}(#2#){} times",
+                    "this card scores"
+                }
+            },
         },
         Joker={
             j_akyrs_redstone_repeater = {
@@ -1812,6 +1821,66 @@ return {
             akyrs_no_suit = {
                 text = { "No Suit" }
             },
+            
+            akyrs_perma_score = {
+                text = {
+                    "{C:purple}#1#{} Score",
+                },
+            },
+            akyrs_perma_h_score = {
+                text = {
+                    "{C:purple}#1#{} Score if held in hand",
+                },
+            },
+            -- booster packs
+            p_akyrs_letter_pack_normal = { 
+                name = "Letter Pack",
+                text={
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{C:attention} Alphabets{} cards to",
+                    "keep for later use",
+                },
+            },
+            p_akyrs_letter_pack_jumbo = { 
+                name = "Jumbo Letter Pack",
+                text={
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{C:attention} Alphabets{} cards to",
+                    "keep for later use",
+                },
+            },
+            p_akyrs_letter_pack_mega = { 
+                name = "Mega Letter Pack",
+                text={
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2#{C:attention} Alphabets{} cards to",
+                    "keep for later use",
+                },
+            },
+            p_akyrs_umbral_pack_normal = {
+                name="Umbral Pack",
+                text={
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2# {C:akyrs_umbral_p,X:akyrs_umbral_y} Umbral {} cards to",
+                    "be used immediately",
+                },
+            },
+            p_akyrs_umbral_pack_jumbo = {
+                name="Jumbo Umbral Pack",
+                text={
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2# {C:akyrs_umbral_p,X:akyrs_umbral_y} Umbral {} cards to",
+                    "be used immediately",
+                },
+            },
+            p_akyrs_umbral_pack_mega = {
+                name="Mega Umbral Pack",
+                text={
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2# {C:akyrs_umbral_p,X:akyrs_umbral_y} Umbral {} cards to",
+                    "be used immediately",
+                },
+            },
         },
         Planet={
             c_akyrs_p_ara={
@@ -1914,7 +1983,22 @@ return {
         },
         Spectral={},
         Stake={},
-        Tag={},
+        Tag={
+            tag_akyrs_spell_itself_tag={
+                name="Tag that spells Tag",
+                text={
+                    "Gives a free",
+                    "{C:blue}Mega Alphabet Pack",
+                },
+            },
+            tag_akyrs_umbral_tag={
+                name="Umbral Tag",
+                text={
+                    "Gives a free",
+                    "{C:akyrs_umbral_p}Mega Umbral Pack",
+                },
+            },
+        },
         Tarot={
             c_akyrs_wof_nopes = {
                 name="The Wheel of Fortune (Modified)",
@@ -2274,10 +2358,116 @@ return {
             },
             c_akyrs_umbral_intrusive_thoughts = {
                 name="Intrusive Thoughts",
+                text={
+                    {
+                        "{X:akyrs_money_x,C:akyrs_money_c}$^#1#{} but {C:green}#2# in #3# chance{} to",
+                        "{E:1,C:red}Lose the run immediately{}",
+                    },
+                    
+                    {
+                        "{C:attention}Sell{} this card to {C:attention}reroll{} your chance",
+                    }
+                    },
+            },
+            c_akyrs_umbral_weeping_angel = {
+                name="Weeping Angel",
                 text=
                 {
-                    "{X:akyrs_money_x,C:akyrs_money_c}$^#1#{} but {C:green}#2# in #3# chance{} to",
-                    "{E:1,C:red}Lose the run immediately{}",
+                    "{C:attention}Flips all cards{} in hand",
+                    "{C:money}+$#1#{} per {C:attention}face down{} cards after flipping{}",
+                },
+            },
+            c_akyrs_umbral_bunker = {
+                name="Bunker",
+                text=
+                {
+                    "Select {C:attention}#1#{} random card in hand",
+                    "to give a random {C:attention}Enhancement, Edition, Seal{} to it",
+                    "but {C:attention}force{} it to be {C:attention}selected{}",
+                },
+            },
+            c_akyrs_umbral_rock = {
+                name="Rock",
+                text=
+                {
+                    "Give {C:attention}permanent{} bonus of {C:chips}+#1# {}Chips",
+                    "to {C:attention}all cards{} in hands",
+                },
+            },
+            c_akyrs_umbral_crust = {
+                name="Crust",
+                text=
+                {
+                    "Give {C:attention}permanent{} bonus of {X:mult,C:white} X#1# {} Mult",
+                    "to {C:attention}all {C:clubs}Clubs{} cards in hands",
+                },
+            },
+            c_akyrs_umbral_mantle = {
+                name="Mantle",
+                text=
+                {
+                    "Give {C:attention}permanent{} bonus of {C:money}+$#1#{}",
+                    "to {C:attention}all {C:hearts}Hearts{} cards in hands",
+                },
+            },
+            c_akyrs_umbral_core = {
+                name="Core",
+                text=
+                {
+                    "Give {C:attention}permanent{} bonus of {X:chips,C:white} X#1# {} Chips",
+                    "to {C:attention}all {C:spades}Spades{} cards in hands",
+                },
+            },
+            c_akyrs_umbral_atmosphere = {
+                name="Atmosphere",
+                text=
+                {
+                    "Give {C:attention}permanent{} bonus of {C:purple} +#1# {} Score",
+                    "to {C:attention}all {C:diamonds}Diamonds{} cards in hands",
+                },
+            },
+            c_akyrs_umbral_nyctophobia = {
+                name="Nyctophobia",
+                text=
+                {
+                    "Creates {C:attention}#1# {}random",
+                    "{C:dark_edition}Negative {C:tarot}Tarot{} cards",
+                },
+            },
+            c_akyrs_umbral_puzzle = {
+                name="Puzzle",
+                text=
+                {
+                    "Select {C:attention}#1#{} cards,",
+                    "apply Edition, Seals and Suits",
+                    "of the {C:attention}right{} card",
+                    "into the {C:attention}left{} card",
+                    "{C:inactive}(Drag to rearrange)",
+                },
+            },
+            c_akyrs_umbral_electrify= {
+                name="Electrify",
+                text=
+                {
+                    "Enhances {C:attention}#1#",
+                    "selected card to",
+                    "{C:attention}Zap Card{}",
+                },
+            },
+            c_akyrs_umbral_d1 = {
+                name="D1",
+                text=
+                {
+                    "Add {C:green}#1#{} to {C:green}numerator{}",
+                    "and {C:green}#2#{} to {C:green}denominator{}",
+                    "to all chances {C:inactive}(if possible)",
+                },
+            },
+            c_akyrs_umbral_free_will = {
+                name="Free Will",
+                text=
+                {
+                    "{C:akyrs_playable}+#1#{} Card Selection Limit",
                 },
             },
         }
@@ -2368,6 +2558,9 @@ return {
 
             k_akyrs_random_letter = "randomly selected letter",
             k_akyrs_tsunagi_absurd_wheel_nope = "1 Miss!",
+            k_akyrs_umbral_intrusive_would_die = "Safe!",
+            k_akyrs_umbral_intrusive_would_win = "Missed!",
+            k_akyrs_solitaire = "Klondike",
 
             k_akyrs_cannot_be_disabled = "Cannot Be Disabled",
             k_akyrs_cannot_be_rerolled = "Cannot Be Rerolled",
@@ -2405,6 +2598,7 @@ return {
             k_akyrs_textbox_notice_2 = "interact with the textbox for text to show up",
 
             k_akyrs_plus_alphabet = "+1 Alphabet",
+            k_akyrs_plus_umbral = "+1 Umbral Card",
 
             k_akyrs_solitaire_redeal = "Redeal",
 
@@ -2465,6 +2659,8 @@ return {
             },
             k_akyrs_emerald = "Emerald",
             k_akyrs_supercommon = "Emerald",
+            k_akyrs_alphabet_pack = "Alphabets",
+            k_akyrs_umbral_pack = "Umbral Pack",
         },
         high_scores={},
         labels={
@@ -2569,6 +2765,9 @@ return {
         tutorial={},
         v_dictionary={
             k_akyrs_pure="Pure #1#",
+            k_akyrs_score_add="+#1# Score",
+            k_akyrs_score_x="X#1# Score",
+            k_akyrs_score_minus="-#1# Score",
         },
         v_text={
             ch_c_sliced_space={

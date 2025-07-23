@@ -9,19 +9,17 @@ local alphabet_digital_hallucinations_compat = {
 		G.consumeables:emplace(ccard)
 	end,
 }
+local umbral_digital_hallucinations_compat = {
+	colour = G.C.AKYRS_UMBRAL_P,
+	loc_key = "k_akyrs_plus_alphabet",
+	create = function()
+		SMODS.add_card{ set = "Umbral", edition = "e_negative" }
+	end,
+}
 
 SMODS.Booster{
     key = "letter_pack_1",
     set = "Booster",
-    loc_txt = { 
-        name = "Letter Pack",
-        group_name = "Alphabet Card",
-        text={
-            "Choose {C:attention}#1#{} of up to",
-            "{C:attention}#2#{C:attention} Alphabets{} cards to",
-            "keep for later use",
-        },
-    },
     config = { extra = 3, choose = 1 },
     loc_vars = function(self, info_queue, card)
         return {
@@ -29,10 +27,11 @@ SMODS.Booster{
                 card.ability.choose,
                 card.ability.extra,
             },
+            key = "p_akyrs_letter_pack_normal"
         }
     end,
     atlas = 'aikoyoriBoosterPack', pos = { x = 0, y = 0 },
-    group_key = "k_alphabets",
+    group_key = "k_akyrs_alphabet_pack",
     cost = 4,
     select_card = 'consumeables',
     weight = 1,
@@ -48,15 +47,6 @@ SMODS.Booster{
 SMODS.Booster{
     key = "letter_pack_2",
     set = "Booster",
-    loc_txt = { 
-        name = "Letter Pack",
-        group_name = "Alphabet Card",
-        text={
-            "Choose {C:attention}#1#{} of up to",
-            "{C:attention}#2#{C:attention} Alphabets{} cards to",
-            "keep for later use",
-        },
-    },
     config = { extra = 3, choose = 1 },
     loc_vars = function(self, info_queue, card)
         return {
@@ -64,10 +54,11 @@ SMODS.Booster{
                 card.ability.choose,
                 card.ability.extra,
             },
+            key = "p_akyrs_letter_pack_normal"
         }
     end,
     atlas = 'aikoyoriBoosterPack', pos = { x = 1, y = 0 },
-    group_key = "k_alphabets",
+    group_key = "k_akyrs_alphabet_pack",
     cost = 4,
     select_card = 'consumeables',
     weight = 1,
@@ -83,15 +74,6 @@ SMODS.Booster{
 SMODS.Booster{
     key = "letter_pack_3",
     set = "Booster",
-    loc_txt = { 
-        name = "Letter Pack",
-        group_name = "Alphabet Card",
-        text={
-            "Choose {C:attention}#1#{} of up to",
-            "{C:attention}#2#{C:attention} Alphabets{} cards to",
-            "keep for later use",
-        },
-    },
     config = { extra = 3, choose = 1 },
     loc_vars = function(self, info_queue, card)
         return {
@@ -99,10 +81,11 @@ SMODS.Booster{
                 card.ability.choose,
                 card.ability.extra,
             },
+            key = "p_akyrs_letter_pack_normal"
         }
     end,
     atlas = 'aikoyoriBoosterPack', pos = { x = 2, y = 0 },
-    group_key = "k_alphabets",
+    group_key = "k_akyrs_alphabet_pack",
     cost = 4,
     select_card = 'consumeables',
     weight = 1,
@@ -118,15 +101,6 @@ SMODS.Booster{
 SMODS.Booster{
     key = "letter_pack_4",
     set = "Booster",
-    loc_txt = { 
-        name = "Letter Pack",
-        group_name = "Alphabet Card",
-        text={
-            "Choose {C:attention}#1#{} of up to",
-            "{C:attention}#2#{C:attention} Alphabets{} cards to",
-            "keep for later use",
-        },
-    },
     config = { extra = 3, choose = 1 },
     loc_vars = function(self, info_queue, card)
         return {
@@ -134,10 +108,11 @@ SMODS.Booster{
                 card.ability.choose,
                 card.ability.extra,
             },
+            key = "p_akyrs_letter_pack_normal"
         }
     end,
     atlas = 'aikoyoriBoosterPack', pos = { x = 3, y = 0 },
-    group_key = "k_alphabets",
+    group_key = "k_akyrs_alphabet_pack",
     cost = 4,
     select_card = 'consumeables',
     weight = 1,
@@ -151,17 +126,8 @@ SMODS.Booster{
     cry_digital_hallucinations = alphabet_digital_hallucinations_compat,
 }
 SMODS.Booster{
-    key = "letter_pack_jumbo_1",
+    key = "jumbo_letter_pack_1",
     set = "Booster",
-    loc_txt = { 
-        name = "Jumbo Letter Pack",
-        group_name = "Alphabet Card",
-        text={
-            "Choose {C:attention}#1#{} of up to",
-            "{C:attention}#2#{C:attention} Alphabets{} cards to",
-            "keep for later use",
-        },
-    },
     config = { extra = 5, choose = 1 },
     loc_vars = function(self, info_queue, card)
         return {
@@ -169,10 +135,11 @@ SMODS.Booster{
                 card.ability.choose,
                 card.ability.extra,
             },
+            key = "p_akyrs_letter_pack_jumbo"
         }
     end,
     atlas = 'aikoyoriBoosterPack', pos = { x = 4, y = 0 },
-    group_key = "k_alphabets",
+    group_key = "k_akyrs_alphabet_pack",
     cost = 6,
     select_card = 'consumeables',
     weight = 1,
@@ -186,17 +153,8 @@ SMODS.Booster{
     cry_digital_hallucinations = alphabet_digital_hallucinations_compat,
 }
 SMODS.Booster{
-    key = "letter_pack_jumbo_2",
+    key = "jumbo_letter_pack_2",
     set = "Booster",
-    loc_txt = { 
-        name = "Jumbo Letter Pack",
-        group_name = "Alphabet Card",
-        text={
-            "Choose {C:attention}#1#{} of up to",
-            "{C:attention}#2#{C:attention} Alphabets{} cards to",
-            "keep for later use",
-        },
-    },
     config = { extra = 5, choose = 1 },
     loc_vars = function(self, info_queue, card)
         return {
@@ -204,10 +162,11 @@ SMODS.Booster{
                 card.ability.choose,
                 card.ability.extra,
             },
+            key = "p_akyrs_letter_pack_jumbo"
         }
     end,
     atlas = 'aikoyoriBoosterPack', pos = { x = 5, y = 0 },
-    group_key = "k_alphabets",
+    group_key = "k_akyrs_alphabet_pack",
     cost = 6,
     select_card = 'consumeables',
     weight = 1,
@@ -221,17 +180,8 @@ SMODS.Booster{
     cry_digital_hallucinations = alphabet_digital_hallucinations_compat,
 }
 SMODS.Booster{
-    key = "letter_pack_mega_1",
+    key = "mega_letter_pack_1",
     set = "Booster",
-    loc_txt = { 
-        name = "Mega Letter Pack",
-        group_name = "Alphabet Card",
-        text={
-            "Choose {C:attention}#1#{} of up to",
-            "{C:attention}#2#{C:attention} Alphabets{} cards to",
-            "keep for later use",
-        },
-    },
     config = { extra = 5, choose = 2 },
     loc_vars = function(self, info_queue, card)
         return {
@@ -239,10 +189,11 @@ SMODS.Booster{
                 card.ability.choose,
                 card.ability.extra,
             },
+            key = "p_akyrs_letter_pack_mega"
         }
     end,
     atlas = 'aikoyoriBoosterPack', pos = { x = 6, y = 0 },
-    group_key = "k_alphabets",
+    group_key = "k_akyrs_alphabet_pack",
     cost = 8,
     select_card = 'consumeables',
     weight = 0.25,
@@ -256,17 +207,8 @@ SMODS.Booster{
     cry_digital_hallucinations = alphabet_digital_hallucinations_compat,
 }
 SMODS.Booster{
-    key = "letter_pack_mega_2",
+    key = "mega_letter_pack_2",
     set = "Booster",
-    loc_txt = { 
-        name = "Mega Letter Pack",
-        group_name = "Alphabet Card",
-        text={
-            "Choose {C:attention}#1#{} of up to",
-            "{C:attention}#2#{C:attention} Alphabets{} cards to",
-            "keep for later use",
-        },
-    },
     config = { extra = 5, choose = 2 },
     loc_vars = function(self, info_queue, card)
         return {
@@ -274,10 +216,11 @@ SMODS.Booster{
                 card.ability.choose,
                 card.ability.extra,
             },
+            key = "p_akyrs_letter_pack_mega"
         }
     end,
     atlas = 'aikoyoriBoosterPack', pos = { x = 7, y = 0 },
-    group_key = "k_alphabets",
+    group_key = "k_akyrs_alphabet_pack",
     cost = 8,
     select_card = 'consumeables',
     weight = 0.25,
@@ -289,4 +232,199 @@ SMODS.Booster{
         return G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled
     end,
     cry_digital_hallucinations = alphabet_digital_hallucinations_compat,
+}
+-- umbral pack
+
+
+SMODS.Booster{
+    key = "umbral_pack_1",
+    set = "Booster",
+    config = { extra = 3, choose = 1 },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.choose,
+                card.ability.extra,
+            },
+            key = "p_akyrs_umbral_pack_normal"
+        }
+    end,
+    atlas = 'aikoyoriBoosterPack', pos = { x = 0, y = 1 },
+    group_key = "k_akyrs_umbral_pack",
+    cost = 4,
+    weight = 0.5,
+    draw_hand = true,
+    kind = "umbral_pack",
+    create_card = function (self, card, i) 
+        return SMODS.create_card{ set = "Umbral", area = G.pack_cards, skip_materialize = true }
+    end,
+    cry_digital_hallucinations = umbral_digital_hallucinations_compat,
+}
+SMODS.Booster{
+    key = "umbral_pack_2",
+    set = "Booster",
+    config = { extra = 3, choose = 1 },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.choose,
+                card.ability.extra,
+            },
+            key = "p_akyrs_umbral_pack_normal"
+        }
+    end,
+    atlas = 'aikoyoriBoosterPack', pos = { x = 1, y = 1 },
+    group_key = "k_akyrs_umbral_pack",
+    cost = 4,
+    weight = 0.5,
+    draw_hand = true,
+    kind = "umbral_pack",
+    create_card = function (self, card, i) 
+        return SMODS.create_card{ set = "Umbral", area = G.pack_cards, skip_materialize = true }
+    end,
+    cry_digital_hallucinations = umbral_digital_hallucinations_compat,
+}
+SMODS.Booster{
+    key = "umbral_pack_3",
+    set = "Booster",
+    config = { extra = 3, choose = 1 },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.choose,
+                card.ability.extra,
+            },
+            key = "p_akyrs_umbral_pack_normal"
+        }
+    end,
+    atlas = 'aikoyoriBoosterPack', pos = { x = 2, y = 1 },
+    group_key = "k_akyrs_umbral_pack",
+    cost = 4,
+    weight = 0.5,
+    draw_hand = true,
+    kind = "umbral_pack",
+    create_card = function (self, card, i) 
+        return SMODS.create_card{ set = "Umbral", area = G.pack_cards, skip_materialize = true }
+    end,
+    cry_digital_hallucinations = umbral_digital_hallucinations_compat,
+}
+SMODS.Booster{
+    key = "umbral_pack_4",
+    set = "Booster",
+    config = { extra = 3, choose = 1 },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.choose,
+                card.ability.extra,
+            },
+            key = "p_akyrs_umbral_pack_normal"
+        }
+    end,
+    atlas = 'aikoyoriBoosterPack', pos = { x = 3, y = 1 },
+    group_key = "k_akyrs_umbral_pack",
+    cost = 4,
+    weight = 0.5,
+    create_card = function (self, card, i) 
+        return SMODS.create_card{ set = "Umbral", area = G.pack_cards, skip_materialize = true }
+    end,
+    draw_hand = true,
+    kind = "umbral_pack",
+    cry_digital_hallucinations = umbral_digital_hallucinations_compat,
+}
+SMODS.Booster{
+    key = "jumbo_umbral_pack_1",
+    set = "Booster",
+    config = { extra = 5, choose = 1 },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.choose,
+                card.ability.extra,
+            },
+            key = "p_akyrs_umbral_pack_jumbo"
+        }
+    end,
+    atlas = 'aikoyoriBoosterPack', pos = { x = 4, y = 1 },
+    group_key = "k_akyrs_umbral_pack",
+    cost = 6,
+    weight = 0.5,
+    draw_hand = true,
+    kind = "umbral_pack",
+    create_card = function (self, card, i) 
+        return SMODS.create_card{ set = "Umbral", area = G.pack_cards, skip_materialize = true }
+    end,
+    cry_digital_hallucinations = umbral_digital_hallucinations_compat,
+}
+SMODS.Booster{
+    key = "jumbo_umbral_pack_2",
+    set = "Booster",
+    config = { extra = 5, choose = 1 },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.choose,
+                card.ability.extra,
+            },
+            key = "p_akyrs_umbral_pack_jumbo"
+        }
+    end,
+    atlas = 'aikoyoriBoosterPack', pos = { x = 5, y = 1 },
+    group_key = "k_akyrs_umbral_pack",
+    cost = 6,
+    weight = 0.5,
+    draw_hand = true,
+    kind = "umbral_pack",
+    create_card = function (self, card, i) 
+        return SMODS.create_card{ set = "Umbral", area = G.pack_cards, skip_materialize = true }
+    end,
+    cry_digital_hallucinations = umbral_digital_hallucinations_compat,
+}
+SMODS.Booster{
+    key = "mega_umbral_pack_1",
+    set = "Booster",
+    config = { extra = 5, choose = 2 },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.choose,
+                card.ability.extra,
+            },
+            key = "p_akyrs_umbral_pack_mega"
+        }
+    end,
+    atlas = 'aikoyoriBoosterPack', pos = { x = 6, y = 1 },
+    group_key = "k_akyrs_umbral_pack",
+    cost = 8,
+    weight = 0.5,
+    draw_hand = true,
+    kind = "umbral_pack",
+    create_card = function (self, card, i) 
+        return SMODS.create_card{ set = "Umbral", area = G.pack_cards, skip_materialize = true }
+    end,
+    cry_digital_hallucinations = umbral_digital_hallucinations_compat,
+}
+SMODS.Booster{
+    key = "mega_umbral_pack_2",
+    set = "Booster",
+    config = { extra = 5, choose = 2 },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.choose,
+                card.ability.extra,
+            },
+            key = "p_akyrs_umbral_pack_mega"
+        }
+    end,
+    atlas = 'aikoyoriBoosterPack', pos = { x = 7, y = 1 },
+    group_key = "k_akyrs_umbral_pack",
+    draw_hand = true,
+    cost = 8,
+    weight = 0.5,
+    kind = "umbral_pack",
+    create_card = function (self, card, i) 
+        return SMODS.create_card{ set = "Umbral", area = G.pack_cards, skip_materialize = true }
+    end,
+    cry_digital_hallucinations = umbral_digital_hallucinations_compat,
 }

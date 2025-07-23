@@ -870,6 +870,12 @@ function Moveable:remove()
 end
 
 AKYRS.mod_run_info_hands = function(object)
+    local show_power
+    if Talisman then
+        show_power = to_big(G.GAME.akyrs_pure_hand_modifier.power) ~= to_big(1)
+    else 
+        show_power = G.GAME.akyrs_pure_hand_modifier.power ~= 1
+    end
     if G.GAME.akyrs_pure_unlocked then
         table.insert(object.nodes, 1,{
                 n = G.UIT.R,
@@ -886,15 +892,16 @@ AKYRS.mod_run_info_hands = function(object)
             {n=G.UIT.C, config={align = "cm", padding = 0.05, colour = G.C.BLACK,r = 0.1}, nodes={
                 {n=G.UIT.T, config={text = "×", scale = 0.45, colour = G.C.AKYRS_UMBRAL_Y}},
                 {n=G.UIT.C, config={align = "cr", padding = 0.01, r = 0.1, colour = G.C.AKYRS_UMBRAL_P, minw = 1.1}, nodes={
-                {n=G.UIT.T, config={text = number_format(G.GAME.akyrs_pure_hand_modifier.multiplier, 1000000), scale = 0.45, colour = G.C.UI.TEXT_LIGHT}},
-                {n=G.UIT.B, config={w = 0.08, h = 0.01}}
+                    {n=G.UIT.T, config={text = number_format(G.GAME.akyrs_pure_hand_modifier.multiplier, 1000000), scale = 0.45, colour = G.C.UI.TEXT_LIGHT}},
+                    {n=G.UIT.B, config={w = 0.08, h = 0.01}}
                 }},
-                {n=G.UIT.T, config={text = "^", scale = 0.45, colour = G.C.AKYRS_UMBRAL_P}},
-                {n=G.UIT.C, config={align = "cl", padding = 0.01, r = 0.1, colour = G.C.AKYRS_UMBRAL_Y, minw = 1.1}, nodes={
-                {n=G.UIT.B, config={w = 0.08,h = 0.01}},
-                {n=G.UIT.T, config={text = number_format(G.GAME.akyrs_pure_hand_modifier.power, 1000000), scale = 0.45, colour = G.C.UI.TEXT_DARK}}
+                show_power and {n=G.UIT.T, config={text = "^", scale = 0.45, colour = G.C.AKYRS_UMBRAL_P}},
+                show_power and {n=G.UIT.C, config={align = "cl", padding = 0.01, r = 0.1, colour = G.C.AKYRS_UMBRAL_Y, minw = 1.1}, nodes={
+                    {n=G.UIT.B, config={w = 0.08,h = 0.01}},
+                    {n=G.UIT.T, config={text = number_format(G.GAME.akyrs_pure_hand_modifier.power, 1000000), scale = 0.45, colour = G.C.UI.TEXT_DARK}}
                 }}
             }},
+            not show_power and {n=G.UIT.B, config={w = 0.8,h = 0.01}},
             {n=G.UIT.C, config={align = "cm"}, nodes={
                 {n=G.UIT.T, config={text = '  #', scale = 0.45, colour = G.C.UI.TEXT_DARK, shadow = true}}
                 }},

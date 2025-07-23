@@ -273,6 +273,10 @@ AKYRS.hand_sort_function = function (a,b)
     return a.T.x < b.T.x    
 end
 
+AKYRS.hand_sort_function_immute = function (a,b)
+    return a.T.x < b.T.x    
+end
+
 
 G.FUNCS.go_to_aikoyori_discord_server = function(e)
     love.system.openURL( "https://discord.gg/JVg8Bynm7k" )

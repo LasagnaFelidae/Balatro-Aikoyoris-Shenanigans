@@ -113,3 +113,41 @@ SMODS.PokerHand:take_ownership("High Card",{
         return {}
     end
 })
+
+local calc_indiv_fx = SMODS.calculate_individual_effect
+SMODS.calculate_individual_effect = function(effect, scored_card, key, amount, from_edition)
+    local aaa = {calc_indiv_fx(effect, scored_card, key, amount, from_edition)}
+        --print(key,amount)
+        
+        if effect == 'akyrs_no_calculate' then
+            G.GAME.akyrs_no_calculate = true
+        end
+        if (key == 'akyrs_score' or key == "akyrs_h_score") and amount ~= 0 then
+            if effect.card and effect.card ~= scored_card then juice_card(effect.card) end
+            AKYRS.mod_score_instant({ add = amount, card = effect.card or scored_card })
+            return true
+    end
+    return unpack(aaa)
+end
+
+local smodgetprobvar = SMODS.get_probability_vars
+function SMODS.get_probability_vars(trigger_obj, base_numerator, base_denominator, identifier, from_roll)
+    local n, d = smodgetprobvar(trigger_obj, base_numerator, base_denominator, identifier, from_roll)
+    
+    G.GAME.akyrs_prob_mod = G.GAME.akyrs_prob_mod or {}
+    for _, mod in ipairs(G.GAME.akyrs_prob_mod) do
+        if mod.n_add then
+            n = n + mod.n_add
+        end
+        if mod.d_add then
+            d = d + mod.d_add
+        end
+        if mod.n_mult then
+            n = n * mod.n_mult
+        end
+        if mod.d_mult then
+            n = n * mod.d_mult
+        end
+    end
+    return n, d
+end

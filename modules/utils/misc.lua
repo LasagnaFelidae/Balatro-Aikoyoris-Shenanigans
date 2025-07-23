@@ -771,23 +771,40 @@ end
 AKYRS.mod_score = function(score_mod)
     AKYRS.simple_event_add(
         function()
-            score_mod = score_mod or {}
-            local pow = score_mod.pow or 1
-            local mult = score_mod.mult or 1
-            local add = score_mod.add or 0
-            local score_cal = score_mod.set or G.GAME.chips
-            score_cal = score_cal ^ pow
-            score_cal = score_cal * mult
-            score_cal = score_cal + add
-            if Talisman then
-                score_cal = to_big(score_cal)
-            end
-            G.GAME.chips = score_cal
-            G.HUD:get_UIE_by_ID('chip_UI_count'):juice_up(0.3, 0.3)
-            play_sound('gong')
+            AKYRS.mod_score_instant(score_mod)
             return true
         end, 0
     )
+end
+
+AKYRS.mod_score_instant = function(score_mod)
+
+    score_mod = score_mod or {}
+    local pow = score_mod.pow or 1
+    local mult = score_mod.mult or 1
+    local add = score_mod.add or 0
+    local score_cal = score_mod.set or G.GAME.chips
+    score_cal = score_cal ^ pow
+    score_cal = score_cal * mult
+    score_cal = score_cal + add
+    local old = G.GAME.chips
+    if Talisman then
+        score_cal = to_big(score_cal)
+    end
+    -- TODO: jank, will fix later
+    G.GAME.chips = score_cal
+    local amount = score_cal - old
+    local comp
+    if Talisman then
+        comp = amount > to_big(0)
+    else
+        comp = amount > 0
+    end
+    G.HUD:get_UIE_by_ID('chip_UI_count'):juice_up(0.3, 0.3)
+    if score_mod.card then
+        card_eval_status_text(score_mod.card, 'jokers', nil, percent, nil, {message = localize{type='variable',key= comp and 'k_akyrs_score_add' or 'k_akyrs_score_minus',vars={amount}}, akyrs_no_sound = true, colour =  G.C.PURPLE, instant = true})
+    end
+    play_sound('gong')
 end
 
 AKYRS.get_most_played = function()
@@ -840,21 +857,25 @@ function AKYRS.do_things_to_card(cards, func, config) -- func(card)
                 if not config.no_juice then
                     card:juice_up(0.3, 0.3)
                 end
-                card:flip()
+                if not config.no_flip then
+                    card:flip()
+                end
                 if not config.fifo then
                     if(config.stay_flipped_delay) then
                         delay(config.stay_flipped_delay)
                     end
                     AKYRS.simple_event_add(
                         function ()
-                            func(card)
+                            func(card, i)
                             if not config.no_sound then
                                 play_sound("card1",math.abs(1.15 - (i-0.999)/(#cards-0.998)*0.3))
                             end
                             if not config.no_juice then
                                 card:juice_up(0.3, 0.3)
                             end
-                            card:flip()
+                            if not config.no_flip then
+                                card:flip()
+                            end
                             if not config.dont_unhighlight and card.highlighted and card.area then
                                 card.area:remove_from_highlighted(card)
                             end
@@ -869,14 +890,17 @@ function AKYRS.do_things_to_card(cards, func, config) -- func(card)
         if config.fifo and config.fifo_wait_for_finish then
             AKYRS.simple_event_add(
                 function ()
-                    func(card)
+                    func(card, i)
                     if not config.no_sound then
                         play_sound("card1",math.abs(1.15 - (i-0.999)/(#cards-0.998)*0.3))
                     end
                     if not config.no_juice then
                         card:juice_up(0.3, 0.3)
                     end
-                    card:flip()
+
+                    if not config.no_flip then
+                        card:flip()
+                    end
                     if not config.dont_unhighlight and card.highlighted and card.area then
                         card.area:remove_from_highlighted(card)
                     end
@@ -891,14 +915,20 @@ function AKYRS.do_things_to_card(cards, func, config) -- func(card)
             if config.fifo and not config.fifo_wait_for_finish then
                 AKYRS.simple_event_add(
                     function ()
-                        func(card)
+                        if not config.once then
+                        end
+
+                        func(card, i)
                         if not config.no_sound then
                             play_sound("card1",math.abs(1.15 - (i-0.999)/(#cards-0.998)*0.3))
                         end
                         if not config.no_juice then
                             card:juice_up(0.3, 0.3)
                         end
-                        card:flip()
+
+                        if not config.no_flip then
+                            card:flip()
+                        end
                         if not config.dont_unhighlight and card.highlighted and card.area then
                             card.area:remove_from_highlighted(card)
                         end
@@ -964,4 +994,14 @@ end
 function AKYRS.has_room(cardarea)
     if not cardarea.cards then return true end
     return #cardarea.cards < cardarea.config.card_limit
+end
+
+function AKYRS.force_save()
+    AKYRS.simple_event_add(
+        function ()
+            save_run()
+            G.FILE_HANDLER.force = true
+            return true
+        end
+    )
 end
