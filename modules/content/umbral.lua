@@ -828,7 +828,7 @@ SMODS.Consumable{
                             _card:set_edition(c2.key)
                         end
                         if c2.seal then
-                            _card:set_edition(c2.seal)
+                            _card:set_seal(c2.seal)
                         end
                         if not SMODS.has_no_suit(c2) and c2.base and c2.base.suit then
                             _card = SMODS.change_base(_card, c2.base.suit )
