@@ -21,7 +21,7 @@ function Card:generate_UIBox_ability_table()
             1 + (AKYRS.get_scrabble_score(self.ability.aikoyori_letters_stickers) / 10),
         }
     end
-    if self.is_null then
+    if self.is_null and (self.ability.set == "Enhanced" or self.ability.set == "Default") then
         --print(table_to_string(ret))
         local newRetTable = table.aiko_shallow_copy(ret)
 

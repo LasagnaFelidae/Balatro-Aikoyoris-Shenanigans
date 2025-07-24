@@ -12,7 +12,7 @@ pattern = """       elseif _c.name == "The World" then loc_vars = {cfg.max_highl
 position = "after"
 payload = """    
 elseif _c.set == 'AikoyoriExtraBases' then
-    if card and card.is_null then
+    if card and card.is_null and (card.ability.set == "Enhanced" or card.ability.set == "Default") then
     
         if(G.GAME.akyrs_letters_mult_enabled) then
             localize{type = 'descriptions', key = _c.key, set = _c.set, full_UI_table.name, vars = _c.vars or loc_vars}
