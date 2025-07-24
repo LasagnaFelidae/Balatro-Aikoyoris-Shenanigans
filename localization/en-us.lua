@@ -2406,16 +2406,16 @@ return {
                 name="Mantle",
                 text=
                 {
-                    "Give {C:attention}permanent{} bonus of {C:money}+$#1#{}",
-                    "to {C:attention}all {C:hearts}Hearts{} cards in hands",
+                    "Give {C:attention}permanent{} bonus of {X:chips,C:white} X#1# {} Chips",
+                    "to {C:attention}all {C:spades}Spades{} cards in hands",
                 },
             },
             c_akyrs_umbral_core = {
                 name="Core",
                 text=
                 {
-                    "Give {C:attention}permanent{} bonus of {X:chips,C:white} X#1# {} Chips",
-                    "to {C:attention}all {C:spades}Spades{} cards in hands",
+                    "Give {C:attention}permanent{} bonus of {C:money}+$#1#{}",
+                    "to {C:attention}all {C:hearts}Hearts{} cards in hands",
                 },
             },
             c_akyrs_umbral_atmosphere = {

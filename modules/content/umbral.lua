@@ -640,7 +640,7 @@ SMODS.Consumable{
     atlas = "umbra",
     pos = {x=8,y=1},
     config = {
-        extras = 0.1
+        extras = 2
     },
     can_use = function (self, card)
         return #G.hand.cards > 0
@@ -674,7 +674,7 @@ SMODS.Consumable{
     atlas = "umbra",
     pos = {x=9,y=1},
     config = {
-        extras = 1
+        extras = 0.1
     },
     can_use = function (self, card)
         return #G.hand.cards > 0
@@ -689,10 +689,10 @@ SMODS.Consumable{
     use = function (self, card, area, copier)
         AKYRS.juice_like_tarot(card)
         for _,_c in ipairs(G.hand.cards) do
-            if _c:is_suit("Hearts") then
+            if _c:is_suit("Spades") then
                 AKYRS.simple_event_add(
                     function ()
-                        _c.ability.perma_p_dollars = _c.ability.perma_p_dollars + card.ability.extras
+                        _c.ability.perma_x_chips = _c.ability.perma_x_chips + card.ability.extras
                         _c:juice_up(0.3, 0.3)
                         play_sound("tarot1")
                         return true
@@ -723,10 +723,10 @@ SMODS.Consumable{
     use = function (self, card, area, copier)
         AKYRS.juice_like_tarot(card)
         for _,_c in ipairs(G.hand.cards) do
-            if _c:is_suit("Spades") then
+            if _c:is_suit("Hearts") then
                 AKYRS.simple_event_add(
                     function ()
-                        _c.ability.perma_x_chips = _c.ability.perma_x_chips + card.ability.extras
+                        _c.ability.perma_p_dollars = _c.ability.perma_p_dollars + card.ability.extras
                         _c:juice_up(0.3, 0.3)
                         play_sound("tarot1")
                         return true
@@ -804,7 +804,6 @@ SMODS.Consumable{
     config = {
         min_highlighted = 2,
         max_highlighted = 2,
-        immutable = true
     },
     loc_vars = function (self, info_queue, card)
         return {
