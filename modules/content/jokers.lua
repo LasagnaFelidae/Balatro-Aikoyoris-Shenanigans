@@ -2165,8 +2165,7 @@ SMODS.Joker{
         if context.using_consumeable and not context.blueprint and (
         AKYRS.is_star(context.consumeable.config.center_key)
         ) then
-            
-            card.ability.extras.xmult = card.ability.extras.xmult * 8
+            card.ability.extras.xmult_absurd = card.ability.extras.xmult_absurd * 8
             card.ability.extras.xmult = card.ability.extras.xmult + card.ability.extras.xmult_add
             return {
                 message = localize("k_upgrade_ex"),
