@@ -747,8 +747,8 @@ G.FUNCS.evaluate_play = function(e)
     for i, c in ipairs(G.play.cards) do
         c.ability.akyrs_played_this_round = true
     end
-    G.GAME.akyrs_ranks_played = ret.akyrs_ranks_played or {}
-    G.GAME.akyrs_suits_played = ret.akyrs_suits_played or {}
+    G.GAME.akyrs_ranks_played = G.GAME.akyrs_ranks_played or {}
+    G.GAME.akyrs_suits_played = G.GAME.akyrs_suits_played or {}
     for i,c in ipairs(G.play.cards) do
         if not SMODS.has_no_rank(c) then
             G.GAME.akyrs_ranks_played[c:get_id()] = (G.GAME.akyrs_ranks_played[c:get_id()] or 0) + 1
