@@ -16,6 +16,10 @@ local umbral_digital_hallucinations_compat = {
 		SMODS.add_card{ set = "Umbral", edition = "e_negative" }
 	end,
 }
+local ease_bg_umbral = function(self)
+    ease_background_colour({ new_colour = G.C.AKYRS_UMBRAL_P, special_colour = G.C.AKYRS_UMBRAL_P})
+end
+
 
 SMODS.Booster{
     key = "letter_pack_1",
@@ -258,6 +262,7 @@ SMODS.Booster{
     create_card = function (self, card, i) 
         return SMODS.create_card{ set = "Umbral", area = G.pack_cards, skip_materialize = true }
     end,
+    ease_background_colour = ease_bg_umbral,
     cry_digital_hallucinations = umbral_digital_hallucinations_compat,
 }
 SMODS.Booster{
@@ -282,6 +287,7 @@ SMODS.Booster{
     create_card = function (self, card, i) 
         return SMODS.create_card{ set = "Umbral", area = G.pack_cards, skip_materialize = true }
     end,
+    ease_background_colour = ease_bg_umbral,
     cry_digital_hallucinations = umbral_digital_hallucinations_compat,
 }
 SMODS.Booster{
@@ -306,6 +312,7 @@ SMODS.Booster{
     create_card = function (self, card, i) 
         return SMODS.create_card{ set = "Umbral", area = G.pack_cards, skip_materialize = true }
     end,
+    ease_background_colour = ease_bg_umbral,
     cry_digital_hallucinations = umbral_digital_hallucinations_compat,
 }
 SMODS.Booster{
@@ -330,6 +337,7 @@ SMODS.Booster{
     end,
     draw_hand = true,
     kind = "umbral_pack",
+    ease_background_colour = ease_bg_umbral,
     cry_digital_hallucinations = umbral_digital_hallucinations_compat,
 }
 SMODS.Booster{
@@ -354,6 +362,7 @@ SMODS.Booster{
     create_card = function (self, card, i) 
         return SMODS.create_card{ set = "Umbral", area = G.pack_cards, skip_materialize = true }
     end,
+    ease_background_colour = ease_bg_umbral,
     cry_digital_hallucinations = umbral_digital_hallucinations_compat,
 }
 SMODS.Booster{
@@ -378,6 +387,7 @@ SMODS.Booster{
     create_card = function (self, card, i) 
         return SMODS.create_card{ set = "Umbral", area = G.pack_cards, skip_materialize = true }
     end,
+    ease_background_colour = ease_bg_umbral,
     cry_digital_hallucinations = umbral_digital_hallucinations_compat,
 }
 SMODS.Booster{
@@ -402,6 +412,7 @@ SMODS.Booster{
     create_card = function (self, card, i) 
         return SMODS.create_card{ set = "Umbral", area = G.pack_cards, skip_materialize = true }
     end,
+    ease_background_colour = ease_bg_umbral,
     cry_digital_hallucinations = umbral_digital_hallucinations_compat,
 }
 SMODS.Booster{
@@ -426,5 +437,6 @@ SMODS.Booster{
     create_card = function (self, card, i) 
         return SMODS.create_card{ set = "Umbral", area = G.pack_cards, skip_materialize = true }
     end,
+    ease_background_colour = ease_bg_umbral,
     cry_digital_hallucinations = umbral_digital_hallucinations_compat,
 }

@@ -1767,7 +1767,7 @@ SMODS.Joker{
         end
         if context.end_of_round and context.cardarea == G.jokers then
             local odder = AKYRS.bal("absurd") or 
-                SMODS.pseudorandom_probability(card,"akyrs_ash_joker_adequate", 1, card.ability.extra.odds)
+                SMODS.pseudorandom_probability(card,"akyrs_ash_joker_adequate", 1, card.ability.extras.odds)
             card.ability.akyrs_ash_disintegrate = odder
         end
     end,

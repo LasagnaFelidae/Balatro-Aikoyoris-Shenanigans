@@ -2439,9 +2439,10 @@ return {
                 text=
                 {
                     "Select {C:attention}#1#{} cards,",
-                    "apply Edition, Seals and Suits",
+                    "apply {C:attention}Suits, Edition, and Seal {}",
                     "of the {C:attention}right{} card",
                     "into the {C:attention}left{} card",
+                    "the {C:red}destroy{} the right card",
                     "{C:inactive}(Drag to rearrange)",
                 },
             },
