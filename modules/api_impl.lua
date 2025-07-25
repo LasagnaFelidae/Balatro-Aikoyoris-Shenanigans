@@ -238,6 +238,15 @@ AKYRS.suit_to_atlas = function (suit_key, card)
     if AKYRS.other_mods_suit_to_atlas(suit_key, card) then
         return AKYRS.other_mods_suit_to_atlas(suit_key, card)
     end
+    if AKYRS_CROSSMOD.suit_to_atlas_map[suit_key] then
+        local t = AKYRS_CROSSMOD.suit_to_atlas_map[suit_key]
+        if type(t) == "function" then
+            return t(suit_key, card)
+        end
+        if type(t) == "table" then
+            return unpack(t)
+        end
+    end
     return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = 8, y = 0}
 end
 AKYRS.rank_to_atlas = function (rank_key, card)
@@ -260,6 +269,15 @@ AKYRS.rank_to_atlas = function (rank_key, card)
     end
     if AKYRS.other_mods_rank_to_atlas(rank_key, card) then
         return AKYRS.other_mods_rank_to_atlas(rank_key, card)
+    end
+    if AKYRS_CROSSMOD.rank_to_atlas_map[rank_key] then
+        local t = AKYRS_CROSSMOD.rank_to_atlas_map[rank_key]
+        if type(t) == "function" then
+            return t(rank_key, card)
+        end
+        if type(t) == "table" then
+            return unpack(t)
+        end
     end
     return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = 10, y = 1}
 end
