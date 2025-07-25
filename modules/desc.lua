@@ -216,7 +216,6 @@ AKYRS.DescriptionDummy{
 AKYRS.DescriptionDummy{
     key = "dx_blind"
 }
-
 AKYRS.DescriptionDummy{
     key = "no_disabling"
 }

@@ -122,14 +122,14 @@ AKYRS.add_blind_extra_info = function(blind,ability_text_table,extras)
         if blind.debuff.akyrs_blind_difficulty and not hide.difficulty then
             AKYRS.generate_difficulty_icons(blind.debuff.akyrs_blind_difficulty, data)
         end
+        if blind.debuff.akyrs_is_forgotten_blind and not hide.forgotten_blind then
+            AKYRS.generate_icon_blinds("forgotten_blind",data)
+        end
         if blind.debuff.akyrs_cannot_be_disabled and not hide.disabled then
             AKYRS.generate_icon_blinds("no_disabling",data)
         end
         if blind.debuff.akyrs_cannot_be_rerolled and not hide.reroll then
             AKYRS.generate_icon_blinds("no_reroll",data)
-        end
-        if blind.debuff.akyrs_is_forgotten_blind and not hide.forgotten_blind then
-            AKYRS.generate_icon_blinds("forgotten_blind",data)
         end
         if blind.debuff.akyrs_is_word_blind and not hide.word_blind then
             AKYRS.generate_icon_blinds("word_blind",data)
