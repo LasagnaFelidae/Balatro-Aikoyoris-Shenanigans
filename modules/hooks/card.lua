@@ -40,10 +40,10 @@ AKYRS.sprite_info_override = function (_center,_front, card, orig_a, orig_p)
     _center = _center or card.config.center
     _front = _front or card.base
     if card and card.ability and card.ability.akyrs_special_card_type == "suit" then
-        return AKYRS.suit_to_atlas(_front.suit)
+        return AKYRS.suit_to_atlas(_front.suit, card)
     end
     if card and card.ability and card.ability.akyrs_special_card_type == "rank" then
-        return AKYRS.rank_to_atlas(_front.value)
+        return AKYRS.rank_to_atlas(_front.value, card)
     end
 
     return orig_a, orig_p

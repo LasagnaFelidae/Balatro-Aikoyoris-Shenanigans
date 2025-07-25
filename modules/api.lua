@@ -198,7 +198,7 @@ function AKYRS.maxwell_generate_card(cardtype, context)
 end
 
 
-AKYRS.suit_to_atlas = function (suit_key)
+AKYRS.suit_to_atlas = function (suit_key, card)
     if suit_key == "Hearts" then
         -- print("<3")
         return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (G.SETTINGS.colourblind_option and 4 or 0), y = 0}
@@ -217,7 +217,7 @@ AKYRS.suit_to_atlas = function (suit_key)
     end
     return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = 8, y = 0}
 end
-AKYRS.rank_to_atlas = function (rank_key)
+AKYRS.rank_to_atlas = function (rank_key, card)
     
     if rank_key == "Jack" then
         return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = 9, y = 0}
