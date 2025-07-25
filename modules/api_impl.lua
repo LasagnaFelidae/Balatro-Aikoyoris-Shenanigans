@@ -12,14 +12,13 @@ AKYRS.generate_icon_blinds = function(key, config)
     local info_queue = config.info_queue or {}
     local sprite = nil
     local atlas, pos,mod_prefix = AKYRS.blind_icons_data(key)
-    mod_prefix = mod_prefix or "akyrs"
     if cache then
         AKYRS.icon_sprites[key] = AKYRS.icon_sprites[key] or Sprite(0,0,1*icon_size,1*icon_size, atlas, pos)
         sprite = AKYRS.icon_sprites[key]
     else
         sprite = Sprite(0,0,1*icon_size,1*icon_size, atlas, pos)
     end
-    local keyed = "dd_"..mod_prefix.."_"..key
+    local keyed = "dd_"..(mod_prefix and (mod_prefix.."_") or "")..key
     z[#z+1] = {
         n = full_ui and G.UIT.R or G.UIT.C, config = { r = 0.2, align = full_ui and "lc" or "cm", can_collide = true, hover = true ,detailed_tooltip = AKYRS.DescriptionDummies[keyed] },
         nodes = {
@@ -39,7 +38,6 @@ AKYRS.generate_difficulty_icons = function(diff, config)
     local cache = config.cache or false
     local icon_size = config.icon_size or false
     local atlas, pos, mod_prefix = AKYRS.blind_icons_data(diff)
-    mod_prefix = mod_prefix or "akyrs"
     local full_ui = config.full_ui or false
     local fsz = config.font_size or false
     local dfctysz = config.text_size_for_full or false
@@ -51,8 +49,7 @@ AKYRS.generate_difficulty_icons = function(diff, config)
     else
         sprite = Sprite(0,0,1*icon_size,1*icon_size, atlas, pos)
     end
-    
-    local blind_txt_dmy = "dd_"..mod_prefix.."_"..diff.."_blind"
+    local blind_txt_dmy = "dd_"..(mod_prefix and (mod_prefix.."_") or "")..diff.."_blind"
     z[#z+1] = {
         n = full_ui and G.UIT.R or G.UIT.C, config = { r = 0.2, align = "cm", can_collide = true, hover = true ,detailed_tooltip = AKYRS.DescriptionDummies[blind_txt_dmy]},
         nodes = {
