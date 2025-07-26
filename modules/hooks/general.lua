@@ -242,20 +242,6 @@ function AKYRS.expensive_calculation()
             G.GAME.aiko_last_mult = G.GAME.current_round.current_hand.mult
             G.GAME.aiko_last_chips = G.GAME.current_round.current_hand.chips
         end
-        if G.GAME.blind.debuff.akyrs_perma_selection then
-            if type(G.GAME.blind.debuff.akyrs_perma_selection) == "table" then
-                local ps = G.GAME.blind.debuff.akyrs_perma_selection
-                for i, k in ipairs(G.play.cards) do
-                    if SMODS.pseudorandom_probability(G.GAME.blind, ps.seed, ps.num, ps.denum) then
-                        k.ability.akyrs_forced_selection = true
-                    end
-                end
-            else
-                for i, k in ipairs(G.play.cards) do
-                    k.ability.akyrs_forced_selection = true
-                end
-            end
-        end
         if G.GAME.akyrs_mathematics_enabled and G.GAME.akyrs_character_stickers_enabled then
             if G.GAME.current_round and G.GAME.current_round.current_hand then
                 G.GAME.current_round.current_hand.chips = 0
@@ -460,7 +446,8 @@ function end_round()
     
     
     
-    if (G.GAME.current_round.advanced_blind and not G.GAME.aiko_puzzle_win) and (G.GAME.current_round.hands_left > 0)
+    if ((G.GAME.current_round.advanced_blind and not G.GAME.aiko_puzzle_win)
+        or (G.GAME.akyrs_mathematics_enabled and not AKYRS.is_value_within_threshold(G.GAME.blind.chips,G.GAME.chips,G.GAME.akyrs_math_threshold))) and (G.GAME.current_round.hands_left > 0) 
     then
         G.STATE_COMPLETE = true
         G.STATE = G.STATES.SELECTING_HAND
@@ -773,6 +760,21 @@ G.FUNCS.evaluate_play = function(e)
             scale =  1.5, text = G.GAME.aikoyori_variable_to_set.." = "..tostring(G.GAME.aikoyori_value_to_set_to_variable), hold = 15, align = 'tm',
             major = G.play, offset = {x = 0, y = -1}
         })
+    end
+   
+    if G.GAME.blind.debuff.akyrs_perma_selection then
+        if type(G.GAME.blind.debuff.akyrs_perma_selection) == "table" then
+            local ps = G.GAME.blind.debuff.akyrs_perma_selection
+            for i, k in ipairs(G.play.cards) do
+                if SMODS.pseudorandom_probability(G.GAME.blind, ps.seed, ps.num, ps.denum) then
+                    k.ability.akyrs_forced_selection = true
+                end
+            end
+        else
+            for i, k in ipairs(G.play.cards) do
+                k.ability.akyrs_forced_selection = true
+            end
+        end
     end
     -- print(#G.play.cards)
     local word_split = nil
