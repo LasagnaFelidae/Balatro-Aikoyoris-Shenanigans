@@ -501,21 +501,21 @@ AKYRS.should_calculate_word = function(card)
 end
 
 AKYRS.force_check_win = function ()
-    if not G.GAME.blind then return end
+    if not G.GAME.blind or not G.STATE_COMPLETE or G.GAME.akyrs_win_checked then return end
     G.E_MANAGER:add_event(Event({
         trigger = 'immediate',
+        delay = 0,
         func = function()
             local new_round
+            if G.GAME.akyrs_win_checked then return true end
             if not G.GAME.akyrs_mathematics_enabled and not G.GAME.current_round.advanced_blind then
                 if AKYRS.compare(G.GAME.chips,">=",G.GAME.blind.chips) or AKYRS.compare(G.GAME.current_round.hands_left,"<",1) then
                     new_round = true
-                    G.STATE = G.STATES.NEW_ROUND
                 end
             end
             if G.GAME.current_round.advanced_blind and G.GAME.aiko_puzzle_win or G.GAME.current_round.hands_left < 1 then
                 if G.GAME.aiko_puzzle_win or G.GAME.current_round.hands_left < 1 then
                     new_round = true
-                    G.STATE = G.STATES.NEW_ROUND
                 end
             elseif G.GAME.akyrs_mathematics_enabled and G.GAME.akyrs_character_stickers_enabled then
                 if (G.GAME.blind and AKYRS.is_value_within_threshold(G.GAME.blind.chips, G.GAME.chips, G.GAME.akyrs_math_threshold)) or AKYRS.compare(G.GAME.current_round.hands_left,"<",1) or AKYRS.does_hand_only_contain_symbols(G.hand) then
@@ -524,10 +524,13 @@ AKYRS.force_check_win = function ()
             end
             if new_round then
                 G.STATE = G.STATES.NEW_ROUND
-                G.STATE_COMPLETE = false
                 G.GAME.akyrs_win_checked = true
-                
+            else
+                G.STATE = G.STATES.SELECTING_HAND
+                G.FUNCS.draw_from_deck_to_hand()
+
             end
+            G.STATE_COMPLETE = false
             return true
         end
     }))

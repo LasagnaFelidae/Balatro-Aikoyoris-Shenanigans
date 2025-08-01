@@ -505,7 +505,7 @@ SMODS.Consumable{
     end,
     use = function (self, card, area, copier)
         AKYRS.juice_like_tarot(card)
-        local die_question_mark = SMODS.pseudorandom_probability(card,"akyrs_umbral_intrusive",card.ability.extras.n,card.ability.extras.d)
+        local die_question_mark = pseudorandom("akyrs_umbral_intrusive") >= 0.5
         if die_question_mark then
             if G.STAGE == G.STAGES.RUN then G.STATE = G.STATES.GAME_OVER; G.STATE_COMPLETE = false end
         end

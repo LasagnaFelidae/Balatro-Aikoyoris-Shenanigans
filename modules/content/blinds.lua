@@ -78,12 +78,6 @@ SMODS.Blind{
             function()
                 G.FUNCS.draw_from_discard_to_deck()
                 G.deck:shuffle('akyrthought')
-                AKYRS.simple_event_add(
-                    function()
-                        G.FUNCS.draw_from_deck_to_hand()
-                        return true
-                    end,0.2
-                )
                 return true
             end,0.2
         )
@@ -110,7 +104,19 @@ SMODS.Blind{
         recalculateBlindUI()
     end,
     press_play = function(self)
+        if not G.GAME.akyrs_win_checked then
+            AKYRS.simple_event_add(function()
+                AKYRS.force_check_win()
+                return true
+            end, 0)
+        end
 
+        AKYRS.simple_event_add(
+            function()
+                G.FUNCS.draw_from_deck_to_hand()
+                return true
+            end,0.0
+        )
     end
 
 }
