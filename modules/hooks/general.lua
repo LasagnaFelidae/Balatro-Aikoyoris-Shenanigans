@@ -422,6 +422,10 @@ end
 
 local endRoundHook = end_round
 function end_round()
+    -- heavy handed as hell approach i do not like it but it should only let end_round run once at least in theory
+    if G.AKYRS_ACTIVATED_END_ROUND then
+        return
+    end
     local x = G.playing_cards
     if G.GAME.blind.debuff.akyrs_destroy_unplayed then
         for i, card in ipairs(x) do
@@ -455,6 +459,7 @@ function end_round()
         G.STATE = G.STATES.SELECTING_HAND
     else
         local ret = endRoundHook()
+        G.AKYRS_ACTIVATED_END_ROUND = true
         for _, cardarea in ipairs(G.I.CARDAREA) do
             if cardarea and cardarea.cards then
                 for i, card in ipairs(cardarea.cards) do
@@ -528,9 +533,7 @@ end
 local updateSelectHandHook = Game.update_selecting_hand
 function Game:update_selecting_hand(dt)
     local ret = updateSelectHandHook(self, dt)
-    
-
-
+    G.AKYRS_ACTIVATED_END_ROUND = nil
     if not self.aiko_wordle and AKYRS.checkBlindKey("bl_akyrs_the_thought") then
         self.aiko_wordle = UIBox {
             definition = create_UIBOX_Aikoyori_WordPuzzleBox(),
@@ -547,6 +550,7 @@ end
 local updateHandPlayedHook = Game.update_hand_played
 function Game:update_hand_played(dt)
     local ret = updateHandPlayedHook(self, dt)
+    G.AKYRS_ACTIVATED_END_ROUND = nil
     if self.aiko_wordle then
         self.aiko_wordle:remove(); self.aiko_wordle = nil
     end

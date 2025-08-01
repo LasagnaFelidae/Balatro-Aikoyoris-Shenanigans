@@ -106,17 +106,15 @@ SMODS.Blind{
     press_play = function(self)
         if not G.GAME.akyrs_win_checked then
             AKYRS.simple_event_add(function()
-                AKYRS.force_check_win()
+                AKYRS.simple_event_add(function()
+                    if not G.GAME.akyrs_win_checked then
+                        AKYRS.force_check_win({no_winnage = true, force_draw = true})
+                    end
+                    return true
+                end, 0.1)
                 return true
             end, 0)
         end
-
-        AKYRS.simple_event_add(
-            function()
-                G.FUNCS.draw_from_deck_to_hand()
-                return true
-            end,0.0
-        )
     end
 
 }

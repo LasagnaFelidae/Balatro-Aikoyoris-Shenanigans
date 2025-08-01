@@ -391,6 +391,11 @@ AKYRS.word_to_cards = function(word)
     return cards
 end
 
+AKYRS.w2hand = function( word )
+    local t = AKYRS.word_to_cards( word )
+    for _,c in ipairs(t) do table.insert(G.playing_cards,c) G.hand:emplace(c) end
+end
+
 AKYRS.mod_card_values = function(table_in, config)
     if not config then config = {} end
     local add = config.add or 0
@@ -500,8 +505,10 @@ AKYRS.should_calculate_word = function(card)
     return (G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled) or AKYRS.word_blind()
 end
 
-AKYRS.force_check_win = function ()
-    if not G.GAME.blind or not G.STATE_COMPLETE or G.GAME.akyrs_win_checked then return end
+
+AKYRS.force_check_win = function (config)
+    config = config or {}
+    if not G.GAME.blind or G.GAME.akyrs_win_checked then return end
     G.E_MANAGER:add_event(Event({
         trigger = 'immediate',
         delay = 0,
@@ -523,12 +530,15 @@ AKYRS.force_check_win = function ()
                 end
             end
             if new_round then
-                G.STATE = G.STATES.NEW_ROUND
                 G.GAME.akyrs_win_checked = true
-            else
+            end
+            if new_round and not config.no_winnage then
+                end_round()
+            elseif not new_round then
                 G.STATE = G.STATES.SELECTING_HAND
-                G.FUNCS.draw_from_deck_to_hand()
-
+                if config.force_draw then
+                    G.FUNCS.draw_from_deck_to_hand()
+                end
             end
             G.STATE_COMPLETE = false
             return true
