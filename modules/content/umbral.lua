@@ -831,7 +831,7 @@ SMODS.Consumable{
                     if G.hand.highlighted[2] then
                         local c2 = G.hand.highlighted[2]
                         if c2.edition then
-                            _card:set_edition(c2.key)
+                            _card:set_edition(c2.edition.key)
                         end
                         if c2.seal then
                             _card:set_seal(c2.seal)
