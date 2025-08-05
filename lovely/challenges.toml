@@ -320,6 +320,20 @@ match_indent = true
 
 
 
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = """    selected_back = get_deck_from_name(selected_back)"""
+position = "before"
+payload = """
+if args.challenge and args.challenge.akyrs_is_hardcore and not (args.challenge.deck and args.challenge.deck.type) then selected_back = 'Hardcore Challenge Deck' end"""
+overwrite = true
+match_indent = true
+
+
+
+
+
 
 [[patches]]
 [patches.pattern]

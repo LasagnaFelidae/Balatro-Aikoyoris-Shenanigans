@@ -253,3 +253,11 @@ function Card:akyrs_get_perma_h_score()
     -- TARGET: akyrs_get_perma_h_score
     return ret
 end
+
+local smods_eternal = SMODS.is_eternal
+function SMODS.is_eternal(card,trigger)
+    if card.akyrs_sigma or card.akyrs_stay_sigma then
+        return true
+    end
+    return smods_eternal(card,trigger)
+end

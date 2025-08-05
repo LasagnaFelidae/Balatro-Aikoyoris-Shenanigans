@@ -74,6 +74,7 @@ AKYRS.HardcoreChallenge = SMODS.Challenge:extend {
     required_params = {
         'key',
     },
+    akyrs_is_hardcore = true,
     deck = { type = "Hardcore Challenge Deck" },
     rules = { custom = {}, modifiers = {} },
     jokers = {},

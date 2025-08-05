@@ -1023,3 +1023,16 @@ function AKYRS.compare(val1, sign, val2)
     if sign == "<" then return value1 < value2 end
     if sign == "~=" or sign == "!=" then return value1 ~= value2 end
 end
+
+AKYRS.get_non_eternals = function (area, trigger)
+    if area and area.cards then
+        local cards = {}
+        for _,c in ipairs(area.cards) do
+            if not SMODS.is_eternal(c, trigger) then
+                table.insert(cards, c)
+            end
+        end
+        return cards
+    end
+    return {}
+end

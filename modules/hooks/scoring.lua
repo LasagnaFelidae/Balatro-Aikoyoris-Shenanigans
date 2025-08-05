@@ -8,7 +8,7 @@ local hookCalFx = SMODS.calculate_effect
 AKYRS.repetable_fx_calc = function(effect, scored_card, from_edition, pre_jokers)
     local card = effect.card or scored_card
     local r
-    if card then
+    if card and card.ability then
         if card.ability.akyrs_oxidising and not effect.akyrs_ignore_copper_calculation then
             local psrd = pseudorandom(pseudoseed("akyrs_oxidising_"..card.config.center_key))
             local compr
@@ -28,12 +28,13 @@ AKYRS.repetable_fx_calc = function(effect, scored_card, from_edition, pre_jokers
                 percent = (percent or 0) + (percent_delta or 0.08)
             end
         end
+    else
+        r = hookCalFx(effect, scored_card, from_edition, pre_jokers)
     end
-
     return r
 end
 SMODS.calculate_effect = function(effect, scored_card, from_edition, pre_jokers)
-    local r = AKYRS.repetable_fx_calc(effect, scored_card, from_edition, pre_jokers)
+    local r,x,b,c = AKYRS.repetable_fx_calc(effect, scored_card, from_edition, pre_jokers)
     local extratrigs = (scored_card and scored_card.ability and scored_card.ability.akyrs_card_extra_triggers) and scored_card.ability.akyrs_card_extra_triggers or 0
     extratrigs = extratrigs + (scored_card and scored_card.edition and scored_card.edition.akyrs_card_extra_triggers or 0)
     if extratrigs > 0 then
@@ -55,7 +56,7 @@ SMODS.calculate_effect = function(effect, scored_card, from_edition, pre_jokers)
             AKYRS.repetable_fx_calc(effect, scored_card, from_edition, pre_jokers)
         end
     end
-    return r
+    return r,x,b,c
 end
 --[[
 local evalCardHook = eval_card

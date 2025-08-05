@@ -1293,17 +1293,25 @@ SMODS.Blind {
         if context.after and not context.repetition then
             return {
                 func = function ()
-                    for i = 1, #G.play.cards do
-                        local attempts = 0
-                        local card_to_destroy
-                        repeat
-                            card_to_destroy = pseudorandom_element(G.jokers.cards, pseudoseed("bl_bug_akyrs"))
-                            attempts = attempts + 1
-                            --print("atttempt "..attempts.." "..card_to_destroy.config.center_key)
-                        until (card_to_destroy and (not card_to_destroy.akyrs_removed and not card_to_destroy.ability.eternal and card_to_destroy.ability.cry_absolute)) or attempts >= #G.jokers.cards
-                        if card_to_destroy then
-                            card_to_destroy.akyrs_removed = true
-                            card_to_destroy:start_dissolve({ G.C.RED }, nil, 1.6)
+                    local jkrs = AKYRS.get_non_eternals(G.jokers, blind)
+                    if #jkrs > 0 then
+                        for i = 1, #G.play.cards do
+                            local attempts = 0
+                            local card_to_destroy
+                            repeat
+                                card_to_destroy = pseudorandom_element(jkrs, pseudoseed("bl_bug_akyrs"))
+                                attempts = attempts + 1
+                                --print("atttempt "..attempts.." "..card_to_destroy.config.center_key)
+                            until (card_to_destroy and (not card_to_destroy.akyrs_removed and not card_to_destroy.ability.eternal and card_to_destroy.ability.cry_absolute)) or attempts >= #G.jokers.cards
+                            if card_to_destroy then
+                                card_to_destroy.akyrs_removed = true
+                                AKYRS.simple_event_add(
+                                    function ()
+                                        card_to_destroy:start_dissolve({ G.C.RED }, nil, 1.6)
+                                        return true
+                                    end, 0
+                                )
+                            end
                         end
                     end
                 end
