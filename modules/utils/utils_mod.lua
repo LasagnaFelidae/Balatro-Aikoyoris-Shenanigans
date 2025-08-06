@@ -536,7 +536,7 @@ AKYRS.force_check_win = function (config)
                 G.STATE = G.STATES.NEW_ROUND
                 G.STATE_COMPLETE = false
             elseif not new_round then
-                G.STATE = G.STATES.SELECTING_HAND
+                G.STATE = config.state_to_go or G.STATES.SELECTING_HAND
                 if config.force_draw then
                     G.FUNCS.draw_from_deck_to_hand()
                 end

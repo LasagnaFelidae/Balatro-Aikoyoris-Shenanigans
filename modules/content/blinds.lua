@@ -21,7 +21,10 @@ SMODS.Blind{
         G.GAME.current_round.advanced_blind = true
         G.GAME.word_todo = AKYRS.aiko_pickRandomInTable(AKYRS.puzzle_words)
         
-
+        
+        for _,c in ipairs(G.playing_cards) do
+            c:set_sprites(c.config.center,c.config.card)
+        end
         
         --print ("Word is "..G.GAME.word_todo)
         G.E_MANAGER:add_event(
@@ -100,15 +103,19 @@ SMODS.Blind{
         G.GAME.current_round.advanced_blind = false
         G.hand:change_size(-3)
         
+        for _,c in ipairs(G.playing_cards) do
+            c:set_sprites(c.config.center,c.config.card)
+        end
         recalculateHUDUI()
         recalculateBlindUI()
     end,
     press_play = function(self)
+        G.STATE_COMPLETE = false
         if not G.GAME.akyrs_win_checked then
             AKYRS.simple_event_add(function()
                 AKYRS.simple_event_add(function()
                     if not G.GAME.akyrs_win_checked then
-                        AKYRS.force_check_win({force_draw = true})
+                        AKYRS.force_check_win({force_draw = true, state_to_go = G.STATES.HAND_PLAYED})
                     end
                     return true
                 end, 0.1)
