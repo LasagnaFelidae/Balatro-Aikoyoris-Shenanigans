@@ -483,3 +483,62 @@ payload = '''
 object = AKYRS.mod_run_info_hands(object)
 '''
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''engine/particles.lua'''
+pattern = '''    self.states.release_on.can = false'''
+position = 'after'
+payload = '''
+self.akyrs_stay_on_top = config.akyrs_stay_on_top
+'''
+match_indent = true
+overwrite = true
+[[patches]]
+[patches.pattern]
+target = '''engine/text.lua'''
+pattern = '''    self.start_pop_in = self.config.pop_in'''
+position = 'after'
+payload = '''
+self.akyrs_stay_on_top = config.akyrs_stay_on_top
+'''
+match_indent = true
+overwrite = true
+
+[[patches]]
+[patches.pattern]
+target = '''functions/UI_definitions.lua'''
+pattern = '''              attach = args.AT,'''
+position = 'after'
+payload = '''
+akyrs_stay_on_top = args.akyrs_stay_on_top,
+'''
+match_indent = true
+overwrite = true
+
+[[patches]]
+[patches.pattern]
+target = '''functions/UI_definitions.lua'''
+pattern = '''          args.AT.attention_text = true'''
+position = 'before'
+payload = '''
+args.AT.definition.nodes[1].config.object.akyrs_stay_on_top = args.akyrs_stay_on_top
+'''
+match_indent = true
+overwrite = true
+[[patches]]
+[patches.pattern]
+target = '''functions/UI_definitions.lua'''
+pattern = '''              timer_type = 'TOTAL',
+              timer = 5,
+              scale = 2.4*(args.backdrop_scale or 1), 
+              lifespan = 5,
+              speed = 0,,'''
+position = 'at'
+payload = '''timer_type = args.backdrop_timer_type or 'TOTAL',
+timer = args.backdrop_timer or 5,
+scale = 2.4*(args.backdrop_scale or 1), 
+lifespan = args.backdrop_lifespan or 5,
+speed = args.backdrop_speed or 0,'''
+match_indent = true
+overwrite = true

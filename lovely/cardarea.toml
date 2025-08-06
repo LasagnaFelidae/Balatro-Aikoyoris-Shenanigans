@@ -64,6 +64,58 @@ end
 overwrite = true
 match_indent = true
 
+
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = """    for k, v in pairs(self.I.MOVEABLE) do
+        if not v.parent then 
+            love.graphics.push()
+            v:translate_container()
+            v:draw()
+            love.graphics.pop()
+        end"""
+position = "after"
+payload = """end"""
+overwrite = true
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = """    for k, v in pairs(self.I.MOVEABLE) do"""
+position = "after"
+payload = """
+if not v.akyrs_stay_on_top then
+"""
+overwrite = true
+match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = """    if self.screenwipe then"""
+position = "before"
+payload = """
+for k, v in pairs(self.I.MOVEABLE) do
+    if v.akyrs_stay_on_top then
+        if not v.parent or not v.parent.akyrs_stay_on_top then
+            love.graphics.push()
+            v:translate_container()
+            v:draw()
+            love.graphics.pop()
+        end
+    end
+end
+"""
+overwrite = true
+match_indent = true
+
+
+
+
 [[patches]]
 [patches.pattern]
 target = "game.lua"
@@ -75,9 +127,8 @@ pattern = """
         love.graphics.pop()
     end
             """
-position = "before"
+position = "after"
 payload = """
-local top_cards = {}
 for k, v in pairs(self.I.CARD) do
     if (v.akyrs_stay_on_top) then -- PATCHED BY AIKOYORI :D
         love.graphics.push()

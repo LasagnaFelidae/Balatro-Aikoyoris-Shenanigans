@@ -585,6 +585,17 @@ return {
                     "{C:attention}a layer{} of oxidation when a consumable is {C:attention}used{}",
                 },
             },
+            dd_akyrs_break_up_tip  = {
+                name="Pure Cards",
+                text={
+                    "{C:attention}Pure Cards{} can form {C:attention}Pure Hands",
+                    "{C:attention}Pure Hands{} give more",
+                    "base {C:chips}Chips{} and {C:mult}Mult",
+                    "but can only be played if played hand",
+                    "only has {C:attention}Pure Cards{}",
+                    "For example, this is a {C:attention}Pure Flush{}",
+                },
+            },
         },
         Edition={
             e_akyrs_texelated = {
@@ -893,10 +904,8 @@ return {
             j_akyrs_tsunagite = {
                 name = "{f:5,C:akyrs_luminous}系ぎて",
                 text = { 
-                    "Gives value listed in {C:attention}Gives{}",
-                    "if played hand sum does not exceed {C:attention}#1#{}",
-                    "Joker gain the value listed in {C:attention}Joker Gains{}",
-                    "When a {C:tarot,T:c_wheel_of_fortune}Wheel of Fortune{} is used",
+                    "Played cards permanently gain {X:mult,C:white} X#2#{} Mult",
+                    "if played cards total is divisible by {C:attention}#1#"
                 }
             },
             j_akyrs_tsunagite_absurd = {
@@ -1018,7 +1027,7 @@ return {
                 name = "Gaslighting",
                 text = { 
                     "This Joker gains {X:mult,C:white} X#1# {} Mult every hand played",
-                    "{C:attention}Will not reset at all if score catches fire.",
+                    "{C:attention}Will certainly not reset at all if score catches fire.",
                     "{C:inactive,s:0.7}Trust me, not Jimbo.",
                     "{C:inactive}(Currently {X:mult,C:white} X#2# {C:inactive} Mult)",
                 }
@@ -1188,8 +1197,10 @@ return {
                 text = { 
                     "{C:chips}+#1#{} Chips",
                     "{C:green}#2# in #3#{} chance",
-                    "of disintegrating into nothing",
-                    "at the end of the round"
+                    "of disintegrating",
+                    "at the end of the round",
+                    "but gain {C:Chips}+#4#{} Chips",
+                    "if it survives"
                 }
             },
             j_akyrs_ash_joker_absurd = {
@@ -1254,9 +1265,9 @@ return {
             j_akyrs_tetoris = {
                 name = "Tetoris",
                 text = { 
+                    "{X:chips,C:white}X#2#{} Chips when any of",
                     "{C:attention}L{}, {C:attention}S{}{C:inactive}(pades), {C:attention}O{}, {C:attention}Z{}, {C:attention}J{C:inactive}(ack), {C:attention}I{}, and {C:attention}T{}{C:inactive}(en)",
-                    "gives {C:chips}+#1#{} Chips when scored",
-                    "and {X:chips,C:white}X#2#{} Chips if any one those is present.",
+                    "are played",
                     "{s:0.9,C:inactive,f:akyrs_MochiyPopOne}テテテテト テト テテテテトリス!{}"
                 }
             },
@@ -1360,6 +1371,7 @@ return {
                     "with the {C:attention}same{} rarity as the Joker",
                     "{C:attention}immediately to the left{} of this joker",
                     "{C:red}Self-destructs{}",
+                    "{C:inactive}(Must have room){}",
                 }
             },
             j_akyrs_space_elevator = {
@@ -1467,6 +1479,13 @@ return {
             j_akyrs_pandora_paradoxxx = {
                 name = "PANDORA PARADOXXX",
                 text = { 
+                    "Give {C:attention}Standard Tag",
+                    "for every {C:attention}#1#{C:inactive} (#2#) {}playing card scored",
+                }
+            },
+            j_akyrs_pandora_paradoxxx_absurd = {
+                name = "PANDORA PARADOXXX",
+                text = { 
                     "{C:green}#1# in #2# chance{} to give {C:attention}Standard Tag",
                     "when a {C:attention}playing card{} added to deck",
                 }
@@ -1521,7 +1540,8 @@ return {
                 text = { 
                     "{C:attention}Prevents death",
                     "{C:red}Destroy all your Jokers",
-                    "Set Ante to {C:attention}#1#{}",
+                    "Halves your current Ante {C:inactive}(rounding up)",
+                    "Sets money to {C:money}$#2#",
                     "then {E:1,C:red}self-desructs",
                 }
             },
@@ -1788,10 +1808,12 @@ return {
                 },
             },
             akyrs_tsunagite_scores={
-                name="Totals",
+                name="Total",
                 text={
-                    "Aces count as 1",
-                    "Face Cards count as 10",
+                    "Current total:",
+                    "{s:1.2,C:attention}#1#{}",
+                    "{C:inactive}Aces count as 1",
+                    "{C:inactive}and face cards count as 10",
                 },
             },
             akyrs_tsunagite_name={
@@ -2336,7 +2358,7 @@ return {
                 name="Break Up",
                 text={
                     "Splits {C:attention}#1#{} selected card",
-                    "into {C:attention}Suit{} and {C:attention}Rank{} cards",
+                    "into {C:attention}Pure Suit{} and {C:attention}Rank{} cards",
                     "{C:inactive}(If possible)"
                 },
             },
@@ -2717,7 +2739,8 @@ return {
                 'nil when hovering on certain Jokers. Turning this off might mitigate that issue.',
             },
             k_akyrs_emerald = "Emerald",
-            k_akyrs_supercommon = "Emerald",
+            k_akyrs_supercommon = "Supercommon",
+            k_akyrs_unique = "Unique",
             k_akyrs_alphabet_pack = "Alphabets",
             k_akyrs_umbral_pack = "Umbral Pack",
         },
@@ -2733,7 +2756,8 @@ return {
             akyrs_burnt = "Burnt",
             akyrs_enchanted = "Enchanted",
             k_akyrs_emerald = "Emerald",
-            k_akyrs_supercommon = "Emerald",
+            k_akyrs_supercommon = "Supercommon",
+            k_akyrs_unique = "Unique",
             umbral = "Umbral"
         },
         poker_hand_descriptions={

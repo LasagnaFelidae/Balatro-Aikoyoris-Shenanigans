@@ -249,3 +249,26 @@ AKYRS.DescriptionDummy{
 AKYRS.DescriptionDummy{
     key = "copper_scrape_tip",
 }
+AKYRS.DescriptionDummy{
+    key = "break_up_tip",
+    generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+        SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+        local cards = {
+        }
+        for i = 1,5 do
+            local c = AKYRS.create_random_card("maxwellui") 
+            assert(SMODS.change_base(c,"Clubs"))
+            AKYRS.set_special_card_type(c,"suit")
+            table.insert(cards, c)
+        end
+        AKYRS.card_area_preview(G.akyrs_pure_hands_tip,desc_nodes,{
+            override = true,
+            cards = cards,
+            w = 2.1,
+            h = 0.6,
+            ml = 0,
+            mb = 0.5,
+            scale = 0.5,
+        })
+    end,
+}

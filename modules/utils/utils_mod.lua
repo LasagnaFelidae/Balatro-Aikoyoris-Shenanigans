@@ -545,3 +545,9 @@ AKYRS.force_check_win = function (config)
         end
     }))
 end
+
+AKYRS.set_special_card_type = function(card, type)
+    if card and card.ability then card.ability.akyrs_special_card_type = type 
+        card:set_sprites(card.config.center,card.config.card)
+    end
+end

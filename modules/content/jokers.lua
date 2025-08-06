@@ -627,62 +627,53 @@ SMODS.Joker {
     rarity = 4,
     cost = 50,
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue+1] = {key = "akyrs_chip_mult_xchip_xmult", set = 'Other', vars = 
-            AKYRS.bal_val({ 
-                    card.ability.extra.chips,
-                    card.ability.extra.mult,
-                    card.ability.extra.Xchips,
-                    card.ability.extra.Xmult,
-                },
+        if AKYRS.bal("absurd") then
+            info_queue[#info_queue+1] = {key = "akyrs_chip_mult_xchip_xmult", set = 'Other', vars = 
                 { 
                     card.ability.extra.chips_absurd,
                     card.ability.extra.mult_absurd,
                     card.ability.extra.Xchips_absurd,
                     card.ability.extra.Xmult_absurd,
                 }
-            )
-        }
-        info_queue[#info_queue+1] = {key = "akyrs_gain_chip_mult_xchip_xmult", set = 'Other', vars = 
-            AKYRS.bal_val({ 
-                    card.ability.extra.gain_chips,
-                    card.ability.extra.gain_mult,
-                    card.ability.extra.gain_Xchips,
-                    card.ability.extra.gain_Xmult,
-                },
+            }
+            info_queue[#info_queue+1] = {key = "akyrs_gain_chip_mult_xchip_xmult", set = 'Other', vars = 
                 { 
                     card.ability.extra.gain_chips_absurd,
                     card.ability.extra.gain_mult_absurd,
                     card.ability.extra.gain_Xchips_absurd,
                     card.ability.extra.gain_Xmult_absurd,
                 }
-            )
-        }
-        if not AKYRS.bal("absurd") then
-            info_queue[#info_queue+1] = {key = "akyrs_tsunagite_scores", set = 'Other', }
+            }
+        end
+        if AKYRS.bal("adequate") then
+            local total = 0
+            if G.hand and G.hand.highlighted then
+                for i,k in ipairs(G.hand.highlighted) do
+                    if not SMODS.has_no_rank(k)then
+                        total = total + k.base.nominal
+                        if k:get_id() == 14 then
+                            total = total - 10
+                        end                    
+                    end
+                end
+            end
+            info_queue[#info_queue+1] = {key = "akyrs_tsunagite_scores", set = 'Other', vars = {
+                total
+            } }
         end
         info_queue[#info_queue+1] = {key = "akyrs_tsunagite_name", set = 'Other', }
         return {
             key = AKYRS.bal_val(self.key, self.key.."_absurd"), 
             vars = { 
-                card.ability.extra.total,
+                15,
+                card.ability.extra.gain_Xmult,
             }
         }
     end,
     config = {
         extra = {
             total = 15,
-            chips = 15,
-            Xchips = 1.15,
-            mult = 15,
-            Xmult = 1.15,
-            base_chips = 15,
-            base_Xchips = 1.15,
-            base_mult = 15,
-            base_Xmult = 1.15,
-            gain_chips = 15,
-            gain_Xchips = 0.05,
-            gain_mult = 5,
-            gain_Xmult = 0.05,
+            gain_Xmult = 0.15,
             -- absurd
             chips_absurd = 150,
             Xchips_absurd = 15,
@@ -700,34 +691,15 @@ SMODS.Joker {
         }
     },
     calculate = function(self, card, context)
-        if context.individual and context.cardarea == G.play then
-            local total = 0
-            for i,k in ipairs(G.play.cards) do
-
-                if not SMODS.has_no_rank(k)then
-                    total = total + k.base.nominal
-                    if k.base.value == 'Ace' then
-                        total = total - 10
-                    end                    
-                end
-
-            end
-            if total <= 15 or AKYRS.bal("absurd") or context.forcetrigger then
-                return AKYRS.bal_val({
-                    chips = card.ability.extra.chips,
-                    xchips = card.ability.extra.Xchips,
-                    mult = card.ability.extra.mult,
-                    xmult = card.ability.extra.Xmult
-                },{
-                    chips = card.ability.extra.chips_absurd,
-                    xchips = card.ability.extra.Xchips_absurd,
-                    mult = card.ability.extra.mult_absurd,
-                    xmult = card.ability.extra.Xmult_absurd,
-                })
-            end
-
+        if context.individual and context.cardarea == G.play and AKYRS.bal("absurd") then
+            return {
+                chips = card.ability.extra.chips_absurd,
+                xchips = card.ability.extra.Xchips_absurd,
+                mult = card.ability.extra.mult_absurd,
+                xmult = card.ability.extra.Xmult_absurd,
+            }
         end		
-        if context.using_consumeable or context.forcetrigger then
+        if context.using_consumeable or context.forcetrigger and AKYRS.bal("absurd") then
             if context.consumeable.config.center_key == 'c_wheel_of_fortune' or context.forcetrigger then
                 card.ability.extra.chips = card.ability.extra.chips + card.ability.extra.gain_chips 
                 card.ability.extra.Xchips = card.ability.extra.Xchips + card.ability.extra.gain_Xchips 
@@ -741,6 +713,25 @@ SMODS.Joker {
                     message= localize('k_upgrade_ex')
                 }, card)
             end
+        end
+        if context.before and AKYRS.bal("adequate") then
+            return {
+                func = function ()
+                    local total = 0
+                    for i,k in ipairs(G.play.cards) do
+                        if not SMODS.has_no_rank(k)then
+                            total = total + k.base.nominal
+                            if k:get_id() == 14 then
+                                total = total - 10
+                            end                    
+                        end
+                    end
+                    if math.fmod(total,15) then
+                        AKYRS.do_things_to_card(G.play.cards,
+                        function(_c) _c.ability.perma_x_mult = (_c.ability.perma_x_mult or 0) + card.ability.extra.gain_Xmult end)
+                    end
+                end
+            }
         end
     end,
     blueprint_compat = true,
@@ -1282,7 +1273,7 @@ SMODS.Joker{
     pos = {
         x = 0, y = 2
     },
-    rarity = 1,
+    rarity = 2,
     cost = 2,
     config = {
         extra = {
@@ -1735,6 +1726,7 @@ SMODS.Joker{
         name = "Ash Joker",
         extras = {
             chips = 35,
+            chips_gain = 15,
             echips = 2,
             odds = 4
         }
@@ -1754,6 +1746,7 @@ SMODS.Joker{
                 card.ability.extras.chips,
                 n,
                 d,
+                card.ability.extras.chips_gain
             }
         }
     end,
@@ -1768,7 +1761,11 @@ SMODS.Joker{
         if context.end_of_round and context.cardarea == G.jokers then
             local odder = AKYRS.bal("absurd") or 
                 SMODS.pseudorandom_probability(card,"akyrs_ash_joker_adequate", 1, card.ability.extras.odds)
-            card.ability.akyrs_ash_disintegrate = odder
+            if odder then
+                card.ability.akyrs_ash_disintegrate = odder
+            else
+                card.ability.extras.chips = card.ability.extras.chips + card.ability.extras.chips_gain
+            end
         end
     end,
     demicoloncompat = true,
@@ -1931,18 +1928,11 @@ SMODS.Joker {
                 end})
             end
         else
-            if context.individual and context.cardarea == G.play then
-                if (AKYRS.tetoris_piece[string.lower(context.other_card:get_letter_with_pretend())] and G.GAME.akyrs_character_stickers_enabled) or context.other_card:get_id() == 10 or context.other_card:get_id() == 11 or context.other_card:is_suit("Spades") then
-                    return {
-                        chips = card.ability.extras.chips,
-                    }
-                end
-            end
             if context.joker_main then
                 local c = AKYRS.get_letter_freq_from_cards(G.play.cards)
                 local r = AKYRS.get_ranks_freq_from_cards(G.play.cards)
-                local r = AKYRS.get_suit_freq_from_cards(G.play.cards)
-                if (c["l"] or c["s"] or c["o"] or c["z"] or c["j"] or c["i"] or c["t"] or r[11] or r[10]) and G.GAME.akyrs_character_stickers_enabled then
+                local s = AKYRS.get_suit_freq_from_cards(G.play.cards)
+                if (c["l"] or c["s"] or c["o"] or c["z"] or c["j"] or c["i"] or c["t"] or r[11] or r[10] or s["Spades"]) and G.GAME.akyrs_character_stickers_enabled then
                     return {
                         xchips = card.ability.extras.xchips,
                     }
@@ -2252,14 +2242,16 @@ SMODS.Joker{
             local index = AKYRS.find_index(G.jokers.cards,card)
             if index and #G.jokers.cards > 1 and G.jokers.cards[index-1] and index > 1 then
                 local othercard = G.jokers.cards[index-1]
-                if not othercard.eternal and not othercard.cry_absolute then
+                if not SMODS.is_eternal(othercard,card) then
                     return {
                         func = function ()
                             local rarity = othercard.config.center.rarity
                             othercard:start_dissolve({G.C.AKYRS_AKYRS_PLAYABLE},1.1)
                             othercard:remove_from_deck()
                             for i=1, card.ability.extras.create_factor do
-                                SMODS.add_card{rarity = rarity, set = "Joker", legendary = (rarity == 4)}
+                                if AKYRS.has_room(G.jokers) then
+                                    SMODS.add_card{rarity = rarity, set = "Joker", legendary = (rarity == 4)}
+                                end
                             end
                             card:start_dissolve({G.C.AKYRS_PLAYABLE},1.1)
                         end
@@ -2570,7 +2562,7 @@ SMODS.Joker{
     config = {
         extras = {
             level_down = 1,
-            level_up_mult = 3,
+            level_up_mult = 1,
         }
     },
     loc_vars = function (self, info_queue, card)
@@ -2663,7 +2655,8 @@ SMODS.Joker{
     cost = 9,
     config = {
         extras = {
-            odds = 15,
+            count = 15,
+            current = 0,
             odds_absurd = 3
         }
     },
@@ -2671,22 +2664,57 @@ SMODS.Joker{
         info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         info_queue[#info_queue+1] = {set = "Tag", key = "tag_standard"}
         -- numerator & denominator :3
-        local n, d = SMODS.get_probability_vars(card,1,AKYRS.bal_val(card.ability.extras.odds,card.ability.extras.odds_absurd),"akyrs_pandora_paradoxx")
+        if AKYRS.bal("absurd") then
+            local n, d = SMODS.get_probability_vars(card,1,card.ability.extras.odds_absurd,"akyrs_pandora_paradoxx")
+            return {
+                key = self.key.."_absurd",
+                vars = {
+                    n,d
+                }
+            } 
+        end
         return {
             vars = {
-                n,d
+                card.ability.extras.count,
+                card.ability.extras.current
             }
         }
+
     end,
     calculate = function (self, card, context)
-        if context.playing_card_added then
+        if context.playing_card_added and AKYRS.bal("absurd") then
             return {
-                message = localize("k_akyrs_pandora_give_tag"),
                 func = function ()
                     for i = 1, #context.cards do
-                        if SMODS.pseudorandom_probability(card,"akyrs_pandora_paradoxxx",1,AKYRS.bal_val(card.ability.extras.odds,card.ability.extras.odds_absurd)) then
+                        if SMODS.pseudorandom_probability(card,"akyrs_pandora_paradoxxx",1,card.ability.extras.odds_absurd) then
                             local tag = Tag("tag_standard")
                             add_tag(tag)
+                            SMODS.calculate_effect({
+                                message = localize("k_akyrs_pandora_give_tag"),
+                            }, card)
+                        end
+                    end
+                end
+            }
+        end
+        if context.before and AKYRS.bal("adequate") then
+            return {
+                func = function ()
+                    for _,_c in ipairs(context.scoring_hand) do
+                        card.ability.extras.current = card.ability.extras.current + 1
+                        SMODS.calculate_effect({
+                            juice_card = _c,
+                            message = card.ability.extras.current
+                        }, card)
+                        if card.ability.extras.current >= card.ability.extras.count then 
+                            SMODS.calculate_effect({
+                                message = localize("k_akyrs_pandora_give_tag"),
+                                func = function()
+                                local tag = Tag("tag_standard")
+                                add_tag(tag)
+                                    card.ability.extras.current = 0
+                                end
+                            }, card)
                         end
                     end
                 end
@@ -2863,7 +2891,8 @@ SMODS.Joker{
     cost = 12,
     config = {
         extras = {
-            ante_set = 1,
+            ante_set = 3,
+            money_set = 4,
         }
     },
     loc_vars = function (self, info_queue, card)
@@ -2872,6 +2901,7 @@ SMODS.Joker{
             key = self.key .. AKYRS.bal_val("","_absurd"),
             vars = {
                 card.ability.extras.ante_set,
+                card.ability.extras.money_set,
             }
         }
     end,
@@ -2883,12 +2913,18 @@ SMODS.Joker{
                 func = function ()
                     if AKYRS.bal("adequate") then
                         for i,k in ipairs(G.jokers.cards) do
-                            if not k.ability.eternal or not k.ability.cry_absolute then
+                            if not SMODS.is_eternal(k) then
                                 k:start_dissolve({G.C.YELLOW},1.6)
                             end
                         end
                     end
-                    ease_ante(-G.GAME.round_resets.ante+card.ability.extras.ante_set)
+                    local old_ante = G.GAME.round_resets.ante
+                    if AKYRS.bal("adequate") then
+                        ease_ante((-math.floor(G.GAME.round_resets.ante/2)))
+                        ease_dollars(-G.GAME.dollars + card.ability.extras.money_set)
+                    else
+                        ease_ante(-G.GAME.round_resets.ante+card.ability.extras.ante_set)
+                    end
                 end
             }
         end
@@ -3108,13 +3144,9 @@ SMODS.Joker{
         x = 4, y = 5
     },
     rarity = 3,
-    cost = 9,
+    cost = 6,
     config = {
         extras = {
-            xmult = 1,
-            xmult_absurd = 1,
-            xmult_g = 1,
-            xmult_g_absurd = 1.8,
         }
     },
     loc_vars = function (self, info_queue, card)
@@ -3166,7 +3198,7 @@ SMODS.Joker{
         x = 5, y = 5
     },
     rarity = 3,
-    cost = 9,
+    cost = 1,
     config = {
         extras = {
             debt = 12,
@@ -3296,4 +3328,37 @@ SMODS.Joker{
         end
     end,
 	dzicoloncompat = true,
+}
+
+SMODS.Joker {
+    
+    key = "blue_portal",
+    atlas = 'AikoyoriJokers',
+    pools = { ["Portal"] = true, ["Video Games"] = true, },
+    pos = {
+        x = 2, y = 4
+    },
+    rarity = 3,
+    cost = 9,
+    config = {
+        extras = {
+            link = "CCCCC",
+        }
+    },
+}
+SMODS.Joker {
+    
+    key = "orange_portal",
+    atlas = 'AikoyoriJokers',
+    pools = { ["Portal"] = true, ["Video Games"] = true, },
+    pos = {
+        x = 3, y = 4
+    },
+    rarity = "akyrs_unique",
+    cost = 9,
+    config = {
+        extras = {
+            link = "CCCCC",
+        }
+    },
 }

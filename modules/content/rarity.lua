@@ -21,3 +21,12 @@ SMODS.Rarity{
     },
 
 }
+SMODS.Rarity{
+    key = "unique",
+    default_weight = 0,
+    badge_colour = HEX('ed9a78'),
+    pools = {
+        ["Joker"] = true
+    },
+
+}

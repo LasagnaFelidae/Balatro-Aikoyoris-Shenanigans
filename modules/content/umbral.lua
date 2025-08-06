@@ -215,6 +215,7 @@ SMODS.Consumable{
         max_highlighted = 1
     },
     loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = AKYRS.DescriptionDummies["dd_akyrs_break_up_tip"]
         return {
             vars = {
                 card.ability.max_highlighted
@@ -371,6 +372,8 @@ SMODS.Consumable{
         max_highlighted = 2
     },
     loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = G.P_CENTERS["m_akyrs_hatena"]
+        info_queue[#info_queue+1] = G.P_CENTERS["m_akyrs_item_box"]
         return {
             vars = {
                 card.ability.max_highlighted
@@ -924,7 +927,7 @@ SMODS.Consumable{
         end
     end},
     hidden = true,
-    soul_rate = 0.003,
+    soul_rate = 0.05,
     can_repeat_soul = true,
     config = {
         extras = {
