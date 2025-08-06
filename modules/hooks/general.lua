@@ -424,6 +424,8 @@ local endRoundHook = end_round
 function end_round()
     -- heavy handed as hell approach i do not like it but it should only let end_round run once at least in theory
     if G.AKYRS_ACTIVATED_END_ROUND then
+        
+        G.STATE = G.STATES.ROUND_EVAL
         return
     end
     local x = G.playing_cards

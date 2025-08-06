@@ -108,7 +108,7 @@ SMODS.Blind{
             AKYRS.simple_event_add(function()
                 AKYRS.simple_event_add(function()
                     if not G.GAME.akyrs_win_checked then
-                        AKYRS.force_check_win({no_winnage = true, force_draw = true})
+                        AKYRS.force_check_win({force_draw = true})
                     end
                     return true
                 end, 0.1)

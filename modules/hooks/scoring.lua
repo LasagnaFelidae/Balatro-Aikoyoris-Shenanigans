@@ -150,7 +150,7 @@ SMODS.calculate_individual_effect = function(effect, scored_card, key, amount, f
                                 AKYRS.simple_event_add(
                                     function ()
                                         if not G.GAME.akyrs_win_checked then
-                                            AKYRS.force_check_win()
+                                            AKYRS.force_check_win({ force_draw = true})
                                         end
                                         return true
                                     end, 0

@@ -533,7 +533,8 @@ AKYRS.force_check_win = function (config)
                 G.GAME.akyrs_win_checked = true
             end
             if new_round and not config.no_winnage then
-                end_round()
+                G.STATE = G.STATES.NEW_ROUND
+                G.STATE_COMPLETE = false
             elseif not new_round then
                 G.STATE = G.STATES.SELECTING_HAND
                 if config.force_draw then
