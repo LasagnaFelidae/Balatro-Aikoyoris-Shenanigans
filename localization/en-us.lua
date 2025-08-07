@@ -1682,6 +1682,16 @@ return {
                     },
                 }
             },
+            j_akyrs_blue_portal = {
+                name = "Blue Portal",
+                text = { 
+                    {
+                        "If {C:attention}played hand{} contains a {C:attention}Straight{}",
+                        "Create a {C:dark_edition}Negative {C:planet}Planet Card{}",
+                        "of your most played hand per {C:diamonds}Diamonds{} played",
+                    },
+                }
+            },
             -- toga
             j_akyrs_toga_charmap = {
                 
@@ -2544,8 +2554,20 @@ return {
         }
     },
     misc = {
-        achievement_descriptions={},
-        achievement_names={},
+        achievement_descriptions={
+            ach_akyrs_spell_aikoyori = "Spell Aikoyori",
+            ach_akyrs_repeater_into_another_one = "Channels output from a repeater into another one",
+            ach_akyrs_happy_ghast_grown = "Grow a Happy Ghast from its dried form",
+            ach_akyrs_both_pickaxe = "Get both pickaxes!",
+            ach_akyrs_win_klondike = "Win the Klondike!",
+        },
+        achievement_names={
+            ach_akyrs_spell_aikoyori = "Unfortunately Aikoyori is not real",
+            ach_akyrs_repeater_into_another_one = "Repeater Locking",
+            ach_akyrs_happy_ghast_grown = "Uneasy Alliance",
+            ach_akyrs_both_pickaxe = "Dual Wielding",
+            ach_akyrs_win_klondike = "Pretend this is a screen filled with cards",
+        },
         blind_states={},
         akyrs_balancing_wizard = {
         },

@@ -52,6 +52,7 @@ assert(SMODS.load_file("./modules/content/trades.lua"))()
 assert(SMODS.load_file("./modules/challenges_ui.lua"))()
 assert(SMODS.load_file("./modules/content/jokers.lua"))()
 assert(SMODS.load_file("./modules/content/letterjokers.lua"))()
+assert(SMODS.load_file("./modules/content/achievements.lua"))()
 
 assert(SMODS.load_file("./modules/content/challenges.lua"))()
 assert(SMODS.load_file("./modules/content/pokerhands.lua"))()

@@ -788,6 +788,7 @@ G.FUNCS.evaluate_play = function(e)
     -- print(#G.play.cards)
     local word_split = nil
     if G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled or AKYRS.word_blind() then
+
         
         local aiko_current_word_split = {}
         word_split = {}
@@ -802,6 +803,8 @@ G.FUNCS.evaluate_play = function(e)
                 word_split[string.upper(j:get_letter_with_pretend())] = true
             end
         end
+        local w = table.concat(aiko_current_word_split,"")
+        check_for_unlock({type = "akyrs_spell_word", word = w, lowercase_word = string.lower(w)})
         local wordData = {}
         if (AKYRS.WORD_CHECKED[aiko_current_word_split]) then
             --print("WORD "..word_hand_str.." IS IN MEMORY AND THUS SHOULD USE THAT")
@@ -811,6 +814,7 @@ G.FUNCS.evaluate_play = function(e)
             wordData = AKYRS.check_word(aiko_current_word_split)
             AKYRS.WORD_CHECKED[aiko_current_word_split] = wordData
         end
+
         --print(wordData)
         if wordData.valid then
             G.GAME.aiko_current_word = wordData.word

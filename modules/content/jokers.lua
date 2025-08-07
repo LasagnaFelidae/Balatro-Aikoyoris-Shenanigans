@@ -37,6 +37,11 @@ SMODS.Joker {
             mult = mod_mult(card.ability.extra.mult_stored)
             card.ability.extra.mult_stored = stored
             update_hand_text({ immediate = true, nopulse = true, delay = 0 }, { mult_stored = stored })
+            
+            local ind = AKYRS.find_index(card.area.cards, card)
+            if ind and ind > 1 and card.area.cards[ind - 1].config.center_key == card.config.center_key then
+                check_for_unlock({type = "akyrs_repeater_into_another_one"})
+            end
             if AKYRS.bal("absurd") then
                 return {
                     message = "Swapped!",
@@ -199,43 +204,47 @@ SMODS.Joker {
     },
     calculate = function(self, card, context)
         if context.before and not context.blueprint then
-            local quasiCount = 0
-            local jokers = {}
-            for i = 1, #G.jokers.cards do
-                if G.jokers.cards[i].ability.name == "Quasi Connectivity" then
-                    quasiCount = quasiCount + 1
-                end
-                if (G.jokers.cards[i] ~= card or #G.jokers.cards < 2) then
-                    jokers[#jokers + 1] = G.jokers.cards[i]
-                end
+            return {
+                func = function()
+                local quasiCount = 0
+                local jokers = {}
+                for i = 1, #G.jokers.cards do
+                    if G.jokers.cards[i].ability.name == "Quasi Connectivity" then
+                        quasiCount = quasiCount + 1
+                    end
+                    if (G.jokers.cards[i] ~= card or #G.jokers.cards < 2) then
+                        jokers[#jokers + 1] = G.jokers.cards[i]
+                    end
 
-                G.jokers.cards[i]:set_debuff(false)
-            end
-            -- remove the current card from the list
-            if not G.GAME.aiko_has_quasi then
-                jokers[card] = nil
-                G.GAME.aiko_has_quasi = true
-            end
-            for i = 1, quasiCount do
-                if (#jokers > 0) then
-                    local re = AKYRS.bal("absurd") and 2 or 1
-                    for i = 1, re do
-                        local _card = pseudorandom_element(jokers, pseudoseed('akyrs:quasi_connectivity'))
-                        local iter = 1
-                        while _card and _card.debuff and iter < #jokers do
+                    G.jokers.cards[i]:set_debuff(false)
+                end
+                -- remove the current card from the list
+                if not G.GAME.aiko_has_quasi then
+                    jokers[card] = nil
+                    G.GAME.aiko_has_quasi = true
+                end
+                for i = 1, quasiCount do
+                    if (#jokers > 0) then
+                        local re = AKYRS.bal("absurd") and 2 or 1
+                        for i = 1, re do
                             local _card = pseudorandom_element(jokers, pseudoseed('akyrs:quasi_connectivity'))
-                            iter = iter + 1
+                            local iter = 1
+                            while _card and _card.debuff and iter < #jokers do
+                                local _card = pseudorandom_element(jokers, pseudoseed('akyrs:quasi_connectivity'))
+                                iter = iter + 1
+                            end
+                            if _card then
+                                _card:set_debuff(true)
+                                _card:juice_up(1, 1)
+                            end
+                            jokers[_card] = nil
                         end
-                        if _card then
-                            _card:set_debuff(true)
-                            _card:juice_up(1, 1)
-                        end
-                        jokers[_card] = nil
                     end
                 end
+                G.GAME.aiko_has_quasi = false
+                card.ability.extra.first_hand = false
             end
-            G.GAME.aiko_has_quasi = false
-            card.ability.extra.first_hand = false
+            }
         end
         if context.joker_main or context.forcetrigger then
             return AKYRS.bal_val(
@@ -290,6 +299,11 @@ SMODS.Joker {
             chip_add_stack_absurd = 12,
         }
     },
+    add_to_deck = function (self, card, from_debuff)
+        if #SMODS.find_card("j_akyrs_netherite_pickaxe") > 0 then
+            check_for_unlock({ type = "akyrs_both_pickaxe" })
+        end
+    end,
     calculate = function(self, card, context)
         if context.before and AKYRS.bal("absurd") and not context.blueprint or context.forcetrigger then
             AKYRS.simple_event_add(
@@ -349,6 +363,11 @@ SMODS.Joker {
         return {
             vars = { card.ability.extra.chip_add, card.ability.extra.chip_add_stack }
         }
+    end,
+    add_to_deck = function (self, card, from_debuff)
+        if #SMODS.find_card("j_akyrs_diamond_pickaxe") > 0 then
+            check_for_unlock({ type = "akyrs_both_pickaxe" })
+        end
     end,
     config = {
         name = "Netherite Pickaxe",
@@ -1531,7 +1550,8 @@ SMODS.Joker{
                         card.ability.extras.rounds_left = card.ability.extras.rounds_left - 1
                         if card.ability.extras.rounds_left <= 0 then
                             card:start_dissolve({G.C.BLUE}, nil, 0.5)
-                            SMODS.add_card({ key = "j_akyrs_ghastling"})
+                            local c = SMODS.add_card({ key = "j_akyrs_ghastling"})
+                            c.ability.akyrs_from_dried = true
                         end
                     end
                 }
@@ -1588,6 +1608,9 @@ SMODS.Joker{
                         card.ability.extras.rounds_left_absurd = card.ability.extras.rounds_left_absurd - (#SMODS.find_card("j_ice_cream") + 1)
                         if AKYRS.bal_val(card.ability.extras.rounds_left <= 0,card.ability.extras.rounds_left_absurd <= 0) then
                             card:start_dissolve({G.C.RED}, nil, 0.5)
+                            if card.ability.akyrs_from_dried then
+                                check_for_unlock({ type = "akyrs_happy_ghast_grown_from_dried"})
+                            end
                             SMODS.add_card({ key = "j_akyrs_happy_ghast"})
                         end
                     end
@@ -3334,6 +3357,9 @@ SMODS.Joker {
     pos = {
         x = 2, y = 4
     },
+    in_pool = function (self, args)
+        return false
+    end,
     rarity = 3,
     cost = 9,
     config = {
@@ -3350,6 +3376,9 @@ SMODS.Joker {
     pos = {
         x = 3, y = 4
     },
+    in_pool = function (self, args)
+        return false
+    end,
     rarity = "akyrs_unique",
     cost = 9,
     config = {
