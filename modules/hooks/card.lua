@@ -256,8 +256,10 @@ end
 
 local smods_eternal = SMODS.is_eternal
 function SMODS.is_eternal(card,trigger)
-    if card and card.akyrs_sigma or card.akyrs_stay_sigma then
-        return true
+    if card and type(card) == "table" then
+        if card.akyrs_sigma or card.akyrs_stay_sigma then
+            return true
+        end
     end
     return smods_eternal(card,trigger)
 end
