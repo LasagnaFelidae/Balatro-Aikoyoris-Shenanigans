@@ -996,9 +996,10 @@ function AKYRS.do_nothing(...)
     return ...
 end
 
-function AKYRS.has_room(cardarea)
+function AKYRS.has_room(cardarea, card, extra)
+    extra = extra or 0
     if not cardarea.cards then return true end
-    return #cardarea.cards < cardarea.config.card_limit
+    return #cardarea.cards + extra < cardarea.config.card_limit + (card and AKYRS.edition_extend_card_limit(card) or 0)
 end
 
 function AKYRS.force_save()
@@ -1035,4 +1036,24 @@ AKYRS.get_non_eternals = function (area, trigger)
         return cards
     end
     return {}
+end
+
+local validLetters = {}
+for i = 48, 57 do -- 0-9
+    table.insert(validLetters, string.char(i))
+end
+for i = 65, 90 do -- A-Z
+    table.insert(validLetters, string.char(i))
+end
+for i = 97, 122 do -- a-z
+    table.insert(validLetters, string.char(i))
+end
+
+function AKYRS.random_string(length)
+    local stri = ""
+    for i = 1, length do
+        stri = stri .. pseudorandom_element(validLetters, "akyrs_random_string")
+    end
+    return stri
+
 end

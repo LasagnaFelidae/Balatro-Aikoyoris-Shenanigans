@@ -1686,9 +1686,19 @@ return {
                 name = "Blue Portal",
                 text = { 
                     {
-                        "If {C:attention}played hand{} contains a {C:attention}Straight{}",
-                        "Create a {C:dark_edition}Negative {C:planet}Planet Card{}",
-                        "of your most played hand per {C:diamonds}Diamonds{} played",
+                        "{C:white,X:chips} X#1# {} Chips",
+                        "{C:attention}2{} free Joker slots",
+                        "required to purchase",
+                        "Spawns a matching",
+                        "{C:attention}Orange Portal{) when purchase"
+                    },
+                }
+            },
+            j_akyrs_orange_portal = {
+                name = "Orange Portal",
+                text = { 
+                    {
+                        "{C:white,X:mult} X#1# {} Mult",
                     },
                 }
             },

@@ -344,6 +344,15 @@ function Game:start_run(args)
             end, 0.5
         )
     end
+    if #G.play.cards > 0 then
+        for _,c in ipairs(G.play.cards) do
+            G.deck:emplace(c)
+        end
+        G.play.cards = {}
+    end
+    for _,c in ipairs(G.playing_cards) do
+        c:set_sprites(c.config.center,c.config.card)
+    end
     return ret
 end
 

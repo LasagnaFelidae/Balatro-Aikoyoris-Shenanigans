@@ -3357,16 +3357,55 @@ SMODS.Joker {
     pos = {
         x = 2, y = 4
     },
-    in_pool = function (self, args)
-        return false
+    loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = G.P_CENTERS["j_akyrs_orange_portal"]
+        return {
+            vars = {card.ability.extras.xc},
+            main_end = {
+                { n = G.UIT.R, config = { padding = 0.1, colour = G.C.ORANGE, r = 0.1}, nodes = {
+                    {
+                        n = G.UIT.T, config = {scale = 0.3, text = card.ability.extras.link}
+                    }
+                }}
+            }
+        }
     end,
+    set_ability = function (self, card, initial, delay_sprites)
+        card.ability.extras.link = AKYRS.random_string(10)
+    end,
+    add_to_deck = function (self, card, from_debuff)
+        AKYRS.simple_event_add(
+            function()
+                local c1 = SMODS.add_card({ key = "j_akyrs_orange_portal"})
+                c1.ability.extras.link = card.ability.extras.link
+                return true
+            end
+        )
+    end,
+    remove_from_deck = function (self, card, from_debuff)
+        local s = SMODS.find_card("j_akyrs_orange_portal")
+        for _,_c in ipairs(s) do
+            if _c.ability.extras.link == card.ability.extras.link then
+                _c:start_dissolve({G.C.ORANGE})
+            end
+        end
+    end,
+    
     rarity = 3,
     cost = 9,
     config = {
         extras = {
-            link = "CCCCC",
+            link = "?????",
+            xc = 2.5
         }
     },
+    calculate = function (self, card, context)
+        if context.joker_main then
+            return {
+                xchips = card.ability.extras.xc
+            }
+        end
+    end,
 }
 SMODS.Joker {
     
@@ -3379,11 +3418,39 @@ SMODS.Joker {
     in_pool = function (self, args)
         return false
     end,
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = { card.ability.extras.xm },
+            main_end = {
+                { n = G.UIT.R, config = { padding = 0.1, colour = G.C.BLUE, r = 0.1}, nodes = {
+                    {
+                        n = G.UIT.T, config = {scale = 0.3, text = card.ability.extras.link}
+                    }
+                }}
+            }
+        }
+    end,
+    remove_from_deck = function (self, card, from_debuff)
+        local s = SMODS.find_card("j_akyrs_blue_portal")
+        for _,_c in ipairs(s) do
+            if _c.ability.extras.link == card.ability.extras.link then
+                _c:start_dissolve({G.C.ORANGE})
+            end
+        end
+    end,
     rarity = "akyrs_unique",
     cost = 9,
     config = {
         extras = {
-            link = "CCCCC",
+            link = "?????",
+            xm = 2.5,
         }
     },
+    calculate = function (self, card, context)
+        if context.joker_main then
+            return {
+                xmult = card.ability.extras.xm
+            }
+        end
+    end,
 }

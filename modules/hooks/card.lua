@@ -272,3 +272,17 @@ function CardArea:sort(method)
     end
     return cardarea_sort(self,method)
 end
+
+local func_bfs = G.FUNCS.buy_from_shop
+
+G.FUNCS.buy_from_shop = function (e)
+    local c1 = e.config.ref_table
+    if c1.config.center_key == "j_akyrs_blue_portal" and not AKYRS.has_room(G.jokers, c1, 1) then
+        --print("!!!!")
+        alert_no_space(c1,G.jokers)
+        e.disable_button = nil
+        return false
+    else
+        return func_bfs(e)
+    end
+end
