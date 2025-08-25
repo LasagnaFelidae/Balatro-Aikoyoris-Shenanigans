@@ -3358,7 +3358,7 @@ SMODS.Joker{
             end
         end
     end,
-	dzicoloncompat = true,
+	demicoloncompat = true,
 }
 
 SMODS.Joker {
@@ -3419,6 +3419,7 @@ SMODS.Joker {
         end
     end,
 }
+
 SMODS.Joker {
     
     key = "orange_portal",
@@ -3466,3 +3467,4 @@ SMODS.Joker {
         end
     end,
 }
+
