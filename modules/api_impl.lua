@@ -220,21 +220,29 @@ end
 
 
 AKYRS.suit_to_atlas = function (suit_key, card)
+
+    local deckskin = SMODS.DeckSkins[G.SETTINGS.CUSTOM_DECK.Collabs[suit_key]]
+    local palette = deckskin.palette_map and deckskin.palette_map[G.SETTINGS.colour_palettes[suit_key] or ''] or (deckskin.palettes or {})[1]
+    if palette then
+        if palette.akyrs_pure_suit then
+            return G.ASSET_ATLAS[palette.akyrs_pure_suit.atlas_key], palette.akyrs_pure_suit.pos 
+        end
+    end
     if suit_key == "Hearts" then
         -- print("<3")
-        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (G.SETTINGS.colourblind_option and 4 or 0), y = 0}
+        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (G.SETTINGS.colour_palettes[suit_key] == "hc" and 4 or 0), y = 0}
     end
     if suit_key == "Clubs" then
         -- print("|-8o")
-        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (G.SETTINGS.colourblind_option and 5 or 1), y = 0}
+        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (G.SETTINGS.colour_palettes[suit_key] == "hc" and 5 or 1), y = 0}
     end
     if suit_key == "Diamonds" then
         -- print("<>")
-        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (G.SETTINGS.colourblind_option and 6 or 2), y = 0}
+        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (G.SETTINGS.colour_palettes[suit_key] == "hc" and 6 or 2), y = 0}
     end
     if suit_key == "Spades" then
         -- print("|-C>")
-        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (G.SETTINGS.colourblind_option and 7 or 3), y = 0}
+        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (G.SETTINGS.colour_palettes[suit_key] == "hc" and 7 or 3), y = 0}
     end
     if AKYRS.other_mods_suit_to_atlas(suit_key, card) then
         return AKYRS.other_mods_suit_to_atlas(suit_key, card)
