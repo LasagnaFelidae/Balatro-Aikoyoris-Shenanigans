@@ -1,8 +1,5 @@
 SMODS.Achievement{
     key = "spell_aikoyori",
-    atlas = "icons",
-    pos = {x = 3, y = 0},
-    hidden_pos = {x = 0, y = 1},
     prefix_config = {
         atlas = false
     },
@@ -17,9 +14,6 @@ SMODS.Achievement{
 }
 SMODS.Achievement{
     key = "happy_ghast_grown",
-    atlas = "icons",
-    pos = {x = 3, y = 0},
-    hidden_pos = {x = 0, y = 1},
     prefix_config = {
         atlas = false
     },
@@ -32,9 +26,6 @@ SMODS.Achievement{
 }
 SMODS.Achievement{
     key = "repeater_into_another_one",
-    atlas = "icons",
-    pos = {x = 3, y = 0},
-    hidden_pos = {x = 0, y = 1},
     prefix_config = {
         atlas = false
     },
@@ -48,9 +39,6 @@ SMODS.Achievement{
 
 SMODS.Achievement{
     key = "repeater_into_another_one",
-    atlas = "icons",
-    pos = {x = 3, y = 0},
-    hidden_pos = {x = 0, y = 1},
     prefix_config = {
         atlas = false
     },
@@ -64,9 +52,6 @@ SMODS.Achievement{
 
 SMODS.Achievement{
     key = "both_pickaxe",
-    atlas = "icons",
-    pos = {x = 3, y = 0},
-    hidden_pos = {x = 0, y = 1},
     prefix_config = {
         atlas = false
     },
@@ -79,9 +64,6 @@ SMODS.Achievement{
 }
 SMODS.Achievement{
     key = "win_klondike",
-    atlas = "icons",
-    pos = {x = 3, y = 0},
-    hidden_pos = {x = 0, y = 1},
     prefix_config = {
         atlas = false
     },
