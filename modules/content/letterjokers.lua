@@ -166,7 +166,7 @@ AKYRS.LetterJoker {
     config = {
     },
     calculate = function (self, card, context)
-        if context.joker_main and G.GAME.aiko_current_word then
+        if context.joker_main and G.GAME.aiko_current_word and G.GAME.current_round.hands_played == 0 then
             return {
                 func = function()
                     ---@type Card[]
