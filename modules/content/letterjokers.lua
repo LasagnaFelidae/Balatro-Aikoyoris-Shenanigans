@@ -126,7 +126,7 @@ AKYRS.LetterJoker{
                         message = localize("k_upgrade_ex"),
                         message_card = card,
                         func = function ()
-                            card.ability.extras.xchips = card.ability.extras.xchips + card.ability.extras.xchips_add
+                            SMODS.scale_card(card,{ ref_table = card.ability.extras, ref_value = 'xchips', scalar_value = "xchips_add"})
                         end
                     }
                 end
