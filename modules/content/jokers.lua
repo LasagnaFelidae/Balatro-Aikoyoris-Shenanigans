@@ -152,7 +152,6 @@ SMODS.Joker {
                     card.ability.extra.times = card.ability.extra.times - 1
                     if card.ability.extra.times <= 0 then
                         SMODS.calculate_effect({
-                            message = localize("k_upgrade_ex"),
                             func = function ()
                                 -- same deal here
                                 SMODS.scale_card(card,{
@@ -428,7 +427,6 @@ SMODS.Joker {
                 context.other_card.ability.aiko_about_to_be_destroyed = true
                 if AKYRS.bal("absurd") then
                     SMODS.calculate_effect({
-                        message = localize("k_upgrade_ex"),
                         func = function ()
                             SMODS.scale_card(card,{
                                 ref_table = card.ability.extra,
@@ -1076,17 +1074,9 @@ SMODS.Joker {
                                         G.play.cards[i]:flip()
                                         if G.play.cards[i]:get_id() == original_rank and AKYRS.bal("absurd") then
                                             SMODS.scale_card(card, { ref_table = card.ability.extra, ref_value = "xchips", scalar_value = "xchips_gain" })
-                                            SMODS.calculate_effect({
-                                                message = localize("k_upgrade_ex"),
-                                                colour = G.C.CHIPS
-                                            }, card)
                                         end
                                         if G.play.cards[i].base.suit == original_suit and AKYRS.bal("absurd") then
                                             SMODS.scale_card(card, { ref_table = card.ability.extra, ref_value = "xmult", scalar_value = "xmult_gain" })
-                                            SMODS.calculate_effect({
-                                                message = localize("k_upgrade_ex"),
-                                                colour = G.C.MULT
-                                            }, card)
                                         end
                                     end
                                 end
@@ -1419,11 +1409,6 @@ SMODS.Joker{
         }
     },
     loc_vars = function (self,info_queue, card)
-        
-        if Talisman then
-            card.ability.extras.xmult_absurd = to_big(card.ability.extras.xmult_absurd)
-            card.ability.extras.xmult_inc_absurd = to_big(card.ability.extras.xmult_inc_absurd)
-        end
         return {
             key = AKYRS.bal_val(self.key, self.key.."_absurd"), 
             vars = AKYRS.bal_val({
@@ -1440,7 +1425,6 @@ SMODS.Joker{
         if context.individual and context.cardarea == G.play and not context.blueprint then
             if context.other_card:is_suit("Hearts") or ((context.other_card:is_suit("Spades") and next(SMODS.find_card("j_akyrs_evilneuro")))) then
                 return {
-                    message = localize("k_upgrade_ex"),
                     message_card = card,
                     func = function ()
                         if Talisman then
@@ -1485,10 +1469,6 @@ SMODS.Joker{
         }
     },
     loc_vars = function (self,info_queue, card)
-        if Talisman then
-            card.ability.extras.xchips_absurd = to_big(card.ability.extras.xchips_absurd)
-            card.ability.extras.xchips_inc_absurd = to_big(card.ability.extras.xchips_inc_absurd)
-        end
         return {
             key = AKYRS.bal_val(self.key, self.key.."_absurd"), 
             vars = AKYRS.bal_val({
@@ -1505,7 +1485,6 @@ SMODS.Joker{
         if context.individual and context.cardarea == G.play and not context.blueprint then
             if context.other_card:is_suit("Clubs") or ((context.other_card:is_suit("Diamonds") and next(SMODS.find_card("j_akyrs_neurosama")))) then
                 return {
-                    message = localize("k_upgrade_ex"),
                     message_card = card,
                     func = function ()
                         if AKYRS.bal("adequate") then
@@ -1885,7 +1864,6 @@ SMODS.Joker{
         and (context.card_getting_removed.config and context.card_getting_removed.config.center_key and context.card_getting_removed.config.center_key == "j_popcorn") then
             if context.card_getting_removed.ability.mult - context.card_getting_removed.ability.extra <= 0 then
                 return {
-                    message = localize("k_upgrade_ex"),
                     func = AKYRS.bal_val(function ()
                         SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xmult", scalar_value = "xmult_inc" })
                     end,
@@ -2222,13 +2200,15 @@ SMODS.Joker{
         if context.using_consumeable and not context.blueprint and (
         AKYRS.is_star(context.consumeable.config.center_key)
         ) then
-            if AKYRS.bal("absurd") then
-                SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xmult_absurd", scalar_table = {["s"] = 8}, scalar_value = "s", operation = "X" })
-            else
-                SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xmult", scalar_value = "xmult_add" })
-            end
+
             return {
-                message = localize("k_upgrade_ex"),
+                func = function()
+                    if AKYRS.bal("absurd") then
+                        SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xmult_absurd", scalar_table = {["s"] = 8}, scalar_value = "s", operation = "X" })
+                    else
+                        SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xmult", scalar_value = "xmult_add" })
+                    end
+                end
             }
         end
         if context.joker_main then
@@ -2932,7 +2912,6 @@ SMODS.Joker{
         if context.individual and context.cardarea == G.play and next(context.poker_hands["Flush"]) and not context.blueprint then
             if context.other_card.ability.name == "Wild Card" then
                 return {
-                    message = localize("k_upgrade_ex"),
                     message_card = card,
                     func = function ()
                         if AKYRS.bal("absurd") then
@@ -3167,7 +3146,7 @@ SMODS.Joker{
             xmult = 1,
             xmult_absurd = 1.1,
             xmult_g = 1,
-            xmult_g_absurd = 1.2,
+            xmult_g_absurd = 1.3,
         }
     },
     loc_vars = function (self, info_queue, card)
@@ -3195,14 +3174,11 @@ SMODS.Joker{
                     local x = AKYRS.filter_table(G.jokers.cards,function(t) return not AKYRS.is_in_pool(t,"Kessoku Band") end, true, true)
                     local sts, stschk = AKYRS.get_suits(G.play.cards)
                     if (#x == 0 and AKYRS.bal_val((#G.play.cards) == 1 and G.play.cards[1]:is_suit("Spades"),stschk["Spades"])) or context.forcetrigger then
-                        SMODS.calculate_effect({
-                            message = localize("k_upgrade_ex"),
-                        }, card)
                         if AKYRS.bal("absurd") then
                             SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xmult_absurd", scalar_value = "xmult_g_absurd",
                                 operation = function (rt,rv,int,sc)
                                     if Talisman then
-                                    rt[rv] = to_big(int):pow(sc)
+                                        rt[rv] = to_big(int):pow(sc)
                                     end
                                 end
                             })
