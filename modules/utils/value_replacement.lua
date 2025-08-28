@@ -216,14 +216,16 @@ function AKYRS.getGameOverBlindText()
 end
 
 
-function AKYRS.getBlindText(key)
+function AKYRS.getBlindText(key, collection)
     if G.GAME.akyrs_mathematics_enabled then
         return {
             localize("ph_akyrs_math_score_1")..G.GAME.akyrs_math_threshold..localize("ph_akyrs_math_score_2")
             ,nil
         }
-    elseif (key == "bl_akyrs_the_thought") and G.GAME.blind and not G.GAME.blind.disabled then
+    elseif (key == "bl_akyrs_the_thought") and ((G.GAME.blind and not G.GAME.blind.disabled) or collection) then
         return {localize("ph_aiko_beat_puzzle"),localize("ph_word_puzzle")}
+    elseif (key == "bl_akyrs_the_bomb") and ((G.GAME.blind and not G.GAME.blind.disabled) or collection) then
+        return {localize("ph_aiko_defuse"),localize("ph_aiko_bomb")}
     else
         return {nil,nil}
     end
@@ -232,6 +234,7 @@ end
 function AKYRS.getCashOutText(config,scale,stake_sprite)
     
     if G.GAME.aiko_puzzle_win then
+        config.dollars = G.GAME.blind.dollars
         return {n=G.UIT.C, config={padding = 0.05, align = 'cm', minw = 2}, nodes={
             {n=G.UIT.R, config={align = 'cm'}, nodes={
                 {n=G.UIT.O, config={object = DynaText({string = {' '..localize('ph_puzzle_clear')..' '}, colours = {G.C.EDITION}, shadow = true, pop_in = 0, float = true, scale = .8*scale, silent = true})}}

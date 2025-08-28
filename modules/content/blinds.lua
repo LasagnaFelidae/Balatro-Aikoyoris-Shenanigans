@@ -129,6 +129,171 @@ SMODS.Blind{
 
 }
 
+SMODS.Blind{
+    key = "the_bomb",
+    dollars = 5,
+    mult = 2,
+    boss_colour = HEX('FF6F4B'),
+    atlas = 'aikoyoriBlindsChips2', 
+    boss = {min = 1, max = 10},
+    pos = { x = 0, y = 14 },
+    debuff = {
+        special_blind = true,
+        infinite_discards = true,
+        akyrs_is_word_blind = true,
+        akyrs_is_puzzle_blind = true,
+    },
+    vars = {},
+    set_blind = function(self)
+        G.GAME.aiko_puzzle_win = false
+        G.GAME.current_round.advanced_blind = true
+        
+        
+        for _,c in ipairs(G.playing_cards) do
+            c:set_sprites(c.config.center,c.config.card)
+        end
+        
+        --print ("Word is "..G.GAME.word_todo)
+        G.E_MANAGER:add_event(
+            Event({
+                delay = 10,
+                func = function()
+                    G.FUNCS.draw_from_deck_to_hand()
+                    
+                    --ease_background_colour{new_colour = HEX('95df3e'), special_colour = HEX('ffd856'), tertiary_colour = G.C.BLACK, contrast = 3}
+                    SMODS.change_play_limit(1e4)
+                    SMODS.change_discard_limit(1e4)
+                    return true
+                end
+            })
+        )
+        G.E_MANAGER:add_event(
+            Event({
+                delay = 10,
+                func = function()
+                    recalculateHUDUI()
+                    recalculateBlindUI()
+                    return true
+                end
+            })
+        )
+        -- add 5 temp wilds to hand so players don't get fucked royally
+        AKYRS.simple_event_add(
+            function ()
+                for i = 1, G.GAME.current_round.hands_left - 1 do
+                    AKYRS.simple_event_add(
+                        function ()
+                            local wldcrd = Card(11.5,15,G.CARD_W,G.CARD_H,pseudorandom_element(G.P_CARDS,pseudoseed("thebombblind")),G.P_CENTERS['c_base'],{playing_card = G.playing_card})
+                            wldcrd.is_null = true
+                            wldcrd.ability.akyrs_attention = true
+                            AKYRS.change_letter_to(wldcrd,AKYRS.get_bomb_prompt({min_freq = 2000, seed = "thebombblind_carder"}))
+                            G.hand:emplace(wldcrd)
+                            return true
+                        end, 0.1
+                    )
+                end
+                return true
+            end, 0
+        )
+    end,
+    drawn_to_hand = function(self)
+        AKYRS.simple_event_add(
+            function()
+                G.FUNCS.draw_from_discard_to_deck()
+                G.deck:shuffle('akyrthought')
+                return true
+            end,0.2
+        )
+    end,
+    debuff_hand = function (self, cards, hand, handname, check)
+        local contains_attention = false
+        for _,_c in ipairs(cards) do
+            if _c.ability.akyrs_attention then
+                contains_attention = true
+            end
+        end
+        return not contains_attention
+    end,
+    get_loc_debuff_text = function (self)
+        return localize("k_akyrs_must_defuse")
+    end,
+    in_pool = function(self)
+        return (G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled)
+    end,
+    disable = function(self)
+        G.GAME.current_round.advanced_blind = false
+        
+        for _,c in ipairs(G.playing_cards) do
+            c:set_sprites(c.config.center,c.config.card)
+        end
+        SMODS.change_play_limit(-1e4)
+        SMODS.change_discard_limit(-1e4)
+        
+        recalculateHUDUI()
+        recalculateBlindUI()
+        
+    end,
+    defeat = function(self)
+        G.GAME.current_round.advanced_blind = false
+        for _,c in ipairs(G.playing_cards) do
+            c:set_sprites(c.config.center,c.config.card)
+        end
+        SMODS.change_play_limit(-1e4)
+        SMODS.change_discard_limit(-1e4)
+        recalculateHUDUI()
+        recalculateBlindUI()
+    end,
+    press_play = function(self)
+        
+    end,
+    calculate = function (self, blind, context)
+        if context.debuff_hand and not G.GAME.aiko_current_word then
+            return {
+                debuff = true,
+                debuff_text = localize("k_akyrs_must_contain_word"),
+                func = function ()
+                    AKYRS.simple_event_add(
+                        function()
+                            if G.STATE == G.STATES.HAND_PLAYED then
+                                G.FUNCS.akyrs_force_draw_from_discard_to_hand()
+                            else
+                            end
+                            return true
+                        end, 0.5)
+                end
+            }
+        end
+        if context.after then
+            return {
+                func = function ()
+                    AKYRS.simple_event_add(
+                        function()
+                            G.FUNCS.draw_from_discard_to_deck()
+                            if not G.GAME.akyrs_win_checked then
+                                
+                                AKYRS.simple_event_add(
+                                function()
+                                    local attention_no_longer_in_hand = true
+                                    for _,_c in ipairs(G.hand.cards) do
+                                        if _c.ability.akyrs_attention then
+                                            attention_no_longer_in_hand = false
+                                        end
+                                    end
+                                    G.GAME.aiko_puzzle_win = attention_no_longer_in_hand
+                                    AKYRS.force_check_win({force_draw = true})
+                                    return true
+                                end, 0.2)
+                            end
+                            return true
+                        end,0.2
+                    )
+                end
+            }
+        end
+    end
+
+}
+
 local function talismanCheck(v,big,omega,jen)
     if Talisman then
         if Talisman.config_file.break_infinity == "omeganum" then

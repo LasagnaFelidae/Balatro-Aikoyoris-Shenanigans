@@ -270,7 +270,10 @@ end
 local smods_eternal = SMODS.is_eternal
 function SMODS.is_eternal(card,trigger)
     if card and type(card) == "table" then
-        if card.akyrs_sigma or card.akyrs_stay_sigma then
+        if card.ability.akyrs_sigma or card.ability.akyrs_stay_sigma then
+            return true
+        end
+        if card.ability.akyrs_attention then
             return true
         end
     end

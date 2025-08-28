@@ -287,6 +287,12 @@ return {
                     "per card played"
                 }
             },
+            bl_akyrs_the_bomb= {
+                name = "The Bomb",
+                text = {
+                    "Defuse the bomb!",
+                }
+            },
         },
         DescriptionDummy={
             dd_akyrs_maxwell_example={
@@ -1814,6 +1820,12 @@ return {
                     "{C:red}#1#%{} chance to not trigger",
                 },
             },
+            akyrs_attention={
+                name="Attention",
+                text={
+                    "{C:red}Cannot be discarded{} and {C:blue}Must be played{}",
+                },
+            },
             akyrs_debuff_seal={
                 name="Debuff Seal",
                 text={
@@ -2485,6 +2497,10 @@ return {
             k_akyrs_up_to_sel = "x",
             ph_aiko_beat_puzzle = "Solve the following",
             ph_word_puzzle = "Word Puzzle",
+            ph_aiko_defuse = "Get rid of",
+            ph_aiko_bomb = "Word Bomb!",
+            k_akyrs_must_defuse = "Must have Attention Card in hand!",
+            k_akyrs_must_contain_word = "Hand must contain word!",
             ph_puzzle_clear = "Puzzle Clear!",
             ph_akyrs_unknown = "???",
             k_akyrs_item_box_trigger = "?",
@@ -2648,6 +2664,7 @@ return {
             akyrs_self_destructs="Self-Destructive",
             akyrs_sigma="Sigma",
             akyrs_oxidising="Oxidising",
+            akyrs_attention="Attention",
             akyrs_debuff_seal="Seal-Debuffed",
             akyrs_texelated = "Texelated",
             akyrs_noire = "Noire",

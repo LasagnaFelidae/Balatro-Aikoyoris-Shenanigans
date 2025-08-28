@@ -285,7 +285,7 @@ AKYRS.DescriptionDummy{
         AKYRS.card_area_preview(G.akyrs_pure_hands_tip,desc_nodes,{
             override = true,
             cards = cards,
-            w = 2.1,
+            w = 1.4,
             h = 0.6,
             ml = 0,
             mb = 0.5,

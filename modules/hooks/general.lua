@@ -370,6 +370,16 @@ end
 local discardAbilityHook = G.FUNCS.can_discard
 G.FUNCS.can_discard = function(e)
     local ret = discardAbilityHook(e)
+    if G.hand and G.hand.highlighted then
+        for _, _c in ipairs(G.hand.highlighted) do
+            if _c.ability.akyrs_attention then
+                e.config.colour = G.C.UI.BACKGROUND_INACTIVE
+                e.config.button = nil
+                return ret
+            end
+        end
+    end
+
     if #G.hand.highlighted > 0 and G.GAME.blind and G.GAME.blind.config and G.GAME.blind.config.blind and G.GAME.blind.config.blind.debuff and G.GAME.blind.config.blind.debuff.infinite_discards then
         e.config.colour = G.C.RED
         e.config.button = 'discard_cards_from_highlighted'
@@ -487,6 +497,16 @@ function end_round()
                 for i, card in ipairs(cardarea.cards) do
 
                     if card.ability.akyrs_self_destructs then
+                        G.E_MANAGER:add_event(Event({
+                            func = function()
+                                card:start_dissolve({ G.C.BLACK }, nil, 1.6)
+                                AKYRS.remove_value_from_table(G.playing_cards,card)
+                                return true
+                            end,
+                            delay = 0.5,
+                        }), 'base')
+                    end
+                    if card.ability.akyrs_attention then
                         G.E_MANAGER:add_event(Event({
                             func = function()
                                 card:start_dissolve({ G.C.RED }, nil, 1.6)
@@ -686,7 +706,16 @@ local dcfhHook = G.FUNCS.discard_cards_from_highlighted
 G.FUNCS.discard_cards_from_highlighted = function (e,hook)
     if AKYRS.checkBlindKey("bl_akyrs_the_picker") and not G.GAME.blind.disabled then
         G.GAME.blind.debuff.primed = false
-    end    
+    end
+    
+    if G.hand and G.hand.highlighted then
+        for _, _c in ipairs(G.hand.highlighted) do
+            if _c.ability.akyrs_attention then
+                return ret
+            end
+        end
+    end
+
     if G.GAME.blind and not G.GAME.blind.disabled then
         if G.GAME.blind.debuff.akyrs_alternate_action and G.GAME.current_round.akyrs_last_action == "discard" then
             stop_use()

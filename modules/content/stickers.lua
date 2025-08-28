@@ -162,3 +162,32 @@ SMODS.Sticker{
         AKYRS.copper_stickers[val]:draw_shader('dissolve', nil, nil, nil, card.children.center)
     end
 }
+
+
+
+SMODS.Sticker{
+    key = "attention",
+    default_compat = true,
+    atlas = "aikoyoriStickers",
+    pos = {x = 0, y = 1},
+    rate = 0,
+    badge_colour = HEX("FF6D6D"),
+    sets =  all_sets,
+    apply = function(self, card, val)
+        card.ability[self.key] = val
+    end,
+    calculate = function (self, card, context)
+        if context.destroy_card and context.cardarea == G.play then
+            if card == context.destroy_card then
+                return {
+                    remove = true
+                }
+            end
+        end
+    end,
+    draw = function (self, card, layer)
+        G.shared_stickers[self.key].role.draw_major = card
+        G.shared_stickers[self.key]:draw_shader('dissolve', nil, nil, nil, card.children.center)
+        G.shared_stickers[self.key]:draw_shader('voucher', nil, card.ARGS.send_to_shader, nil, card.children.center)
+    end
+}

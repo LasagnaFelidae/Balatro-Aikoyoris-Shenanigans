@@ -598,3 +598,35 @@ AKYRS.initialise_deck_letter = function(letters)
         end
     }))
 end
+
+---@params config? table config
+AKYRS.get_bomb_prompt = function(config)
+    config = config or {}
+    local seed = config.seed or "bullshit"
+    local max_freq = math.min(config.max_freq or 1e10,1e10) -- max is er with this number
+    local min_freq = math.max(config.min_freq or 1000,1) 
+    local max_length = math.min(config.max_length or 5, 5)
+    local min_length = math.max(config.min_length or 2, 2)
+    local matching = table.akyrs_filter(AKYRS.pickable_bomb_prompts, 
+        function(value) 
+            local f = AKYRS.bomb_prompts[value] 
+            return f >= min_freq and f <= max_freq and #value >= min_length and #value <= max_length
+        end)
+    local freq, word
+    word = pseudorandom_element(matching, seed, {})
+    return word
+end
+
+
+  G.FUNCS.akyrs_force_draw_from_discard_to_hand = function(e)
+    G.E_MANAGER:add_event(Event({
+        trigger = 'immediate',
+        func = function()
+            local discard_count = #G.discard.cards
+            for i=1, discard_count do --draw cards from deck
+                draw_card(G.discard, G.hand, i*100/discard_count,'up', nil ,nil, 0.005, i%2==0, nil, math.max((21-i)/20,0.7))
+            end
+            return true
+        end
+      }))
+  end

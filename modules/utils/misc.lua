@@ -1079,3 +1079,12 @@ function AKYRS.hsl2rgb(h,s,l,al)
     local f = function(n, k) k = math.fmod((n+h/30),12); return l - a*math.max(math.min(k-3,9-k,1),-1) end
     return {f(0),f(8),f(4),al};
 end
+-- https://gist.github.com/FGRibreau/3790217
+table.akyrs_filter = function(t, filterIter)
+    local out = {}
+    for k, v in pairs(t) do
+        if filterIter(v, k, t) then out[k] = v end
+    end
+
+    return out
+end

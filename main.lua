@@ -9,6 +9,8 @@ assert(SMODS.load_file("./modules/colours.lua"))()
 assert(SMODS.load_file("./modules/fonts.lua"))()
 assert(SMODS.load_file("./func/numbers.lua"))()
 assert(SMODS.load_file("./func/words/words.lua"))()
+assert(SMODS.load_file("./func/words/puzzle_words.lua"))()
+assert(SMODS.load_file("./func/words/bomb_prompts.lua"))()
 assert(SMODS.load_file("./func/word_utils.lua"))()
 
 assert(SMODS.load_file("./modules/utils/misc.lua"))()
