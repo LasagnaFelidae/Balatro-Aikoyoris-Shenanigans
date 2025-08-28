@@ -610,6 +610,13 @@ return {
                     "For example, this is a {C:attention}Pure Flush{}",
                 },
             },
+            dd_akyrs_letter_puzzle_umbral_expl  = {
+                name="Letter & Puzzle",
+                text={
+                    "{C:attention}Combine{} both letters",
+                    "onto one card",
+                },
+            },
         },
         Edition={
             e_akyrs_texelated = {

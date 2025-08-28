@@ -256,7 +256,7 @@ AKYRS.DescriptionDummy{
         local cards = {
         }
         for i = 1,5 do
-            local c = AKYRS.create_random_card("maxwellui") 
+            local c = AKYRS.create_random_card("break_up") 
             assert(SMODS.change_base(c,"Clubs"))
             AKYRS.set_special_card_type(c,"suit")
             table.insert(cards, c)
@@ -269,6 +269,44 @@ AKYRS.DescriptionDummy{
             ml = 0,
             mb = 0.5,
             scale = 0.5,
+        })
+    end,
+}
+AKYRS.DescriptionDummy{
+    key = "letter_puzzle_umbral_expl",
+    generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+        SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
+        local cards = {
+        }
+        for i = 1,2 do
+            local c = AKYRS.create_random_card("puzzle_letter") 
+            table.insert(cards, c)
+        end
+        AKYRS.card_area_preview(G.akyrs_pure_hands_tip,desc_nodes,{
+            override = true,
+            cards = cards,
+            w = 2.1,
+            h = 0.6,
+            ml = 0,
+            mb = 0.5,
+            scale = 0.5,
+            func_list = {
+                function(ca) delay(2.0, "akyrs_desc") end,
+                function(ca) if ca then
+                    AKYRS.do_things_to_card(ca.cards, function (c,i)
+                        if ca and ca.cards then
+                            if i == 1 then
+                                local c2 = ca.cards[2]
+                                if c:get_letter_with_pretend() and c2:get_letter_with_pretend() then
+                                    c:set_letters(c:get_letter_with_pretend()..c2:get_letter_with_pretend())
+                                end
+                            else
+                                c:start_dissolve({G.C.AKYRS_UMBRAL_P, G.C.AKYRS_UMBRAL_Y}, true)
+                            end
+                        end
+                    end, nil, "akyrs_desc")
+                end end,
+            }
         })
     end,
 }

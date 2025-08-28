@@ -5,8 +5,8 @@ local cardGetUIBoxRef = Card.generate_UIBox_ability_table
 
 function Card:generate_UIBox_ability_table(vars)
     local ret = cardGetUIBoxRef(self,vars)
-    if G.GAME.akyrs_character_stickers_enabled or self.ability.forced_letter_render then
-        local letter = self.ability.aikoyori_letters_stickers or "NIL"
+    if (G.GAME.akyrs_character_stickers_enabled or self.ability.forced_letter_render) and self.ability.aikoyori_letters_stickers then
+        local letter = self.ability.aikoyori_letters_stickers
 
         if letter and letter == "#" then
             letter = "#"

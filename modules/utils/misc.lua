@@ -851,10 +851,13 @@ function AKYRS.juice_like_tarot(card)
     card:juice_up(0.3, 0.5)
 end
 ---@param cards Card[] list of cards
----@param func fun(card: Card): nil callback for each card
+---@param func fun(card: Card, index: number): nil callback for each card
 ---@param config? table config for the function
-function AKYRS.do_things_to_card(cards, func, config) -- func(card)
+---@param queue? string event queue
+function AKYRS.do_things_to_card(cards, func, config, queue) -- func(card)
+    queue = queue or "base"
     config = config or {stay_flipped_delay = 1,stagger = 0.5,finish_flipped_delay = 0.5, fifo = true}
+    if not cards then return end
     for i, card in ipairs(cards) do
         AKYRS.simple_event_add(
             function ()
@@ -870,7 +873,7 @@ function AKYRS.do_things_to_card(cards, func, config) -- func(card)
                 end
                 if not config.fifo then
                     if(config.stay_flipped_delay) then
-                        delay(config.stay_flipped_delay)
+                        delay(config.stay_flipped_delay, queue)
                     end
                     AKYRS.simple_event_add(
                         function ()
@@ -888,12 +891,12 @@ function AKYRS.do_things_to_card(cards, func, config) -- func(card)
                                 card.area:remove_from_highlighted(card)
                             end
                             return true
-                        end,config.finish_flipped_delay or 0.5
+                        end,config.finish_flipped_delay or 0.5, queue
                     )
                 end
 
                 return true
-            end,config.stagger or 0
+            end,config.stagger or 0, queue
         )
         if config.fifo and config.fifo_wait_for_finish then
             AKYRS.simple_event_add(
@@ -913,12 +916,12 @@ function AKYRS.do_things_to_card(cards, func, config) -- func(card)
                         card.area:remove_from_highlighted(card)
                     end
                     return true
-                end,config.finish_flipped_delay or 0.5
+                end,config.finish_flipped_delay or 0.5, queue
             )
         end
     end
     if(config.fifo and config.stay_flipped_delay) then
-        delay(config.stay_flipped_delay or 0)
+        delay(config.stay_flipped_delay or 0, queue)
         for i, card in ipairs(cards) do
             if config.fifo and not config.fifo_wait_for_finish then
                 AKYRS.simple_event_add(
@@ -941,7 +944,7 @@ function AKYRS.do_things_to_card(cards, func, config) -- func(card)
                             card.area:remove_from_highlighted(card)
                         end
                         return true
-                    end,config.finish_flipped_delay or 0.5
+                    end,config.finish_flipped_delay or 0.5, queue
                 )
             end
         end

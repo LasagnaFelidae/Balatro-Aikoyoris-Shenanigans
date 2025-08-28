@@ -818,6 +818,9 @@ SMODS.Consumable{
         max_highlighted = 2,
     },
     loc_vars = function (self, info_queue, card)
+        if G.GAME.akyrs_character_stickers_enabled then
+            info_queue[#info_queue+1] = AKYRS.DescriptionDummies["dd_akyrs_letter_puzzle_umbral_expl"]
+        end
         return {
             vars = {
                 card.ability.min_highlighted
@@ -835,6 +838,7 @@ SMODS.Consumable{
             function (_card, index)
                 if index == 1 then
                     if G.hand.highlighted[2] then
+                        ---@type Card
                         local c2 = G.hand.highlighted[2]
                         if c2.edition then
                             _card:set_edition(c2.edition.key)
@@ -847,6 +851,11 @@ SMODS.Consumable{
                             if _card and _card.ability.akyrs_special_card_type == "rank" then
                                 _card.ability.akyrs_special_card_type = nil
                                 _card:set_sprites(_card.config.center,_card.config.card)
+                            end
+                        end
+                        if _card then
+                            if _card:get_letter_with_pretend() and c2:get_letter_with_pretend() then
+                                _card:set_letters(_card:get_letter_with_pretend()..c2:get_letter_with_pretend())
                             end
                         end
                     end
