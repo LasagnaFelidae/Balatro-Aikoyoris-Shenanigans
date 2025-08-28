@@ -30,11 +30,19 @@ function AKYRS.aikoyori_draw_extras(card, layer)
         tint = true
     end
 
-    if card.akyrs_letter then
+    if card.akyrs_letter and type(card.akyrs_letter) == "table" then
         if tint then
-            card.akyrs_letter:draw_shader('akyrs_magenta_tint', nil, nil, nil, center, nil, nil, nil, -0.02 + movement_mod * 0.9)
+            for i,st in ipairs(card.akyrs_letter) do
+                ---@type Sprite
+                st = st 
+                local pos =  ((#card.akyrs_letter) - (i)) * 0.5
+                st:draw_shader('akyrs_magenta_tint', nil, nil, nil, center, nil, nil, nil, -pos-0.02 + movement_mod * 0.9)
+            end
         else
-            card.akyrs_letter:draw_shader('dissolve', nil, nil, nil, center, nil, nil, nil, -0.02 + movement_mod * 0.9)
+            for i,st in ipairs(card.akyrs_letter) do
+                local pos =  ((#card.akyrs_letter) - (i)) * 0.5
+                st:draw_shader('dissolve', nil, nil, nil, center, nil, nil, nil, -pos-0.02 + movement_mod * 0.9)
+            end
         end
     end
 end

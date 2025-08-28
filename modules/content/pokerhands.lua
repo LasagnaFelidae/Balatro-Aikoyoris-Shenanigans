@@ -122,8 +122,9 @@ for i = 3, 31 do
                 elseif alpha == "#" and AKYRS.config.wildcard_behaviour == 3 then -- if it's unset in mode 3 then just make it a random letter i guess
                     alpha = '★'
                 end
-                table.insert(word_hand, alpha)
-                    
+                for _, ltr in ipairs(AKYRS.word_splitter(alpha)) do
+                    table.insert(word_hand, ltr)
+                end 
             end
             if #word_hand ~= i then
                 return {}

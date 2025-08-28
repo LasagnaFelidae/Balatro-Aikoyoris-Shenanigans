@@ -63,7 +63,15 @@ for letter, count in pairs(AKYRS.math_deck_pro_distribution) do
 end
 
 AKYRS.get_scrabble_score = function(letter)
-
+    if not letter then return 0 end
+    if #letter > 1 then
+        local w = AKYRS.word_splitter(letter) 
+        local sc = 0
+        for _, ltr in ipairs(w) do
+            sc = sc + AKYRS.get_scrabble_score(ltr)
+        end
+        return sc
+    end
     if AKYRS.scrabble_scores[letter] then
         return AKYRS.scrabble_scores[letter]
     end

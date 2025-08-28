@@ -391,8 +391,12 @@ end
 
 local cardRemoveHookFirst = Card.remove
 function Card:remove()
-    
-    if self.akyrs_letter then self.akyrs_letter:remove() end
+    if self.akyrs_letter and type(self.akyrs_letter) == "table" then
+        for _,lt in ipairs(self.akyrs_letter) do
+            lt:remove()
+        end
+        self.akyrs_letter = nil
+    end
     return cardRemoveHookFirst(self)
 end
 
