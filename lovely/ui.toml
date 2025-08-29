@@ -153,9 +153,21 @@ target = "functions/state_events.lua"
 pattern = """        add_round_eval_row({dollars = 0, name='blind1', pitch = pitch, saved = true})"""
 position = "before"
 payload = """
-    if G.GAME.akyrs_mathematics_enabled and G.GAME.akyrs_character_stickers_enabled then 
-        add_round_eval_row({dollars = G.GAME.blind.dollars, name='blind1', pitch = pitch})
-    else
+local should_win = false
+if G.GAME.blind.debuff.special_blind and G.GAME.aiko_puzzle_win then
+    if G.GAME.aiko_puzzle_win then
+        --print("win")
+        should_win = true
+    end
+elseif G.GAME.akyrs_mathematics_enabled and G.GAME.akyrs_character_stickers_enabled then
+    if (G.GAME.blind and AKYRS.is_value_within_threshold(G.GAME.blind.chips, G.GAME.chips, G.GAME.akyrs_math_threshold)) or AKYRS.compare(G.GAME.current_round.hands_left,"<",1) or AKYRS.does_hand_only_contain_symbols(G.hand) then
+        should_win = true
+    end
+end
+if should_win then 
+    add_round_eval_row({dollars = G.GAME.blind.dollars, name='blind1', pitch = pitch})
+    dollars = dollars + G.GAME.blind.dollars
+else
 """
 overwrite = true
 match_indent = true
@@ -168,7 +180,7 @@ target = "functions/state_events.lua"
 pattern = """        add_round_eval_row({dollars = 0, name='blind1', pitch = pitch, saved = true})"""
 position = "after"
 payload = """
-    end
+end
 """
 overwrite = true
 match_indent = true
