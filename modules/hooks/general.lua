@@ -1819,3 +1819,9 @@ function reset_blinds()
         rst_blind()
     end
 end
+
+local dfd2h = G.FUNCS.draw_from_deck_to_hand
+function G.FUNCS.draw_from_deck_to_hand(...)
+    if G.STATE == G.STATES.ROUND_EVAL then return end
+    return dfd2h(...)
+end

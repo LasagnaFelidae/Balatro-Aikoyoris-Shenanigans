@@ -75,13 +75,6 @@ SMODS.Blind{
         )
     end,
     drawn_to_hand = function(self)
-        AKYRS.simple_event_add(
-            function()
-                G.deck:shuffle("akyrsthought")
-                G.FUNCS.draw_from_discard_to_deck()
-                return true
-            end,0.2
-        )
     end,
     in_pool = function(self)
         return (G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled)
@@ -107,21 +100,28 @@ SMODS.Blind{
         recalculateHUDUI()
         recalculateBlindUI()
     end,
-    press_play = function(self)
-        G.STATE_COMPLETE = false
-        if not G.GAME.akyrs_win_checked then
-            AKYRS.simple_event_add(function()
-                AKYRS.simple_event_add(function()
-                    AKYRS.simple_event_add(function()
-                        if not G.GAME.akyrs_win_checked then
-                            AKYRS.force_check_win()
-                        end
-                        return true
-                    end, 0.1)
-                    return true
-                end, 0.1)
-                return true
-            end, 0)
+    calculate = function (self, blind, context)
+        if context.after then
+            return {
+                func =function ()
+                    
+                    AKYRS.simple_event_add(
+                        function()
+                            G.deck:shuffle("akyrsthought")
+                            G.FUNCS.draw_from_discard_to_deck()
+                            return true
+                        end,0.2
+                    )
+                    if true then
+                        AKYRS.simple_event_add(
+                            function()
+                                AKYRS.force_check_win({ force_draw = true})
+                                return true
+                            end, 0
+                        )
+                    end
+                end
+            }
         end
     end
 
@@ -225,13 +225,6 @@ SMODS.Blind{
             _c = _c
             _c:set_debuff(true)
         end
-        AKYRS.simple_event_add(
-            function()
-                G.deck:shuffle("akyrsbombblind")
-                G.FUNCS.draw_from_discard_to_deck()
-                return true
-            end,0.2
-        )
     end,
     in_pool = function(self)
         return (G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled)
@@ -333,6 +326,14 @@ SMODS.Blind{
                         _c = _c
                         _c:set_debuff(true)
                     end
+                    
+                    AKYRS.simple_event_add(
+                        function()
+                            G.deck:shuffle("akyrsbombblind")
+                            G.FUNCS.draw_from_discard_to_deck()
+                            return true
+                        end,0.2
+                    )
                     AKYRS.simple_event_add(
                         function()
                             if not G.GAME.akyrs_win_checked then
@@ -346,7 +347,14 @@ SMODS.Blind{
                                         end
                                     end
                                     G.GAME.aiko_puzzle_win = attention_no_longer_in_hand
-                                    AKYRS.force_check_win()
+                                    if true then
+                                        AKYRS.simple_event_add(
+                                            function()
+                                                AKYRS.force_check_win({ force_draw = true})
+                                                return true
+                                            end, 0
+                                        )
+                                    end
                                     return true
                                 end, 0.2)
                             end
