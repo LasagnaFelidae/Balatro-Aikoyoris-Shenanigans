@@ -75,6 +75,13 @@ SMODS.Blind{
         )
     end,
     drawn_to_hand = function(self)
+        AKYRS.simple_event_add(
+            function()
+                G.deck:shuffle("akyrsthought")
+                G.FUNCS.draw_from_discard_to_deck()
+                return true
+            end,0.2
+        )
     end,
     in_pool = function(self)
         return (G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled)
@@ -105,13 +112,6 @@ SMODS.Blind{
             return {
                 func =function ()
                     
-                    AKYRS.simple_event_add(
-                        function()
-                            G.deck:shuffle("akyrsthought")
-                            G.FUNCS.draw_from_discard_to_deck()
-                            return true
-                        end,0.2
-                    )
                     if true then
                         AKYRS.simple_event_add(
                             function()
@@ -214,17 +214,13 @@ SMODS.Blind{
         )
     end,
     drawn_to_hand = function(self)
-        
-        for _, _c in ipairs(G.jokers.cards) do
-            ---@type Card
-            _c = _c
-            _c:set_debuff(true)
-        end
-        for _, _c in ipairs(G.consumeables.cards) do
-            ---@type Card
-            _c = _c
-            _c:set_debuff(true)
-        end
+        AKYRS.simple_event_add(
+            function()
+                G.deck:shuffle("akyrsthought")
+                G.FUNCS.draw_from_discard_to_deck()
+                return true
+            end,0.2
+        )
     end,
     in_pool = function(self)
         return (G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled)
