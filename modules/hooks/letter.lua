@@ -263,6 +263,16 @@ G.FUNCS.cash_out = function(e)
     end
     if not G.GAME.current_round.advanced_blind or G.GAME.aiko_puzzle_win then
         local ret = {cashOutHook(e)}
+        if G.GAME.challenge then
+            local challenge_center = G.CHALLENGES[G.GAME.challenge] or AKYRS.HC_CHALLENGES[G.GAME.challenge]
+            if challenge_center and challenge_center.type == "highscore" then
+                G.PROFILES[G.SETTINGS.profile].akyrs_challenge_highscore = G.PROFILES[G.SETTINGS.profile].akyrs_challenge_highscore or {}
+                G.PROFILES[G.SETTINGS.profile].akyrs_challenge_highscore[G.GAME.challenge] = G.GAME.round
+                set_challenge_unlock()
+                G:save_settings()
+            end
+
+        end
         SMODS.set_scoring_calculation("multiply")
         G.GAME.aiko_puzzle_win = nil
         G.GAME.current_round.advanced_blind = false

@@ -532,6 +532,7 @@ AKYRS.HardcoreChallenge{
         }
     },
     difficulty = 5,
+    type = "highscore"
 }
 
 AKYRS.HardcoreChallenge{
@@ -553,4 +554,5 @@ AKYRS.HardcoreChallenge{
         }
     },
     difficulty = 6,
+    type = "highscore"
 }

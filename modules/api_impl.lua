@@ -61,7 +61,7 @@ AKYRS.generate_difficulty_icons = function(diff, config)
         info_queue[#info_queue+1] = AKYRS.DescriptionDummies[blind_txt_dmy]
     end
 end
-
+---@type SMODS.Challenge
 AKYRS.HardcoreChallenge = SMODS.Challenge:extend {
     obj_table = AKYRS.HC_CHALLENGES,
     obj_buffer = {},

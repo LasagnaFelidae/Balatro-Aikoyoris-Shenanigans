@@ -165,10 +165,13 @@ G.FUNCS.akyrs_change_hc_challenge_description = function(e)
 function G.UIDEF.akyrs_hc_challenge_list_page(_page)
 local snapped = false
 local challenge_list = {}
+
+G.PROFILES[G.SETTINGS.profile].akyrs_challenge_highscore = G.PROFILES[G.SETTINGS.profile].akyrs_challenge_highscore or {}
 for k, v in ipairs(AKYRS.HC_CHALLENGES) do
     if k > G.AKYRS_HC_CHALLENGE_PAGE_SIZE*(_page or 0) and k <= G.AKYRS_HC_CHALLENGE_PAGE_SIZE*((_page or 0) + 1) then
     if G.CONTROLLER.focused.target and G.CONTROLLER.focused.target.config.id == 'challenge_page' then snapped = true end
     local challenge_completed =  G.PROFILES[G.SETTINGS.profile].challenge_progress.completed[v.id or '']
+    local is_challenge_high_score = v.type == "highscore" and (G.PROFILES[G.SETTINGS.profile].akyrs_challenge_highscore[v.key] or 0) or nil
     local difficultyString = ''
     local numberDiff = nil
     if v.difficulty and v.difficulty > 0 then
@@ -222,12 +225,14 @@ for k, v in ipairs(AKYRS.HC_CHALLENGES) do
                                 nodes = {
                                     {
                                         n = G.UIT.C,
-                                        config = { minh = 0.4, minw = 0.4, emboss = 0.05, r = 0.1, colour = challenge_completed and G.C.GREEN or G.C.BLACK },
-                                        nodes = {
-                                            challenge_completed and
+                                        config = { minh = 0.4, minw = 0.4, emboss = 0.05, r = 0.1, colour = challenge_completed and G.C.GREEN or (is_challenge_high_score and G.C.PURPLE or G.C.BLACK), align = "cm" },
+                                        nodes = 
+                                            is_challenge_high_score and {
+                                            { n = G.UIT.T, config = { text = is_challenge_high_score, scale = 0.3, colour = G.C.WHITE } } or
+                                            nil} or {challenge_completed and
                                             { n = G.UIT.O, config = { object = Sprite(0, 0, 0.4, 0.4, G.ASSET_ATLAS["icons"], { x = 1, y = 0 }) } } or
-                                            nil
-                                        }
+                                            nil} 
+                                        
                                     },
                                 }
                             }
