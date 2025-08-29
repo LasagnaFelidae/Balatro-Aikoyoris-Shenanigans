@@ -150,16 +150,6 @@ SMODS.Blind{
         for _,c in ipairs(G.playing_cards) do
             c:set_sprites(c.config.center,c.config.card)
         end
-        for _, _c in ipairs(G.jokers.cards) do
-            ---@type Card
-            _c = _c
-            _c:set_debuff(true)
-        end
-        for _, _c in ipairs(G.consumeables.cards) do
-            ---@type Card
-            _c = _c
-            _c:set_debuff(true)
-        end
         
         --print ("Word is "..G.GAME.word_todo)
         G.E_MANAGER:add_event(
@@ -170,6 +160,17 @@ SMODS.Blind{
                     G.hand:change_size(6)
                     SMODS.change_play_limit(1e4)
                     SMODS.change_discard_limit(1e4)
+                    
+                    for _, _c in ipairs(G.jokers.cards) do
+                        ---@type Card
+                        _c = _c
+                        _c:set_debuff(true)
+                    end
+                    for _, _c in ipairs(G.consumeables.cards) do
+                        ---@type Card
+                        _c = _c
+                        _c:set_debuff(true)
+                    end
                     return true
                 end
             })
