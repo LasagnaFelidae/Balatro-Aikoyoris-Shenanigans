@@ -77,6 +77,7 @@ SMODS.Blind{
     drawn_to_hand = function(self)
         AKYRS.simple_event_add(
             function()
+                G.deck:shuffle("akyrsthought")
                 G.FUNCS.draw_from_discard_to_deck()
                 return true
             end,0.2
@@ -226,6 +227,7 @@ SMODS.Blind{
         end
         AKYRS.simple_event_add(
             function()
+                G.deck:shuffle("akyrsbombblind")
                 G.FUNCS.draw_from_discard_to_deck()
                 return true
             end,0.2
