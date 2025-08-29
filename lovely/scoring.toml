@@ -263,3 +263,17 @@ SMODS.calculate_context({akyrs_copper_end_of_round = true, game_over = game_over
 AKYRS.simple_event_add(function() AKYRS.copper_eval_calculation = nil return true end, 0)"""
 overwrite = true
 match_indent = true
+
+
+
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/utils.lua"]'
+pattern = """    local eff, triggered = individual.object:calculate(context)"""
+position = "before"
+payload = """
+if not individual or not individual.object then SMODS.pop_from_context_stack(context, "utils.lua : SMODS.eval_individual") return ret, post_trig end
+"""
+overwrite = true
+match_indent = true
+

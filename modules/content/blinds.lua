@@ -294,7 +294,7 @@ SMODS.Blind{
                                 else
                             end
                             return true
-                        end, 0.5)
+                        end, 0)
                     end
 
                 }
@@ -311,7 +311,7 @@ SMODS.Blind{
                                 else
                             end
                             return true
-                        end, 0.5)
+                        end, 0)
                     end
                 }
             end
