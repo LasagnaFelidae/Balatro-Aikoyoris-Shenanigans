@@ -533,3 +533,24 @@ AKYRS.HardcoreChallenge{
     },
     difficulty = 5,
 }
+
+AKYRS.HardcoreChallenge{
+    key = "bomb_galore",
+    jokers = {
+    },
+    vouchers = {
+    },
+    deck = {
+        type = "Hardcore Challenge Deck",
+        cards = { }
+    },
+    
+    rules = {
+        custom = {
+            {id = 'akyrs_start_with_letter_deck'},
+            {id = 'akyrs_no_skips'},
+            {id = 'akyrs_all_blinds_are', value = "bl_akyrs_the_bomb", akyrs_localized_value = {type = "name_text", key = "bl_akyrs_the_bomb", set = "Blind"}},
+        }
+    },
+    difficulty = 6,
+}

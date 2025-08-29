@@ -2481,6 +2481,7 @@ return {
             hc_akyrs_no_hints_here = "Knowledge Test",
             hc_akyrs_no_hints_here_gold_edition = "Close-Book Finals",
             hc_akyrs_wordle_galore = "Chain of Thoughts",
+            hc_akyrs_bomb_galore = "Keep Wording and Nobody Explodes",
         },
         collabs={},
         dictionary={
