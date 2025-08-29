@@ -257,7 +257,7 @@ function AKYRS.getCashOutText(config,scale,stake_sprite, num_dollars)
     end
 end
 function AKYRS.setCashOutDollars(config,scale,stake_sprite, num_dollars)
-    if G.GAME.aiko_puzzle_win then
+    if G.GAME.aiko_puzzle_win and config.name == "blind1" then
         config.dollars = config.dollars + G.GAME.blind.dollars
         return G.GAME.blind.dollars
     end
