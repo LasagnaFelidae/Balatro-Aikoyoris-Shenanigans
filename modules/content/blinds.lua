@@ -199,7 +199,14 @@ SMODS.Blind{
                             prompt_card.ability.akyrs_attention = true
                             AKYRS.simple_event_add(
                                 function ()
-                                    local prompt, freq = AKYRS.get_bomb_prompt({min_freq = math.max(500, 15000 - G.GAME.round_resets.ante * (2000)), min_length = i, max_length = i, seed = "thebombblind_carder"})
+                                    local prompt, freq = AKYRS.get_bomb_prompt(
+                                    {
+                                        min_freq = math.max(500, 15000 - G.GAME.round_resets.ante * (2000)), 
+                                        max_freq = math.max(5000, 80000 - G.GAME.round_resets.ante * (8000)), 
+                                        min_length = i, 
+                                        max_length = i, 
+                                        seed = "thebombblind_carder"
+                                    })
                                     if prompt then
                                         AKYRS.change_letter_to(prompt_card,prompt)
                                         prompt_card.ability.akyrs_word_freq = freq
