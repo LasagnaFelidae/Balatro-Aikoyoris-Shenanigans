@@ -1766,6 +1766,9 @@ end
 
 local getNewBossHook = get_new_boss
 get_new_boss = function()
+    if G.GAME.modifiers.akyrs_all_blinds_are then
+        return G.GAME.modifiers.akyrs_all_blinds_are
+    end
     if not AKYRS.can_boss_be_rerolled(G.GAME.round_resets.blind_choices.Boss) and not G.GAME.akyrs_blind_just_defeated then
         -- TODO: FIX THIS
         return G.GAME.round_resets.blind_choices.Boss
