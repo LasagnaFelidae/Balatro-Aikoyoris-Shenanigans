@@ -296,7 +296,7 @@ end
 
 G.FUNCS.akyrs_wildcard_set_letter_wildcard = function(e)
     
-    local card = AKYRS.wildcard_current
+    local card = e.config.ref_table.card
     card:flip()
     G.E_MANAGER:add_event(
         Event{
@@ -307,18 +307,18 @@ G.FUNCS.akyrs_wildcard_set_letter_wildcard = function(e)
                 delay(AKYRS.get_speed_mult(card) * 0.5)
                 card:flip()
                 play_sound('card1')
-                card:set_pretend_letters(AKYRS.wildcard_current_data.letter ~= "" and AKYRS.wildcard_current_data.letter or nil)
-                AKYRS.wildcard_current = nil
+                card:set_pretend_letters(e.config.ref_table.letter ~= "" and e.config.ref_table.letter or nil)
                 return true
             end
         }
     )
+    AKYRS.better_input_selected = nil
     G.FUNCS.exit_overlay_menu()
 end
 
 G.FUNCS.akyrs_wildcard_set_letter_wildcard_auto = function(e)
     
-    local card = AKYRS.wildcard_current
+    local card = e.config.ref_table.card
     card:flip()
     G.E_MANAGER:add_event(
         Event{
@@ -331,18 +331,18 @@ G.FUNCS.akyrs_wildcard_set_letter_wildcard_auto = function(e)
                 play_sound('card1')
                 card:set_pretend_letters("#")
                 card:highlight(false)
-                AKYRS.wildcard_current = nil
                 return true
             end
         }
     )
     card.area:remove_from_highlighted(card, true)
+    AKYRS.better_input_selected = nil
     G.FUNCS.exit_overlay_menu()
 end
     
 G.FUNCS.akyrs_wildcard_unset_letter_wildcard = function(e)
     
-    local card = AKYRS.wildcard_current
+    local card = e.config.ref_table.card
     card:flip()
     G.E_MANAGER:add_event(
         Event{
@@ -355,16 +355,16 @@ G.FUNCS.akyrs_wildcard_unset_letter_wildcard = function(e)
                 play_sound('card1')
                 card:set_pretend_letters(nil)
                 card:highlight(false)
-                AKYRS.wildcard_current = nil
                 return true
             end
         }
     )
+    AKYRS.better_input_selected = nil
     G.FUNCS.exit_overlay_menu()
 end
 G.FUNCS.akyrs_wildcard_switch_case_letter_wildcard = function(e)
     
-    local card = AKYRS.wildcard_current
+    local card = e.config.ref_table.card
     card:flip()
     G.E_MANAGER:add_event(
         Event{
@@ -377,23 +377,24 @@ G.FUNCS.akyrs_wildcard_switch_case_letter_wildcard = function(e)
                 play_sound('card1')
                 card:set_pretend_letters(AKYRS.swap_case(card.ability.aikoyori_pretend_letter))
                 card:highlight(false)
-                AKYRS.wildcard_current = nil
                 return true
             end
         }
     )
+    AKYRS.better_input_selected = nil
     G.FUNCS.exit_overlay_menu()
 end
 
 G.FUNCS.akyrs_wildcard_quit_set_letter_wildcard_menu = function(e)
+    AKYRS.better_input_selected = nil
     G.FUNCS.exit_overlay_menu()
-    AKYRS.wildcard_current = nil
 end
 
 
 function AKYRS.UIDEF.wildcards_set_letter_ui(card)
-    AKYRS.wildcard_current_data = { letter = card.ability.aikoyori_pretend_letter or "" }
-    AKYRS.wildcard_current = card
+    local data = { letter = card.ability.aikoyori_pretend_letter or '', card = card }
+    
+    
     return create_UIBox_generic_options({
         back_func = 'akyrs_wildcard_quit_set_letter_wildcard_menu',
         contents = {
@@ -410,10 +411,10 @@ function AKYRS.UIDEF.wildcards_set_letter_ui(card)
                                     h = 1,
                                     max_length = 1, 
                                     extended_corpus = true, 
-                                    prompt_text = localize("k_akyrs_type_in_letter"),
-                                    ref_table = AKYRS.wildcard_current_data,
-                                    current_prompt_text = AKYRS.wildcard_current_data.letter,
+                                    prompt_text = "",
+                                    ref_table = data,
                                     ref_value = "letter",
+                                    id = "wild_card",
                                     keyboard_offset = 4.5,
                                 })
                             }
@@ -430,6 +431,7 @@ function AKYRS.UIDEF.wildcards_set_letter_ui(card)
                                             colour = G.C.GREEN,
                                             button = "akyrs_wildcard_set_letter_wildcard",
                                             label = { localize("k_akyrs_letter_btn_set") },
+                                            ref_table = data,
                                             minw = 2.5,
                                             focus_args = { set_button_pip = true, button = 'leftshoulder', orientation = 'rm'},
                                         }),
@@ -444,6 +446,7 @@ function AKYRS.UIDEF.wildcards_set_letter_ui(card)
                                             text_colour = G.C.UI.TEXT_DARK,
                                             button = "akyrs_wildcard_set_letter_wildcard_auto",
                                             label = { localize("k_akyrs_letter_btn_auto") },
+                                            ref_table = data,
                                             minw = 2.5,
                                             focus_args = { set_button_pip = true, button = 'rightshoulder', orientation = 'rm', snap_to = true },
                                         }),
@@ -457,6 +460,7 @@ function AKYRS.UIDEF.wildcards_set_letter_ui(card)
                                             colour = G.C.RED,
                                             text_colour = G.C.WHITE,
                                             button = "akyrs_wildcard_unset_letter_wildcard",
+                                            ref_table = data,
                                             label = { localize("k_akyrs_letter_btn_unset") },
                                             minw = 2.5,
                                             focus_args = {},

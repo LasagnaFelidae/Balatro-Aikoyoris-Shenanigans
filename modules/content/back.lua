@@ -61,8 +61,11 @@ SMODS.Back{
     key = "hardcore_challenges",
     name = "Hardcore Challenge Deck",
     atlas = 'deckBacks',
-    pos = {x = 1, y = 0},
+    pos = {x = 3, y = 1},
     omit = true,
+    draw = function (self, card, layer)
+        
+    end,
     config = {
     },
 }

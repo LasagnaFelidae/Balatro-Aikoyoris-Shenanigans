@@ -621,7 +621,7 @@ function AKYRS.create_better_text_input(args)
   args.text_scale = args.text_scale or 0.4
   args.max_length = args.max_length or 16
   args.all_caps = args.all_caps or false
-  args.prompt_text = args.prompt_text or localize('k_enter_text')
+  args.prompt_text = args.prompt_text or ""
   args.current_prompt_text = args.ref_table[args.ref_value] or ''
   args.id = args.id or "text_input"
 
@@ -661,12 +661,12 @@ G.FUNCS.akyrs_text_input = function(e)
     args.current_position_text = args.position_text
   else
     e.parent.parent.config.colour = args.colour
-    args.current_prompt_text = (args.text.ref_table[args.text.ref_value] == '' and args.prompt_text or '')
+    args.current_prompt_text = (args.text.ref_table[args.text.ref_value] and args.text.ref_table[args.text.ref_value] and args.prompt_text or '')
     args.current_position_text = ''
   end
 
   local OSkeyboard_e = e.parent.parent.parent
-  if G.CONTROLLER.text_input_hook == e and G.CONTROLLER.HID.controller then
+  if G.CONTROLLER.text_input_hook == e then
     if not OSkeyboard_e.children.controller_keyboard then 
       OSkeyboard_e.children.controller_keyboard = UIBox{
         definition = AKYRS.create_better_keyboard_input{backspace_key = true, return_key = true, space_key = true, shift_key = true, osk = e},
@@ -684,6 +684,16 @@ G.FUNCS.akyrs_text_input = function(e)
     G.CONTROLLER.screen_keyboard = nil
     AKYRS.shift_toggled = nil
     G.CONTROLLER:mod_cursor_context_layer(-1)
+  else
+    if not AKYRS.better_input_selected then
+      AKYRS.better_input_selected = true
+      AKYRS.simple_event_add(
+        function ()
+          G.FUNCS.select_text_input(e.parent.parent)
+          return true
+        end, 0.05
+      )
+    end
   end
 end
 

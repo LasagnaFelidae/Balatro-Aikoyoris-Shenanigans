@@ -285,3 +285,16 @@ function AKYRS.blind_handler()
         G.GAME.round_resets.blind_states[G.GAME.blind_on_deck] = 'Defeated'
     end
 end
+
+---@param card Card card
+---@param sprite Sprite sprite
+---@params overlay number[] colour idk
+function AKYRS.back_render_override(card, sprite, overlay)
+    -- performance wise it should not be TOO bad from general testing
+    if sprite.atlas.key == "akyrs_deckBacks" and sprite.sprite_pos.x == 3 and sprite.sprite_pos.y == 1 then
+        --sprite:draw_shader('dissolve',nil,nil,overlay and true)
+        sprite:draw_shader('akyrs_enchanted',nil,nil,overlay and true)
+        return true
+    end
+    return nil
+end
