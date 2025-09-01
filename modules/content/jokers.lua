@@ -2616,7 +2616,6 @@ SMODS.Joker{
         }
     },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         return {
             key = self.key..AKYRS.bal_val("","_absurd"),
             vars = {
