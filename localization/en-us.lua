@@ -48,6 +48,20 @@ return {
 					"to place them anywhere.",
 				},
             },
+            b_akyrs_ultimate_freedom={
+                name="Ultimate Freedom Deck",
+				text = {
+					"You can drag {E:1,C:attention}any{} cards",
+					"to place them anywhere.",
+				},
+            },
+            b_akyrs_split_deck={
+                name="Split Deck",
+				text = {
+					"Start with all cards",
+                    "{C:attention}split{} in half"
+				},
+            },
             b_akyrs_cry_misprint_ultima={
                 name="Ultima Misprint Deck",
 				text = {
@@ -2656,6 +2670,8 @@ return {
                 'is demonstrated. If you are experiencing crashes related to "blind" being',
                 'nil when hovering on certain Jokers. Turning this off might mitigate that issue.',
             },
+            k_akyrs_toggle_crt = "Enable CRT Shaders",
+            k_akyrs_toggle_crt_description = 'Toggle the game\'s CRT shader (the shader saturates everything a bit)',
             k_akyrs_emerald = "Emerald",
             k_akyrs_supercommon = "Supercommon",
             k_akyrs_unique = "Unique",

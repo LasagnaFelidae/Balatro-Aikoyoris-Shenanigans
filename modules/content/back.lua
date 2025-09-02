@@ -56,6 +56,18 @@ SMODS.Back{
     },
 }
 
+SMODS.Back{
+    key = "split_deck",
+    name = "Split Deck",
+    atlas = 'deckBacks',
+    pos = {x = 2, y = 1},
+    loc_vars = function (self, info_queue, card)
+    end,
+    config = {
+        akyrs_split_deck = true
+    },
+}
+
 
 SMODS.Back{
     key = "hardcore_challenges",
@@ -92,11 +104,23 @@ SMODS.Back{
     end,
 
 }
+
 SMODS.Back{
     key = "freedom",
     atlas = "deckBacks",
     pos = { x = 8, y = 0},
     config = { akyrs_any_drag = true },
+    set_badges = function (self, card, badges)
+    end,
+    loc_vars = function (self, info_queue, card)
+    end,
+}
+
+SMODS.Back{
+    key = "ultimate_freedom",
+    atlas = "deckBacks",
+    pos = { x = 9, y = 0},
+    config = { akyrs_any_drag = true, akyrs_ultimate_freedom = true },
     set_badges = function (self, card, badges)
     end,
     loc_vars = function (self, info_queue, card)

@@ -1450,6 +1450,12 @@ function Back:apply_to_run()
     if self.effect.config.akyrs_gain_selection_per_ante then
         G.GAME.akyrs_gain_selection_per_ante = self.effect.config.akyrs_gain_selection_per_ante
     end
+    if self.effect.config.akyrs_split_deck then
+        G.GAME.starting_params.akyrs_split_deck = self.effect.config.akyrs_split_deck
+    end
+    if self.effect.config.akyrs_ultimate_freedom then
+        G.GAME.starting_params.akyrs_ultimate_freedom = self.effect.config.akyrs_ultimate_freedom
+    end
 
     if self.effect.config.akyrs_any_drag then
         G.GAME.akyrs_any_drag = self.effect.config.akyrs_any_drag

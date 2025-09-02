@@ -604,3 +604,21 @@ num_dollars = AKYRS.setCashOutDollars(config,scale,stake_sprite, num_dollars) or
 """
 overwrite = true
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = """        love.graphics.setShader( G.SHADERS['CRT'])"""
+position = "before"
+payload = """if AKYRS.config.turn_on_crt then"""
+overwrite = true
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = """        love.graphics.setShader( G.SHADERS['CRT'])"""
+position = "after"
+payload = """end"""
+overwrite = true
+match_indent = true

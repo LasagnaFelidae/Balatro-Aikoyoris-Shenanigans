@@ -255,6 +255,10 @@ G.FUNCS.akyrs_change_joker_preview_stuff = function (e)
   AKYRS.save_config(e)
 end
 
+G.FUNCS.akyrs_change_crt_toggle = function (e)
+  AKYRS.save_config(e)
+end
+
 AKYRS.balance_map = {
   ["adequate"] = 1,
   ["absurd"] = 2,
@@ -448,6 +452,38 @@ SMODS.current_mod.config_tab = function ()
             n = G.UIT.T,
             config = {
               text = localize("k_akyrs_joker_preview_description")[3],
+              scale = 0.4,
+              colour = G.C.UI.TEXT_LIGHT,
+            }
+          }
+        }
+      },
+
+      { n = G.UIT.R, config = { align = "tm"}, nodes = {
+        { n = G.UIT.C, config = {
+          align = "cm", padding = 0.2,
+        }, nodes = {
+          
+          create_toggle({
+            label = localize("k_akyrs_toggle_crt"),
+            ref_table = AKYRS.config,
+            ref_value = "turn_on_crt",
+            label_scale = 0.5,
+            callback = G.FUNCS.akyrs_change_crt_toggle
+          })
+          }
+        },
+        } 
+      },
+      {
+        n = G.UIT.R,{
+          align = "cm", padding = 0.2,
+        },
+        nodes = {
+          {
+            n = G.UIT.T,
+            config = {
+              text = localize("k_akyrs_toggle_crt_description"),
               scale = 0.4,
               colour = G.C.UI.TEXT_LIGHT,
             }

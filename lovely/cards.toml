@@ -122,3 +122,16 @@ AKYRS.mod_card_displays(_c,card,desc_nodes,specific_vars)
 overwrite = true
 match_indent = true
 
+
+
+[[patches]]
+[patches.pattern]
+target = 'game.lua'
+pattern = "        self.GAME.starting_deck_size = #G.playing_cards"
+position = "before"
+payload = """
+AKYRS.mod_playing_cards(self)
+"""
+overwrite = true
+match_indent = true
+

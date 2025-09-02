@@ -298,3 +298,20 @@ function AKYRS.back_render_override(card, sprite, overlay)
     end
     return nil
 end
+
+---@param self Game game
+AKYRS.mod_playing_cards = function(self)
+    if self.GAME.starting_params.akyrs_split_deck then
+        local cards = {}
+        for i = 1, #G.playing_cards do
+            ---@type Card
+            local _c = G.playing_cards[i]
+            local _c2 = AKYRS.copy_p_card(_c,nil, nil, nil, nil, G.deck)
+            table.insert(cards,_c2)
+            AKYRS.set_special_card_type(_c, "suit")
+        end
+        for _, _c2 in ipairs(cards) do
+            AKYRS.set_special_card_type(_c2, "rank")
+        end
+    end
+end
