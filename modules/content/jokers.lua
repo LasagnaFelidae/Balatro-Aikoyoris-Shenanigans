@@ -2059,7 +2059,7 @@ SMODS.Joker {
             end
         end
         if context.setting_blind then
-            if AKYRS.is_mod_loaded("vallkarri") then
+            if AKYRS.is_mod_loaded("GrabBag") then
                 return {
                     func = function()
                         SMODS.add_card({set = "Ephemeral", area = G.consumeables, edition = "e_negative"})
