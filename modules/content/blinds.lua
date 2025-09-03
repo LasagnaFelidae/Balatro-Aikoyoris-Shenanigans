@@ -780,6 +780,171 @@ SMODS.Blind {
 }
 
 
+SMODS.Blind{
+    key = "the_reverse",
+    dollars = 5,
+    mult = 2,
+    boss_colour = HEX("ff7d49"),
+    atlas = 'aikoyoriBlindsChips', 
+    boss = {min = 1, max = 10},
+    pos = { x = 0, y = 4 },
+    debuff = {
+        akyrs_is_word_blind = true,
+    },
+    in_pool = function(self)
+        return (G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled)
+    end,
+    loc_vars = function (self)
+        return {
+            vars = {
+                string.upper(G.GAME.akyrs_letter_target)
+            }
+        }
+    end,
+    set_blind = function (self)
+        G.GAME.words_reversed = true
+    end,
+    disable = function (self)
+        G.GAME.words_reversed = nil
+    end,
+    defeat = function (self)
+        G.GAME.words_reversed = nil
+    end,
+    
+}
+
+
+SMODS.Blind{
+    key = "the_alignment",
+    dollars = 5,
+    mult = 2,
+    boss_colour = HEX("825bff"),
+    atlas = 'aikoyoriBlindsChips2', 
+    boss = {min = 4, max = 10},
+    pos = { x = 0, y = 15 },
+    debuff = {
+        
+    },
+    in_pool = function(self)
+        return true
+    end,
+    calculate = function (self, blind, context)
+        if context.modify_scoring_hand then
+            local index = AKYRS.find_index(context.full_hand, context.other_card)
+            if index and index == 1 or index == #context.full_hand then
+                return {
+                    remove_from_hand = true
+                }
+            end
+            
+        end
+    end
+    
+}
+
+SMODS.Blind{
+    key = "the_duality",
+    dollars = 5,
+    mult = 2,
+    boss_colour = HEX("ff6e96"),
+    atlas = 'aikoyoriBlindsChips2', 
+    boss = {min = 4, max = 10},
+    pos = { x = 0, y = 16 },
+    debuff = {
+        
+    },
+    in_pool = function(self)
+        return true
+    end,
+    calculate = function (self, blind, context)
+        if context.before then
+            for i = 1, #G.play.cards do
+                if i == 1 or i ==  #G.play.cards then
+                    G.play.cards[i]:set_debuff(true)
+                end
+            end
+            
+        end
+    end
+    
+}
+
+SMODS.Blind{
+    key = "the_collapse",
+    dollars = 5,
+    mult = 2,
+    boss_colour = HEX("ffcb7b"),
+    atlas = 'aikoyoriBlindsChips2', 
+    boss = {min = 1, max = 10},
+    pos = { x = 0, y = 17 },
+    debuff = {
+        akyrs_no_gain_cash = true
+    },
+    in_pool = function(self)
+        return true
+    end,
+    
+}
+
+SMODS.Blind{
+    key = "the_bonsai",
+    dollars = 5,
+    mult = 2,
+    boss_colour = HEX("b8f083"),
+    atlas = 'aikoyoriBlindsChips2', 
+    boss = {min = 4, max = 10},
+    pos = { x = 0, y = 18 },
+    config = {
+        numer = 1,
+        denum = 3,
+    },
+    in_pool = function(self)
+        return true
+    end,
+    loc_vars = function (self)
+        local n, d = SMODS.get_probability_vars(self, self.config.numer, self.config.denum, "akyrs_bonsai_blind")
+        return {
+            vars = {
+                n, d
+            }
+        }
+    end,
+    collection_loc_vars = function (self)
+        local n, d = SMODS.get_probability_vars(self, self.config.numer, self.config.denum, "akyrs_bonsai_blind")
+        return {
+            vars = {
+                n, d
+            }
+        }
+    end,
+    calculate = function (self, blind, context)
+        if context.modify_scoring_hand then
+            if SMODS.pseudorandom_probability(self, "akyrs_bonsai_blind",self.config.numer, self.config.denum) and context.other_card:is_face() then
+                return {
+                    remove_from_hand = true
+                }
+            end
+        end
+    end
+}
+
+
+SMODS.Blind{
+    key = "the_base",
+    dollars = 5,
+    mult = 1,
+    boss_colour = HEX("32f9ff"),
+    atlas = 'aikoyoriBlindsChips2', 
+    boss = {min = 2, max = 10},
+    pos = { x = 0, y = 19 },
+    debuff = {
+        akyrs_no_retriggers = true
+    },
+}
+
+
+-- le finale bosse
+
 
 -- Showdown Bosses
 SMODS.Blind {

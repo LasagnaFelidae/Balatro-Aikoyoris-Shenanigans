@@ -123,6 +123,39 @@ return {
                     "chance to be forever selected",
                 }
             },
+            bl_akyrs_the_alignment= {
+                name = "The Alignment",
+                text = {
+                    "First and last played cards",
+                    "are removed from scoring",
+                }
+            },
+            bl_akyrs_the_duality= {
+                name = "The Duality",
+                text = {
+                    "First and last played cards",
+                    "are debuffed",
+                }
+            },
+            bl_akyrs_the_collapse= {
+                name = "The Collapse",
+                text = {
+                    "Cannot gain money during the round",
+                }
+            },
+            bl_akyrs_the_bonsai= {
+                name = "The Bonsai",
+                text = {
+                    "Face cards have #1# in #2# chance",
+                    "to not score",
+                }
+            },
+            bl_akyrs_the_base= {
+                name = "The Base",
+                text = {
+                    "No retriggers",
+                }
+            },
             bl_akyrs_final_periwinkle_pinecone= {
                 name = "Periwinkle Pinecone",
                 text = {

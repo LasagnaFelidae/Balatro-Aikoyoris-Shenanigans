@@ -169,8 +169,8 @@ SMODS.calculate_individual_effect = function(effect, scored_card, key, amount, f
 end
 
 local smodgetprobvar = SMODS.get_probability_vars
-function SMODS.get_probability_vars(trigger_obj, base_numerator, base_denominator, identifier, from_roll)
-    local n, d = smodgetprobvar(trigger_obj, base_numerator, base_denominator, identifier, from_roll)
+function SMODS.get_probability_vars(trigger_obj, base_numerator, base_denominator, identifier, from_roll, non_modifiable)
+    local n, d = smodgetprobvar(trigger_obj, base_numerator, base_denominator, identifier, from_roll, non_modifiable)
     
     G.GAME.akyrs_prob_mod = G.GAME.akyrs_prob_mod or {}
     for _, mod in ipairs(G.GAME.akyrs_prob_mod) do
@@ -188,4 +188,23 @@ function SMODS.get_probability_vars(trigger_obj, base_numerator, base_denominato
         end
     end
     return n, d
+end
+
+
+local calcrep = SMODS.calculate_repetitions
+SMODS.calculate_repetitions = function(card, context, reps)
+    if G.GAME.blind and G.GAME.blind.debuff.akyrs_no_retriggers then
+        return {}
+    end
+	local reps = calcrep(card, context, reps)
+	reps = reps or { 1 }
+	return reps
+end
+
+local easedol = ease_dollars
+ease_dollars = function(amnt, insta)
+    if G.GAME.blind and G.GAME.blind.debuff.akyrs_no_gain_cash then
+        return 
+    end
+    return easedol(amnt, insta)
 end
