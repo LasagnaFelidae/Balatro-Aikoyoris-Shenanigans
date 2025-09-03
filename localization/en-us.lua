@@ -2539,7 +2539,7 @@ return {
             k_akyrs_with = "with",
             k_akyrs_credits = "Credits",
             k_akyrs_created_by = "Created by",
-            k_akyrs_additional_art_by = "Additional Art by",
+            k_akyrs_additional_art_by = "Additional Arts by",
             k_akyrs_difficult = "Difficult",
             k_akyrs_dried = "Dried...",
             k_akyrs_moisture = "Moisturised!",

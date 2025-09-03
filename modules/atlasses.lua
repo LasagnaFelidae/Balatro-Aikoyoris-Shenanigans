@@ -116,6 +116,14 @@ SMODS.Atlas {
 }
 
 SMODS.Atlas {
+    key = "mystery",
+    path = "mystery.png",
+    px = 320,
+    py = 320
+}
+
+
+SMODS.Atlas {
     key = "aikoyoriTags",
     path = "aikoyoriTags.png",
     px = 34,

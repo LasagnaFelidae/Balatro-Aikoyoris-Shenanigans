@@ -378,6 +378,9 @@ function AKYRS.embedded_ui_sprite( sprite_atlas, sprite_pos, desc_nodes, config 
     local sprite_atli = G.ASSET_ATLAS[sprite_atlas]
     local height = config.h or sprite_atli.py
     local width = config.w or sprite_atli.px
+    local manual_scale = config.manual_scale
+    local fix_height = config.fxh
+    local fix_width = config.fxw
     local scale = config.scale or 1
     local padding = config.padding or 0.07
     local rounded = config.rounded or 0.1
@@ -386,7 +389,7 @@ function AKYRS.embedded_ui_sprite( sprite_atlas, sprite_pos, desc_nodes, config 
     local alignment = config.alignment or "cm"
     local box_height = config.box_height or 0
     local aspect_ratio = sprite_atli.px / sprite_atli.py
-    local longer_value = math.max(sprite_atli.px, sprite_atli.py)
+    local longer_value = not manual_scale and math.max(sprite_atli.px, sprite_atli.py) or manual_scale
     local sprt = Sprite(
         G.ROOM.T.x + margin_left * G.ROOM.T.w, G.ROOM.T.h + margin_top
         ,width*scale/(aspect_ratio*longer_value), height*scale/(aspect_ratio*longer_value),
@@ -395,7 +398,7 @@ function AKYRS.embedded_ui_sprite( sprite_atlas, sprite_pos, desc_nodes, config 
     local uiEX = 
     {
         n = G.UIT.R,
-        config = { align = alignment , padding = padding, no_fill = true, minh = box_height, r = rounded },
+        config = { align = alignment , padding = padding, no_fill = true, r = rounded, minh = box_height or fix_height, maxh = fix_height, minw = fix_width, maxw = fix_width },
         nodes = {
             {n = G.UIT.O, config = { object = sprt }}
         }
