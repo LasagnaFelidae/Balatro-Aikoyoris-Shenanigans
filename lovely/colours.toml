@@ -17,6 +17,9 @@ AKYRS_NIJIKA = HEX("e38e20"),
 AKYRS_RYOU = HEX("3653f7"),
 AKYRS_UMBRAL_P = HEX("925ac3"),
 AKYRS_UMBRAL_Y = HEX("ffd45b"),
+AKYRS_AIKOYORI_HAIR = HEX("8dffa8"),
+AKYRS_AIKOYORI_SUSPENDERS = HEX("73c0ff"),
+AKYRS_AIKOYORI_SHIRT = HEX("ffffff"),
 """
 overwrite = true
 match_indent = true

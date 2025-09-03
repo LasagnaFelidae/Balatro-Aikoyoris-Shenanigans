@@ -363,7 +363,7 @@ return {
                 },
             },
             dd_akyrs_aikoyori_base_ability_absurd={
-                name="Steamodded & Lovely Ability",
+                name="Steamodded, Lovely & Talisman Ability",
                 text={
                     "{X:dark_edition,C:white} ^#1# {} Mult per",
                     "{C;attention}non-face{} cards scored",
