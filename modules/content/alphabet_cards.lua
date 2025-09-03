@@ -98,7 +98,11 @@ SMODS.Consumable{
         text = { "Convert up to #2# selected card's","letter to {C:red}Wild (#1#){}" },
     },
     loc_vars = function(self, info_queue, card)
-        info_queue[#info_queue+1] = {key = 'lettersWild', set = 'AikoyoriExtraBases'}
+        info_queue[#info_queue+1] = {key = 'letters'..string.upper(card.ability.extra.letter), set = 'AikoyoriExtraBases' ,vars = {
+            card.ability.extra.letter,
+            (AKYRS.get_scrabble_score(card.ability.extra.letter)),
+            1 + (AKYRS.get_scrabble_score(card.ability.extra.letter)/10),
+        }}
         return {
             vars = {
                 string.upper(card.ability.extra.letter),
