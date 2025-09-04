@@ -2046,6 +2046,9 @@ SMODS.Joker {
         if AKYRS.is_mod_loaded("GrabBag") then
             info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_grab_bag_ability"}
         end
+        if AKYRS.is_mod_loaded("ortalab") then
+            info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_ortalab_ability"}
+        end
         return {
         }
     end,
@@ -2078,6 +2081,18 @@ SMODS.Joker {
                     end
                 }
             end
+        end
+        if context.akyrs_ortalab_zodiac_used then
+            return {
+                func = function ()
+                    AKYRS.simple_event_add(
+                        function()
+                            level_up_hand(card, context.zodiac_proto.config.extra.hand_type)
+                            return true
+                        end
+                    )
+                end, 0
+            }
         end
         if context.before then
             if Cryptid and #G.play.cards == 1 and G.play.cards[1]:get_id() == 14 then

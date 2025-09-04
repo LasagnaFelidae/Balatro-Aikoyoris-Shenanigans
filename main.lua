@@ -71,6 +71,7 @@ assert(SMODS.load_file("./modules/compat/cartomancer.lua"))()
 assert(SMODS.load_file("./modules/compat/notjustyet.lua"))()
 assert(SMODS.load_file("./modules/compat/togasstuff.lua"))()
 assert(SMODS.load_file("./modules/compat/partner.lua"))()
+assert(SMODS.load_file("./modules/compat/ortalab.lua"))()
 
 -- cross mod loading
 for _,mod in pairs(SMODS.Mods) do

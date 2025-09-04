@@ -513,6 +513,13 @@ return {
                     "When blind is selected"
                 },
             },
+            dd_akyrs_ortalab_ability={
+                name="Ortalab Ability",
+                text={
+                    "Upgrade the {C:attention}corresponding{} poker hand",
+                    "When {C:attention}Zodiac{} cards are used"
+                },
+            },
             dd_akyrs_mukuroju_en = {
                 name = "Mukuroju no Hakamori",
                 text = { 
