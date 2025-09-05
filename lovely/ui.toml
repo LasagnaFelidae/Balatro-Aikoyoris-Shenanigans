@@ -652,3 +652,38 @@ payload = """if _c and _c.set == "DescriptionDummy" and G.GAME.akyrs_hatena_deck
 end"""
 overwrite = true
 match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = """      local multi_boxes = {}"""
+position = "at"
+payload = """
+"""
+overwrite = true
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = """      if AUT.badges.card_type or AUT.badges.force_rarity then"""
+position = "before"
+payload = """
+local multi_boxes = {}
+if obj and obj.set == "Joker" and G.GAME.akyrs_hatena_deck then
+
+else"""
+overwrite = true
+match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = """      info_boxes = {{n=G.UIT.R, config = {align="cm", padding = 0.05, card_pos = card.T.x }, nodes = info_cols}}"""
+position = "before"
+payload = """end"""
+overwrite = true
+match_indent = true
+
