@@ -985,3 +985,13 @@ end
 AKYRS.rows_needed_for_icon = function()
     return (G.skill_deck and 1 or 0) + (G.akyrs_blind_icons and 1 or 0) 
 end
+
+local tagGen = Tag.generate_UI
+function Tag:generate_UI(_size)
+    local tag_sprite_tab, tag_sprite = tagGen(self, _size)
+    if AKYRS.should_conceal_card(nil,self.config) then
+        tag_sprite.atlas = G.ASSET_ATLAS["akyrs_aikoyoriTags"]
+        tag_sprite:set_sprite_pos({x = 0, y = 9})
+    end
+    return tag_sprite_tab, tag_sprite
+end
