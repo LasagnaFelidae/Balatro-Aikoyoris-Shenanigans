@@ -87,7 +87,7 @@ local cardSetSpriteHook = Card.set_sprites
 function Card:set_sprites(_c,_f)
     local x = cardSetSpriteHook(self,_c,_f)
     _c = _c or self.config.center
-    if _c and _c.set == "Joker" and G.GAME.akyrs_hatena_deck then
+    if _c and _c.set == "Joker" and AKYRS.should_conceal_card(self, _c) then
         for key, spriters in pairs(self.children) do
             if self.children[key] and key ~= "center" and key ~= "shadow" and key ~= "back" then
                 if spriters.atlas then
@@ -324,4 +324,9 @@ end
 local card_click = Card.click
 function Card:click()
     return card_click(self)
+end
+
+AKYRS.should_conceal_card = function(card, center)
+    if not card then return G.GAME.akyrs_hatena_deck end
+    return G.GAME.akyrs_hatena_deck or (card.ability and card.ability.akyrs_concealed)
 end

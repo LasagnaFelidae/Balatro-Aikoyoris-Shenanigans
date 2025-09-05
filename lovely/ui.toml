@@ -629,13 +629,15 @@ match_indent = true
 target = "functions/common_events.lua"
 pattern = """    if not full_UI_table.name then"""
 position = "before"
-payload = """if _c and _c.set == "Joker" and G.GAME.akyrs_hatena_deck then
+payload = """local akyrs_should_conceal = false
+if _c and _c.set == "Joker" and AKYRS.should_conceal_card(card, _c) then
     local _c2 = {}
     for k, v in pairs(_c) do
         _c2[k] = v
     end
     _c2.key = "j_hatena"
     _c2.set = "DescriptionDummy"
+    akyrs_should_conceal = true
     _c = _c2
 end"""
 overwrite = true
@@ -647,7 +649,7 @@ match_indent = true
 target = "functions/common_events.lua"
 pattern = """    for _, v in ipairs(info_queue) do"""
 position = "before"
-payload = """if _c and _c.set == "DescriptionDummy" and G.GAME.akyrs_hatena_deck then
+payload = """if _c and akyrs_should_conceal and AKYRS.should_conceal_card(card, _c) then
     info_queue = {}
 end"""
 overwrite = true
@@ -682,7 +684,7 @@ position = "before"
 payload = """
 local multi_boxes = {}
 local info_cols = {}
-if obj and obj.set == "Joker" and G.GAME.akyrs_hatena_deck then
+if obj and obj.set == "Joker" and AKYRS.should_conceal_card(self, obj) then
 
 else"""
 overwrite = true
@@ -695,6 +697,17 @@ target = "functions/UI_definitions.lua"
 pattern = """      info_boxes = {{n=G.UIT.R, config = {align="cm", padding = 0.05, card_pos = card.T.x }, nodes = info_cols}}"""
 position = "before"
 payload = """end"""
+overwrite = true
+match_indent = true
+
+
+
+[[patches]]
+[patches.pattern]
+target = '=[SMODS _ "src/overrides.lua"]'
+pattern = """	elseif num_lines < #e.children then"""
+position = "before"
+payload = """num_lines = num_lines + AKYRS.rows_needed_for_icon()"""
 overwrite = true
 match_indent = true
 

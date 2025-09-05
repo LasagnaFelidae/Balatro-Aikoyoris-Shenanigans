@@ -1227,6 +1227,27 @@ function Card:load(cardTable, other_card)
     self.akyrs_old_ability = cardTable.akyrs_old_ability
     self.akyrs_upgrade_sliced = cardTable.akyrs_upgrade_sliced
     self.akyrs_impostor_card = cardTable.akyrs_impostor_card
+    
+    _c = self.config.center
+
+    if _c and _c.set == "Joker" and AKYRS.should_conceal_card(self, _c) then
+        for key, spriters in pairs(self.children) do
+            if self.children[key] and key ~= "center" and key ~= "shadow" and key ~= "back" then
+                if spriters.atlas then
+                    spriters.atlas = G.ASSET_ATLAS["akyrs_blank"]
+                    spriters:set_sprite_pos({ x = 0, y = 0})
+                end
+            elseif key == "center" then
+                AKYRS.simple_event_add(
+                    function ()
+                        spriters.T.w = G.CARD_W
+                        spriters.T.h = G.CARD_H
+                        return true
+                    end, 0, "other"
+                )
+            end
+        end
+    end
     return c
 end
 

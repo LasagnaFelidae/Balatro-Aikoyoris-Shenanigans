@@ -845,7 +845,7 @@ function localize(args, misc_cat)
     return locHooker(args, misc_cat)
 end
 
-
+--[[
 G.FUNCS.HUD_blind_debuff = function(e)
 	local scale = 0.4
 	local num_lines = #G.GAME.blind.loc_debuff_lines
@@ -874,6 +874,7 @@ G.FUNCS.HUD_blind_debuff = function(e)
 	e.UIBox:recalculate()
 
 end
+]]
 local moveableRemoveHook = Moveable.remove
 function Moveable:remove()
     if self.children and type(self.children) == 'table' then
@@ -979,4 +980,8 @@ function Game:main_menu(change_context)
             major = G.ROOM_ATTACH
         }
     })
+end
+
+AKYRS.rows_needed_for_icon = function()
+    return (G.skill_deck and 1 or 0) + (G.akyrs_blind_icons and 1 or 0) 
 end
