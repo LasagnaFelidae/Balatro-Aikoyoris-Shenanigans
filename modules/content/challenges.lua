@@ -556,3 +556,39 @@ AKYRS.HardcoreChallenge{
     difficulty = 6,
     type = "highscore"
 }
+
+AKYRS.HardcoreChallenge{
+    key = "hatena_jokers",
+    jokers = {
+    },
+    vouchers = {
+    },
+    deck = {
+        type = "Hardcore Challenge Deck",
+    },
+    
+    rules = {
+        custom = {
+            {id = 'akyrs_hatena_deck'},
+        }
+    },
+    difficulty = 7,
+}
+
+AKYRS.HardcoreChallenge{
+    key = "hatena_everything",
+    jokers = {
+    },
+    vouchers = {
+    },
+    deck = {
+        type = "Hardcore Challenge Deck",
+    },
+    
+    rules = {
+        custom = {
+            {id = 'akyrs_hatena_everything'},
+        }
+    },
+    difficulty = 12,
+}

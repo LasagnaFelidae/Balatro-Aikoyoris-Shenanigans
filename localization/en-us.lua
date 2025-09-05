@@ -2552,6 +2552,8 @@ return {
             hc_akyrs_no_hints_here_gold_edition = "Close-Book Finals",
             hc_akyrs_wordle_galore = "Chain of Thoughts",
             hc_akyrs_bomb_galore = "Keep Wording and Nobody Explodes",
+            hc_akyrs_hatena_jokers = "????????",
+            hc_akyrs_hatena_everything = "???????????????",
         },
         collabs={},
         dictionary={
@@ -2891,6 +2893,12 @@ return {
             },
             ch_c_akyrs_all_blinds_are={
                 "{C:attention}All Blinds{} are {C:attention}#1#",
+            },
+            ch_c_akyrs_hatena_deck={
+                "{C:attention}All Jokers{} are {C:red}concealed",
+            },
+            ch_c_akyrs_hatena_everything={
+                "{C:attention}All cards{} are {C:red}concealed",
             },
         },
     },

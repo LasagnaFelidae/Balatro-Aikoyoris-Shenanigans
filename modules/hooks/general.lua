@@ -323,6 +323,12 @@ function Game:start_run(args)
     if G.GAME.modifiers.akyrs_no_skips then
         G.GAME.akyrs_no_skips = G.GAME.modifiers.akyrs_no_skips
     end
+    if G.GAME.modifiers.akyrs_hatena_deck then
+        G.GAME.akyrs_hatena_deck = G.GAME.modifiers.akyrs_hatena_deck
+    end
+    if G.GAME.modifiers.akyrs_hatena_everything then
+        G.GAME.akyrs_hatena_everything = G.GAME.modifiers.akyrs_hatena_everything
+    end
     if self.GAME.modifiers.akyrs_no_hints then
         AKYRS.simple_event_add(
             function()
@@ -1520,6 +1526,10 @@ function Back:apply_to_run()
 
     if G.GAME.starting_params.akyrs_hatena_deck then
         G.GAME.akyrs_hatena_deck = G.GAME.starting_params.akyrs_hatena_deck
+    end
+
+    if G.GAME.starting_params.akyrs_hatena_everything then
+        G.GAME.akyrs_hatena_deck = G.GAME.starting_params.akyrs_hatena_everything
     end
 
     if self.effect.config.akyrs_math_threshold then
