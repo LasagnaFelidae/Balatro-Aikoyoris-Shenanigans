@@ -931,15 +931,31 @@ Obviously this is not a real crash LMAO don't bother reporting.
         end
         local w = table.concat(aiko_current_word_split,"")
         check_for_unlock({type = "akyrs_spell_word", word = w, lowercase_word = string.lower(w)})
+        
         local wordData = {}
-        if (AKYRS.WORD_CHECKED[aiko_current_word_split]) then
-            --print("WORD "..word_hand_str.." IS IN MEMORY AND THUS SHOULD USE THAT")
-            wordData = AKYRS.WORD_CHECKED[aiko_current_word_split]
-        else
-            --print("WORD "..word_hand_str.." IS NOT IN MEMORY ... CHECKING")
-            wordData = AKYRS.check_word(aiko_current_word_split)
-            AKYRS.WORD_CHECKED[aiko_current_word_split] = wordData
+        
+        local all_wildcards = true
+        for _, val in ipairs(aiko_current_word_split) do
+            if val ~= "#" then
+                all_wildcards = false
+                break
+            end
         end
+        if all_wildcards then
+            G.GAME.aiko_current_word = string.lower(AKYRS.example_words[#aiko_current_word_split])
+            wordData.valid = true
+            wordData.word = G.GAME.aiko_current_word
+        else
+            if (AKYRS.WORD_CHECKED[aiko_current_word_split]) then
+                --print("WORD "..word_hand_str.." IS IN MEMORY AND THUS SHOULD USE THAT")
+                wordData = AKYRS.WORD_CHECKED[aiko_current_word_split]
+            else
+                --print("WORD "..word_hand_str.." IS NOT IN MEMORY ... CHECKING")
+                wordData = AKYRS.check_word(aiko_current_word_split)
+                AKYRS.WORD_CHECKED[aiko_current_word_split] = wordData
+            end
+        end
+
 
         --print(wordData)
         if wordData.valid then

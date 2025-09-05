@@ -1,5 +1,5 @@
 
-local example_words = {
+AKYRS.example_words = {
     "cry",
     "card",
     "jimbo",
@@ -91,8 +91,8 @@ AKYRS.WORD_CHECKED = {
 AKYRS.words_hand = {}
 for i = 3, 31 do
     local exampler = {}
-    for j = 1, #example_words[i-2] do
-        local c = example_words[i-2]:sub(j,j)
+    for j = 1, #AKYRS.example_words[i-2] do
+        local c = AKYRS.example_words[i-2]:sub(j,j)
         table.insert(exampler,{
             AKYRS.randomCard(),
             true,
@@ -140,7 +140,7 @@ for i = 3, 31 do
                 end
             end
             if all_wildcards then
-                G.GAME.aiko_current_word = string.lower(example_words[i-2])
+                G.GAME.aiko_current_word = string.lower(AKYRS.example_words[i-2])
                 return { hand }
             end
             local wordData = {}
