@@ -682,7 +682,7 @@ return {
                 name="????????",
                 text={
                     "This joker is {C:attention}completely{} unknown",
-                    "{C:inactive}(as of now anyway)",
+                    "{C:inactive}(and you will never know what it is)",
                 },
             },
         },
