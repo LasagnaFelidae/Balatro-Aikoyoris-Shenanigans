@@ -661,8 +661,20 @@ match_indent = true
 [patches.pattern]
 target = "functions/UI_definitions.lua"
 pattern = """      local multi_boxes = {}"""
-position = "at"
+position = "before"
 payload = """
+if not multi_boxes then
+"""
+overwrite = true
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = """      local multi_boxes = {}"""
+position = "after"
+payload = """
+end
 """
 overwrite = true
 match_indent = true
@@ -671,8 +683,20 @@ match_indent = true
 [patches.pattern]
 target = "functions/UI_definitions.lua"
 pattern = """      local info_cols = {}"""
-position = "at"
+position = "before"
 payload = """
+if not info_cols then
+"""
+overwrite = true
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = """      local info_cols = {}"""
+position = "after"
+payload = """
+end
 """
 overwrite = true
 match_indent = true
@@ -695,12 +719,12 @@ match_indent = true
 [[patches]]
 [patches.pattern]
 target = "functions/UI_definitions.lua"
-pattern = """      info_boxes = {{n=G.UIT.R, config = {align="cm", padding = 0.05, card_pos = card.T.x }, nodes = info_cols}}"""
-position = "before"
+pattern = """          table.insert(info_cols, {n=G.UIT.C, config = {align="cm"}, nodes = col})
+      end"""
+position = "after"
 payload = """end"""
 overwrite = true
 match_indent = true
-
 
 
 [[patches]]
