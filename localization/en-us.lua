@@ -1339,6 +1339,18 @@ return {
                     "{s:0.7,C:inactive}bobobobo bo bobo bo bobo bobobobo bo bobo YEE{}"
                 }
             },
+            j_akyrs_yee_absurd_cass_none = {
+                name = "Yee",
+                text = { 
+                    "{C:attention}Before hand is scored{}, change",
+                    "{C:attention}first two{} letters of played hand",
+                    "to {C:green}Y{} and {C:green}E{}.",
+                    "This joker gain {X:chips,C:white} X#1# {} Chips",
+                    "if hand is {C:attention}NOT{} a {C:attention}High Card{} or {C:attention}None",
+                    "{C:inactive}(Currently {X:chips,C:white} X#2# {C:inactive} Chips)",
+                    "{s:0.7,C:inactive}bobobobo bo bobo bo bobo bobobobo bo bobo YEE{}"
+                }
+            },
             j_akyrs_chicken_jockey = {
                 name = "Chicken Jockey",
                 text = {

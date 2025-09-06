@@ -92,7 +92,7 @@ AKYRS.LetterJoker{
     loc_vars = function (self, info_queue, card)
         if AKYRS.bal("absurd") then
             return {
-                key = self.key .. "_absurd",
+                key = self.key .. "_absurd" ..(AKYRS.is_mod_loaded("Cryptid") and "_cass_none" or ""),
                 vars = {
                     card.ability.extras.xchips_add,
                     card.ability.extras.xchips,
