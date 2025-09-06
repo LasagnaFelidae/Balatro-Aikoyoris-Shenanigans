@@ -166,7 +166,7 @@ match_indent = true
 
 [[patches]]
 [patches.pattern]
-target = "functions/common_events.lua"
+target = '=[SMODS _ "src/utils.lua"]'
 pattern = """    if specific_vars and specific_vars.bonus_h_dollars then
         localize{type = 'other', key = 'card_extra_h_dollars', nodes = desc_nodes, vars = {SMODS.signed_dollars(specific_vars.bonus_h_dollars)}}
     end"""
