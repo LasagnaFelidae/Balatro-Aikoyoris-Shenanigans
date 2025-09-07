@@ -244,6 +244,9 @@ AKYRS.suit_to_atlas = function (suit_key, card)
         -- print("|-C>")
         return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (G.SETTINGS.colour_palettes[suit_key] == "hc" and 7 or 3), y = 0}
     end
+    if SMODS.Suits[suit_key] and SMODS.Suits[suit_key].akyrs_pure_suit_atlas then
+        return G.ASSET_ATLAS[SMODS.Suits[suit_key].akyrs_pure_suit_atlas.atlas_key], SMODS.Suits[suit_key].akyrs_pure_suit_atlas.pos 
+    end
     if AKYRS.other_mods_suit_to_atlas(suit_key, card) then
         return AKYRS.other_mods_suit_to_atlas(suit_key, card)
     end
@@ -264,6 +267,9 @@ AKYRS.suit_to_atlas = function (suit_key, card)
 end
 AKYRS.rank_to_atlas = function (rank_key, card)
     
+    if SMODS.Ranks[rank_key] and SMODS.Ranks[rank_key].akyrs_pure_rank_atlas then
+        return G.ASSET_ATLAS[SMODS.Ranks[rank_key].akyrs_pure_rank_atlas.atlas_key], SMODS.Ranks[rank_key].akyrs_pure_rank_atlas.pos 
+    end
     if rank_key == "Jack" then
         return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = 9, y = 0}
     end
