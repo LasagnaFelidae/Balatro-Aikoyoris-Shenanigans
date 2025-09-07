@@ -554,7 +554,7 @@ SMODS.Blind{
         return { vars = {orig_chips  * to_big(G.GAME.round_resets.ante * self.debuff.disable_chip_x) }, key = self.key }
     end,
     collection_loc_vars = function(self)
-        return { vars = { "2X"..localize("k_akyrs_power_ante")}, key = self.key }
+        return { vars = { "X 2X"..localize("k_akyrs_power_ante")}, key = self.key }
     end,
     set_blind = function(self)
     end,
