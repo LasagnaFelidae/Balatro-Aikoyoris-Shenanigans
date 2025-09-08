@@ -12,6 +12,19 @@ payload = """
 AKYRS_CROSSMOD = {}
 AKYRS_CROSSMOD.suit_to_atlas_map = {}
 AKYRS_CROSSMOD.rank_to_atlas_map = {}
+function akyrs_unpack_unordered_recursive(tbl, key)
+    local new_key, value = next(tbl, key)
+    if new_key == nil then return end
+
+    return value, akyrs_unpack_unordered_recursive(tbl, new_key)
+end
+
+function akyrs_unpack_unordered(tbl)
+    local key, value = next(tbl)
+    if key == nil then return end
+
+    return value, akyrs_unpack_unordered_recursive(tbl, key)
+end
 """
 overwrite = true
 match_indent = true

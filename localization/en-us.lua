@@ -1,3 +1,20 @@
+
+
+local poker_hand_desc = {}
+local poker_hands_name = {}
+for i = 3, 45 do
+    poker_hand_desc["akyrs_"..i.."-letter Word"] = {
+        "Create a valid "..i.."-letter English word",
+        "without extra letters"
+    }
+    poker_hands_name["akyrs_"..i.."-letter Word"] = i.."-letter Word"
+end
+poker_hands_name["akyrs_expression"] = "Expression"
+poker_hands_name["akyrs_modification"] = "Modification"
+poker_hands_name["akyrs_assignment"] = "Assignment"
+poker_hand_desc["akyrs_expression"] = {'Create a valid mathematical expression'}
+poker_hand_desc["akyrs_modification"] = {'Modify current chip value'}
+poker_hand_desc["akyrs_assignment"] = {'Assign a value to a variable'}
 return {
     descriptions = {
         Alphabets = {
@@ -2764,74 +2781,8 @@ return {
             k_akyrs_unique = "Unique",
             umbral = "Umbral"
         },
-        poker_hand_descriptions={
-            ["akyrs_3-letter Word"] =  {'Create a valid '.. 3 ..'-letter English word', 'without extra letters'},
-            ["akyrs_4-letter Word"] =  {'Create a valid '.. 4 ..'-letter English word', 'without extra letters'},
-            ["akyrs_5-letter Word"] =  {'Create a valid '.. 5 ..'-letter English word', 'without extra letters'},
-            ["akyrs_6-letter Word"] =  {'Create a valid '.. 6 ..'-letter English word', 'without extra letters'},
-            ["akyrs_7-letter Word"] =  {'Create a valid '.. 7 ..'-letter English word', 'without extra letters'},
-            ["akyrs_8-letter Word"] =  {'Create a valid '.. 8 ..'-letter English word', 'without extra letters'},
-            ["akyrs_9-letter Word"] =  {'Create a valid '.. 9 ..'-letter English word', 'without extra letters'},
-            ["akyrs_10-letter Word"] = {'Create a valid '.. 10 ..'-letter English word', 'without extra letters'},
-            ["akyrs_11-letter Word"] = {'Create a valid '.. 11 ..'-letter English word', 'without extra letters'},
-            ["akyrs_12-letter Word"] = {'Create a valid '.. 12 ..'-letter English word', 'without extra letters'},
-            ["akyrs_13-letter Word"] = {'Create a valid '.. 13 ..'-letter English word', 'without extra letters'},
-            ["akyrs_14-letter Word"] = {'Create a valid '.. 14 ..'-letter English word', 'without extra letters'},
-            ["akyrs_15-letter Word"] = {'Create a valid '.. 15 ..'-letter English word', 'without extra letters'},
-            ["akyrs_16-letter Word"] = {'Create a valid '.. 16 ..'-letter English word', 'without extra letters'},
-            ["akyrs_17-letter Word"] = {'Create a valid '.. 17 ..'-letter English word', 'without extra letters'},
-            ["akyrs_18-letter Word"] = {'Create a valid '.. 18 ..'-letter English word', 'without extra letters'},
-            ["akyrs_19-letter Word"] = {'Create a valid '.. 19 ..'-letter English word', 'without extra letters'},
-            ["akyrs_20-letter Word"] = {'Create a valid '.. 20 ..'-letter English word', 'without extra letters'},
-            ["akyrs_21-letter Word"] = {'Create a valid '.. 21 ..'-letter English word', 'without extra letters'},
-            ["akyrs_22-letter Word"] = {'Create a valid '.. 22 ..'-letter English word', 'without extra letters'},
-            ["akyrs_23-letter Word"] = {'Create a valid '.. 23 ..'-letter English word', 'without extra letters'},
-            ["akyrs_24-letter Word"] = {'Create a valid '.. 24 ..'-letter English word', 'without extra letters'},
-            ["akyrs_25-letter Word"] = {'Create a valid '.. 25 ..'-letter English word', 'without extra letters'},
-            ["akyrs_26-letter Word"] = {'Create a valid '.. 26 ..'-letter English word', 'without extra letters'},
-            ["akyrs_27-letter Word"] = {'Create a valid '.. 27 ..'-letter English word', 'without extra letters'},
-            ["akyrs_28-letter Word"] = {'Create a valid '.. 28 ..'-letter English word', 'without extra letters'},
-            ["akyrs_29-letter Word"] = {'Create a valid '.. 29 ..'-letter English word', 'without extra letters'},
-            ["akyrs_30-letter Word"] = {'Create a valid '.. 30 ..'-letter English word', 'without extra letters'},
-            ["akyrs_31-letter Word"] = {'Create a valid '.. 31 ..'-letter English word', 'without extra letters'},
-            ["akyrs_expression"] = {'Create a valid mathematical expression'},
-            ["akyrs_modification"] = {'Modify current chip value'},
-            ["akyrs_assignment"] = {'Assign a value to a variable'},
-        },
-        poker_hands={
-            ["akyrs_3-letter Word"] =  "3".."-letter Word" ,
-            ["akyrs_4-letter Word"] =  "4".."-letter Word" ,
-            ["akyrs_5-letter Word"] =  "5".."-letter Word" ,
-            ["akyrs_6-letter Word"] =  "6".."-letter Word" ,
-            ["akyrs_7-letter Word"] =  "7".."-letter Word" ,
-            ["akyrs_8-letter Word"] =  "8".."-letter Word" ,
-            ["akyrs_9-letter Word"] =  "9".."-letter Word" ,
-            ["akyrs_10-letter Word"] = "10".."-letter Word",
-            ["akyrs_11-letter Word"] = "11".."-letter Word",
-            ["akyrs_12-letter Word"] = "12".."-letter Word",
-            ["akyrs_13-letter Word"] = "13".."-letter Word",
-            ["akyrs_14-letter Word"] = "14".."-letter Word",
-            ["akyrs_15-letter Word"] = "15".."-letter Word",
-            ["akyrs_16-letter Word"] = "16".."-letter Word",
-            ["akyrs_17-letter Word"] = "17".."-letter Word",
-            ["akyrs_18-letter Word"] = "18".."-letter Word",
-            ["akyrs_19-letter Word"] = "19".."-letter Word",
-            ["akyrs_20-letter Word"] = "20".."-letter Word",
-            ["akyrs_21-letter Word"] = "21".."-letter Word",
-            ["akyrs_22-letter Word"] = "22".."-letter Word",
-            ["akyrs_23-letter Word"] = "23".."-letter Word",
-            ["akyrs_24-letter Word"] = "24".."-letter Word",
-            ["akyrs_25-letter Word"] = "25".."-letter Word",
-            ["akyrs_26-letter Word"] = "26".."-letter Word",
-            ["akyrs_27-letter Word"] = "27".."-letter Word",
-            ["akyrs_28-letter Word"] = "28".."-letter Word",
-            ["akyrs_29-letter Word"] = "29".."-letter Word",
-            ["akyrs_30-letter Word"] = "30".."-letter Word",
-            ["akyrs_31-letter Word"] = "31".."-letter Word",
-            ["akyrs_expression"] = "Expression",
-            ["akyrs_modification"] = "Modification",
-            ["akyrs_assignment"] = "Assignment",
-        },
+        poker_hand_descriptions=poker_hand_desc,
+        poker_hands=poker_hands_name,
         quips={},
         ranks={
             akyrs_non_playing = "A kind"

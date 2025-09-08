@@ -23,12 +23,26 @@ AKYRS.example_words = {
     "overintellectualization",
     "formaldehydesulphoxylate",
     "demethylchlortetracycline",
-    "##########################",
+    "mentor-on-the-lake-village",
     "electroencephalographically",
     "antidisestablishmentarianism",
     "cyclotrimethylenetrinitramine",
     "##############################",
     "dichlorodiphenyltrichloroethane",
+    "################################",
+    "#################################",
+    "##################################",
+    "###################################",
+    "####################################",
+    "#####################################",
+    "######################################",
+    "#######################################",
+    "########################################",
+    "#########################################",
+    "##########################################",
+    "###########################################",
+    "############################################",
+    "pneumonoultramicroscopicsilicovolcanoconiosis",
 }
 local function replace_char(pos, str, r)
     return str:sub(1, pos-1) .. r .. str:sub(pos+1)
@@ -89,7 +103,7 @@ AKYRS.WORD_CHECKED = {
 }
 
 AKYRS.words_hand = {}
-for i = 3, 31 do
+for i = 3, 45 do
     local exampler = {}
     for j = 1, #AKYRS.example_words[i-2] do
         local c = AKYRS.example_words[i-2]:sub(j,j)
