@@ -1086,12 +1086,13 @@ function CardArea:init(X, Y, W, H, config)
     return r
 end
 
-local setCardAbilityHook = Card.set_ability
+AKYRS.original_set_ability = Card.set_ability
 
 function Card:set_ability(c,i,d)
     if self and self.ability and self.ability.akyrs_sigma then return end
     -- this one is for collection
-    local r = setCardAbilityHook(self,c,i,d)
+    local r = AKYRS.original_set_ability(self,c,i,d)
+    self:akyrs_mod_card_value_init(c)
     
     if self.config.card and self.config.center.set == "Enhanced" or self.config.center.set == "Default" and not self.is_null then
         self:set_base(self.config.card, i)
@@ -1144,7 +1145,6 @@ function Card:init(X, Y, W, H, card, center, params)
     local ret = cardInitHook(self, X, Y, W, H, card, center, params)
 
     
-    self:akyrs_mod_card_value_init()
     self.akyrs_upgrade_sliced = false
     
     return ret
@@ -1167,11 +1167,11 @@ function Card:set_card_area(area)
     return x
 end
 
-function Card:akyrs_mod_card_value_init()
+function Card:akyrs_mod_card_value_init(center)
     if G.GAME.modifiers.akyrs_misprint then
         local x = self.ability
-
-        AKYRS.mod_card_values(x,{random = {digits_min = -4, digits_max = 4, min = 1e-4, max = 1e4,scale = 1, can_negate = false}})
+        local y = AKYRS.deep_copy(center,{center.mod})
+        AKYRS.mod_card_values(x,{random = {digits_min = -4, digits_max = 4, min = 1e-4, max = 1e4,scale = 1, can_negate = false, reference = y}})
         if self.ability.set == "Default" or  self.ability.set == "Enhanced" then
             x.x_chips    = 1
             x.h_x_chips  = 1

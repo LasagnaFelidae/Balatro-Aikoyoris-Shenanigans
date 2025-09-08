@@ -405,7 +405,8 @@ AKYRS.mod_card_values = function(table_in, config)
     local reference = config.reference or table_in
     local randomize = config.random
 
-    local function modify_values(table_in, ref)
+    local function modify_values(table_in, ref, depth)
+        if depth > 2 then return end
         for k, v in pairs(table_in) do 
             local rand = 1
             if randomize then
@@ -427,14 +428,14 @@ AKYRS.mod_card_values = function(table_in, config)
                     end
                 end
             elseif type(v) == "table" and ref and k and not unkeyword[k] then
-                modify_values(v, ref[k])
+                modify_values(v, ref[k], depth + 1)
             end
         end
     end
     if table_in == nil then
         return
     end
-    modify_values(table_in, reference)
+    modify_values(table_in, reference, 0)
 end
 
 AKYRS.mod_card_values_misprint = function(table_in, config)

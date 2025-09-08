@@ -409,20 +409,18 @@ function AKYRS.embedded_ui_sprite( sprite_atlas, sprite_pos, desc_nodes, config 
     return uiEX
 end
 
-AKYRS.deep_copy = function(orig, table_of_objects_that_are_root)
-    table_of_objects_that_are_root = table_of_objects_that_are_root or {}
-    table.insert(table_of_objects_that_are_root, orig)
-    local orig_type = type(orig)
-    local copy
-    if orig_type == 'table' then
-        copy = {}
-        for orig_key, orig_value in next, orig, nil do
-            if not AKYRS.is_in_table(table_of_objects_that_are_root, orig_value) then
-                copy[AKYRS.deep_copy(orig_key, table_of_objects_that_are_root)] = AKYRS.deep_copy(orig_value, table_of_objects_that_are_root)
-            end
-        end
-    else -- number, string, boolean, etc
-        copy = orig
+AKYRS.deep_copy = function(orig, seen)
+    seen = seen or {}
+    if type(orig) ~= 'table' then
+        return orig
+    end
+    if seen[orig] then
+        return seen[orig]
+    end
+    local copy = {}
+    seen[orig] = copy
+    for orig_key, orig_value in next, orig, nil do
+        copy[AKYRS.deep_copy(orig_key, seen)] = AKYRS.deep_copy(orig_value, seen)
     end
     return copy
 end
