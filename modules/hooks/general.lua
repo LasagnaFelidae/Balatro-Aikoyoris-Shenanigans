@@ -1284,6 +1284,7 @@ function Card:get_nominal(mod)
         local suit_nominal = self.base.suit_nominal
         local rank_nominal = self.base.nominal
         local face_nominal = self.base.face_nominal
+        local orig_suit_nominal = self.base.suit_nominal_original
         if self.ability.effect == 'Stone Card' or (self.config.center.no_suit and self.config.center.no_rank) then
             mult = -10000
         elseif self.config.center.no_suit then
@@ -1293,11 +1294,12 @@ function Card:get_nominal(mod)
         end
         if mod == "suit" and self.ability.akyrs_special_card_type == "rank" then
             suit_nominal = 0
+            orig_suit_nominal = 0
         elseif not mod and self.ability.akyrs_special_card_type == "suit" then
             rank_nominal = 0
             face_nominal = 0
         end
-        ret = 10*rank_nominal*rank_mult + suit_nominal*mult + (self.base.suit_nominal_original or 0)*0.0001*mult + 10*face_nominal*rank_mult + 0.000001*self.unique_val
+        ret = 10*rank_nominal*rank_mult + suit_nominal*mult + (orig_suit_nominal or 0)*0.0001*mult + 10*face_nominal*rank_mult + 0.000001*self.unique_val
     end
     return ret
 end
