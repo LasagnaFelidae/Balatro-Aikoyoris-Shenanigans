@@ -110,9 +110,9 @@ function get_blind_amount(ante)
     end
     if G.GAME.akyrs_random_scale then
         if Talisman then
-            G.GAME.akyrs_blind_random = G.GAME.akyrs_blind_random or r*(pseudorandom(pseudoseed("akyrs_random_scale"),to_number(G.GAME.akyrs_random_scale.min),to_number(G.GAME.akyrs_random_scale.max)))
+            G.GAME.akyrs_blind_random = G.GAME.akyrs_blind_random or (r*(pseudorandom(pseudoseed("akyrs_random_scale"),to_number(G.GAME.akyrs_random_scale.min)*1000,to_number(G.GAME.akyrs_random_scale.max)*1000))/1000)
         else
-            G.GAME.akyrs_blind_random = G.GAME.akyrs_blind_random or r*(pseudorandom(pseudoseed("akyrs_random_scale"),G.GAME.akyrs_random_scale.min*r,G.GAME.akyrs_random_scale.max*r))
+            G.GAME.akyrs_blind_random = G.GAME.akyrs_blind_random or (r*(pseudorandom(pseudoseed("akyrs_random_scale"),G.GAME.akyrs_random_scale.min*1000,G.GAME.akyrs_random_scale.max*1000))/1000)
         end
         r = G.GAME.akyrs_blind_random
     end
