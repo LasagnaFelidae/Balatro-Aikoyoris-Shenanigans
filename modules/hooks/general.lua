@@ -1216,7 +1216,7 @@ function Card:akyrs_mod_card_value_init(center)
     end
     if G.GAME.modifiers.akyrs_all_cards_are_stone then
         if self.ability.set == "Default" or self.ability.set == "Enhanced" then
-            self:set_ability(G.P_CENTERS["m_stone"],true)
+            AKYRS.original_set_ability(self,G.P_CENTERS["m_stone"],true)
             if self.ability.bonus == 0 then
                 self.ability.bonus = 50
             end
