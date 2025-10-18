@@ -8,6 +8,7 @@ function Game:init_game_object()
     ret.starting_params.deck_size_letter = 1
     ret.akyrs_character_stickers_enabled = false
     ret.akyrs_wording_enabled = false
+    ret.akyrs_has_not_spelled_a_single_word = false
     ret.akyrs_mathematics_enabled = false
     ret.akyrs_letters_mult_enabled = false
     ret.akyrs_letters_xmult_enabled = false
@@ -955,6 +956,8 @@ Obviously this is not a real crash LMAO don't bother reporting.
 
         --print(wordData)
         if wordData.valid then
+            check_for_unlock({type = "akyrs_spell_valid_word", word = w, lowercase_word = string.lower(w)})
+            G.GAME.akyrs_has_not_spelled_a_single_word = false
             G.GAME.aiko_current_word = wordData.word
             G.GAME.aiko_current_word_table = aiko_current_word_split
             G.GAME.aiko_words_played[wordData.word] = true
@@ -1499,6 +1502,7 @@ function Back:apply_to_run()
     end
     if self.effect.config.akyrs_wording_enabled then
         G.GAME.akyrs_wording_enabled = true
+        G.GAME.akyrs_has_not_spelled_a_single_word = true
     end
 
     if self.effect.config.akyrs_mathematics_enabled then
@@ -1592,6 +1596,7 @@ function Back:apply_to_run()
                 AKYRS.initialise_deck_letter(G.GAME.starting_params.akyrs_starting_letters)
                 G.GAME.akyrs_character_stickers_enabled = true
                 G.GAME.akyrs_wording_enabled = true
+                G.GAME.akyrs_has_not_spelled_a_single_word = true
                 SMODS.change_play_limit(1e100)
                 SMODS.change_discard_limit(1e100)
             end

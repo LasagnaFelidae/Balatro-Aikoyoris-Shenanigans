@@ -16,6 +16,7 @@ SMODS.Back{
         starting_deck_size = 100,
         akyrs_selection = 1e100,
         discards = 2,
+        akyrs_wording_enabled = true,
         akyrs_start_with_no_cards = true,
         akyrs_letters_mult_enabled = true,
         akyrs_hide_normal_hands = true,

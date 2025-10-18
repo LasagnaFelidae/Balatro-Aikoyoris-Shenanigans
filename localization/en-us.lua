@@ -2576,19 +2576,24 @@ return {
         }
     },
     misc = {
+        achievement_names={
+            ach_akyrs_spell_aikoyori = "Unfortunately Aikoyori is not real",
+            ach_akyrs_repeater_into_another_one = "Repeater Locking",
+            ach_akyrs_happy_ghast_grown = "Uneasy Alliance",
+            ach_akyrs_both_pickaxe = "Dual Wielding",
+            ach_akyrs_spell_very_long_word = "Supercalifragilisticexpialidociousing my antidisestablishmentarianism",
+            ach_akyrs_spell_long_word = "Long Live The New Fresh",
+            ach_akyrs_we_no_speak_americano = "We No Speak Americano",
+        },
         achievement_descriptions={
             ach_akyrs_spell_aikoyori = "Spell Aikoyori",
             ach_akyrs_repeater_into_another_one = "Channels output from a repeater into another one",
             ach_akyrs_happy_ghast_grown = "Grow a Happy Ghast from its dried form",
             ach_akyrs_both_pickaxe = "Get both pickaxes!",
             ach_akyrs_win_klondike = "Win the Klondike!",
-        },
-        achievement_names={
-            ach_akyrs_spell_aikoyori = "Unfortunately Aikoyori is not real",
-            ach_akyrs_repeater_into_another_one = "Repeater Locking",
-            ach_akyrs_happy_ghast_grown = "Uneasy Alliance",
-            ach_akyrs_both_pickaxe = "Dual Wielding",
-            ach_akyrs_win_klondike = "Pretend this is a screen filled with cards",
+            ach_akyrs_spell_very_long_word = "Spell a valid very long words (25+ letters)",
+            ach_akyrs_spell_long_word = "Spell a valid long words (12+ letters)",
+            ach_akyrs_we_no_speak_americano = "Beat a Letter Deck without spelling a single word",
         },
         blind_states={},
         akyrs_balancing_wizard = {

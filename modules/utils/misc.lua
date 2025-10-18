@@ -1121,3 +1121,52 @@ function AKYRS.faux_score_container(ref_t, ref_v, args)
         align ~= 'cl' and {n=G.UIT.B, config={w = 0.1, h = 0.1}} or nil,
     }}
 end
+
+
+function AKYRS.relock_achievement(achievement_name)
+    if G.PROFILES[G.SETTINGS.profile].all_unlocked and (G.ACHIEVEMENTS and G.ACHIEVEMENTS[achievement_name] and not G.ACHIEVEMENTS[achievement_name].bypass_all_unlocked and SMODS.config.achievements < 3) or (SMODS.config.achievements < 3 and (G.GAME.seeded or G.GAME.challenge)) then return true end
+    G.E_MANAGER:add_event(Event({
+        no_delete = true,
+        blockable = false,
+        blocking = false,
+        func = function()
+            if G.STATE ~= G.STATES.HAND_PLAYED then 
+                if G.PROFILES[G.SETTINGS.profile].all_unlocked and (G.ACHIEVEMENTS and G.ACHIEVEMENTS[achievement_name] and not G.ACHIEVEMENTS[achievement_name].bypass_all_unlocked and SMODS.config.achievements < 3) or (SMODS.config.achievements < 3 and (G.GAME.seeded or G.GAME.challenge)) then return true end
+                local achievement_set = nil
+                if not G.ACHIEVEMENTS then fetch_achievements() end
+                G.SETTINGS.ACHIEVEMENTS_EARNED[achievement_name] = nil
+                G:save_progress()
+                
+                if G.ACHIEVEMENTS[achievement_name] and G.ACHIEVEMENTS[achievement_name].mod then 
+                    if G.ACHIEVEMENTS[achievement_name].earned then
+                        --|THIS IS THE FIRST TIME THIS ACHIEVEMENT HAS BEEN EARNED
+                        achievement_set = true
+                        G.FILE_HANDLER.force = true
+                    end
+                    G.ACHIEVEMENTS[achievement_name].earned = nil
+                end
+                
+                if achievement_set then 
+                    return true
+                end
+                if G.F_NO_ACHIEVEMENTS and not (G.ACHIEVEMENTS[achievement_name] or {}).mod then return true end
+
+                --|LOCAL SETTINGS FILE
+                --|-------------------------------------------------------
+                if not G.ACHIEVEMENTS then fetch_achievements() end
+
+                G.SETTINGS.ACHIEVEMENTS_EARNED[achievement_name] = nil
+                G:save_progress()
+                if G.ACHIEVEMENTS[achievement_name] and not G.STEAM then 
+                    if G.ACHIEVEMENTS[achievement_name].earned then
+                        --|THIS IS THE FIRST TIME THIS ACHIEVEMENT HAS BEEN EARNED
+                        achievement_set = true
+                        G.FILE_HANDLER.force = true
+                    end
+                    G.ACHIEVEMENTS[achievement_name].earned = nil
+                end
+                return true
+            end
+        end
+        }), 'achievement')
+end
