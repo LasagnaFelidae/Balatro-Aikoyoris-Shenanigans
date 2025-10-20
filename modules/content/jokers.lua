@@ -3281,7 +3281,7 @@ SMODS.Joker{
         if context.before or context.forcetrigger then
             return {
                 func = function ()
-                    local x = AKYRS.filter_table(G.jokers.cards,function(t) return not AKYRS.is_in_pool(t,"Kessoku Band") end, true, true)
+                    local x = AKYRS.filter_table(G.jokers.cards,function(t) return AKYRS.is_in_pool(t,"Kessoku Band") end, true, true)
                     local sts, stschk = AKYRS.get_suits(G.play.cards)
                     if (AKYRS.bal_val((#G.play.cards) == 1 and G.play.cards[1]:is_suit("Spades"),stschk["Spades"])) or context.forcetrigger then
                         if AKYRS.bal("absurd") then
