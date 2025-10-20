@@ -3288,15 +3288,13 @@ SMODS.Joker{
                             SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xmult_absurd", scalar_value = "xmult_g_absurd",
                                 operation = function (rt,rv,int,sc)
                                     if Talisman then
-                                        rt[rv] = to_big(int):pow(sc * x)
+                                        rt[rv] = to_big(int):pow(sc * #x)
                                     end
                                 end
                             })
                         else
                             SMODS.scale_card(card, {ref_table = card.ability.extras, ref_value = "xmult", scalar_value = "xmult_g", operation = function (rt,rv,int,sc)
-                                    if Talisman then
-                                        rt[rv] = int + sc * x
-                                    end
+                                    rt[rv] = int + sc * #x
                                 end})
                         end
                     end
