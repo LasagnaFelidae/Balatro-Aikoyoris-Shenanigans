@@ -3255,7 +3255,7 @@ SMODS.Joker{
         extras = {
             xmult = 1,
             xmult_absurd = 1.1,
-            xmult_g = 1,
+            xmult_g = 0.25,
             xmult_g_absurd = 1.3,
         }
     },
@@ -3283,17 +3283,21 @@ SMODS.Joker{
                 func = function ()
                     local x = AKYRS.filter_table(G.jokers.cards,function(t) return not AKYRS.is_in_pool(t,"Kessoku Band") end, true, true)
                     local sts, stschk = AKYRS.get_suits(G.play.cards)
-                    if (#x == 0 and AKYRS.bal_val((#G.play.cards) == 1 and G.play.cards[1]:is_suit("Spades"),stschk["Spades"])) or context.forcetrigger then
+                    if (AKYRS.bal_val((#G.play.cards) == 1 and G.play.cards[1]:is_suit("Spades"),stschk["Spades"])) or context.forcetrigger then
                         if AKYRS.bal("absurd") then
                             SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "xmult_absurd", scalar_value = "xmult_g_absurd",
                                 operation = function (rt,rv,int,sc)
                                     if Talisman then
-                                        rt[rv] = to_big(int):pow(sc)
+                                        rt[rv] = to_big(int):pow(sc * x)
                                     end
                                 end
                             })
                         else
-                            SMODS.scale_card(card, {ref_table = card.ability.extras, ref_value = "xmult", scalar_value = "xmult_g"})
+                            SMODS.scale_card(card, {ref_table = card.ability.extras, ref_value = "xmult", scalar_value = "xmult_g", operation = function (rt,rv,int,sc)
+                                    if Talisman then
+                                        rt[rv] = int + sc * x
+                                    end
+                                end})
                         end
                     end
                 end
@@ -3374,8 +3378,8 @@ SMODS.Joker{
     pos = {
         x = 5, y = 5
     },
-    rarity = 3,
-    cost = 1,
+    rarity = 1,
+    cost = 2,
     config = {
         extras = {
             debt = 12,
@@ -3460,8 +3464,8 @@ SMODS.Joker{
     pos = {
         x = 6, y = 5
     },
-    rarity = 3,
-    cost = 9,
+    rarity = 2,
+    cost = 6,
     config = {
         extras = {
         }
@@ -3612,6 +3616,49 @@ SMODS.Joker {
         if context.joker_main then
             return {
                 xmult = card.ability.extras.xm
+            }
+        end
+    end,
+}
+
+
+SMODS.Joker {
+    
+    key = "koshitan",
+    atlas = 'AikoyoriJokers',
+    pools = { ["Shikanokonokonokokoshitantan"] = true,},
+    pos = {
+        x = 7, y = 5
+    },
+    in_pool = function (self, args)
+        return false
+    end,
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = { card.ability.extras.taketh, card.ability.extras.addth },
+        }
+    end,
+    rarity = 2,
+    cost = 5,
+    config = {
+        extras = {
+            taketh = 1,
+            addth = 5
+        }
+    },
+    calculate = function (self, card, context)
+        if context.setting_blind then
+            return {
+                dollars = -card.ability.extras.taketh,
+                message = localize("k_akyrs_value_up"),
+                func = function ()
+                    AKYRS.simple_event_add(
+                        function ()
+                            card.sell_cost = card.sell_cost + card.ability.extras.addth
+                            return true
+                        end
+                    )
+                end
             }
         end
     end,

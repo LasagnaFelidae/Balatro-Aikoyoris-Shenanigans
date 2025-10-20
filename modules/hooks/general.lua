@@ -9,6 +9,7 @@ function Game:init_game_object()
     ret.akyrs_character_stickers_enabled = false
     ret.akyrs_wording_enabled = false
     ret.akyrs_has_not_spelled_a_single_word = false
+    ret.akyrs_temptation_resisted = false
     ret.akyrs_mathematics_enabled = false
     ret.akyrs_letters_mult_enabled = false
     ret.akyrs_letters_xmult_enabled = false
@@ -339,6 +340,7 @@ function Game:start_run(args)
         recalculateBlindUI()
     end
     if G.GAME.akyrs_any_drag then
+        G.GAME.akyrs_temptation_resisted = true
         AKYRS.simple_event_add(
             function()
                 G.jokers.states.collide.can = true
@@ -1561,6 +1563,7 @@ function Back:apply_to_run()
         )
     end
     if G.GAME.starting_params.akyrs_ultimate_freedom then
+        G.GAME.akyrs_temptation_resisted = true
         G.GAME.akyrs_ultimate_freedom = G.GAME.starting_params.akyrs_ultimate_freedom
     end
 

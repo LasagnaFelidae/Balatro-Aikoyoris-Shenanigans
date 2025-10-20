@@ -1719,8 +1719,8 @@ return {
                 text = { 
                     {
                         "This Joker gains {C:white,X:mult} X#1# {} Mult",
+                        "per {C:attention}Kessoku Band{} Jokers held",
                         "if played hand contains {C:attention}a single {C:spades}Spade",
-                        "and only {C:attention}Kessoku Band{} Jokers are held",
                         "{C:inactive}(Currently {C:white,X:mult} X#2# {C:inactive} Mult)",
                     }
                 }
@@ -1730,8 +1730,8 @@ return {
                 text = { 
                     {
                         "This Joker {C:attention}exponentiates{} its {C:white,X:mult} XMult {} by {C:white,X:dark_edition} ^#1# {}",
+                        "per {C:attention}Kessoku Band{} Jokers held",
                         "if played hand contains only {C:spades}Spades",
-                        "and only {C:attention}Kessoku Band{} Jokers are held",
                         "{C:inactive}(Currently {C:white,X:mult} X#2# {C:inactive} Mult)",
                     },
                 }
@@ -1804,7 +1804,7 @@ return {
                         "{C:attention}2{} free Joker slots",
                         "required to purchase",
                         "Spawns a matching",
-                        "{C:attention}Orange Portal{) when purchase"
+                        "{C:attention}Orange Portal{} when purchase"
                     },
                 }
             },
@@ -1845,6 +1845,18 @@ return {
                     'Cards with letter {C:attention}C{}',
                     ' gives {C:chips}+#1#{} Chips when scored',
                     '{C:inactive,s:0.8}cue Tobu - Cloud 9'
+                }
+            },
+            j_akyrs_koshitan = {
+                name = {
+                    "{f:5}虎視虎子",
+                    "{s:0.7}Koshi Torako"
+                },
+                text = {
+                    'When blind is {C:attention}selected',
+                    'Takes {C:money}$#1#{} and adds',
+                    '{C:money}$#2#{} to this Joker\'s',
+                    '{C:money}sell value{}',
                 }
             },
         },
@@ -2584,6 +2596,7 @@ return {
             ach_akyrs_spell_very_long_word = "Supercalifragilisticexpialidociousing my antidisestablishmentarianism",
             ach_akyrs_spell_long_word = "Long Live The New Fresh",
             ach_akyrs_we_no_speak_americano = "We No Speak Americano",
+            ach_akyrs_resist_the_temptation = "Resist the Temptation",
         },
         achievement_descriptions={
             ach_akyrs_spell_aikoyori = "Spell Aikoyori",
@@ -2593,7 +2606,8 @@ return {
             ach_akyrs_win_klondike = "Win the Klondike!",
             ach_akyrs_spell_very_long_word = "Spell a valid very long words (25+ letters)",
             ach_akyrs_spell_long_word = "Spell a valid long words (12+ letters)",
-            ach_akyrs_we_no_speak_americano = "Beat a Letter Deck without spelling a single word",
+            ach_akyrs_we_no_speak_americano = "Win a run of Letter Deck without spelling a single word",
+            ach_akyrs_resist_the_temptation = "Win a run of Freedom Deck without the freedom part",
         },
         blind_states={},
         akyrs_balancing_wizard = {
@@ -2680,6 +2694,7 @@ return {
             k_akyrs_downgrade_ex = "Downgrade!",
             k_akyrs_woah_undertale = "Woah..",
             k_akyrs_story_of_undertale = "Story of Undertale..",
+            k_akyrs_value_up = "Value UP!",
 
 
             k_akyrs_ryo_borrowed_money = "Borrowed Money...",

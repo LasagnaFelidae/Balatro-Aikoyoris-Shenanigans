@@ -93,3 +93,14 @@ SMODS.Achievement{
         end
     end
 }
+SMODS.Achievement{
+    key = "resist_the_temptation",
+    bypass_all_unlocked = true,
+    unlock_condition = function (self, args)
+        if args and (args.type == "win") then
+            if G.GAME.akyrs_temptation_resisted then
+                return true
+            end
+        end
+    end
+}
