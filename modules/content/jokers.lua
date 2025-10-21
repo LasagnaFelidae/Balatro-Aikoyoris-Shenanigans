@@ -2835,7 +2835,6 @@ SMODS.Joker{
         }
     },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         info_queue[#info_queue+1] = {set = "Tag", key = "tag_standard"}
         -- numerator & denominator :3
         if AKYRS.bal("absurd") then
@@ -3013,7 +3012,6 @@ SMODS.Joker{
         }
     },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         if AKYRS.bal("absurd") then
             return {
                 key = self.key .. "_absurd",
@@ -3070,7 +3068,6 @@ SMODS.Joker{
         }
     },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         return {
             key = self.key .. AKYRS.bal_val("","_absurd"),
             vars = {
@@ -3120,7 +3117,6 @@ SMODS.Joker{
         }
     },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         return {
             key = self.key .. AKYRS.bal_val("","_absurd"),
             vars = {
@@ -3152,7 +3148,6 @@ SMODS.Joker{
         }
     },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         return {
             key = self.key .. AKYRS.bal_val("","_absurd"),
             vars = {
@@ -3190,7 +3185,6 @@ SMODS.Joker{
         }
     },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         local _,_2,c = love.window.getMode()
         local x = math.max(c.refreshrate - love.timer.getFPS( ),0) 
         if AKYRS.bal("absurd") then
@@ -3272,7 +3266,6 @@ SMODS.Joker{
         }
     },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         if AKYRS.bal("absurd") then
             return {
                 key = self.key .. "_absurd",
@@ -3341,7 +3334,6 @@ SMODS.Joker{
         }
     },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         info_queue[#info_queue+1] = {set = "Tarot", key = "c_lovers", vars = {1, localize("k_akyrs_wild_card")}}
         if AKYRS.bal("absurd") then
             return {
