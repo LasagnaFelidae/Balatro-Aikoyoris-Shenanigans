@@ -3398,7 +3398,6 @@ SMODS.Joker{
         G.GAME.bankrupt_at = G.GAME.bankrupt_at + AKYRS.bal_val_overridable(card.ability.extras.debt,card.ability.extras.debt_absurd,card.ability.extras.obtain_bal)
     end,
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         if (card.ability.extras.obtain_bal or AKYRS.bal()) == "absurd" then
             return {
                 key = self.key .. "_absurd",
@@ -3473,7 +3472,6 @@ SMODS.Joker{
         }
     },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_placeholder_art"}
         if AKYRS.bal("absurd") then
             return {
                 key = self.key .. "_absurd",
