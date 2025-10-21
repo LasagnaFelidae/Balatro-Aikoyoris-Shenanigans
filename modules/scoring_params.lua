@@ -9,6 +9,7 @@ SMODS.Scoring_Calculation{
     replace_ui = function(self)
         return {
             n = G.UIT.R,
+            config = { id = 'hand_operator_container' },
             nodes = {
 
             }
@@ -33,7 +34,7 @@ SMODS.Scoring_Calculation{
     replace_ui = function(self)
         return {
             n = G.UIT.R,
-            config = { align = "cm", padding = 0.1 },
+            config = { align = "cm", padding = 0.1, id = 'hand_operator_container' },
             nodes = {
                 {
                     n = G.UIT.O,

@@ -2240,7 +2240,7 @@ SMODS.Joker {
             if context.final_scoring_step then
                 return {
                     func = function ()
-                        ease_spark_points(math.floor(hand_chips))
+                        ease_spark_points(math.floor(hand_chips) * 10.0)
                     end
                 }
             end

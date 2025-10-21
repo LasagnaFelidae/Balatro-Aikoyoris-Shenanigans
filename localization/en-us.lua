@@ -541,7 +541,7 @@ return {
                 name="Hot Potato Ability",
                 text={
                     "Earn {C:blue,f:hpot_plincoin}͸icks{} equal to",
-                    "final {C:chips}Chips{} in scoring"
+                    "{C:attention}ten{} times the final {C:chips}Chips{} in scoring"
                 },
             },
             dd_akyrs_mukuroju_en = {
