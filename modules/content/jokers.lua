@@ -3727,3 +3727,37 @@ SMODS.Joker {
     end,
 }
 
+
+SMODS.Joker {
+    
+    key = "koshian",
+    atlas = 'AikoyoriJokers',
+    pools = { ["Shikanokonokonokokoshitantan"] = true,},
+    pos = {
+        x = 9, y = 5
+    },
+    in_pool = function (self, args)
+        return false
+    end,
+    loc_vars = function (self, info_queue, card)
+        local n, d = SMODS.get_probability_vars(card, 2, 2, "koshian_calc")
+        card.sell_cost = n + d
+        return {
+            vars = { n, d },
+        }
+    end,
+    rarity = 1,
+    cost = 3,
+    config = {
+        
+    },
+    add_to_deck = function (self, card, dt)
+        local n, d = SMODS.get_probability_vars(card, 2, 2, "koshian_calc")
+        card.sell_cost = n + d
+    end,
+    
+    calculate = function (self, card, context)
+        
+    end,
+}
+

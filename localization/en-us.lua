@@ -1878,6 +1878,18 @@ return {
                     "{C:inactive}(Currently {C:mult}+#2#{C:inactive} Mult)",
                 }
             },
+            j_akyrs_koshian = {
+                name = {
+                    "{f:5}虎視餡子",
+                    "{s:0.7}Koshi Anko"
+                },
+                text = {
+                    'This Joker\'s {C:attention}sell value{} is equal to',
+                    'sum of {C:green}numerator and denominator{} of probability',
+                    'with base chance of {C:attention}2 in 2',
+                    "{C:inactive}(Currently {C:green}#1# in #2#{C:inactive})",
+                }
+            },
         },
         Partner = {
             pnr_akyrs_aikoyori = {
