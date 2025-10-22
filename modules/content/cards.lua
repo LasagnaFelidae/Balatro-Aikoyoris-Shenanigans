@@ -405,7 +405,7 @@ SMODS.Enhancement{
         if context.main_scoring and context.cardarea == G.play then
             return {
                 func = function ()
-                    card.ability.extras.trigger_triggered = card.ability.extras.trigger_triggered + 1
+                    card.ability.extras.trigger_triggered = (card.ability.extras.trigger_triggered or 0) + 1
                     if card.ability.extras.trigger_triggered >= card.ability.extras.trigger_needed then
                         SMODS.calculate_effect({
                             message = localize("k_duplicated_ex"),
