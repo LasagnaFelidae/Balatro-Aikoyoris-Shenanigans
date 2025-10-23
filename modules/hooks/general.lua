@@ -1790,7 +1790,10 @@ function Game:main_menu(ctx)
     end
     if (G.PROFILES[G.SETTINGS.profile].akyrs_balance == "absurd" and (MP) and true) then
         G.AKYRS_MULTIPLAYER_NOTICE_INTRO = true
-        AKYRS.start_onboarding(nil, true)
+        AKYRS.start_onboarding(true, true)
+    elseif (G.PROFILES[G.SETTINGS.profile].akyrs_balance == "absurd" and not Talisman) then
+        G.AKYRS_TALISMAN_NOTICE_INTRO = true
+        AKYRS.set_bal("adequate")
     else
         AKYRS.start_onboarding()
     end

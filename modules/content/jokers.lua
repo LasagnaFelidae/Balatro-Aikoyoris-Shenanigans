@@ -3758,6 +3758,7 @@ SMODS.Joker {
 SMODS.Joker {
     
     key = "bashame",
+    enhancement_gate = "m_akyrs_canopy_card",
     atlas = 'AikoyoriJokers',
     pools = { ["Shikanokonokonokokoshitantan"] = true,},
     pos = {

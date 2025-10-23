@@ -1961,17 +1961,19 @@ return {
                     "The game on {E:2,C:green}Adequate{} Balance.",
                     "You won't be able to change it while",
                     "{E:2,C:dark_edition}Balatro Multiplayer{} is active.",
+                    "Some content also {E:2,C:dark_edition}won't be available{}",
                 }
             },
             akyrs_balance_dialog_multiplayer_start_from_already_set_profile = {
                 name = "", 
                 text = {
-                    "Eh? {E:2,C:dark_edition}Balatro Multiplayer{} has been installed.",
+                    "It seems that {E:2,C:dark_edition}Balatro Multiplayer{} has been installed.",
                     "at some point when on this {E:1,C:red}Absurd{} save file",
                     "Due to advantageous reasons I'll have to put",
                     "The game on {E:2,C:green}Adequate{} Balance.",
                     "You won't be able to change it while",
                     "{E:2,C:dark_edition}Balatro Multiplayer{} is active.",
+                    "Some content also {E:2,C:dark_edition}won't be available{}",
                 }
             },
             akyrs_balance_dialog_details = {
@@ -2844,7 +2846,7 @@ return {
             k_akyrs_balance_dialog_cryptid_accept = "Sounds Good. (End)",
             k_akyrs_balance_dialog_cryptid_decline = "I want to hear more!",
             k_akyrs_balance_dialog_details_next = "Alright, I'll pick...",
-            k_akyrs_balance_dialog_mp_accept = "Sure (End)",
+            k_akyrs_balance_dialog_mp_accept = "OK (End)",
             k_akyrs_balance_dialog_adequate_text = "Adequate",
             k_akyrs_balance_dialog_adequate_description = "Balanced towards vanilla",
             k_akyrs_balance_dialog_absurd_text = "Absurd (Requires Talisman)",
