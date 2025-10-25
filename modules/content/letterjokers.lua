@@ -267,7 +267,7 @@ AKYRS.LetterJoker {
 AKYRS.LetterJoker {
     key = "e",
     atlas = 'AikoyoriJokers',
-    pos = { x = 2, y = 6 },
+    pos = { x = 3, y = 6 },
     pools = { ["Letter"] = true },
     loc_vars = function (self, info_queue, card)
         return {
