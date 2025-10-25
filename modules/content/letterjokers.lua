@@ -253,7 +253,7 @@ AKYRS.LetterJoker {
     cost = 3,
     config = {
         extras = {
-            chips = 24,
+            chips = 20,
         }
     },
     calculate = function (self, card, context)
@@ -280,7 +280,7 @@ AKYRS.LetterJoker {
     cost = 3,
     config = {
         extras = {
-            mult = 6,
+            mult = 4,
         }
     },
     calculate = function (self, card, context)
