@@ -3828,39 +3828,41 @@ SMODS.Joker {
             }
         end
     end,
-    blueprint_compat = false,
+    blueprint_compat = true,
 	demicoloncompat = true,
 }
 
 SMODS.Joker {
-    key = "furina",
-    atlas = 'furina',
-    pools = { ["Genshin Impact"] = true,},
-    pos = {
-        x = 0, y = 0
-    },
-    soul_pos = {
-        x = 1, y = 0, draw = function (card, scale_mod, rotate_mod)
-            card.children.floating_sprite:draw_shader('dissolve',0, nil, nil, card.children.center,scale_mod, rotate_mod,0,0 - 0.3,nil, 0.6)
-            card.children.floating_sprite:draw_shader('dissolve', nil, nil, nil, card.children.center, scale_mod, rotate_mod,0,0-0.5)
-        end
-    },
+    key = "gift_voucher",
+    atlas = 'guestJokerArts',
+    pos = { x = 2, y = 0 },
     loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = AKYRS.DescriptionDummies["dd_akyrs_credit_gud"]
         return {
-            vars = { card.ability.extra },
+            vars = {
+                localize("k_"..string.lower(card.ability.extras.type or ""))
+            }
         }
     end,
-    rarity = 4,
-    cost = 5,
+    rarity = 2,
+    cost = 7,
     config = {
-        extra = 1
+        extras = {
+            type = ""
+        }
     },
+    set_ability = function (self, card, initial, delay_sprites)
+        local sts = AKYRS.get_comsumable_set()
+        card.ability.extras.type = pseudorandom_element(sts, "akyrs_gift_voucher_initial")
+    end,
     calculate = function (self, card, context)
-        if context.press_play then
+        if context.end_of_round and context.cardarea == G.jokers then
             return {
-                func = function ()
-                    ease_discard(card.ability.extra)
-                end
+                func = function()
+                    local sts = AKYRS.get_comsumable_set()
+                    card.ability.extras.type = pseudorandom_element(sts, "akyrs_gift_voucher")
+                end,
+                message = localize("k_akyrs_gift_change")
             }
         end
     end,

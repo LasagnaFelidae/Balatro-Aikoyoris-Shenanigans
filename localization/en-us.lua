@@ -383,6 +383,12 @@ return {
                     "{X:dark_edition,C:white}@larantula_l{}"
                 },
             },
+            dd_akyrs_credit_gud={
+                name="Art Credit",
+                text={
+                    "{X:dark_edition,C:white}@gudusername_53951{}"
+                },
+            },
             dd_akyrs_hibana_conditions={
                 name="Cycle Option",
                 text={
@@ -1968,6 +1974,14 @@ return {
                     "When hand is {C:attention}played"
                 }
             },
+            j_akyrs_gift_voucher = {
+                name = "Gift Voucher",
+                text = {
+                    '{C:attention}#1#{} Cards are free in shop',
+                    "{C:attention}Changes{} to a different consumable type",
+                    "at the end of the round",
+                }
+            },
         },
         Partner = {
             pnr_akyrs_aikoyori = {
@@ -2802,7 +2816,7 @@ return {
         collabs={},
         dictionary={
             b_umbral_cards = "Umbral Cards",
-            k_umbral = "Umbral Card",
+            k_umbral = "Umbral",
 
             b_akyrs_alphabets="Alphabet Cards",
             k_aikoyoriextrabases = "Extra Base",
@@ -2838,6 +2852,7 @@ return {
             k_words_long = "12+-letter Words",
             k_akyrs_multiple_hands = "Multiple Hands",
             k_akyrs_hibana_change = "Nanana...",
+            k_akyrs_gift_change = "New Promo!",
             k_akyrs_with = "with",
             k_akyrs_credits = "Credits",
             k_akyrs_created_by = "Created by",

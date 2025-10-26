@@ -1220,6 +1220,23 @@ function Card:akyrs_mod_card_value_init(center)
         self.sell_cost = AKYRS.bal_val(self.cost * self.ability.extras.xcost,(self.cost + self.ability.extras.pluscost) ^ self.ability.extras.ecost)
         if self.sell_cost ~= self.sell_cost then self.sell_cost = 1e300 end
     end
+    if #SMODS.find_card("j_akyrs_gift_voucher") > 0 then
+        local gifts = SMODS.find_card("j_akyrs_gift_voucher")
+        for _, _c in ipairs(gifts) do
+            if self.config.center.set == _c.ability.extras.type then
+                AKYRS.simple_event_add(
+                    function ()
+                        if self.area == G.shop_jokers or self.area == G.load_shop_jokers and self.cost ~= 0 then
+                            self.cost = 0
+                            AKYRS.juice_like_tarot(self)
+                            AKYRS.force_save()
+                        end
+                        return true
+                    end, 0
+                )
+            end
+        end
+    end
     if G.GAME.modifiers.akyrs_all_cards_are_stone then
         if self.ability.set == "Default" or self.ability.set == "Enhanced" then
             AKYRS.original_set_ability(self,G.P_CENTERS["m_stone"],true)

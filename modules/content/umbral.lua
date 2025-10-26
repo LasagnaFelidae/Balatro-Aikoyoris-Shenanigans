@@ -935,9 +935,9 @@ SMODS.Consumable{
     set = "Umbral",
     key = "umbral_bounce",
     atlas = "umbra",
-    pos = {x=0,y=3},
+    pos = {x=7,y=2},
     config = {
-        max_highlighted = 2,
+        max_highlighted = 1,
     },
     loc_vars = function (self, info_queue, card)
         
@@ -962,7 +962,7 @@ SMODS.Consumable{
     set = "Umbral",
     key = "umbral_hydrate",
     atlas = "umbra",
-    pos = {x=7,y=2},
+    pos = {x=8,y=2},
     config = {
         max_highlighted = 2,
     },
@@ -989,7 +989,7 @@ SMODS.Consumable{
     set = "Umbral",
     key = "umbral_d1",
     atlas = "umbra",
-    pos = {x=8,y=2},
+    pos = {x=5,y=2},
     config = {
         extras = {
             d = 1,
