@@ -109,7 +109,7 @@ return {
                 text = 
                 { 
                     'Letter Deck',
-                    "but {C:blue}+#2#{} Hand Size", 
+                    "but {C:blue}+#3#{} Hand Size", 
                     "you only have {C:red}1 hand{}",
                     "{C:red}X#1#{} base Blind Size",
                 },
