@@ -15,7 +15,7 @@ SMODS.Sticker{
     end,
     should_apply = function (self, card, center, area, bypass_reroll)
         if self.sets[card.ability.set] then
-            if G.GAME.modifiers.akyrs_spawn_self_destruct and center.eternal_compat and pseudorandom((area == G.pack_cards and 'akyrs_packs_sale_' or 'akyrs_sale_')..G.GAME.round_resets.ante) > 0.9 then
+            if G.GAME.modifiers.akyrs_spawn_self_destruct and pseudorandom((area == G.pack_cards and 'akyrs_packs_self_destruct' or 'akyrs_self_destruct')..G.GAME.round_resets.ante) > 0.9 then
                 self:apply(card, true)
                 card.cost = 1
                 card.sell_cost = 1
@@ -321,7 +321,7 @@ SMODS.Sticker{
     sets =  all_sets,
     should_apply = function (self, card, center, area, bypass_reroll)
         if self.sets[card.ability.set] then
-            if G.GAME.modifiers.akyrs_spawn_steam_sale and center.eternal_compat and pseudorandom((area == G.pack_cards and 'akyrs_packs_sale_' or 'akyrs_sale_')..G.GAME.round_resets.ante) > 0.4 then
+            if G.GAME.modifiers.akyrs_spawn_steam_sale and pseudorandom((area == G.pack_cards and 'akyrs_packs_sale_' or 'akyrs_sale_')..G.GAME.round_resets.ante) > 0.4 then
                 self:apply(card, true)
                 card.cost = 1
                 card.sell_cost = 1
