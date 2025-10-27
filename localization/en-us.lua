@@ -2382,14 +2382,6 @@ return {
                     "{C:attention}Stake{} difficulty",
                 },
             },
-            akyrs_hydrogel_sticker={
-                name="Hydrogel Sticker",
-                text={
-                    "Used this Joker",
-                    "to win on {C:attention}Hydrogel",
-                    "{C:attention}Stake{} difficulty",
-                },
-            },
             akyrs_spotify_sticker={
                 name="Spotify Sticker",
                 text={
@@ -2606,8 +2598,8 @@ return {
             stake_akyrs_hydrogel = {
                 name = "Hydrogel Stake",
                 text = {
-                    "A random Playing Card gain a {C:attention}Sus{} Sticker every round",
-                    "{S:0.8}(Hand will not score when played, remove sticker when played)",
+                    "A random Playing Card gain a {C:attention}Sus{} Sticker every round",                    
+                    "{s:0.8}(Randomly changes either suit or rank at the end of the round)",
                     "{s:0.8}Applies Turquoise Stake",
                 }
             },
