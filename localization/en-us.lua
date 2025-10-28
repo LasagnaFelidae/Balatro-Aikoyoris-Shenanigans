@@ -3038,7 +3038,7 @@ return {
                 {
                     "{C:green}#1# in #2#{} chance to",
                     "{C:attention}disable{} the blind's effect",
-                    "{C:inactive}(Use outside blind to keep)",
+                    "{C:inactive}(Use outside of blind to keep)",
                 },
             },
             c_akyrs_umbral_free_will = {
