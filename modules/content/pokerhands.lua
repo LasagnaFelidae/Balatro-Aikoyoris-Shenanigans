@@ -102,6 +102,66 @@ AKYRS.WORD_CHECKED = {
 
 }
 
+function AKYRS.word_hand_combine(hand_in, length)
+    if ((not G.GAME.akyrs_character_stickers_enabled) or (not G.GAME.akyrs_wording_enabled)) and not AKYRS.word_blind() then 
+    return {} end
+    local word_hand = {}
+    local hand = AKYRS.shallow_indexed_table_copy(hand_in)
+    table.sort(hand, AKYRS.hand_sort_function)
+    for _, v in pairs(hand) do
+        if not v.ability or not v.ability.aikoyori_letters_stickers then return {} end
+        local alpha = v.ability.aikoyori_letters_stickers:lower()
+        if alpha == "#" and v.ability.aikoyori_pretend_letter then
+            -- if wild is set fr tbh
+            alpha = v.ability.aikoyori_pretend_letter:lower()
+        elseif alpha == "#" and AKYRS.config.wildcard_behaviour == 3 then -- if it's unset in mode 3 then just make it a random letter i guess
+            alpha = '★'
+        end
+        for _, ltr in ipairs(AKYRS.word_splitter(alpha)) do
+            table.insert(word_hand, ltr)
+        end 
+    end
+    if #word_hand ~= length then
+        return {}
+    end
+    return word_hand
+end
+
+function AKYRS.word_hand_search(word_hand, hand, length)
+    local word_hand_str = table.concat(word_hand)
+    
+    local all_wildcards = true
+    for _, val in ipairs(word_hand) do
+        if val ~= "#" then
+            all_wildcards = false
+            break
+        end
+    end
+    if all_wildcards then
+        if AKYRS.example_words[length-2] then
+            G.GAME.aiko_current_word = string.lower(AKYRS.example_words[length-2])
+        end
+        return { hand }
+    end
+    local wordData = {}
+    --print("CHECK TIME! FOR '"..word_hand_str.."' IS THE WORD")
+    if (AKYRS.WORD_CHECKED[word_hand_str]) then
+        --print("WORD "..word_hand_str.." IS IN MEMORY AND THUS SHOULD USE THAT")
+        wordData = AKYRS.WORD_CHECKED[word_hand_str]
+    else
+        --print("WORD "..word_hand_str.." IS NOT IN MEMORY ... CHECKING")
+        wordData = AKYRS.check_word(word_hand)
+        AKYRS.WORD_CHECKED[word_hand_str] = wordData
+    end
+    if wordData.valid then
+        G.GAME.aiko_current_word = wordData.word
+        local aiko_current_word_split = {}
+        return {hand}, word_data
+    else 
+        return {}, word_data
+    end
+end
+
 AKYRS.words_hand = {}
 for i = 3, 45 do
     local exampler = {}
@@ -122,60 +182,11 @@ for i = 3, 45 do
         visible = false,
         example = exampler,
         evaluate = function(parts, hand_in)
-            if ((not G.GAME.akyrs_character_stickers_enabled) or (not G.GAME.akyrs_wording_enabled)) and not AKYRS.word_blind() then 
-            return {} end
-            local word_hand = {}
-            local hand = AKYRS.shallow_indexed_table_copy(hand_in)
-            table.sort(hand, AKYRS.hand_sort_function)
-            for _, v in pairs(hand) do
-                if not v.ability or not v.ability.aikoyori_letters_stickers then return {} end
-                local alpha = v.ability.aikoyori_letters_stickers:lower()
-                if alpha == "#" and v.ability.aikoyori_pretend_letter then
-                    -- if wild is set fr tbh
-                    alpha = v.ability.aikoyori_pretend_letter:lower()
-                elseif alpha == "#" and AKYRS.config.wildcard_behaviour == 3 then -- if it's unset in mode 3 then just make it a random letter i guess
-                    alpha = '★'
-                end
-                for _, ltr in ipairs(AKYRS.word_splitter(alpha)) do
-                    table.insert(word_hand, ltr)
-                end 
-            end
-            if #word_hand ~= i then
-                return {}
-            end
-            
-            local word_hand_str = table.concat(word_hand)
-            
-            local all_wildcards = true
-            for _, val in ipairs(word_hand) do
-                if val ~= "#" then
-                    all_wildcards = false
-                    break
-                end
-            end
-            if all_wildcards then
-                if AKYRS.example_words[i-2] then
-                    G.GAME.aiko_current_word = string.lower(AKYRS.example_words[i-2])
-                end
-                return { hand }
-            end
-            local wordData = {}
-            --print("CHECK TIME! FOR '"..word_hand_str.."' IS THE WORD")
-            if (AKYRS.WORD_CHECKED[word_hand_str]) then
-                --print("WORD "..word_hand_str.." IS IN MEMORY AND THUS SHOULD USE THAT")
-                wordData = AKYRS.WORD_CHECKED[word_hand_str]
-            else
-                --print("WORD "..word_hand_str.." IS NOT IN MEMORY ... CHECKING")
-                wordData = AKYRS.check_word(word_hand)
-                AKYRS.WORD_CHECKED[word_hand_str] = wordData
-            end
-            if wordData.valid then
-                G.GAME.aiko_current_word = wordData.word
-                local aiko_current_word_split = {}
-                return {hand}
-            else 
-                return {}
-            end
+            local s = AKYRS.word_hand_combine(hand_in, i)
+            if #s == 0 then return {} end
+            local hand_return = AKYRS.word_hand_search(s, hand_in, i)
+            --print(hand_return)
+            return hand_return
         end,
         chips = 3 * i + (i-1.8) ^ (1 + i * 0.25),
         mult = 2*1.5^i + 3,
