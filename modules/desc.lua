@@ -205,6 +205,38 @@ AKYRS.DescriptionDummy{
 }
 
 
+AKYRS.DescriptionDummy{
+    key = "wildcard_behaviour_1",
+}
+AKYRS.DescriptionDummy{
+    key = "wildcard_behaviour_2",
+}
+AKYRS.DescriptionDummy{
+    key = "wildcard_behaviour_3",
+}
+AKYRS.DescriptionDummy{
+    key = "wildcard_behaviour_4",
+}
+
+AKYRS.DescriptionDummy{
+    key = "balance_settings",
+}
+
+AKYRS.DescriptionDummy{
+    key = "card_preview_tooltip",
+}
+AKYRS.DescriptionDummy{
+    key = "crt_shader_toggle",
+}
+
+AKYRS.DescriptionDummy{
+    key = "crt_shader_toggle",
+}
+
+AKYRS.DescriptionDummy{
+    key = "full_dictionary",
+}
+
 --popup
 
 AKYRS.DescriptionDummy{

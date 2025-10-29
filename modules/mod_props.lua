@@ -182,12 +182,6 @@ end
 G.FUNCS.akyrs_change_wildcard_behaviour = function (e)
   AKYRS.config.wildcard_behaviour = e.to_key
   AKYRS.save_config(e)
-  AKYRS.config_dyna_desc_txt_1 = localize('k_akyrs_wildcard_behaviours_description')[AKYRS.config.wildcard_behaviour][1]
-  AKYRS.config_dyna_desc_txt_2 = localize('k_akyrs_wildcard_behaviours_description')[AKYRS.config.wildcard_behaviour][2]
-  AKYRS.config_wildcard_desc_dyna_1:update_text(true)
-  AKYRS.config_wildcard_desc_dyna_1:update()
-  AKYRS.config_wildcard_desc_dyna_2:update_text(true)
-  AKYRS.config_wildcard_desc_dyna_2:update()
 end
 
 G.FUNCS.akyrs_change_balance_toggle = function (e)
@@ -198,17 +192,21 @@ G.FUNCS.akyrs_change_balance_toggle = function (e)
     text_col = G.C.RED
   end
   G:save_settings()
-  AKYRS.config_balance_text_txt = localize('k_akyrs_balance_descriptions')[AKYRS.balance_map[G.PROFILES[G.SETTINGS.profile].akyrs_balance]]
-  AKYRS.config_balance_text.colours = {text_col}
-  AKYRS.config_balance_text:update_text(true)
-  AKYRS.config_balance_text:update()
 end
 
 G.FUNCS.akyrs_change_joker_preview_stuff = function (e)
   AKYRS.save_config(e)
 end
 
+G.FUNCS.akyrs_update_wildcard_tooltip = function (e)
+  e.config.detailed_tooltip = AKYRS.DescriptionDummies["dd_akyrs_wildcard_behaviour_"..AKYRS.config.wildcard_behaviour]
+end
+
 G.FUNCS.akyrs_change_crt_toggle = function (e)
+  AKYRS.save_config(e)
+end
+
+G.FUNCS.save_config = function (e)
   AKYRS.save_config(e)
 end
 
@@ -221,43 +219,23 @@ AKYRS.rev_balance_map = {
 }
 
 SMODS.current_mod.config_tab = function ()
-  AKYRS.config_dyna_desc_txt_1 = localize('k_akyrs_wildcard_behaviours_description')[AKYRS.config.wildcard_behaviour][1]
-  AKYRS.config_dyna_desc_txt_2 = localize('k_akyrs_wildcard_behaviours_description')[AKYRS.config.wildcard_behaviour][2]
-  AKYRS.config_balance_text_txt = localize('k_akyrs_balance_descriptions')[AKYRS.balance_map[G.PROFILES[G.SETTINGS.profile].akyrs_balance]]
-  AKYRS.config_wildcard_desc_dyna_1 = DynaText{
-    scale = 0.4,
-    colours = {G.C.UI.TEXT_LIGHT},
-    string = {{ref_table = AKYRS ,ref_value = "config_dyna_desc_txt_1"}},
-    shadow = true, float = false, silent = true
-  }  
-  AKYRS.config_wildcard_desc_dyna_2 = DynaText{
-    scale = 0.4,
-    colours = {G.C.UI.TEXT_LIGHT},
-    string = {{ref_table = AKYRS ,ref_value = "config_dyna_desc_txt_2"}},
-    shadow = true, float = false, silent = true
-  }
-  AKYRS.config_balance_text = DynaText{
-    scale = 0.4,
-    colours = {G.C.UI.TEXT_LIGHT},
-    string = {{ref_table = AKYRS ,ref_value = "config_balance_text_txt"}},
-    shadow = true, float = false, silent = true
-  }
+
   return {
-    n = G.UIT.ROOT, config = { minw = 18, minh = 8 ,align = "tm",colour = G.C.UI.TRANSPARENT_DARK, r = 0.1 },
+    n = G.UIT.ROOT, config = { minw = 9, minh = 5 ,align = "tm",colour = G.C.UI.TRANSPARENT_DARK, r = 0.1 },
     nodes = {
-      { n = G.UIT.R, config = {align = "tm"}, nodes = {
+      { n = G.UIT.R, config = {align = "rt"}, nodes = {
           { n = G.UIT.C, config = {
-            align = "cm", padding = 0.2,
+            align = "cm", padding = 0.1,
           }, nodes = {
             {n = G.UIT.T, config = {
               text = localize("k_akyrs_wildcard_behaviour_txt"),
-              scale = 0.5,
+              scale = 0.4,
               colour = G.C.UI.TEXT_LIGHT
             }}
             }
           },          
           { n = G.UIT.C, config = {
-            align = "cm", padding = 0.2,
+            align = "cm", padding = 0.1,
             id = "akyrs_wildcard_behaviour_desc_dyna"
           }, nodes = {
               create_option_cycle({
@@ -271,56 +249,29 @@ SMODS.current_mod.config_tab = function ()
 
               })
             }
-          },       
-        } 
+          },
+          AKYRS.create_hover_tooltip{ tooltip_key = "dd_akyrs_wildcard_behaviour_1", func = "akyrs_update_wildcard_tooltip" }
+        },
       },
       -- wildcard description
-      {
-        n = G.UIT.R,{
-          align = "cm", padding = 0.2,
-        },
-        nodes = {
-          {
-            n = G.UIT.O,
-            config = {
-              align = "cm",
-              object = AKYRS.config_wildcard_desc_dyna_1
-            }
-          }
-        }
-      },
-      {
-        n = G.UIT.R,{
-          align = "cm", padding = 0.2,
-        },
-        nodes = {
-          {
-            n = G.UIT.O,
-            config = {
-              align = "cm",
-              object = AKYRS.config_wildcard_desc_dyna_2
-            }
-          }
-        }
-      },
       -- balance
-      not MP and { n = G.UIT.R, config = {align = "tm"}, nodes = {
+      not MP and { n = G.UIT.R, config = {align = "rt"}, nodes = {
           { n = G.UIT.C, config = {
-            align = "cm", padding = 0.2,
+            align = "cm", padding = 0.1,
           }, nodes = {
             {n = G.UIT.T, config = {
               text = localize("k_akyrs_config_balance_txt"),
-              scale = 0.5,
+              scale = 0.4,
               colour = G.C.UI.TEXT_LIGHT
             }}
             }
           },          
           { n = G.UIT.C, config = {
-            align = "cm", padding = 0.2,
+            align = "cm", padding = 0.1,
             id = "akyrs_wildcard_behaviour_desc_dyna"
           }, nodes = {
               create_option_cycle({
-                options = localize('k_akyrs_balance_selects'),
+                options = localize('k_akyrs_balance_selects' .. (not Talisman and "_no_talisman" or "")),
                 scale = 0.7,
                 w = 4.5,
                 current_option = AKYRS.balance_map[G.PROFILES[G.SETTINGS.profile].akyrs_balance],
@@ -330,118 +281,64 @@ SMODS.current_mod.config_tab = function ()
 
               })
             }
-          },       
+          },
+          AKYRS.create_hover_tooltip{ tooltip_key = "dd_akyrs_balance_settings" }
         } 
-      },
-      -- wildcard description
-      {
-        n = G.UIT.R,{
-          align = "cm", padding = 0.2,
-        },
-        nodes = {
-          {
-            n = G.UIT.O,
-            config = {
-              align = "cm",
-              object = AKYRS.config_balance_text
-            }
-          }
-        }
       },
       -- joker previews
       
-      { n = G.UIT.R, config = { align = "tm"}, nodes = {
-        { n = G.UIT.C, config = {
-          align = "cm", padding = 0.2,
-        }, nodes = {
+      { n = G.UIT.R, config = { align = "rt"}, nodes = {
+          { n = G.UIT.C, config = {
+            align = "cm", padding = 0.05,
+          }, nodes = {
+            
+            create_toggle({
+              label = localize("k_akyrs_card_preview"),
+              ref_table = AKYRS.config,
+              ref_value = "show_joker_preview",
+              label_scale = 0.4,
+              callback = G.FUNCS.akyrs_change_joker_preview_stuff
+            })
+            }
+          },
           
-          create_toggle({
-            label = localize("k_akyrs_joker_preview"),
-            ref_table = AKYRS.config,
-            ref_value = "show_joker_preview",
-            label_scale = 0.5,
-            callback = G.FUNCS.akyrs_change_joker_preview_stuff
-          })
-          }
-        },
+          AKYRS.create_hover_tooltip{ tooltip_key = "dd_akyrs_card_preview_tooltip" }
         } 
       },
-      {
-        n = G.UIT.R,{
-          align = "cm", padding = 0.2,
-        },
-        nodes = {
-          {
-            n = G.UIT.T,
-            config = {
-              text = localize("k_akyrs_joker_preview_description")[1],
-              scale = 0.4,
-              colour = G.C.UI.TEXT_LIGHT,
-            }
-          }
-        }
-      },
-      {
-        n = G.UIT.R,{
-          align = "cm", padding = 0.2,
-        },
-        nodes = {
-          {
-            n = G.UIT.T,
-            config = {
-              text = localize("k_akyrs_joker_preview_description")[2],
-              scale = 0.4,
-              colour = G.C.UI.TEXT_LIGHT,
-            }
-          }
-        }
-      },
-      {
-        n = G.UIT.R,{
-          align = "cm", padding = 0.2,
-        },
-        nodes = {
-          {
-            n = G.UIT.T,
-            config = {
-              text = localize("k_akyrs_joker_preview_description")[3],
-              scale = 0.4,
-              colour = G.C.UI.TEXT_LIGHT,
-            }
-          }
-        }
-      },
 
-      { n = G.UIT.R, config = { align = "tm"}, nodes = {
+      { n = G.UIT.R, config = { align = "rt"}, nodes = {
         { n = G.UIT.C, config = {
-          align = "cm", padding = 0.2,
+            align = "cm", padding = 0.05,
         }, nodes = {
           
           create_toggle({
             label = localize("k_akyrs_toggle_crt"),
             ref_table = AKYRS.config,
             ref_value = "turn_on_crt",
-            label_scale = 0.5,
+            label_scale = 0.4,
             callback = G.FUNCS.akyrs_change_crt_toggle
           })
           }
         },
+        AKYRS.create_hover_tooltip{ tooltip_key = "dd_akyrs_crt_shader_toggle" }
         } 
       },
-      {
-        n = G.UIT.R,{
-          align = "cm", padding = 0.2,
-        },
-        nodes = {
-          {
-            n = G.UIT.T,
-            config = {
-              text = localize("k_akyrs_toggle_crt_description"),
-              scale = 0.4,
-              colour = G.C.UI.TEXT_LIGHT,
-            }
+      { n = G.UIT.R, config = { align = "rt"}, nodes = {
+        { n = G.UIT.C, config = {
+            align = "cm", padding = 0.05,
+        }, nodes = {
+          
+          create_toggle({
+            label = localize("k_akyrs_toggle_full_dictionary"),
+            ref_table = AKYRS.config,
+            ref_value = "full_dictionary",
+            label_scale = 0.4,
+            callback = G.FUNCS.save_config
+          })
           }
-        }
+        },
+        AKYRS.create_hover_tooltip{ tooltip_key = "dd_akyrs_full_dictionary" }
+        } 
       },
     }
   }

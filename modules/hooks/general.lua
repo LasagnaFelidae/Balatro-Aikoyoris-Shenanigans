@@ -242,15 +242,19 @@ function AKYRS.expensive_calculation()
             G.GAME.aiko_last_mult = G.GAME.current_round.current_hand.mult
             G.GAME.aiko_last_chips = G.GAME.current_round.current_hand.chips
         end
-        if G.GAME.akyrs_mathematics_enabled and G.GAME.akyrs_character_stickers_enabled then
+        if G.GAME.akyrs_mathematics_enabled and G.GAME.akyrs_character_stickers_enabled and not G.GAME.blind.debuff.akyrs_scoring_set then
             SMODS.set_scoring_calculation('akyrs_math_display')
+            G.GAME.blind.debuff = G.GAME.blind.debuff or {}
+            G.GAME.blind.debuff.akyrs_scoring_set = true
         end
     end
     if G.STATE == G.STATES.SELECTING_HAND then
         
         if G.GAME.akyrs_wording_enabled and G.GAME.akyrs_character_stickers_enabled and G.GAME.blind.debuff.akyrs_is_puzzle_blind then
-            if not G.GAME.blind.disabled and not G.GAME.blind.defeated then
+            if not G.GAME.blind.disabled and not G.GAME.blind.defeated and not G.GAME.blind.debuff.akyrs_scoring_set then
                 SMODS.set_scoring_calculation('akyrs_puzzle_display')
+                G.GAME.blind.debuff = G.GAME.blind.debuff or {}
+                G.GAME.blind.debuff.akyrs_scoring_set = true
             end
         end
         if not G.GAME.blind.debuff.initial_action_act_set and not G.GAME.blind.disabled then
@@ -371,7 +375,12 @@ local cardSetCostHook = Card.set_cost
 function Card:set_cost()
     local ret = cardSetCostHook(self)
     if self.ability.akyrs_self_destructs then
-        self.sell_cost = -1
+        self.cost = 1
+        self.sell_cost = 1
+    end
+    if self.ability.akyrs_sale then
+        self.cost = 1
+        self.sell_cost = 1
     end
     return ret
 end

@@ -201,8 +201,8 @@ SMODS.Blind{
                                 function ()
                                     local ante = Talisman and to_number(G.GAME.round_resets.ante) or G.GAME.round_resets.ante
                                     local fct = 2 * (i - 1) - 1
-                                    local max_freq = (70000/(fct))/ante^1.5
-                                    local min_freq = (15000/(fct))/ante^1.03
+                                    local max_freq = (70000/(fct))/ante^1.5 / (AKYRS.config.full_dictionary and 1 or 10)
+                                    local min_freq = (15000/(fct))/ante^1.03 / (AKYRS.config.full_dictionary and 1 or 10)
                                     local prompt, freq = AKYRS.get_bomb_prompt(
                                     {
                                         min_freq = min_freq, 

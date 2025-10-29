@@ -3,4 +3,5 @@ return {
 	show_joker_preview = true,
 	balance = nil,
 	turn_on_crt = true,
+	full_dictionary = false,
 }

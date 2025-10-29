@@ -623,15 +623,55 @@ AKYRS.get_bomb_prompt = function(config)
 end
 
 
-  G.FUNCS.akyrs_force_draw_from_discard_to_hand = function(e)
-    G.E_MANAGER:add_event(Event({
-        trigger = 'immediate',
-        func = function()
-            local discard_count = #G.discard.cards
-            for i=1, discard_count do --draw cards from deck
-                draw_card(G.discard, G.hand, i*100/discard_count,'up', nil ,nil, 0.005, i%2==0, nil, math.max((21-i)/20,0.7))
-            end
-            return true
+G.FUNCS.akyrs_force_draw_from_discard_to_hand = function(e)
+G.E_MANAGER:add_event(Event({
+    trigger = 'immediate',
+    func = function()
+        local discard_count = #G.discard.cards
+        for i=1, discard_count do --draw cards from deck
+            draw_card(G.discard, G.hand, i*100/discard_count,'up', nil ,nil, 0.005, i%2==0, nil, math.max((21-i)/20,0.7))
         end
-      }))
-  end
+        return true
+    end
+    }))
+end
+
+AKYRS.create_hover_tooltip = function(args)
+    args = args or {}
+    return {
+        n = args.top_level_node or G.UIT.C,
+        config = { 
+            align = "cm"
+        },
+        nodes = {
+            {
+                n = G.UIT.R,
+                config = {
+                    align = "cm",
+                    hover = true,
+                    can_collide = true, 
+                    r = args.round or 0.1,
+                    maxh = args.w or 0.5,
+                    maxw = args.h or 0.5,
+                    minh = args.w or 0.5,
+                    minw = args.h or 0.5,
+                    focus_args = { snap_to = true },
+                    detailed_tooltip = AKYRS.DescriptionDummies[args.tooltip_key or "dd_akyrs_yona_yona_ex"], 
+                    func = args.func,
+                    colour = args.colour or G.C.BLUE,
+                    padding = args.padding or 0.1,
+                },
+                nodes = {
+                    {
+                        n = G.UIT.T,
+                        config = {
+                            text = args.text or "i",
+                            colour = args.text_colour or G.C.WHITE,
+                            scale = args.scale or 0.3,
+                        }
+                    }
+                }
+            }
+        }
+    }
+end

@@ -384,6 +384,66 @@ return {
             },
         },
         DescriptionDummy={
+            -- config
+            dd_akyrs_wildcard_behaviour_1 = {
+                name = "Wildcard Behaviour",
+                text = {
+                    {'{C:attention}Automatic','Automatically find a letter for wildcards','which do not have letters set. (Default).'},
+                }
+            },
+            dd_akyrs_wildcard_behaviour_2 = {
+                name = "Wildcard Behaviour",
+                text = {
+                    {'{C:attention}Force No Unset','The play button will be disabled','if you selected an unset wild card.',} ,
+                }
+            },
+            dd_akyrs_wildcard_behaviour_3 = {
+                name = "Wildcard Behaviour",
+                text = {
+                    {'{C:attention}Always Manual','Wildcards do not have letter assigned to them by default.','When played, will not attempt to find letters. (Can help with performance)',} ,
+                }
+            },
+            dd_akyrs_wildcard_behaviour_4 = {
+                name = "Wildcard Behaviour",
+                text = {
+                    {'{C:attention}Auto Set', 'Automatically find a letter for wildcard and','also set the letter automatically to the target if it is unset.',} 
+                }
+            },
+            dd_akyrs_balance_settings = {
+                name = "Balance Settings",
+                text = {
+                    {"{C:green,E:2}Adequate", "Balanced towards vanilla",},
+                    {"{C:red,E:1}Absurd{C:inactive} (Requires Talisman)", "Bigger Number, Crazier Effects,","Direr Consequences"}
+                }
+            },
+            dd_akyrs_card_preview_tooltip = {
+                name = "Card Preview Tooltip",
+                text = {
+                    'Some cards have a small "Preview" window where the effect of the cards',
+                    'is demonstrated. If you are experiencing crashes after hovering a card',
+                    'turning this off might help',
+                },
+            },
+            dd_akyrs_crt_shader_toggle = {
+                name = "CRT Shader",
+                text = {
+                    'Normally, the game {C:attention}always{} render CRT shader despite',
+                    'you turning it to 0 in settings which is why everything looks so saturated',
+                    'Turning this off means everything will be less saturated {C:inactive}(If you like the faded look)',
+                },
+            },
+            dd_akyrs_full_dictionary = {
+                name = "Full Dictionary",
+                text = {
+                    'Use the full dictionary of {C:attention,E:1}500k{} entries instead of 50k entries',
+                    'From a lot of testing, full dictionary {C:attention}can{} cause quite a lag spike',
+                    'when playing large words but you will have a lot more word choices.',
+                    'Reduced dictionary meanwhile means that things like many {C:attention}plural forms{}',
+                    'won\'t be available. But is less likely to be laggy',
+                    'This also impacts {C:attention}The Bomb{} boss blinds\' prompt choice',
+                },
+            },
+            -- tooltips
             dd_akyrs_maxwell_example={
                 name="Example",
                 text={
@@ -3253,10 +3313,6 @@ return {
             k_akyrs_balance_dialog_cryptid_decline = "I want to hear more!",
             k_akyrs_balance_dialog_details_next = "Alright, I'll pick...",
             k_akyrs_balance_dialog_mp_accept = "OK (End)",
-            k_akyrs_balance_dialog_adequate_text = "Adequate",
-            k_akyrs_balance_dialog_adequate_description = "Balanced towards vanilla",
-            k_akyrs_balance_dialog_absurd_text = "Absurd (Requires Talisman)",
-            k_akyrs_balance_dialog_absurd_description = "Bigger Number, Crazier Effects, Direr Consequences",
             k_akyrs_balance_dialog_finish_wizard = "Let's Go! (End)",
 
             k_akyrs_wildcard_behaviour_txt = "Wildcards Behaviour",
@@ -3283,19 +3339,14 @@ return {
                 'Absurd',
             },
             
-            k_akyrs_balance_descriptions={
-                'Balanced towards vanilla',
-                '(Requires Talisman) Bigger Number, Crazier Effects, Direr Consequences',
+            k_akyrs_balance_selects_no_talisman={
+                'Adequate',
             },
             
-            k_akyrs_joker_preview = "Enable Joker Preview Window",
-            k_akyrs_joker_preview_description={
-                'Some Jokers have a small "Preview" window where the effect of the Joker',
-                'is demonstrated. If you are experiencing crashes related to "blind" being',
-                'nil when hovering on certain Jokers, Turning this off might mitigate that issue.',
-            },
+            
+            k_akyrs_card_preview = "Enable Card Previews",
             k_akyrs_toggle_crt = "Enable CRT Shaders",
-            k_akyrs_toggle_crt_description = 'Toggle the game\'s CRT shader (the shader saturates everything a bit)',
+            k_akyrs_toggle_full_dictionary = "Enable Full Dictionary",
             k_akyrs_emerald = "Emerald",
             k_akyrs_supercommon = "Supercommon",
             k_akyrs_unique = "Unique",

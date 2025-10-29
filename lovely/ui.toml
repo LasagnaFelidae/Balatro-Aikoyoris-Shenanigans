@@ -736,3 +736,13 @@ payload = """num_lines = num_lines + AKYRS.rows_needed_for_icon()"""
 overwrite = true
 match_indent = true
 
+
+[[patches]]
+[patches.pattern]
+target = 'engine/ui.lua'
+pattern = """    if self.UIT == G.UIT.O and not self.config.no_role then"""
+position = "at"
+payload = """    if self.UIT == G.UIT.O and not self.config.no_role and self.config.object then"""
+overwrite = true
+match_indent = true
+

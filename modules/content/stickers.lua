@@ -16,9 +16,6 @@ SMODS.Sticker{
     should_apply = function (self, card, center, area, bypass_reroll)
         if self.sets[card.ability.set] then
             if G.GAME.modifiers.akyrs_spawn_self_destruct and pseudorandom((area == G.pack_cards and 'akyrs_packs_self_destruct' or 'akyrs_self_destruct')..G.GAME.round_resets.ante) > 0.9 then
-                self:apply(card, true)
-                card.cost = 1
-                card.sell_cost = 1
                 return true
             end
         end
@@ -85,7 +82,6 @@ SMODS.Sticker{
     should_apply = function (self, card, center, area, bypass_reroll)
         if self.sets[card.ability.set] then
             if G.GAME.modifiers.akyrs_spawn_oxidising and pseudorandom((area == G.pack_cards and 'akyrs_packs_oxi_' or 'akyrs_oxi_')..G.GAME.round_resets.ante) > 0.7 then
-                card.ability.akyrs_oxidising = 1
                 return true
             end
         end
@@ -105,7 +101,7 @@ SMODS.Sticker{
         }
     end,
     apply = function(self, card, val)
-        if val == true then val = 1 end
+        if val == true then val = 1 else val = 0 end
         card.ability[self.key] = val
         card.ability.akyrs_oxidising_round = 2
         card.cost = math.floor(card.cost / 2)
@@ -215,15 +211,17 @@ SMODS.Sticker{
     should_apply = function (self, card, center, area, bypass_reroll)
         if self.sets[card.ability.set] then
             if G.GAME.modifiers.akyrs_spawn_concealed and pseudorandom((area == G.pack_cards and 'akyrs_packs_concealed_' or 'akyrs_concealed_')..G.GAME.round_resets.ante) > 0.7 then
-                card.ability.akyrs_concealed = true
-                card:set_ability(card.config.center)
-                card:set_sprites(card.config.center, card.config.base)
-                card.cost = 5
-                card.sell_cost = 3
                 return true
             end
         end
         return false
+    end,
+    apply = function (self, card, val)
+        card.ability[self.key] = val
+        card:set_ability(card.config.center)
+        card:set_sprites(card.config.center, card.config.base)
+        card.cost = 5
+        card.sell_cost = 3
     end,
     calculate = function(self, card, context)
     end,    
@@ -282,7 +280,6 @@ SMODS.Sticker{
     should_apply = function (self, card, center, area, bypass_reroll)
         if self.sets[card.ability.set] then
             if G.GAME.modifiers.akyrs_spawn_latticed and center.eternal_compat and pseudorandom((area == G.pack_cards and 'akyrs_packs_latticed_' or 'akyrs_latticed_')..G.GAME.round_resets.ante) > 0.7 then
-                self:apply(card, true)
                 return true
             end
         end
@@ -322,9 +319,6 @@ SMODS.Sticker{
     should_apply = function (self, card, center, area, bypass_reroll)
         if self.sets[card.ability.set] then
             if G.GAME.modifiers.akyrs_spawn_steam_sale and pseudorandom((area == G.pack_cards and 'akyrs_packs_sale_' or 'akyrs_sale_')..G.GAME.round_resets.ante) > 0.4 then
-                self:apply(card, true)
-                card.cost = 1
-                card.sell_cost = 1
                 return true
             end
         end
@@ -343,6 +337,11 @@ SMODS.Sticker{
                 self.config.extras.reduce
             }
         }
+    end,
+    apply = function (self, card, val)
+        card.ability[self.key] = val
+        card.cost = 1
+        card.sell_cost = 1
     end,
     calculate = function(self, card, context)
         if context.end_of_round and not context.repetition and not context.individual then
