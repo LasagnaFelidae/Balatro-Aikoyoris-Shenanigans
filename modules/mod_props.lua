@@ -36,7 +36,7 @@ AKYRS.create_credits = function(sprite_atlas, name, width)
     n = G.UIT.R,
     config = {minw = 1, maxw = 1, minh = 1, maxh = 1, },
     nodes = {
-      {
+      sprite_atlas and {
         n = G.UIT.C,
         config = { minw = 1, maxw = 1, minh = 1, maxh = 1, align = "cm" },
         nodes = {
@@ -66,6 +66,58 @@ AKYRS.create_credits = function(sprite_atlas, name, width)
           }),
         }
       },
+    }
+  }
+end
+
+function AKYRS.create_button_icon(sprite_atlas, px, py, uit)
+  return {
+    n = uit or G.UIT.C,
+    nodes = {
+      AKYRS.embedded_ui_sprite(sprite_atlas, { x = px or 0, y = py or 0 }, nil, {
+        w = 18,
+        h = 18,
+        manual_scale = 54,
+        padding = 0,
+        rounded = 0.5
+      }),
+    }
+  }
+end
+function AKYRS.create_link_sprite_btn(platform, link)
+  local col = G.C.BLACK
+  local px, py = 0, 0
+  if platform == "youtube" then
+    col = G.C.RED
+    px, py = 0, 0
+  end
+  if platform == "bsky" then
+    col = G.C.BLUE
+    px, py = 1, 0
+  end
+  if platform == "twitter" then
+    col = G.C.BLUE
+    px, py = 2, 0
+  end
+  if platform == "pixeljoint" then
+    col = G.C.BOOSTER
+    px, py = 3, 0
+  end
+  
+  return 
+  {
+    n = G.UIT.C,
+    config = {
+      button = "akyrs_open_link",
+      link = link or "https://aikoyori.xyz",
+      colour = darken(col, 0.4),
+      padding = 0.05,
+      r = 0.1,
+      emboss = 0.05,
+      hover = true,
+    },
+    nodes = {
+      AKYRS.create_button_icon("akyrs_misc_icons", px, py)
     }
   }
 end
@@ -180,9 +232,31 @@ SMODS.current_mod.extra_tabs = function ()
                   }
                 },
                 AKYRS.create_credits("akyrs_larantula_l_credits", "@larantula_l", 3.1),
-                AKYRS.create_credits("akyrs_mystery", "@eggymari", 2.7),
-                AKYRS.create_credits("akyrs_mystery", "@gudusername_53951", 3.6),
-                AKYRS.create_credits("akyrs_mystery", "@Lyman", 1.9),
+                {
+                  n = G.UIT.R,
+                  config = { padding = 0.02 },
+                  nodes = {
+                    AKYRS.create_link_sprite_btn("youtube", "https://www.youtube.com/@Larantula"),
+                  }
+                },
+                AKYRS.create_credits("akyrs_plasma_credits", "@eggymari", 2.7),
+                {
+                  n = G.UIT.R,
+                  config = { padding = 0.02 },
+                  nodes = {
+                    AKYRS.create_link_sprite_btn("youtube", "https://www.youtube.com/@PlasmaPhrase"),
+                    AKYRS.create_link_sprite_btn("twitter", "https://twitter.com/plasmaphrase"),
+                  }
+                },
+                AKYRS.create_credits("akyrs_gud_credits", "@gudusername_53951", 3.6),
+                AKYRS.create_credits("akyrs_lyman_credits", "@Lyman", 1.9),
+                {
+                  n = G.UIT.R,
+                  config = { padding = 0.02 },
+                  nodes = {
+                    AKYRS.create_link_sprite_btn("pixeljoint", "https://pixeljoint.com/p/172299.htm"),
+                  }
+                },
               }
             },
             {
@@ -196,7 +270,7 @@ SMODS.current_mod.extra_tabs = function ()
                     { n = G.UIT.T, config = { text = localize("k_akyrs_additional_help_by"), scale = 0.5, colour = G.C.WHITE } }
                   }
                 },
-                AKYRS.create_credits("akyrs_mystery", "@dr_monty_the_snek", 3.5),
+                AKYRS.create_credits("akyrs_drmonty_credits", "@dr_monty_the_snek", 3.5),
                 {
                   n = G.UIT.R,
                   config = {},

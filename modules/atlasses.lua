@@ -102,26 +102,11 @@ SMODS.Atlas {
 }
 
 SMODS.Atlas {
-    key = "larantula_l_credits",
-    path = "credits/larantula_l.png",
-    px = 400,
-    py = 400
-}
-
-SMODS.Atlas {
     key = "aikoyori_credits",
     path = "aikoyoriP.png",
     px = 320,
     py = 320
 }
-
-SMODS.Atlas {
-    key = "mystery",
-    path = "mystery.png",
-    px = 320,
-    py = 320
-}
-
 
 SMODS.Atlas {
     key = "aikoyoriTags",
@@ -252,6 +237,60 @@ SMODS.Atlas {
     px = 71,
     py = 95
 }
+
+
+SMODS.Atlas {
+    key = "misc_icons",
+    path = "misc_icons.png",
+    px = 18,
+    py = 18
+}
+
+-- credits
+
+
+SMODS.Atlas {
+    key = "larantula_l_credits",
+    path = "credits/larantula_l.png",
+    px = 400,
+    py = 400
+}
+
+SMODS.Atlas {
+    key = "drmonty_credits",
+    path = "credits/drmonty.png",
+    px = 576,
+    py = 576
+}
+SMODS.Atlas {
+    key = "gud_credits",
+    path = "credits/gud.png",
+    px = 379,
+    py = 379
+}
+
+SMODS.Atlas {
+    key = "lyman_credits",
+    path = "credits/lyman.png",
+    px = 128,
+    py = 128
+}
+
+SMODS.Atlas {
+    key = "plasma_credits",
+    path = "credits/plasma.png",
+    px = 600,
+    py = 600
+}
+
+SMODS.Atlas {
+    key = "mystery",
+    path = "mystery.png",
+    px = 320,
+    py = 320
+}
+
+
 
 -- we glsling so hard rn 
 

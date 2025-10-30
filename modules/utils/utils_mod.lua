@@ -286,6 +286,11 @@ G.FUNCS.go_to_aikoyori_discord_server = function(e)
 end
 
 
+G.FUNCS.akyrs_open_link = function(e)
+    love.system.openURL( e.config.link )
+end
+
+
 AKYRS.get_letter_freq_from_cards = function(listofcards)
     
     local wordArray = {}
