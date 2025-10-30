@@ -388,32 +388,32 @@ return {
             dd_akyrs_wildcard_behaviour_1 = {
                 name = "Wildcard Behaviour",
                 text = {
-                    {'{C:attention}Automatic','Automatically find a letter for wildcards','which do not have letters set. (Default).'},
+                    '{C:attention}Automatic','Automatically find a letter for wildcards','which do not have letters set. (Default).',
                 }
             },
             dd_akyrs_wildcard_behaviour_2 = {
                 name = "Wildcard Behaviour",
                 text = {
-                    {'{C:attention}Force No Unset','The play button will be disabled','if you selected an unset wild card.',} ,
+                    '{C:attention}Force No Unset','The play button will be disabled','if you selected an unset wild card.' ,
                 }
             },
             dd_akyrs_wildcard_behaviour_3 = {
                 name = "Wildcard Behaviour",
                 text = {
-                    {'{C:attention}Always Manual','Wildcards do not have letter assigned to them by default.','When played, will not attempt to find letters. (Can help with performance)',} ,
+                    '{C:attention}Always Manual','Wildcards do not have letter assigned to them by default.','When played, will not attempt to find letters. (Can help with performance)' ,
                 }
             },
             dd_akyrs_wildcard_behaviour_4 = {
                 name = "Wildcard Behaviour",
                 text = {
-                    {'{C:attention}Auto Set', 'Automatically find a letter for wildcard and','also set the letter automatically to the target if it is unset.',} 
+                    '{C:attention}Auto Set', 'Automatically find a letter for wildcard and','also set the letter automatically to the target if it is unset.', 
                 }
             },
             dd_akyrs_balance_settings = {
                 name = "Balance Settings",
                 text = {
-                    {"{C:green,E:2}Adequate", "Balanced towards vanilla",},
-                    {"{C:red,E:1}Absurd{C:inactive} (Requires Talisman)", "Bigger Number, Crazier Effects,","Direr Consequences"}
+                    "{C:green,E:2}Adequate", "Balanced towards vanilla",
+                    "{C:red,E:1}Absurd{C:inactive} (Requires Talisman)", "Bigger Number, Crazier Effects,","Direr Consequences"
                 }
             },
             dd_akyrs_card_preview_tooltip = {
