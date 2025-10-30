@@ -1073,10 +1073,11 @@ return {
             j_akyrs_diamond_pickaxe = {
                 name = "Diamond Pickaxe",
                 text = {
-                    "Gives {C:attention}#2#{} stacks of {C:chips}+#1#{} Chips",
-                    "for every {C:attention}Stone{} Card scored",
-                    "and change every scored {C:attention}Stone{} card",
-                    "to a random {C:attention}non-Stone Upgrades{}"
+                    "Siphons {C:chips}#2#{} Chips",
+                    "from every {C:attention}Stone{} Card scored",
+                    "and {C:attention}adds{} that amount to this Joker",
+                    "{C:inactive}(Remove Stone if card has no Chips left)",
+                    "{C:inactive}(Currently {C:chips}+#1#{C:inactive} Chips)",
                 }
             },
             j_akyrs_diamond_pickaxe_absurd = {
@@ -1093,10 +1094,9 @@ return {
             j_akyrs_netherite_pickaxe = {
                 name = "Netherite Pickaxe",
                 text = {
-                    "Gives {C:attention}#2#{} stacks of {C:chips}+#1#{} Chips",
-                    "for every {C:attention}Stone{} Card scored",
-                    "{C:red,E:1}Destroy all scored",
-                    "{C:attention,E:1}Stone{C:red,E:1} cards afterwards"
+                    "Destroy played {C:attention}Stone{} Cards",
+                    "and gain {X:chips,C:white} X#2# {} Chips each Stone Card {C:attention}destroyed",
+                    "{C:inactive}(Currently {X:chips,C:white} X#1# {C:inactive} Chips){}" ,
                 }
             },
             j_akyrs_netherite_pickaxe_absurd = {
@@ -1130,9 +1130,10 @@ return {
             j_akyrs_it_is_forbidden_to_dog = {
                 name = "It is forbidden to dog",
                 text = { 
-                    "Debuffed Cards held in hand or played",
+                    "Debuffed Cards held in hand",
                     "give {X:mult,C:white} X#1#{} Mult each",
-                    "{C:inactive,s:0.8}Now works properly on macOS :D!",
+                    "A {C:attention}random{} card",
+                    "is debuffed every hand {C:attention}drawn"
                 }
             },
             j_akyrs_it_is_forbidden_to_dog_absurd = {
@@ -1146,9 +1147,10 @@ return {
             j_akyrs_eat_pant = {
                 name = "eat pant",
                 text = { 
-                    "If played hand contains exactly {C:attention}#1#{} cards",
-                    "This joker loses {X:mult,C:white} 1/#2# {} of its current Mult.",
-                    "for every played card and {C:red}destroys all scored cards{}",
+                    "If played hand contains exactly {C:attention}4{} cards",
+                    "{C:red}destroys first two played cards{} and loses",
+                    "{X:mult,C:white} 1/#2# {} of its current {X:mult,C:white}XMult{} {C:inactive}(cumulative)",
+                    "per card destroyed",
                     "{C:inactive}(Currently {X:mult,C:white} X#3# {C:inactive} Mult)",
                     "{C:inactive}(Can underflow below {X:mult,C:white} X1 {C:inactive})",
                 }
@@ -1449,7 +1451,7 @@ return {
             j_akyrs_charred_roach = {
                 name = "Charred Roach",
                 text = { 
-                    "{C:red}Destroying{} cards",
+                    "{C:red}Destroying and selling{} cards",
                     "grants you a {C:attention}Burnt{} copy of them",
                 }
             },
@@ -1509,6 +1511,7 @@ return {
                 name = "Chicken Jockey",
                 text = {
                     { 
+                        "{C:attention}Every{} food Joker becomes {C:red}Popcorn{} when {C:attention}bought",
                         "Every {C:red}Popcorn{} obtained while this Joker",
                         "is present decreases Mult by {C:red}-#3#{} per round instead",
                         "Gain {X:mult,C:white}X#1#{} Mult per {C:red}Popcorn{} eaten.",
@@ -1586,7 +1589,7 @@ return {
                 text = { 
                     {
                         "This joker sells for {X:money,C:black}X#1#{}",
-                        "its buy cost ({C:money}$#2#{})",
+                        "its buy cost plus how many of Emerald you have ({C:money}$#2#{} + {C:money}$#3#{})",
                         "{C:inactive}(Will do more things in future updates trust)",
                     },
                     {
@@ -1639,8 +1642,8 @@ return {
                 name = "Turret",
                 text = { 
                     "Sell this Joker to destroy",
-                    "Joker {C:attention}to the right",
-                    "Gives its {C:attention}purchase{} cost back {C:inactive}({C:money}$#1#{C:inactive}){}",
+                    "Joker {C:attention}to the right and gives {X:money,C:black}X#2#{}",
+                    "of its {C:attention}sell{} cost back {C:inactive}({C:money}$#1#{C:inactive}){}",
                     "{E:1,C:red}Bypasses Eternal",
                 }
             },
@@ -1675,7 +1678,7 @@ return {
             j_akyrs_goodbye_sengen = {
                 name = "Goodbye Sengen",
                 text = { 
-                    "If hand has {C:attention}a single{} card,",
+                    "If {C:attention}first hand of round{} has {C:attention}a single{} card,",
                     "destroy it and create a {C:tarot}Justice{}",
                     "{C:inactive}(Must have room){}",
                     "{C:inactive,f:5}引きこもり絶対ジャスティス俺の私だけの折の中で{}",
@@ -1742,12 +1745,13 @@ return {
             j_akyrs_story_of_undertale = {
                 name = "Story of Undertale",
                 text = { 
-                    "When blind is selected",
-                    "Destroy a random {C:attention}Joker{}",
-                    "and create {C:dark_edition}Negative {C:attention}Mr.Bones{}",
-                    "equal to the {C:attention}number of digits{} in",
-                    "that Joker's {C:attention}sell price",
-                    "{E:akyrs_snaking,C:red}Self-destructs",
+                    "When blind is {C:attention}defeated",
+                    "Destroy the rightmost {C:attention}destructible{}",
+                    "{C:attention}non-Mr.Bones{} Joker and create",
+                    "a {C:dark_edition}Negative {C:attention}Mr.Bones{}",
+                    "{C:inactive}(Must have room in between...?)",
+                    "Mr.Bones {E:akyrs_snaking,C:red}does not need{}",
+                    "score requirements to activate",
                 }
             },
             j_akyrs_no_hints_here = {
@@ -3218,7 +3222,9 @@ return {
             k_akyrs_with = "with",
             k_akyrs_credits = "Credits",
             k_akyrs_created_by = "Created by",
-            k_akyrs_additional_art_by = "Additional Arts by",
+            k_akyrs_additional_art_by = "Featuring Arts by",
+            k_akyrs_additional_help_by = "Special Thanks",
+            k_akyrs_drmonty_help = "for helping with balancing",
             k_akyrs_difficult = "Difficult",
             k_akyrs_dried = "Dried...",
             k_akyrs_moisture = "Moisturised!",
@@ -3259,7 +3265,7 @@ return {
             k_akyrs_crystalised_warning = "Crystalised Card will make hand not score!",
 
             k_akyrs_title = "Aikoyori's Shenanigans",
-            k_akyrs_join_akyrs_discord = "Join my Discord",
+            k_akyrs_join_akyrs_discord = "Discord (Bugs & Feedback)",
 
             k_akyrs_hardcore_challenge_mode = "Hardcore Challenge Mode",
             k_akyrs_hardcore_challenge_mode_flavour = "Tough and completely optional Challenges",

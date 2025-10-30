@@ -164,7 +164,9 @@ function Card:update(dt)
     end
     
     if self.config.center_key == "j_akyrs_emerald" and self.sell_cost ~= self.cost * self.ability.extras.xcost then
-        self.sell_cost = AKYRS.bal_val(self.cost * self.ability.extras.xcost,(self.cost + self.ability.extras.pluscost) ^ self.ability.extras.ecost)
+        local emerald = SMODS.find_card("j_akyrs_emerald")
+        self.ability.extras.amnt = #emerald
+        self.sell_cost = AKYRS.bal_val((self.cost + #emerald) * self.ability.extras.xcost,(self.cost + self.ability.extras.pluscost) ^ self.ability.extras.ecost)
     end
     if G.STATE == G.STATES.SELECTING_HAND then
         if not self.ability.akyrs_executed_debuff and G.GAME.blind and not G.GAME.blind.disabled then
@@ -439,10 +441,10 @@ function Card:remove()
 
     if (not (AKYRS.sigmaable_areas(area) and self.ability.akyrs_sigma)) or (AKYRS.is_card_not_sigma(self)) or area.being_removed then
         --print("CARD CAN BE REMOVED SAFELY")
-        if not G.AKYRS_RUN_BEING_DELETED and not self.akyrs_is_being_sold and not (area and (area.config.collection or area.config.temporary or area.config.view_deck)) and area and AKYRS.game_areas(area) then
+        if not G.AKYRS_RUN_BEING_DELETED and not (area and (area.config.collection or area.config.temporary or area.config.view_deck)) and area and AKYRS.game_areas(area) then
             if not area.being_removed then
 
-                pcall(SMODS.calculate_context,{ akyrs_card_remove = true, card_getting_removed = self })
+                pcall(SMODS.calculate_context,{ akyrs_card_remove = true, card_getting_removed = self, being_sold = self.akyrs_is_being_sold })
             end
         end
 

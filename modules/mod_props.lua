@@ -147,28 +147,70 @@ SMODS.current_mod.custom_ui = function (mod_nodes)
               },
             }
           },
-          {
-            n = G.UIT.C,
-            config = {padding = 0.05},
-            nodes = {
-              {
-                n = G.UIT.R,
-                config = {},
-                nodes = {
-                  { n = G.UIT.T, config = { text = localize("k_akyrs_additional_art_by"), scale = 0.5, colour = G.C.WHITE } }
-                }
-              },
-              AKYRS.create_credits("akyrs_larantula_l_credits", "@larantula_l", 3.5),
-              AKYRS.create_credits("akyrs_mystery", "@eggymari", 3.2),
-              AKYRS.create_credits("akyrs_mystery", "@gudusername_53951", 3.8),
-              AKYRS.create_credits("akyrs_mystery", "@Lyman", 2.4),
-            }
-          }
         }
       },
     }
   }
   table.insert(mod_nodes, node1)
+end
+
+SMODS.current_mod.extra_tabs = function ()
+  return {
+    { 
+      label = localize("k_akyrs_credits"),
+      tab_definition_function = function ()
+        return {
+          n = G.UIT.ROOT,
+          config = {
+            r = 0.5,
+            padding = 0.5,
+            colour = G.C.AKYRS_HAIR_DARKER,
+            align = "cm",
+          },
+          nodes = {
+            {
+              n = G.UIT.C,
+              config = {padding = 0.05},
+              nodes = {
+                {
+                  n = G.UIT.R,
+                  config = {},
+                  nodes = {
+                    { n = G.UIT.T, config = { text = localize("k_akyrs_additional_art_by"), scale = 0.5, colour = G.C.WHITE } }
+                  }
+                },
+                AKYRS.create_credits("akyrs_larantula_l_credits", "@larantula_l", 3.1),
+                AKYRS.create_credits("akyrs_mystery", "@eggymari", 2.7),
+                AKYRS.create_credits("akyrs_mystery", "@gudusername_53951", 3.6),
+                AKYRS.create_credits("akyrs_mystery", "@Lyman", 1.9),
+              }
+            },
+            {
+              n = G.UIT.C,
+              config = {padding = 0.05},
+              nodes = {
+                {
+                  n = G.UIT.R,
+                  config = {},
+                  nodes = {
+                    { n = G.UIT.T, config = { text = localize("k_akyrs_additional_help_by"), scale = 0.5, colour = G.C.WHITE } }
+                  }
+                },
+                AKYRS.create_credits("akyrs_mystery", "@dr_monty_the_snek", 3.5),
+                {
+                  n = G.UIT.R,
+                  config = {},
+                  nodes = {
+                    { n = G.UIT.T, config = { text = localize("k_akyrs_drmonty_help"), scale = 0.5, colour = G.C.WHITE } }
+                  }
+                },
+              }
+            }
+          }
+        }
+      end
+    }
+  }
 end
 
 -- copied from breeze https://discord.com/channels/1116389027176787968/1337300709602754611/1337705824859979817

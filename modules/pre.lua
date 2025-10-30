@@ -91,3 +91,20 @@ AKYRS.emplace_funcs.always_placeable = function(ca,card) return G.OVERLAY_MENU a
 
 table.insert(SMODS.other_calculation_keys, "akyrs_score")
 table.insert(SMODS.other_calculation_keys, "akyrs_h_score")
+
+
+function AKYRS.apply_pool(center, pool)
+    if not center or not G.P_CENTERS[center] then return end
+    G.P_CENTERS[center].pools = G.P_CENTERS[center].pools or {}
+    G.P_CENTERS[center].pools[pool] = true
+end
+
+AKYRS.apply_pool("j_gros_michel", "Food")
+AKYRS.apply_pool("j_selzer", "Food")
+AKYRS.apply_pool("j_egg", "Food")
+AKYRS.apply_pool("j_ice_cream", "Food")
+AKYRS.apply_pool("j_popcorn", "Food")
+AKYRS.apply_pool("j_cavendish", "Food")
+AKYRS.apply_pool("j_turtle_bean", "Food")
+AKYRS.apply_pool("j_diet_cola", "Food")
+AKYRS.apply_pool("j_ramen", "Food")

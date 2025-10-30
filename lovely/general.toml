@@ -105,3 +105,41 @@ position = "at"
 payload = '''func = (function(t) return AKYRS.adjust_rounding(t) end)
 '''
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''card.lua'''
+pattern = '''                if self.ability.name == 'Mr. Bones' and context.game_over and '''
+position = "before"
+payload = '''
+if self.ability.name == 'Mr. Bones' and context.game_over then
+    if #SMODS.find_card('j_akyrs_story_of_undertale') > 0 then
+        G.E_MANAGER:add_event(Event({
+            func = function()
+                G.hand_text_area.blind_chips:juice_up()
+                G.hand_text_area.game_chips:juice_up()
+                play_sound('tarot1')
+                self:start_dissolve()
+                return true
+            end
+        })) 
+        return {
+            message = localize('k_saved_ex'),
+            saved = true,
+            colour = G.C.RED
+        }
+    end
+else
+'''
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = '''card.lua'''
+pattern = '''            end
+        elseif context.individual then'''
+position = "after"
+payload = '''
+end
+'''
+match_indent = true

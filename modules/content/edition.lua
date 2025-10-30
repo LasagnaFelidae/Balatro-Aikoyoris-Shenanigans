@@ -40,7 +40,7 @@ SMODS.Edition{
     shader = "akyrs_noire",
     config = {
         extra ={
-            x_mult = 0.75,
+            x_mult = 0.5,
         },
         card_limit = 2
     },

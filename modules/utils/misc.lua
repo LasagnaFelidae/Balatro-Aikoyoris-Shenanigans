@@ -1184,7 +1184,7 @@ function AKYRS.print_table_simple(tlb)
     return str
 end
 
-function AKYRS.get_comsumable_set()
+function AKYRS.get_consumable_set()
     local sets = {}
     for name, _ in pairs(SMODS.ConsumableTypes) do
         if (G.GAME[string.lower(name).."_rate"] > 0) then

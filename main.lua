@@ -18,6 +18,7 @@ end
 assert(SMODS.load_file("./func/words/puzzle_words.lua"))()
 assert(SMODS.load_file("./func/word_utils.lua"))()
 
+assert(SMODS.load_file("./modules/content/vanilla_override.lua"))()
 assert(SMODS.load_file("./modules/utils/misc.lua"))()
 assert(SMODS.load_file("./modules/utils/utils_mod.lua"))()
 assert(SMODS.load_file("./modules/utils/value_replacement.lua"))()
