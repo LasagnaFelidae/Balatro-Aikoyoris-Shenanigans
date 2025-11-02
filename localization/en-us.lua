@@ -3158,7 +3158,7 @@ return {
             c_akyrs_replicant_database = {
                 name = "Database",
                 text = {
-                    "Up to {C:attention}#1#{} random are selected",
+                    "Up to {C:attention}#1#{} random cards are selected",
                     "to {C:attention}return{} them back to deck",
                     "Temporarily receives {C:red}+#2#{} Discard"
                 }
