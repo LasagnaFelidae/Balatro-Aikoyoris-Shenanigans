@@ -1165,7 +1165,7 @@ end
 function AKYRS.get_consumable_set()
     local sets = {}
     for name, _ in pairs(SMODS.ConsumableTypes) do
-        if (G.GAME[string.lower(name).."_rate"] > 0) then
+        if (G.GAME[string.lower(name).."_rate"] and G.GAME[string.lower(name).."_rate"] > 0) then
             table.insert(sets, name)
         end
     end
@@ -1186,7 +1186,7 @@ end
 function AKYRS.create_event_chain( event_def, index )
     index = index or 1
     if not event_def[index] then return end
-    AKYRS.simple_add_event(
+    AKYRS.simple_event_add(
         function ()
             event_def[index].func()
             delay(event_def[index].delay)

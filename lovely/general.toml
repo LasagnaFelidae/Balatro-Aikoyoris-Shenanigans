@@ -138,7 +138,7 @@ match_indent = true
 target = '''card.lua'''
 pattern = '''            end
         elseif context.individual then'''
-position = "after"
+position = "before"
 payload = '''
 end
 '''

@@ -8,18 +8,14 @@ local hookCalFx = SMODS.calculate_effect
 AKYRS.repetable_fx_calc = function(effect, scored_card, from_edition, pre_jokers)
     local card = effect.card or scored_card
     local r
-    if card and card.ability then
-        if card.ability.akyrs_oxidising and not effect.akyrs_ignore_copper_calculation then
-            local psrd = pseudorandom(pseudoseed("akyrs_oxidising_"..card.config.center_key))
-            local compr
-            if Talisman then compr = to_big(psrd) * to_big(4) > to_big(card.ability.akyrs_oxidising - 1) else compr = psrd * 4 > card.ability.akyrs_oxidising - 1 end
-            if  compr then
-                r = hookCalFx(effect, scored_card, from_edition, pre_jokers)
-            else
-                r = hookCalFx({ message = localize("k_nope_ex"), colour = HEX("b74912"),}, card, from_edition, pre_jokers)
-            end
-        else
+    if card and card.ability and card.ability.akyrs_oxidising and not effect.akyrs_ignore_copper_calculation then
+        local psrd = pseudorandom(pseudoseed("akyrs_oxidising_"..card.config.center_key))
+        local compr
+        if Talisman then compr = to_big(psrd) * to_big(4) > to_big(card.ability.akyrs_oxidising - 1) else compr = psrd * 4 > card.ability.akyrs_oxidising - 1 end
+        if  compr then
             r = hookCalFx(effect, scored_card, from_edition, pre_jokers)
+        else
+            r = hookCalFx({ message = localize("k_nope_ex"), colour = HEX("b74912"),}, card, from_edition, pre_jokers)
         end
         if G.GAME.blind and mult and G.GAME.blind.debuff.akyrs_score_face_with_my_dec_mult and G.GAME.blind.debuff.dec_mult then
             if scored_card and scored_card:is_face(true) then
