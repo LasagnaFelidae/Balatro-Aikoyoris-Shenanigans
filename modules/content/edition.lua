@@ -82,16 +82,21 @@ SMODS.Edition{
     sound = { sound = "akyrs_sliced_sfx", per = 0.8, vol = 0.3 },
     in_shop = true,
     on_apply = function (card)
-        if not card.akyrs_upgrade_sliced then
-            local x = AKYRS.deep_copy(card.config.center)
+        if not card.ability.akyrs_upgrade_sliced then
+            local x = AKYRS.deep_copy(G.P_CENTERS[card.config.center_key])
             AKYRS.mod_card_values(x.config,{multiply = 0.5, reference = x.config, unkeywords = AKYRS.blacklist_mod})
             card:set_ability(x)
-            card.akyrs_upgrade_sliced = true
+            AKYRS.simple_event_add(
+                function ()        
+                    card.ability.akyrs_upgrade_sliced = true
+                    return true
+                end, 0
+            )
         end
     end,
     on_remove = function (card)
-        card:set_ability(card.config.center)
-        card.akyrs_upgrade_sliced = false
+        card:set_ability(G.P_CENTERS[card.config.center_key])
+        card.ability.akyrs_upgrade_sliced = false
     end,
     weight = 5,
 }
