@@ -131,7 +131,7 @@ SMODS.Sticker{
                 func = function ()
                     local psrd = pseudorandom(pseudoseed("akyrs_oxidising_scrape_"..card.config.center_key))
                     local cond = AKYRS.compare(card.ability[self.key],">", 1) or AKYRS.compare(card.ability.akyrs_oxidising_round,"<", 2)
-                    if cond and psrd >= 0.75 then
+                    if cond and psrd >= 0.9 then
                         SMODS.calculate_effect(
                             {
                                 akyrs_ignore_copper_calculation = true,

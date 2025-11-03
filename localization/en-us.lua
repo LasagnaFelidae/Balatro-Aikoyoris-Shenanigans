@@ -784,7 +784,7 @@ return {
             dd_akyrs_copper_scrape_tip  = {
                 name="Scraping",
                 text={
-                    "Fixed {C:green}25% chance{}",
+                    "Fixed {C:green}10% chance{}",
                     "to {C:attention}scrape{} off",
                     "{C:attention}a layer{} of oxidation",
                     "when a consumable is {C:attention}used{}",
