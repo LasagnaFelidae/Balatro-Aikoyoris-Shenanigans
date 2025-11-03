@@ -174,7 +174,7 @@ function copy_card(...)
         c[1].base.nominal = SMODS.Ranks[c[1].base.value].nominal
     end
     c[1]:set_sprites()
-    if if other.ability and c[1].ability.akyrs_special_card_type ~= other.ability.akyrs_special_card_type then
+    if other.ability and c[1].ability.akyrs_special_card_type ~= other.ability.akyrs_special_card_type then
         c[1]:set_sprites(c[1].config and c[1].config.center,c[1].config and c[1].config.card)
     end
     return unpack(c)
