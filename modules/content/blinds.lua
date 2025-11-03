@@ -726,7 +726,7 @@ SMODS.Blind {
     atlas = 'aikoyoriBlindsChips', 
     boss = {min = 4, max = 10},
     debuff = {
-        dec_mult = 0.75,
+        dec_mult = 0.9,
     },
     
     loc_vars = function (self)
@@ -736,7 +736,7 @@ SMODS.Blind {
     end,
     collection_loc_vars = function (self)
         return {
-            vars = { 0.75 }
+            vars = { 0.9 }
         }
     end,
     calculate = function (self, blind, context)

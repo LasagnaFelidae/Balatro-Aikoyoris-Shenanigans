@@ -233,7 +233,7 @@ SMODS.Enhancement{
     config = {
         extras = {
             xmult = 1,
-            xmult_add = 0.4,
+            xmult_add = 0.3,
         }
     },
     loc_vars = function (self, info_queue, card)

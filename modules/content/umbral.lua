@@ -69,11 +69,14 @@ SMODS.Consumable{
         return not (G.GAME.akyrs_last_umbral == self.key or not G.GAME.akyrs_last_umbral)
     end,
     use = function (self, card, area, copier)
-        AKYRS.juice_like_tarot(card)
-        local disallow = not not (G.GAME.akyrs_last_umbral == self.key or not G.GAME.akyrs_last_umbral)
-        if not disallow then
-            SMODS.add_card{key = G.GAME.akyrs_last_umbral}
-        end
+        AKYRS.simple_event_add(function ()
+            AKYRS.juice_like_tarot(card)
+            local disallow = not not (G.GAME.akyrs_last_umbral == self.key or not G.GAME.akyrs_last_umbral)
+            if not disallow then
+                SMODS.add_card{key = G.GAME.akyrs_last_umbral}
+            end
+            return 0
+        end, 0)
     end
 }
 SMODS.Consumable{
@@ -93,10 +96,13 @@ SMODS.Consumable{
         }
     end,
     use = function (self, card, area, copier)
-        AKYRS.juice_like_tarot(card)
-        AKYRS.do_things_to_card(G.hand.highlighted,function (_card)
-            _card:set_ability(G.P_CENTERS["m_akyrs_insolate_card"])
-        end, {stay_flipped_delay = 1,stagger = 0.1, fifo = true})
+        AKYRS.simple_event_add(function ()
+            AKYRS.juice_like_tarot(card)
+            AKYRS.do_things_to_card(G.hand.highlighted,function (_card)
+                _card:set_ability(G.P_CENTERS["m_akyrs_insolate_card"])
+            end, {stay_flipped_delay = 1,stagger = 0.1, fifo = true})
+            return true
+        end, 0)
     end
 }
 SMODS.Consumable{
@@ -112,13 +118,16 @@ SMODS.Consumable{
         return true
     end,
     use = function (self, card, area, copier)
-        table.sort(G.hand.highlighted,AKYRS.hand_sort_function_immute)
-        AKYRS.juice_like_tarot(card)
-        local h = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
-        local pl = AKYRS.get_planet_for_hand(h)
-        if pl then
-            SMODS.add_card{key = pl}
-        end
+        AKYRS.simple_event_add(function ()
+            table.sort(G.hand.highlighted,AKYRS.hand_sort_function_immute)
+            AKYRS.juice_like_tarot(card)
+            local h = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
+            local pl = AKYRS.get_planet_for_hand(h)
+            if pl then
+                SMODS.add_card{key = pl}
+            end
+            return true 
+        end, 0)
     end
 }
 SMODS.Consumable{
@@ -144,6 +153,7 @@ SMODS.Consumable{
         local cards = AKYRS.pseudorandom_elements(G.hand.cards,card.ability.extras,pseudoseed("akyrs_umbral_gambit_c"))
         local rank = pseudorandom_element({"King","Queen","Ace"},pseudoseed("akyrs_umbral_gambit_r"))
         AKYRS.do_things_to_card(cards,function (_card)
+            AKYRS.set_special_card_type(_card, nil)
             _card = SMODS.change_base(_card,nil,rank)
         end, {stay_flipped_delay = 1,stagger = 0.5,finish_flipped_delay = 0.5, fifo = true})
     end

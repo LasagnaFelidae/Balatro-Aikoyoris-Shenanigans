@@ -938,7 +938,7 @@ return {
                 text = {
                     "This card gains {C:white,X:mult} X#1# {} Mult when scored",
                     "if played hand {C:attention}does not contain{} a suit more than {C:attention}once",
-                    "{C:inactive}(Currently {C:white,X:mult} X#2# {} {C:mult}Mult{}{C:inactive}){}" 
+                    "{C:inactive}(Currently {C:white,X:mult} X#2# {C:inactive}Mult){}" 
                 }
             },
             m_akyrs_canopy_card = {
@@ -3101,7 +3101,7 @@ return {
                 {
                     "Enhances {C:attention}#1#",
                     "selected card to",
-                    "{C:attention}Net Cards{}",
+                    "{C:attention}Net Card{}",
                 },
             },
             c_akyrs_umbral_hydrate= {
@@ -3110,7 +3110,7 @@ return {
                 {
                     "Enhances {C:attention}#1#",
                     "selected card to",
-                    "{C:attention}Droplet Card{}",
+                    "{C:attention}Droplet Cards{}",
                 },
             },
             c_akyrs_umbral_exit_plan= {

@@ -2443,7 +2443,7 @@ SMODS.Joker{
     config = {
         name = "Emerald",
         extras = {
-            xcost = 4,
+            xcost = 3,
             pluscost = 4,
             ecost = 2,
             amnt = 0,
