@@ -1217,17 +1217,13 @@ function Card:set_card_area(area)
 end
 
 function Card:akyrs_mod_card_value_init(center)
-    if G.GAME.modifiers.akyrs_misprint then
-        local x = self.ability
-        local y = AKYRS.deep_copy(center,{center.mod})
-        AKYRS.mod_card_values(x,{random = {digits_min = -4, digits_max = 4, min = 1e-4, max = 1e4,scale = 1, can_negate = false, reference = y}})
-        if self.ability.set == "Default" or  self.ability.set == "Enhanced" then
-            x.x_chips    = 1
-            x.h_x_chips  = 1
-            x.x_mult     = 1
-            x.h_x_mult   = 1
-        end
-        self.ability = x
+    if G.GAME.modifiers.akyrs_misprint and not self.ability.akyrs_misprinted then
+        --local x = self.ability
+        local y = AKYRS.deep_copy(center)
+        --print(y.config)
+        AKYRS.mod_card_values(y.config,{random = {digits_min = -4, digits_max = 4, min = 1e-4, max = 1e4,scale = 1, can_negate = false}, reference = y.config})
+        --print(y.config)
+        AKYRS.original_set_ability(self, y)
     end
     if G.GAME.akyrs_any_drag then
         if self and self.base and not self.base.value and not self.base.suit then

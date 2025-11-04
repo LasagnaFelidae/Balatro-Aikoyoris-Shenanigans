@@ -93,7 +93,8 @@ target = '''engine/event.lua'''
 pattern = '''        other = {}'''
 position = "after"
 payload = ''',
-akyrs_desc = {}
+akyrs_desc = {},
+akyrs_misc = {}
 '''
 match_indent = true
 
