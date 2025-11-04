@@ -1136,9 +1136,13 @@ AKYRS.original_set_ability = Card.set_ability
 function Card:set_ability(c,i,d)
     if self and self.ability and self.ability.akyrs_sigma then return end
     -- this one is for collection
+    if not (self.config.center.set == "Enhanced" or self.config.center.set == "Default") and (AKYRS.card_any_drag()) and not AKYRS.is_mod_loaded("Cryptlib") then
+        self.is_null = true
+    end
     local r = AKYRS.original_set_ability(self,c,i,d)
     self:akyrs_mod_card_value_init(c)
-    
+
+
     if self.config.card and self.config.center.set == "Enhanced" or self.config.center.set == "Default" and not self.is_null then
         self:set_base(self.config.card, i)
         if self.ability.akyrs_special_card_type == "suit" then

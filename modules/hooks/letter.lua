@@ -175,7 +175,7 @@ function copy_card(...)
         c[1].base.nominal = SMODS.Ranks[c[1].base.value].nominal
     end
     c[1]:set_sprites()
-    if refresh_sprite then
+    if refresh_sprite and c[1].base.value then
         c[1]:set_sprites(c[1].config and c[1].config.center,c[1].config and c[1].config.card)
     end
     return unpack(c)
@@ -190,6 +190,9 @@ end
 
 local getIDHook = Card.get_id
 function Card:get_id()
+    if (self.ability.set ~= "Default" and self.ability.set ~= "Enhanced") and not AKYRS.is_mod_loaded("Cryptid") then
+        return -math.random(100, 1000000)
+    end
     if self.is_null then
         if self.ability.aikoyori_letters_stickers and G.GAME.akyrs_letters_mult_enabled then
             --print(self.ability.aikoyori_letters_stickers)
