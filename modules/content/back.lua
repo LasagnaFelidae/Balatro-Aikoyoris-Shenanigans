@@ -103,7 +103,7 @@ SMODS.Back{
     },
 }
 
-if not MP then
+if not MP and not BalatroMultiplayer and not AKYRS.is_mod_loaded("Multiplayer") then
     SMODS.Back{
         key = "scuffed_misprint",
         atlas = "deckBacks",
