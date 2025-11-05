@@ -1225,12 +1225,14 @@ function Card:akyrs_mod_card_value_init(center)
         --print(y.config)
         AKYRS.original_set_ability(self, y)
     end
-    if G.GAME.akyrs_any_drag then
-        if self and self.base and not self.base.value and not self.base.suit then
+    if G.GAME.akyrs_any_drag or G.GAME.akyrs_ultimate_freedom then
+        if self and self.ability.set ~= "Default" and self.ability.set ~= "Enhanced" then
             local rank = pseudorandom_element(SMODS.Ranks,pseudoseed("akyrsmodcard"))
             local suit = pseudorandom_element(SMODS.Suits,pseudoseed("akyrsmodcard2"))
             self.is_null = true
-            assert(SMODS.change_base(self,suit.key,rank.key))
+            pcall(SMODS.change_base,self,suit.key,rank.key)
+            --print("TS IS SO ASS" ,suit.key,rank.key)
+            --print(self.base)
             --[[
                 if self.ability.set == "Voucher" then
                     self:set_base(AKYRS.construct_case_base("akyrs_voucher","akyrs_non_playing"), true)
@@ -1609,7 +1611,7 @@ function Back:apply_to_run()
                 G.hand.states.collide.can = true
                 G.deck.states.collide.can = true
                 return true
-            end, 0.5
+            end, 0.02
         )
     end
     if G.GAME.starting_params.akyrs_any_drag then
@@ -1621,7 +1623,7 @@ function Back:apply_to_run()
                 G.hand.states.collide.can = true
                 G.deck.states.collide.can = true
                 return true
-            end, 0.5
+            end, 0.02
         )
     end
     if G.GAME.starting_params.akyrs_ultimate_freedom then

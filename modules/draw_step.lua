@@ -131,3 +131,18 @@ SMODS.DrawStep{
     end,
     conditions = { vortex = false, facing = 'front' },
 }
+
+SMODS.draw_ignore_keys["akyrs_redeem_voucher"] = true
+SMODS.draw_ignore_keys["akyrs_open_packs"] = true
+
+
+SMODS.DrawStep {
+    key = 'misc_btns',
+    order = -30,
+    func = function(self)
+        --Draw any tags/buttons
+        if self.children.akyrs_wildcard then self.children.akyrs_wildcard:draw() end
+        if self.children.akyrs_redeem_voucher then self.children.akyrs_redeem_voucher:draw() end
+        if self.children.akyrs_open_packs and self.highlighted then self.children.akyrs_open_packs:draw() end
+    end,
+} 

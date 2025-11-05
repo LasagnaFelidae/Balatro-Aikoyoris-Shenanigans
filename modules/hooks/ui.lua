@@ -586,6 +586,72 @@ function AKYRS.UIDEF.wildcards_ui(card)
     end
 end
 
+function AKYRS.UIDEF.use_ui(card)
+    local colour = G.C.AKYRS_AIKOYORI_BOW
+    local text_colour = G.C.UI.TEXT_LIGHT
+    
+    local text = localize("k_akyrs_use_from_drag")
+    local text2 = localize("k_akyrs_use_from_drag_2")
+    if card.area then
+        return {
+            n = G.UIT.ROOT,
+            config = { padding = 0, colour = G.C.CLEAR },
+            nodes = {
+                {
+                    n = G.UIT.C,
+                    config = { padding = 0.15, align = 'cl' },
+                    nodes = {
+                        {
+                            n = G.UIT.R,
+                            config = { align = 'cl' },
+                            nodes = {
+                                {
+
+                                    n = G.UIT.C,
+                                    config = { align = "cl" },
+                                    nodes = {
+                                        {
+                                            n = G.UIT.C,
+                                            config = { 
+                                                    ref_table = card, 
+                                                    align = "cl", 
+                                                    maxw = 1.25, 
+                                                    padding = 0.1, 
+                                                    r = 0.08, 
+                                                    minw = 2.2, 
+                                                    minh = 1, 
+                                                    hover = true, 
+                                                    shadow = true, 
+                                                    colour = colour, 
+                                                    button = "akyrs_use_snatch", 
+                                                },
+                                            nodes = {
+                                                {
+                                                    n = G.UIT.R,
+                                                    nodes = {
+                                                        { n = G.UIT.T, config = { text = text, colour = text_colour, scale = 0.4, shadow = true } },
+                                                    }
+                                                },
+                                                {
+                                                    n = G.UIT.R,
+                                                    nodes = {
+                                                        { n = G.UIT.T, config = { text = text2, colour = text_colour, scale = 0.2, shadow = true } },
+                                                    }
+                                                },
+                                            }
+                                        }
+                                    }
+                                },
+                            }
+                        },
+                    }
+                },
+            }
+        }
+    end
+end
+
+-- add buttons n shi
 local cardhighlighthook = Card.highlight
 function Card:highlight(is_higlighted)
     local ret = cardhighlighthook(self, is_higlighted)
@@ -593,7 +659,7 @@ function Card:highlight(is_higlighted)
     if self.base and (self.area and self.area == G.hand) and self.ability.aikoyori_letters_stickers == "#" then
         if is_higlighted and self.area and self.area ~= G.play and self.area.config.type ~= 'shop' then
 
-            self.children.use_button = UIBox {
+            self.children.akyrs_wildcard = UIBox {
                 definition = AKYRS.UIDEF.wildcards_ui(self),
                 config = { align =
                     "cl",
@@ -602,10 +668,23 @@ function Card:highlight(is_higlighted)
             }
         end
     end
+    if AKYRS.is_in_typical_area(self.area) and AKYRS.card_any_drag() then
+        self.children.akyrs_redeem_voucher = UIBox {
+            definition = AKYRS.UIDEF.use_ui(self),
+            config = { align =
+                "cl",
+                offset = { x = 1, y = 0.25 },
+                parent = self }
+        }
+    end
     if not is_higlighted then
-        if self.children.use_button then
-            self.children.use_button:remove()
-            self.children.use_button = nil
+        if self.children.akyrs_wildcard then
+            self.children.akyrs_wildcard:remove()
+            self.children.akyrs_wildcard = nil
+        end
+        if self.children.akyrs_redeem_voucher then
+            self.children.akyrs_redeem_voucher:remove()
+            self.children.akyrs_redeem_voucher = nil
         end
     end
     return ret

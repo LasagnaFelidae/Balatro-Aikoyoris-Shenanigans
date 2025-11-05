@@ -3322,6 +3322,9 @@ return {
             k_akyrs_story_of_undertale = "Story of Undertale..",
             k_akyrs_value_up = "Value UP!",
             k_akyrs_gain_discard = "<SPLASH>",
+            
+            k_akyrs_use_from_drag = "USE",
+            k_akyrs_use_from_drag_2 = "[Ethically]",
 
 
             k_akyrs_ryo_borrowed_money = "Borrowed Money...",

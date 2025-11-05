@@ -333,3 +333,8 @@ AKYRS.should_conceal_card = function(card, center)
     local config = (card.config and card.config.center or center)
     return (G.GAME.akyrs_hatena_deck and config.set == "Joker") or (G.GAME.akyrs_hatena_everything) or (card.ability and card.ability.akyrs_concealed)
 end
+
+function G.FUNCS.akyrs_use_snatch(e)
+    e.config.ref_table.cost = 0
+    G.FUNCS.use_card(e)
+end

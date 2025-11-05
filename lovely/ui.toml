@@ -746,3 +746,14 @@ payload = """    if self.UIT == G.UIT.O and not self.config.no_role and self.con
 overwrite = true
 match_indent = true
 
+
+
+[[patches]]
+[patches.pattern]
+target = 'card.lua'
+pattern = """                    {string = 'rand()', colour = G.C.JOKER_GREY},{string = "#@"..(G.deck and G.deck.cards[1] and G.deck.cards[#G.deck.cards].base.id or 11)..(G.deck and G.deck.cards[1] and G.deck.cards[#G.deck.cards].base.suit:sub(1,1) or 'D'), colour = G.C.RED},"""
+position = "at"
+payload = """{string = 'rand()', colour = G.C.JOKER_GREY},{string = "#@"..(G.deck and G.deck.cards[1] and G.deck.cards[#G.deck.cards].base.id or 11)..(G.deck and G.deck.cards[1] and G.deck.cards[#G.deck.cards].base and G.deck.cards[#G.deck.cards].base.suit and G.deck.cards[#G.deck.cards].base.suit:sub(1,1) or 'D'), colour = G.C.RED},"""
+overwrite = true
+match_indent = true
+

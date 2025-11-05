@@ -555,7 +555,7 @@ SMODS.Consumable{
     end,
     use = function (self, card, area, copier)
         AKYRS.juice_like_tarot(card)
-        local die_question_mark = SMODS.pseudorandom_probability(card,"akyrs_umbral_intrusive",odds ,1, "akyrs_umbral_intrusive", true)
+        local die_question_mark = SMODS.pseudorandom_probability(card,"akyrs_umbral_intrusive",card.ability.extras.odds ,1, "akyrs_umbral_intrusive", true)
         local d_dollar = 0
         if die_question_mark then
             if AKYRS.bal("absurd") then

@@ -1196,3 +1196,8 @@ function AKYRS.create_event_chain( event_def, index )
     )
 
 end
+
+
+function AKYRS.is_in_typical_area(area)
+    return area == G.jokers or area == G.hand or area == G.consumeables
+end
