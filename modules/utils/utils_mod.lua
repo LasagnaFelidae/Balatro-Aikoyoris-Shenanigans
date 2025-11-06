@@ -407,7 +407,7 @@ AKYRS.mod_card_values = function(table_in, config)
     local multiply = config.multiply or 1
     local keywords = config.keywords or {}
     local unkeyword = config.unkeywords or {}
-    local reference = config.reference or table_in
+    local reference = config.reference or AKYRS.deep_copy(table_in)
     local randomize = config.random
 
     local function modify_values(table_in, ref, depth)
@@ -427,14 +427,14 @@ AKYRS.mod_card_values = function(table_in, config)
                         table_in[k] = (ref[k] + add) * multiply * rand
                     end
                 end
+            elseif type(v) == "table" and ref and k and not unkeyword[k] then
+                modify_values(v, ref[k], depth + 1)
             elseif Talisman and type(v) == "table" and v.to_number and (to_number(v) == v) then
                 if (keywords[k] or #keywords < 1) and not unkeyword[k] then
                     if ref and ref[k] then
                         table_in[k] = (to_big(ref[k]) + to_big(add)) * to_big(multiply) * to_big(rand)
                     end
                 end
-            elseif type(v) == "table" and ref and k and not unkeyword[k] then
-                modify_values(v, ref[k], depth + 1)
             end
         end
     end

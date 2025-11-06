@@ -85,7 +85,9 @@ SMODS.Edition{
         if not card.ability.akyrs_upgrade_sliced then
             local x = AKYRS.deep_copy(G.P_CENTERS[card.config.center_key])
             AKYRS.mod_card_values(x.config,{multiply = 0.5, reference = x.config, unkeywords = AKYRS.blacklist_mod})
-            card:set_ability(x)
+            for n, v in pairs(x) do
+                card.ability[n] = x[n] or card.ability[n]
+            end
             AKYRS.simple_event_add(
                 function ()        
                     card.ability.akyrs_upgrade_sliced = true

@@ -472,15 +472,24 @@ SMODS.Enhancement{
                 func = function ()
                     card.ability.extras.trigger_triggered = (card.ability.extras.trigger_triggered or 0) + 1
                     if card.ability.extras.trigger_triggered >= card.ability.extras.trigger_needed then
-                        SMODS.calculate_effect({
-                            message = localize("k_duplicated_ex"),
-                            func = function ()
-                                card.ability.extras.trigger_triggered = 0
-                                local c2 = AKYRS.copy_p_card(card,nil,nil,nil,nil,G.hand)
-                                c2:set_ability(G.P_CENTERS.c_base)
-                                SMODS.calculate_context({ playing_card_added = true, cards = { c2 } })
-                            end
-                        }, card)
+                        local times = card.ability.extras.trigger_triggered / card.ability.extras.trigger_needed
+                        local remainder = card.ability.extras.trigger_triggered - (card.ability.extras.trigger_needed * math.floor(times))
+                        for i = 1, times do
+                            SMODS.calculate_effect({
+                                message = localize("k_duplicated_ex"),
+                                func = function ()
+                                    AKYRS.simple_event_add(
+                                        function ()
+                                            card.ability.extras.trigger_triggered = remainder
+                                            local c2 = AKYRS.copy_p_card(card,nil,nil,nil,nil,G.hand)
+                                            c2:set_ability(G.P_CENTERS.c_base)
+                                            SMODS.calculate_context({ playing_card_added = true, cards = { c2 } })
+                                            return true
+                                        end
+                                    )
+                                end
+                            }, card)
+                        end
                     end
                 end,
                 message = localize("k_upgrade_ex")

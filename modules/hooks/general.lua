@@ -1140,7 +1140,7 @@ function Card:set_ability(c,i,d)
         self.is_null = true
     end
     local r = AKYRS.original_set_ability(self,c,i,d)
-    self:akyrs_mod_card_value_init(c)
+    self:akyrs_mod_card_value_init(c, i, d)
 
 
     if self.config.card and self.config.center.set == "Enhanced" or self.config.center.set == "Default" and not self.is_null then
@@ -1216,15 +1216,11 @@ function Card:set_card_area(area)
     return x
 end
 
-function Card:akyrs_mod_card_value_init(center)
-    if G.GAME.modifiers.akyrs_misprint and not self.ability.akyrs_misprinted then
-        --local x = self.ability
-        local y = AKYRS.deep_copy(center)
-        --print(y.config)
-        AKYRS.mod_card_values(y.config,{random = {digits_min = -4, digits_max = 4, min = 1e-4, max = 1e4,scale = 1, can_negate = false}, reference = y.config})
-        --print(y.config)
-        AKYRS.original_set_ability(self, y)
-    end
+AKYRS.do_not_misprint = {
+    ["j_misprint"] = true
+}
+
+function Card:akyrs_mod_card_value_init(center, initial, delay)
     if G.GAME.akyrs_any_drag or G.GAME.akyrs_ultimate_freedom then
         if self and self.ability.set ~= "Default" and self.ability.set ~= "Enhanced" then
             local rank = pseudorandom_element(SMODS.Ranks,pseudoseed("akyrsmodcard"))
@@ -1248,6 +1244,19 @@ function Card:akyrs_mod_card_value_init(center)
             ]]
         end
     end
+    
+    if G.GAME.modifiers.akyrs_misprint and not (self.ability or {}).misprinted and center and not AKYRS.do_not_misprint[center.key] then
+        --local x = self.ability
+        local x = AKYRS.deep_copy((G.P_CENTERS[center.key] or center).config)
+        --print(y.config)
+        AKYRS.mod_card_values(x,{random = {digits_min = -4, digits_max = 4, min = 1e-4, max = 1e4,scale = 1, can_negate = false}})
+        --print(y.config)
+        for n, v in pairs(x) do
+            self.ability[n] = x[n] or self.ability[n]
+        end
+        self.ability.misprinted = true
+    end
+    
     if #SMODS.find_card("j_akyrs_chicken_jockey") > 0 and self.config.center_key == "j_popcorn" then
         local jj = SMODS.find_card("j_akyrs_chicken_jockey")
         if AKYRS.bal("absurd") then

@@ -1201,3 +1201,18 @@ end
 function AKYRS.is_in_typical_area(area)
     return area == G.jokers or area == G.hand or area == G.consumeables
 end
+
+-- value and weight are them props
+function AKYRS.weighted_randomiser(list_of_things, seed)
+    local total = 0
+    for _, thing in ipairs(list_of_things) do
+        total = total + thing.weight
+    end
+    local randomised = pseudorandom(seed) * total
+    for _, thing in ipairs(list_of_things) do
+        if randomised < thing.weight then
+            return thing.value
+        end
+        randomised = randomised - thing.weight
+    end
+end
