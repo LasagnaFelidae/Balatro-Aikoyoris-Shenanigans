@@ -1489,7 +1489,7 @@ return {
                     "{C:green}#2# in #3#{} chance",
                     "of disintegrating",
                     "at the end of the round",
-                    "but gain {C:Chips}+#4#{} Chips",
+                    "but gain {C:chips}+#4#{} Chips",
                     "if it survives"
                 }
             },

@@ -1,3 +1,21 @@
+
+SMODS.Edition{
+    key = "enchanted",
+    shader = "akyrs_enchanted",
+    config = {
+        name = "akyrs_enchanted"
+    },
+    sound = { sound = "akyrs_enchanted", per = 1, vol = 0.7 },
+    in_shop = false,
+    loc_vars = function (self, info_queue, card)
+        return {
+        }
+    end,
+    calculate = function (self, card, context)
+    end,
+    weight = 0,
+}
+
 AKYRS.Enchantments = {}
 
 ---@type SMODS.Center
@@ -27,5 +45,5 @@ AKYRS.Enchantment = SMODS.GameObject:extend{
         end
         return weights
     end,
-    
+
 }

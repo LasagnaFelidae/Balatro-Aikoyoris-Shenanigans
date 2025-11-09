@@ -1173,7 +1173,7 @@ function buildAdditionsTab(mod)
             local deck_overlaid = AKYRS.card_collection_ui_template("j_joker", { atlas_key = "akyrs_deckBacks" })
             local sealed_card = AKYRS.card_collection_ui_template("c_base", nil, "C_7")
             sealed_card:set_seal("akyrs_carmine", true, true)
-            editioned_joker:set_edition("e_akyrs_noire", true, true)
+            editioned_joker:set_edition({akyrs_noire = true}, true, true)
             joker_normal.click = function (self)
                 G.FUNCS.akyrs_your_collection_non_letter_jokers(self)
             end
