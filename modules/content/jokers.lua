@@ -2804,15 +2804,27 @@ SMODS.Joker{
                 }
             end
         else
-            if context.joker_main and G.GAME.current_round.hands_played == 1 then
-                if #context.full_hand == 1 and AKYRS.has_room(G.consumeables) then
-                    SMODS.add_card{ key = "c_justice", set = "Tarot" } 
+            if context.destroy_card and not context.blueprint then
+                if context.destroy_card == context.full_hand[1] and #context.full_hand == 1 and G.GAME.current_round.hands_played == 0 then
+                    if AKYRS.has_room(G.consumeables) then
+                        return {
+                            func = function()
+                                AKYRS.simple_event_add(
+                                    function ()
+                                        SMODS.add_card{ key = "c_justice", set = "Tarot" } 
+                                        return true
+                                    end, 0
+                                )
+                            end,
+                            message = localize('k_plus_tarot'),
+                            colour = G.C.PURPLE,
+                            remove = true
+                        }
+                    end
+                    return {
+                        remove = true
+                    }
                 end
-            end
-            if context.destroy_card and context.cardarea == G.play and #context.full_hand == 1 then
-                return {
-                    remove = true
-                }
             end
         end
 
