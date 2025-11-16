@@ -2505,19 +2505,20 @@ SMODS.Joker{
             if index and #G.jokers.cards > 1 and G.jokers.cards[index-1] and index > 1 then
                 local othercard = G.jokers.cards[index-1]
                 if not SMODS.is_eternal(othercard,card) then
-                    return {
-                        func = function ()
-                            local rarity = othercard.config.center.rarity
-                            othercard:start_dissolve({G.C.AKYRS_PLAYABLE},1.1)
-                            othercard:remove_from_deck()
-                            for i=1, card.ability.extras.create_factor do
-                                if AKYRS.has_room(G.jokers) then
-                                    SMODS.add_card{rarity = rarity, set = "Joker", legendary = (rarity == 4)}
-                                end
+                    local rarity = othercard.config.center.rarity
+                    othercard:start_dissolve({G.C.AKYRS_PLAYABLE},1.1)
+                    othercard:remove_from_deck()
+                    for i=1, card.ability.extras.create_factor do
+                        SMODS.calculate_effect({
+                            func = function ()
+                                SMODS.add_card{rarity = rarity, set = "Joker", legendary = (rarity == 4)}
                             end
-                            card:start_dissolve({G.C.AKYRS_PLAYABLE},1.1)
-                        end
-                    }
+                        }, card)
+                    end
+                    AKYRS.simple_event_add(function ()
+                        card:start_dissolve({G.C.AKYRS_PLAYABLE},1.1)
+                        return true
+                    end)
                 end
             end
         end

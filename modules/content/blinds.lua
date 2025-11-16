@@ -1152,7 +1152,7 @@ SMODS.Blind {
     collection_loc_vars = function (self)
         return {
             vars = {
-                2
+                1
             }
         }
     end

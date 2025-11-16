@@ -233,7 +233,7 @@ SMODS.Enhancement{
     config = {
         extras = {
             xmult = 1,
-            xmult_add = 0.1,
+            xmult_add = 0.07,
         }
     },
     loc_vars = function (self, info_queue, card)
@@ -246,24 +246,28 @@ SMODS.Enhancement{
     end,
     calculate = function (self, card, context)
         if context.before then
+            return {
+                func = function ()
+                    local r = AKYRS.get_suit_freq_from_cards(G.play.cards,true)
+                    local s = false
+                    for k,v in pairs(r) do
+                        if v > 1 then
+                            s = true
+                            break
+                        end
+                    end
+                    if s then
+                        SMODS.calculate_effect({
+                            message = localize("k_upgrade_ex"),
+                            func = function ()
+                                card.ability.extras.xmult = card.ability.extras.xmult + card.ability.extras.xmult_add
+                            end
+                        }, card)
+                    end
+                end
+            }
         end
         if context.main_scoring and context.cardarea == G.play then
-            local r = AKYRS.get_suit_freq_from_cards(G.play.cards,true)
-            local s = false
-            for k,v in pairs(r) do
-                if v > 1 then
-                    s = true
-                    break
-                end
-            end
-            if s then
-                SMODS.calculate_effect({
-                    message = localize("k_upgrade_ex"),
-                    func = function ()
-                        card.ability.extras.xmult = card.ability.extras.xmult + card.ability.extras.xmult_add
-                    end
-                }, card)
-            end
             return {
                 xmult = card.ability.extras.xmult
             }

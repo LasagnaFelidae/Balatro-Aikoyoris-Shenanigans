@@ -851,7 +851,7 @@ function AKYRS.do_things_to_card(cards, func, config, queue) -- func(card)
         AKYRS.simple_event_add(
             function ()
                 
-                if not config.no_sound then
+                if not config.no_sound and card then
                     play_sound('card1')
                 end
                 if not config.no_juice then
@@ -867,7 +867,7 @@ function AKYRS.do_things_to_card(cards, func, config, queue) -- func(card)
                     AKYRS.simple_event_add(
                         function ()
                             func(card, i)
-                            if not config.no_sound then
+                            if not config.no_sound and card then
                                 play_sound("card1",math.abs(1.15 - (i-0.999)/(#cards-0.998)*0.3))
                             end
                             if not config.no_juice then
@@ -891,7 +891,7 @@ function AKYRS.do_things_to_card(cards, func, config, queue) -- func(card)
             AKYRS.simple_event_add(
                 function ()
                     func(card, i)
-                    if not config.no_sound then
+                    if not config.no_sound and card then
                         play_sound("card1",math.abs(1.15 - (i-0.999)/(#cards-0.998)*0.3))
                     end
                     if not config.no_juice then
@@ -919,7 +919,7 @@ function AKYRS.do_things_to_card(cards, func, config, queue) -- func(card)
                         end
 
                         func(card, i)
-                        if not config.no_sound then
+                        if not config.no_sound and card then
                             play_sound("card1",math.abs(1.15 - (i-0.999)/(#cards-0.998)*0.3))
                         end
                         if not config.no_juice then
@@ -991,9 +991,10 @@ function AKYRS.do_nothing(...)
     return ...
 end
 
-function AKYRS.has_room(cardarea, card, extra)
+function AKYRS.has_room(cardarea, card, extra, buffer, count)
     extra = extra or 0
     if not cardarea.cards then return true end
+    if buffer then buffer = buffer + (count or 1) end
     return #cardarea.cards + extra < cardarea.config.card_limit + (card and AKYRS.edition_extend_card_limit(card) or 0)
 end
 

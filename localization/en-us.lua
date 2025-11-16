@@ -961,9 +961,9 @@ return {
             m_akyrs_insolate_card = {
                 name = "Insolate Card",
                 text = {
-                    "This card gains {C:white,X:mult} X#1# {} Mult when scored",
+                    "This card gains {C:white,X:mult} X#1# {} Mult when played",
                     "if played hand {C:attention}contains{} a suit more than {C:attention}once",
-                    "{C:inactive}(Currently {C:white,X:mult} X#2# {C:inactive}Mult){}" 
+                    "{C:inactive}(Currently {C:white,X:mult} X#2# {C:inactive} Mult){}" 
                 }
             },
             m_akyrs_canopy_card = {
@@ -1648,7 +1648,6 @@ return {
                     "with the {C:attention}same{} rarity as the Joker",
                     "{C:attention}immediately to the left{} of this joker",
                     "{C:red}Self-destructs{}",
-                    "{C:inactive}(Must have room){}",
                 }
             },
             j_akyrs_space_elevator = {
@@ -1681,7 +1680,7 @@ return {
                     "Joker {C:attention}to the left{}",
                     "gains a {C:attention}new{} edition",
                     "{C:green}#1# in #2#{} chance to {C:red}destroy",
-                    "this Joker in the process",
+                    "the portal in this process",
                     "{C:inactive}(All editions weighted equally)",
                 }
             },
@@ -2215,8 +2214,8 @@ return {
             akyrs_self_destructs={
                 name="Self-Destructive",
                 text={
-                    "{C:red}Self-Destructs{} at ",
-                    "the end of the round",
+                    "{C:red}Self-Destructs{}",
+                    "at the end of the round",
                 },
             },
             akyrs_sigma={
@@ -2760,6 +2759,7 @@ return {
                 name = "Doomsday Stake",
                 text = {
                     "Cards can have {C:attention}Self-Destructive{} Sticker",
+                    "{C:red}Self-Destructs{} at the end of the round",
                     "{s:0.8}Applies Netherite Stake",
                 }
             },
@@ -2938,9 +2938,9 @@ return {
             c_akyrs_umbral_public_transport = {
                 name="Public Transport",
                 text={
-                    "Create {C:attention}#1#{} cards",
-                    "with ranks {C:attention}consecutive{} to",
+                    "Create {C:attention}#1#{} copies of",
                     "{C:attention}#2#{} selected card",
+                    "with {C:attention}consecutive{} ranks",
                     "{C:inactive}(Can go in either direction)",
                 },
             },

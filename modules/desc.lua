@@ -360,7 +360,7 @@ AKYRS.DescriptionDummy{
                                     c:start_dissolve({G.C.AKYRS_UMBRAL_P, G.C.AKYRS_UMBRAL_Y}, true)
                                 end
                             end
-                        end, nil, "akyrs_desc")
+                        end, {stay_flipped_delay = 1,stagger = 0.5,finish_flipped_delay = 0.5, fifo = true, no_sound = true}, "akyrs_desc")
                     end end,
                 }
             })
