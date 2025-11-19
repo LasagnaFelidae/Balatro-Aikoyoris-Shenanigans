@@ -3974,14 +3974,48 @@ SMODS.Joker {
     pools = { Food = true },
     config = {
         extras = {
-            
+            chips = 300,
+            reduce_chips = -100,
         }
     },
+    rarity = 3,
+    cost = 7,
     loc_vars = function (self, info_queue, card)
-        
+        return {
+            vars = {
+                card.ability.extras.chips,
+                card.ability.extras.reduce_chips,
+            }
+        }
     end,
-    add_to_deck = function (self, card, from_debuff)
-        
+    calculate = function (self, card, context)
+        if context.joker_main then
+            return {
+                chips = card.ability.extras.chips
+            }
+        end
+        if context.buying_card then
+            return {
+                func = function ()
+                    SMODS.scale_card(card,{
+                        ref_table = card.ability.extras,
+                        ref_value = "chips",
+                        scalar_value = "reduce_chips",
+                        message = localize("k_akyrs_downgrade_ex"),
+                    })
+                    if card.ability.extras.chips <= 0 then
+                        card.pinch.x = true
+                        SMODS.calculate_effect(
+                            { message = localize("k_akyrs_ate_up")},
+                            card
+                        )
+                        AKYRS.simple_event_add(function ()
+                            card:remove()
+                        end, 0.5)
+                    end
+                end,
+            }
+        end
     end,
 
 }

@@ -2146,6 +2146,16 @@ return {
                     "create a {C:attention}Double Tag",
                 }
             },
+            j_akyrs_sushi = {
+                name = {
+                    "Sushi",
+                },
+                text = {
+                    "{C:chips}+#1#{} Chips",
+                    "{C:chips}#2#{} Chips",
+                    "when you buy a card from shop",
+                }
+            },
         },
         Partner = {
             pnr_akyrs_aikoyori = {
@@ -3353,6 +3363,7 @@ return {
             k_akyrs_use_from_drag_2 = "[Ethically]",
             b_akyrs_normal_jokers = "Normal Jokers",
             b_akyrs_letter_jokers = "Letter Jokers",
+            k_akyrs_ate_up = "Eaten Up!",
 
 
             k_akyrs_ryo_borrowed_money = "Borrowed Money...",
