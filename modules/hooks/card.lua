@@ -338,3 +338,23 @@ function G.FUNCS.akyrs_use_snatch(e)
     e.config.ref_table.cost = 0
     G.FUNCS.use_card(e)
 end
+
+local create_card_for_shop_hook = create_card_for_shop
+function create_card_for_shop(area)
+    ---@type Card
+    local card = create_card_for_shop_hook(area) 
+    if G.GAME.starting_params.akyrs_down_deck then
+        if card and card.ability.set == "Joker" then
+            card.flipping = 'f2b'
+            card.facing = "back"
+            card.sprite_facing = "back"
+            AKYRS.simple_event_add(function ()
+                card.flipping = 'f2b'
+                card.facing = "back"
+                card.sprite_facing = "back"
+                return true
+            end,0, "akyrs_misc")
+        end
+    end
+    return card
+end

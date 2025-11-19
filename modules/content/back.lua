@@ -200,3 +200,35 @@ SMODS.Back{
         akyrs_split_deck = true, discards = 2
     },
 }
+
+SMODS.Back{
+    key = "inversion_deck",
+    name = "Inversion Deck",
+    atlas = 'deckBacks',
+    pos = {x = 2, y = 0},
+    loc_vars = function (self, info_queue, card)
+        return {
+        }
+    end,
+    config = {
+        akyrs_inversion_deck = true,
+    },
+}
+
+SMODS.Back{
+    key = "down_deck",
+    name = "Down Deck",
+    atlas = 'deckBacks',
+    pos = {x = 2, y = 0},
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                self.config.joker_slot
+            }
+        }
+    end,
+    config = {
+        joker_slot = 1,
+        akyrs_down_deck = true,
+    },
+}

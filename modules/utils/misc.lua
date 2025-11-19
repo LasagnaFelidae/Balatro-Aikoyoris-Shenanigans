@@ -1406,3 +1406,11 @@ function AKYRS.card_collection_ui_template(key, override_sprite, p_card)
     end
     return c
 end
+
+function AKYRS.split(str, pattern)
+    local a = {}
+    for i in string.gmatch(str, pattern or ".") do
+        table.insert(a, i)
+    end
+    return a
+end

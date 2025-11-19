@@ -3285,7 +3285,7 @@ SMODS.Joker{
         extras = {
             chips = 0,
             xchips = 1,
-            chips_g = 0.4,
+            chips_g = 12,
             xchips_g = 0.1,
         }
     },
@@ -3304,8 +3304,7 @@ SMODS.Joker{
         end
         return {
             vars = {
-                card.ability.extras.chips_g * 240 / c.refreshrate,
-                c.refreshrate,
+                card.ability.extras.chips_g,
                 card.ability.extras.chips,
             }
         }
@@ -3326,17 +3325,16 @@ SMODS.Joker{
                                 rt[rv] = int + sc * x * 240 / c.refreshrate
                             end
                         })
-                    else
-                        SMODS.scale_card(card, { ref_table = card.ability.extras, ref_value = "chips", scalar_value = "chips_g",
-                            operation = function (rt,rv,int,sc)
-                                rt[rv] = int + sc * x * 240 / c.refreshrate
-                            end
-                        })
                     end
 
 
                 end
             }
+        end
+        if AKYRS.bal("adequate") then
+            if context.individual and context.cardarea == "unscored" then
+                SMODS.scale_card(context.other_card, { ref_table = context.other_card.ability, ref_value = "perma_bonus", scalar_table = card.ability.extras,scalar_value = "chips_g", })
+            end
         end
         if context.joker_main or context.forcetrigger then
             if AKYRS.bal("absurd") then
@@ -3968,4 +3966,3 @@ SMODS.Joker {
     blueprint_compat = false,
 	demicoloncompat = true,
 }
-

@@ -94,6 +94,20 @@ return {
                     "{C:red}X#1#{} blind size",
 				},
             },
+            b_akyrs_inversion_deck={
+                name="Inversion Deck",
+				text = {
+					"Card selection is {C:attention}inverted",
+				},
+            },
+            b_akyrs_down_deck={
+                name="Down Deck",
+				text = {
+					"{C:attention}+#1#{} Joker Slots",
+					"All Jokers are {C:attention}flipped face down{}",
+                    "before purchase",
+				},
+            },
             b_akyrs_cry_misprint_ultima={
                 name="Ultima Misprint Deck",
 				text = {
@@ -1139,7 +1153,7 @@ return {
             j_akyrs_utage_charts = {
                 name = "Utage Charts",
                 text = {
-                    "{C:akyrs_playable}+#1#{} Hand Selection"
+                    "{C:akyrs_playable}+#1#{} Card Selection"
                 }
             },
             j_akyrs_maxwells_notebook = {
@@ -1865,9 +1879,8 @@ return {
             j_akyrs_lagtrain = {
                 name = "Lagtrain",
                 text = { 
-                    "If played hand contained a {C:attention}Straight",
-                    "gain {C:chips}+#1#{} Chips per {C:white,X:mult}FPS{} below #2#",
-                    "{C:inactive}(Currently {C:chips} +#3# {C:inactive} Chips)",
+                    "Played and unscored cards",
+                    "gain {C:chips}+#1#{} Chips",
                 }
             },
             j_akyrs_lagtrain_absurd = {
@@ -2119,6 +2132,18 @@ return {
                     "a single {C:attention}F{}, destroy it and",
                     "create an {C:akyrs_umbral_p,X:akyrs_umbral_y} Umbral {} card",
                     "{C:inactive}(Must have room)",
+                }
+            },
+            j_akyrs_ojisan_koubun = {
+                name = {
+                    "{f:5}お返事まだカナ？(水)おじさん構文{f:akyrs_NotoEmoji}😁❗", 
+                    "{s:0.7}Ojisan Style Text",
+                },
+                text = {
+                    "If {C:attention}first letter{} of played {C:attention}hand",
+                    "matches {C:attention}last letter{}",
+                    "of last played {C:attention}word{} {C:inactive}(#1#)",
+                    "create a {C:attention}Double Tag",
                 }
             },
         },
@@ -3321,6 +3346,7 @@ return {
             k_akyrs_woah_undertale = "Woah..",
             k_akyrs_story_of_undertale = "Story of Undertale..",
             k_akyrs_value_up = "Value UP!",
+            k_akyrs_ojisan = "Replied!",
             k_akyrs_gain_discard = "<SPLASH>",
             
             k_akyrs_use_from_drag = "USE",

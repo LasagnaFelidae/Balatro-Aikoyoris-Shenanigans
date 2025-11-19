@@ -4,7 +4,7 @@ SMODS.Voucher {
     cost = 10,
     config = {
         extras = {
-            addentum = 1
+            addentum = 2
         }
     },
     loc_vars = function (self, info_queue, card)
@@ -43,7 +43,7 @@ SMODS.Voucher {
     cost = 10,
     config = {
         extras = {
-            addentum = 2
+            addentum = 3
         }
     },
     loc_vars = function (self, info_queue, card)

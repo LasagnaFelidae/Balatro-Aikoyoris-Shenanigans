@@ -368,3 +368,52 @@ AKYRS.LetterJoker {
         end
     end,
 }
+
+
+
+AKYRS.LetterJoker {
+    key = "ojisan_koubun",
+    atlas = 'AikoyoriJokers',
+    pos = { x = 4, y = 8 },
+    loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = G.P_TAGS["tag_double"]
+        return {
+            vars = {
+                card.ability.extras.last_letter
+            }
+        }
+    end,
+    rarity = 3,
+    cost = 7,
+    config = {
+        extras = {
+            last_letter = "???"
+        }
+    },
+    calculate = function (self, card, context)
+        if G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled and G.GAME.aiko_current_word then
+            if context.before then
+                if G.play and string.lower(G.play.cards[1]:get_letter_with_pretend()) == card.ability.extras.last_letter then
+                    return {
+                        func = function ()
+                            AKYRS.simple_event_add(
+                                function ()
+                                    add_tag(G.P_TAGS.tag_double)
+                                    return true
+                                end
+                            )
+                        end,
+                        message = localize("k_akyrs_ojisan"),
+                    }
+                end
+            end
+            if context.joker_main then
+                local s = AKYRS.split(G.GAME.aiko_current_word)
+                card.ability.extras.last_letter = string.lower(s[#s])
+            end
+        end
+    end,
+    blueprint_compat = false,
+	demicoloncompat = true,
+}
+

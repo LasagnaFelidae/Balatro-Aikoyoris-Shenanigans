@@ -744,6 +744,26 @@ end
 
 local dcfhHook = G.FUNCS.discard_cards_from_highlighted 
 G.FUNCS.discard_cards_from_highlighted = function (e,hook)
+    
+    if G.GAME.starting_params.akyrs_inversion_deck then
+        local tobe_hilight = {}
+        local tobe_unhilight = {}
+        for _, c in ipairs(G.hand.cards) do
+            if not AKYRS.is_in_table(G.hand.highlighted, c) then
+                table.insert(tobe_hilight, c)
+            else
+                table.insert(tobe_unhilight, c)
+            end
+        end
+        for _, c in ipairs(tobe_unhilight) do
+            c:highlight(false)
+        end
+        G.hand.highlighted = {}
+        for _, c in ipairs(tobe_hilight) do
+            table.insert(G.hand.highlighted, c)
+        end
+    end
+
     if AKYRS.checkBlindKey("bl_akyrs_the_picker") and not G.GAME.blind.disabled then
         G.GAME.blind.debuff.primed = false
     end
@@ -795,6 +815,24 @@ local playCardEval = G.FUNCS.play_cards_from_highlighted
 G.FUNCS.play_cards_from_highlighted = function(e)
     if G.GAME.blind.debuff.akyrs_reduce_other then
         ease_discard(-G.GAME.blind.debuff.akyrs_reduce_other)
+    end
+    if G.GAME.starting_params.akyrs_inversion_deck then
+        local tobe_hilight = {}
+        local tobe_unhilight = {}
+        for _, c in ipairs(G.hand.cards) do
+            if not AKYRS.is_in_table(G.hand.highlighted, c) then
+                table.insert(tobe_hilight, c)
+            else
+                table.insert(tobe_unhilight, c)
+            end
+        end
+        for _, c in ipairs(tobe_unhilight) do
+            c:highlight(false)
+        end
+        G.hand.highlighted = {}
+        for _, c in ipairs(tobe_hilight) do
+            table.insert(G.hand.highlighted, c)
+        end
     end
     local ret = playCardEval(e)
     return ret
@@ -1625,6 +1663,12 @@ function Back:apply_to_run()
     end
     if self.effect.config.akyrs_split_suit_deck then
         G.GAME.starting_params.akyrs_split_suit_deck = self.effect.config.akyrs_split_suit_deck
+    end
+    if self.effect.config.akyrs_inversion_deck then
+        G.GAME.starting_params.akyrs_inversion_deck = self.effect.config.akyrs_inversion_deck
+    end
+    if self.effect.config.akyrs_down_deck then
+        G.GAME.starting_params.akyrs_down_deck = self.effect.config.akyrs_down_deck
     end
     if self.effect.config.akyrs_ultimate_freedom then
         G.GAME.starting_params.akyrs_ultimate_freedom = self.effect.config.akyrs_ultimate_freedom
