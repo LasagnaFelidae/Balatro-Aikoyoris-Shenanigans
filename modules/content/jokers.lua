@@ -3966,3 +3966,22 @@ SMODS.Joker {
     blueprint_compat = false,
 	demicoloncompat = true,
 }
+
+SMODS.Joker {
+    key = "sushi",
+    atlas = 'AikoyoriJokers',
+    pos = { x = 3, y = 8 },
+    pools = { Food = true },
+    config = {
+        extras = {
+            
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        
+    end,
+    add_to_deck = function (self, card, from_debuff)
+        
+    end,
+
+}

@@ -680,3 +680,24 @@ AKYRS.create_hover_tooltip = function(args)
         }
     }
 end
+
+function AKYRS.invert_selection(area)
+    if not area or not area.cards then return end
+    local tobe_hilight = {}
+    local tobe_unhilight = {}
+    for _, c in ipairs(area.cards) do
+        if not AKYRS.is_in_table(area.highlighted, c) then
+            table.insert(tobe_hilight, c)
+        else
+            table.insert(tobe_unhilight, c)
+        end
+    end
+    for _, c in ipairs(tobe_unhilight) do
+        c:highlight(false)
+    end
+    area.highlighted = {}
+    for _, c in ipairs(tobe_hilight) do
+        c.highlighted = true
+        table.insert(area.highlighted, c)
+    end
+end

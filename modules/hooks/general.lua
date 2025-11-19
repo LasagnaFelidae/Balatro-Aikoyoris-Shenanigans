@@ -746,22 +746,7 @@ local dcfhHook = G.FUNCS.discard_cards_from_highlighted
 G.FUNCS.discard_cards_from_highlighted = function (e,hook)
     
     if G.GAME.starting_params.akyrs_inversion_deck then
-        local tobe_hilight = {}
-        local tobe_unhilight = {}
-        for _, c in ipairs(G.hand.cards) do
-            if not AKYRS.is_in_table(G.hand.highlighted, c) then
-                table.insert(tobe_hilight, c)
-            else
-                table.insert(tobe_unhilight, c)
-            end
-        end
-        for _, c in ipairs(tobe_unhilight) do
-            c:highlight(false)
-        end
-        G.hand.highlighted = {}
-        for _, c in ipairs(tobe_hilight) do
-            table.insert(G.hand.highlighted, c)
-        end
+        AKYRS.invert_selection(G.hand)
     end
 
     if AKYRS.checkBlindKey("bl_akyrs_the_picker") and not G.GAME.blind.disabled then
@@ -817,22 +802,7 @@ G.FUNCS.play_cards_from_highlighted = function(e)
         ease_discard(-G.GAME.blind.debuff.akyrs_reduce_other)
     end
     if G.GAME.starting_params.akyrs_inversion_deck then
-        local tobe_hilight = {}
-        local tobe_unhilight = {}
-        for _, c in ipairs(G.hand.cards) do
-            if not AKYRS.is_in_table(G.hand.highlighted, c) then
-                table.insert(tobe_hilight, c)
-            else
-                table.insert(tobe_unhilight, c)
-            end
-        end
-        for _, c in ipairs(tobe_unhilight) do
-            c:highlight(false)
-        end
-        G.hand.highlighted = {}
-        for _, c in ipairs(tobe_hilight) do
-            table.insert(G.hand.highlighted, c)
-        end
+        AKYRS.invert_selection(G.hand)
     end
     local ret = playCardEval(e)
     return ret
@@ -2072,4 +2042,12 @@ local dfd2h = G.FUNCS.draw_from_deck_to_hand
 function G.FUNCS.draw_from_deck_to_hand(...)
     if G.STATE == G.STATES.ROUND_EVAL then return end
     return dfd2h(...)
+end
+
+local card_use_cons = Card.use_consumeable
+function Card:use_consumeable(...)
+    if G.GAME.starting_params.akyrs_inversion_deck then
+        AKYRS.invert_selection(G.hand)
+    end
+    return card_use_cons(self,...)
 end

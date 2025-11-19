@@ -166,7 +166,7 @@ function copy_card(...)
     local c = {copyCardHook(...)}
     c[1].is_null = other.is_null
     c[1].akyrs_old_ability = other.ability
-    local refresh_sprite = other.ability and c[1].ability.akyrs_special_card_type ~= other.ability.akyrs_special_card_type
+    local refresh_sprite = c[1].ability.akyrs_special_card_type ~= other.ability.akyrs_special_card_type
     c[1].ability.akyrs_special_card_type = other.ability.akyrs_special_card_type
 
     if c[1].ability.akyrs_special_card_type == "suit" then
@@ -175,7 +175,7 @@ function copy_card(...)
         c[1].base.nominal = SMODS.Ranks[c[1].base.value].nominal
     end
     c[1]:set_sprites()
-    if refresh_sprite and c[1].base.value then
+    if c[1].base.value then
         c[1]:set_sprites(c[1].config and c[1].config.center,c[1].config and c[1].config.card)
     end
     return unpack(c)
