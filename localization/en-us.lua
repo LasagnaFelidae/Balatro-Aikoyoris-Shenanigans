@@ -2153,7 +2153,7 @@ return {
                 text = {
                     "{C:chips}+#1#{} Chips",
                     "{C:chips}#2#{} Chips",
-                    "when you buy a card from shop",
+                    "when you {C:attention}buy{} a Joker from shop",
                 }
             },
         },
@@ -3409,6 +3409,7 @@ return {
             k_akyrs_letter_btn_set = "Set",
             k_akyrs_letter_btn_swap_case = "Swap Case",
             k_akyrs_you_tried = "You tried :star:",
+            k_akyrs_alphabetically = "abc",
 
             k_akyrs_textbox_notice = "Due to how the game works, you'll have to",
             k_akyrs_textbox_notice_2 = "interact with the textbox for text to show up",

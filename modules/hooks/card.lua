@@ -358,3 +358,33 @@ function create_card_for_shop(area)
     end
     return card
 end
+
+local ca_sort = CardArea.sort
+
+function CardArea:sort(mezod)
+    local x = ca_sort(self, mezod)
+    self.config.sort = method or self.config.sort
+    if self.config.sort == 'akyrs_alpha asc' then 
+        table.sort(self.cards, function (a, b) return string.lower(a:get_letter_with_pretend()) < string.lower(b:get_letter_with_pretend()) end )
+    elseif self.config.sort == 'akyrs_alpha desc' then 
+        table.sort(self.cards, function (a, b) return string.lower(a:get_letter_with_pretend()) > string.lower(b:get_letter_with_pretend()) end )
+    end
+end
+
+local createBTN = create_UIBox_buttons
+function create_UIBox_buttons()
+    local text_scale = 0.45
+    local x = createBTN()
+    if AKYRS.should_calculate_word() then
+        table.insert(x.nodes[2].nodes[1].nodes[2].nodes,
+        {n=G.UIT.C, config={align = "cm", minh = 0.7, minw = 0.9, padding = 0.1, r = 0.1, hover = true, colour =G.C.ORANGE, button = "akyrs_sort_alpha", shadow = true}, nodes={
+            {n=G.UIT.T, config={text = localize('k_akyrs_alphabetically'), scale = text_scale*0.7, colour = G.C.UI.TEXT_LIGHT}}
+        }})
+    end
+    return x
+end
+
+function G.FUNCS.akyrs_sort_alpha(e)
+    G.hand:sort('akyrs_alpha asc')
+    play_sound('paper1')
+end

@@ -3994,7 +3994,7 @@ SMODS.Joker {
                 chips = card.ability.extras.chips
             }
         end
-        if context.buying_card then
+        if context.buying_card and context.card and context.card.ability and context.card.ability.set == "Joker" then
             return {
                 func = function ()
                     SMODS.scale_card(card,{
@@ -4017,5 +4017,4 @@ SMODS.Joker {
             }
         end
     end,
-
 }
