@@ -784,7 +784,7 @@ SMODS.Consumable{
     atlas = "umbra",
     pos = {x=0,y=2},
     config = {
-        extras = 2
+        extras = 1
     },
     can_use = function (self, card)
         return #G.hand.cards > 0

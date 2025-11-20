@@ -1582,7 +1582,7 @@ return {
             j_akyrs_tetoris = {
                 name = "Tetoris",
                 text = { 
-                    "{X:chips,C:white}X#2#{} Chips when any of",
+                    "{X:chips,C:white}X#2#{} Chips if any of",
                     "{C:attention}L{}, {C:attention}S{}{C:inactive}(pades), {C:attention}O{}, {C:attention}Z{}, {C:attention}J{C:inactive}(ack), {C:attention}I{}, and {C:attention}T{}{C:inactive}(en)",
                     "are played",
                     "{s:0.9,C:inactive,f:5}テテテテト テト テテテテトリス!{}"
