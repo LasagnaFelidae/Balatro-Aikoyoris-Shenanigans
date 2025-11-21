@@ -406,7 +406,7 @@ SMODS.Booster{
     atlas = 'aikoyoriBoosterPack', pos = { x = 6, y = 1 },
     group_key = "k_akyrs_umbral_pack",
     cost = 8,
-    weight = 0.5,
+    weight = 0.125,
     draw_hand = true,
     kind = "umbral_pack",
     create_card = function (self, card, i) 
@@ -432,7 +432,7 @@ SMODS.Booster{
     group_key = "k_akyrs_umbral_pack",
     draw_hand = true,
     cost = 8,
-    weight = 0.5,
+    weight = 0.125,
     kind = "umbral_pack",
     create_card = function (self, card, i) 
         return SMODS.create_card{ set = "Umbral", area = G.pack_cards, skip_materialize = true }
