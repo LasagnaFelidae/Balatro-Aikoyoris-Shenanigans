@@ -2168,7 +2168,7 @@ return {
             },
             j_akyrs_nutrient = {
                 name = {
-                    "Biochamber",
+                    "Nutrient",
                 },
                 text = {
                     "{C:white,X:chips}X#1#{} Chips",
