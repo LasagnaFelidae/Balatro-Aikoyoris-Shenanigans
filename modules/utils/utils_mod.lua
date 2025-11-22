@@ -713,7 +713,11 @@ AKYRS.aiko_click = function (self)
         G.SETTINGS.paused = true
         self.akyrs_clicked_cnt = -1
         G.FUNCS.overlay_menu({
-        definition = AKYRS.SOL.get_UI_definition(),
+        definition = create_UIBox_generic_options({
+            contents = {
+                AKYRS.SOL.get_UI_definition()
+            }
+            }),
         })
     end 
 end

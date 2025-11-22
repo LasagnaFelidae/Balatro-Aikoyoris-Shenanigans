@@ -40,7 +40,7 @@ AKYRS.SOL.get_UI_definition = function(params)
         config = {
             w = width, minh = height,
             r = 0.1,
-            colour = params.transparent and G.C.UI.TRANSPARENT_DARK or HEX("3f3f3f")
+            colour = G.C.UI.TRANSPARENT_DARK
         },
         nodes =                 {
             { -- top row with stock waste and foundation
