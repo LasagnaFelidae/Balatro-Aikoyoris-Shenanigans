@@ -795,6 +795,7 @@ AKYRS.mod_score_instant = function(score_mod)
     if score_mod.card then
         card_eval_status_text(score_mod.card, 'jokers', nil, percent, nil, {message = localize{type='variable',key= comp and 'k_akyrs_score_add' or 'k_akyrs_score_minus',vars={amount}}, akyrs_no_sound = true, colour =  G.C.PURPLE, instant = true})
     end
+    percent = percent or 1
     play_sound('gong', 0.5 + percent, 0.5)
     -- 12 equal temperament moment :heart:
     percent = percent * 1.05946309436
