@@ -85,6 +85,7 @@ assert(SMODS.load_file("./modules/compat/notjustyet.lua"))()
 assert(SMODS.load_file("./modules/compat/togasstuff.lua"))()
 assert(SMODS.load_file("./modules/compat/partner.lua"))()
 assert(SMODS.load_file("./modules/compat/ortalab.lua"))()
+assert(SMODS.load_file("./modules/compat/paperback.lua"))()
 assert(SMODS.load_file("./modules/compat/multiplayer.lua"))()
 
 -- cross mod loading

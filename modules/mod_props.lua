@@ -72,7 +72,7 @@ end
 AKYRS.create_credits = function(sprite_atlas, name, width, colour, credits_nodes)
   return {
     n = G.UIT.R,
-    config = { padding = 0.1 },
+    config = { padding = 0 },
     nodes = {
       sprite_atlas and {
         n = G.UIT.C,
@@ -89,7 +89,7 @@ AKYRS.create_credits = function(sprite_atlas, name, width, colour, credits_nodes
       },
       {
         n = G.UIT.C,
-        config = { align = "cm" },
+        config = { align = "cm", padding = 0.1  },
         nodes = {
           {
             n = G.UIT.R,
@@ -320,6 +320,62 @@ SMODS.current_mod.extra_tabs = function ()
                     { n = G.UIT.T, config = { text = localize("k_akyrs_drmonty_help"), scale = 0.3, colour = G.C.WHITE } }
                   }
                 }),
+                {
+                  n = G.UIT.R,
+                  config = {},
+                  nodes = {
+                    { n = G.UIT.T, config = { text = localize("k_akyrs_cross_mods_creds"), scale = 0.5, colour = G.C.WHITE } }
+                  }
+                },
+                {
+                  n = G.UIT.R,
+                  config = {},
+                  nodes = {
+                    { n = G.UIT.T, config = { text = "ThatOneGoofAli, PaperMoon", scale = 0.3, colour = G.C.WHITE } },
+                  }
+                },
+                {
+                  n = G.UIT.R,
+                  config = {},
+                  nodes = {
+                    { n = G.UIT.T, config = { text = localize("k_akyrs_special_thanks"), scale = 0.5, colour = G.C.WHITE } }
+                  }
+                },
+                {
+                  n = G.UIT.R,
+                  config = {},
+                  nodes = {
+                    { n = G.UIT.T, config = { text = "haya_underscore, SleepG11", scale = 0.3, colour = G.C.WHITE } },
+                  }
+                },
+                {
+                  n = G.UIT.R,
+                  config = {},
+                  nodes = {
+                    { n = G.UIT.T, config = { text = "TheUnseenExplosion, focussh0ck, sizaak", scale = 0.3, colour = G.C.WHITE } },
+                  }
+                },
+                {
+                  n = G.UIT.R,
+                  config = {},
+                  nodes = {
+                    { n = G.UIT.T, config = { text = localize("k_akyrs_sharetest_cred_1"), scale = 0.3, colour = G.C.WHITE } },
+                  }
+                },
+                {
+                  n = G.UIT.R,
+                  config = {},
+                  nodes = {
+                    { n = G.UIT.T, config = { text = localize("k_akyrs_sharetest_cred_2"), scale = 0.3, colour = G.C.WHITE } },
+                  }
+                },
+                {
+                  n = G.UIT.R,
+                  config = {},
+                  nodes = {
+                    { n = G.UIT.T, config = { text = localize("k_akyrs_thanks_you_for_playing"), scale = 0.3, colour = G.C.WHITE } },
+                  }
+                },
               }
             }
           }

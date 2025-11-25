@@ -228,21 +228,30 @@ AKYRS.suit_to_atlas = function (suit_key, card)
             return G.ASSET_ATLAS[palette.akyrs_pure_suit.atlas_key], palette.akyrs_pure_suit.pos 
         end
     end
+    local is_hc = G.SETTINGS.colour_palettes[suit_key] == "hc"
     if suit_key == "Hearts" then
         -- print("<3")
-        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (G.SETTINGS.colour_palettes[suit_key] == "hc" and 4 or 0), y = 0}
+        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (is_hc and 4 or 0), y = 0}
     end
     if suit_key == "Clubs" then
         -- print("|-8o")
-        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (G.SETTINGS.colour_palettes[suit_key] == "hc" and 5 or 1), y = 0}
+        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (is_hc and 5 or 1), y = 0}
     end
     if suit_key == "Diamonds" then
         -- print("<>")
-        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (G.SETTINGS.colour_palettes[suit_key] == "hc" and 6 or 2), y = 0}
+        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (is_hc and 6 or 2), y = 0}
     end
     if suit_key == "Spades" then
         -- print("|-C>")
-        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (G.SETTINGS.colour_palettes[suit_key] == "hc" and 7 or 3), y = 0}
+        return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = (is_hc and 7 or 3), y = 0}
+    end
+    -- if mod dev is reading this i am open to having your stuff be here if you wanna so contact me
+    -- btw art done by papermoon from paperback
+    if suit_key == "paperback_Stars" then
+        return G.ASSET_ATLAS['akyrs_paperback_pure'], { x = 0, y = (is_hc and 1 or 0)}
+    end
+    if suit_key == "paperback_Crowns" then
+        return G.ASSET_ATLAS['akyrs_paperback_pure'], { x = 1, y = (is_hc and 1 or 0)}
     end
     if SMODS.Suits[suit_key] and SMODS.Suits[suit_key].akyrs_pure_suit_atlas then
         return G.ASSET_ATLAS[SMODS.Suits[suit_key].akyrs_pure_suit_atlas.atlas_key], SMODS.Suits[suit_key].akyrs_pure_suit_atlas.pos 
@@ -282,6 +291,10 @@ AKYRS.rank_to_atlas = function (rank_key, card)
     if rank_key == "Ace" then
         return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = 0, y = 1}
     end
+    -- if mod dev is reading this i am open to having your stuff be here if you wanna so contact me
+    if rank_key == "paperback_Apostle" then
+        return G.ASSET_ATLAS['akyrs_paperback_pure'], { x = 2, y = 0}
+    end
     --          nan check v                           
     if tonumber(rank_key) and (tonumber(rank_key) == tonumber(rank_key)) and tonumber(rank_key) >= 2 and tonumber(rank_key) <= 10 then
         return G.ASSET_ATLAS['akyrs_rank_suit_cards'], { x = 11 - tonumber(rank_key), y = 1}
@@ -315,6 +328,7 @@ AKYRS.plural_centers = function(word)
     if word == "tarots" then return "tarot" end
     if word == "planets" then return "planet" end
     if word == "spectrals" then return "spectral" end
+    if word == "umbrals" then return "umbral" end
     if AKYRS.other_mods_plural_centers(word) then return AKYRS.other_mods_plural_centers(word) end
     return nil
 end
