@@ -83,7 +83,7 @@ SMODS.Seal{
     badge_colour = HEX('b7f058'),
     sound = { sound = 'generic1', per = 1.2, vol = 0.4 },
     loc_vars = function (self, info_queue, card)
-        local t = G.hand.highlighted
+        local t = ((G.hand or {}).highlighted or {})
         if G.STATE == G.STATES.HAND_PLAYED then
             t = G.play.cards
         end
