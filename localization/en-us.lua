@@ -3301,8 +3301,8 @@ return {
             c_akyrs_replicant_smart_home = {
                 name = "Smart Home",
                 text = {
-                    "Poker Hand shall be selected",
-                    "to be {C:attention}upgraded {}#1# times",
+                    "Cards shall be selected to create {C:attention}Poker Hand",
+                    "that will be {C:attention}upgraded {}#1# times",
                     "then {C:attention}Attention{} stickers",
                     "are applied to selected cards",
                     "{C:inactive}(Selecting {C:attention}#1#{C:inactive})",

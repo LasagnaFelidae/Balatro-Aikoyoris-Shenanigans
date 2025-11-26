@@ -169,7 +169,7 @@ SMODS.Sticker{
         card.ability[self.key] = val
     end,
     calculate = function (self, card, context)
-        if context.debuff_hand then
+        if context.debuff_hand and card.area == G.hand then
             local contains_attention = false
             for _,_c in ipairs(context.full_hand) do
                 if _c.ability.akyrs_attention then

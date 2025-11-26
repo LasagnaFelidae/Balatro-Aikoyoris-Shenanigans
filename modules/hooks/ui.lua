@@ -63,12 +63,14 @@ function Card:generate_UIBox_ability_table(vars)
             else
                 generate_card_ui({ key = 'null_card', set = 'AikoyoriExtraBases', vars = loc_vars }, newRetTable)
             end
+            
             if self.ability.set ~= 'Default' then
+                --[[
                 for i, v in ipairs(ret.main) do
                     if i > 0 then
                         table.insert(newRetTable.main, v)
                     end
-                end
+                end]]
                 for i, v in ipairs(ret.type) do
                     if i > 0 then
                         table.insert(newRetTable.type, v)
