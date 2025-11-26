@@ -331,7 +331,7 @@ SMODS.current_mod.extra_tabs = function ()
                   n = G.UIT.R,
                   config = {},
                   nodes = {
-                    { n = G.UIT.T, config = { text = "ThatOneGoofAli, PaperMoon", scale = 0.3, colour = G.C.WHITE } },
+                    { n = G.UIT.T, config = { text = "TheOneGoofAli, PaperMoon", scale = 0.3, colour = G.C.WHITE } },
                   }
                 },
                 {
