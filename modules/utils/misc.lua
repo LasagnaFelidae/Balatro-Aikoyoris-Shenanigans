@@ -1439,3 +1439,13 @@ function AKYRS.start_blind_arbitrarily(key)
     G.GAME.round_resets.blind_choices.akyrs_Solo = key
     G.FUNCS.select_blind({config = { ref_table = G.P_BLINDS[key] }, UIBox = {get_UIE_by_ID = function(...) end}})
 end
+
+function AKYRS.combine_table(...)
+    local out = {}
+    for _, tab in ipairs({...}) do
+        for _,ele in pairs(tab) do
+            table.insert(out, ele)
+        end
+    end
+    return out
+end

@@ -2291,7 +2291,7 @@ SMODS.Joker {
                     SMODS.calculate_effect({ func = function() SMODS.add_card({key = "c_entr_flipside", area = G.consumeables, edition = "e_negative"}) end}, card)
                 end
             end
-            if SDM_0s_Stuff_Mod then
+            if AKYRS.is_mod_loaded("sdm0sstuff") then
                 if next(context.poker_hands["Full House"]) then
                     SMODS.calculate_effect({ func = function() SMODS.add_card({set = "Bakery", area = G.consumeables, edition = "e_negative"}) end}, card)
                 end

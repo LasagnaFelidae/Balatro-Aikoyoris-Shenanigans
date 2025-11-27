@@ -331,6 +331,17 @@ AKYRS.get_suit_freq_from_cards = function(listofcards, no_count_wild)
     return wordArray
 end
 
+AKYRS.get_enhancements_freq_from_cards = function(listofcards)
+    
+    local enchamarr = {}
+    for i,v in ipairs(listofcards) do
+        if v.config and v.config.center and v.config.center.key ~= "c_base" then
+            enchamarr[v.config.center.key] = enchamarr[v.config.center.key] and enchamarr[v.config.center.key] + 1 or 1
+        end
+    end
+    return enchamarr
+end
+
 function AKYRS.is_valid_enhancement(name)
     for _, v in pairs(G.P_CENTER_POOLS.Enhanced) do
         local first_part = string.split(v.name," ")[1]
@@ -647,7 +658,15 @@ AKYRS.draw_cards_back_to_hand = function(cards, to)
         func = function()
             local cx = #cards
             for i=1, cx do --draw cards from deck
-                draw_card(cards[cx], to, i*100/cx,'up', nil ,nil, 0.005, i%2==0, nil, math.max((21-i)/20,0.7))
+                draw_card(cards[i].area, to, i*100/cx,'up', nil ,cards[i], 0.005, i%2==0, nil, math.max((21-i)/20,0.7))
+                if (cards[i].area ~= to) then
+                    if AKYRS.is_playing_card_area(cards[i].area) then
+                        AKYRS.remove_value_from_table(G.playing_cards, cards[i]) 
+                    end
+                    if AKYRS.is_playing_card_area(to) then
+                        table.insert(G.playing_cards, cards[i]) 
+                    end
+                end
             end
             return true
         end
@@ -738,4 +757,21 @@ AKYRS.aiko_click = function (self)
             return true
         end, 0, "akyrs_misc"
     )
+end
+
+AKYRS.apply_random_p_attrib = function(self)
+    local card = pseudorandom_element(G.P_CARDS,pseudoseed("akyrsmodcard"))
+    self:set_base(card)
+    self.is_null = true
+    if self.children and self.children.front then
+        self.children.front:remove()
+        self.children.front = nil
+    end
+end
+
+AKYRS.is_playing_card_area = function(ca)
+    return ca == G.hand or ca == G.deck
+end
+AKYRS.is_playing_card = function(cr)
+    return cr.ability and (cr.ability.set == "Default" or cr.ability.set == "Enhanced")
 end

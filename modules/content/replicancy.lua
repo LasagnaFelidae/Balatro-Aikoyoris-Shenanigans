@@ -229,3 +229,130 @@ SMODS.Consumable{
     end
 }
 
+SMODS.Consumable{
+    key = "replicant_smart_home",
+    set = "Replicant",
+    atlas = "replicant",
+    pos = {x=5, y=0},
+    config = {
+        extras = 3,
+        min_highlighted = 0,
+        max_highlighted = 99999,
+    },
+    loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = { key = "akyrs_attention", set = "Other" }
+        if not G.hand then return {
+            vars = {
+                "???", "???"
+            }
+        } end
+        local h = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
+        return {
+            vars = {
+                card.ability.extras,
+                localize(h, "poker_hands") ~= "ERROR" and localize(h, "poker_hands") or "???", 
+            }
+        }
+    end,
+    can_use = function (self, card)
+        return #G.hand.highlighted > 0 or AKYRS.is_mod_loaded("Cryptid")
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.simple_event_add(function ()
+            if #G.hand.highlighted > 0 or AKYRS.is_mod_loaded("Cryptid") then
+                table.sort(G.hand.highlighted or {},AKYRS.hand_sort_function_immute)
+                AKYRS.juice_like_tarot(card)
+                local h = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
+                SMODS.smart_level_up_hand(card, h, false, card.ability.extras)
+                AKYRS.do_things_to_card(G.hand.highlighted,
+                    function (cx)
+                        SMODS.Stickers.akyrs_attention:apply(cx, true)
+                    end
+                )
+            end
+            return true 
+        end, 0)
+    end
+}
+
+
+SMODS.Consumable{
+    key = "replicant_music_streaming",
+    set = "Replicant",
+    atlas = "replicant",
+    pos = {x=6, y=0},
+    config = {
+        min_highlighted = 0,
+        max_highlighted = 2,
+    },
+    loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = { key = "rental", set = "Other", vars = { G.GAME.rental_rate } }
+        return {
+            vars = {
+                card.ability.max_highlighted,
+            }
+        }
+    end,
+    can_use = function (self, card)
+        return #G.jokers.highlighted > card.ability.min_highlighted and #G.jokers.highlighted <= card.ability.max_highlighted
+    end,
+    use = function (self, card, area, copier)
+        local filtered = AKYRS.filter_table(G.jokers.highlighted, function (ca)
+            return not ca.ability.rental
+        end, true, true)
+        AKYRS.do_things_to_card(filtered,
+            function (cx)
+                SMODS.Stickers.rental:apply(cx, true)
+                SMODS.add_card{ set = "Spectral", edition = "e_negative" }
+            end
+        )
+    end
+}
+
+
+SMODS.Consumable{
+    key = "replicant_file_sharing",
+    set = "Replicant",
+    atlas = "replicant",
+    pos = {x=7, y=0},
+    config = {
+        min_highlighted = 2,
+        max_highlighted = 2,
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.max_highlighted,
+            }
+        }
+    end,
+    can_use = function (self, card)
+        local cards = AKYRS.filter_table(AKYRS.combine_table(G.jokers.highlighted, G.consumeables.highlighted, G.hand.highlighted),
+        function (ca)
+            return ca ~= card
+        end, true, true)
+        return #cards >= card.ability.min_highlighted and #cards <= card.ability.max_highlighted
+    end,
+    use = function (self, card, area, copier)
+        local cards = AKYRS.filter_table(AKYRS.combine_table(G.jokers.highlighted, G.consumeables.highlighted, G.hand.highlighted),
+        function (ca)
+            return ca ~= card
+        end, true, true)
+        local card1 = cards[1]
+        local card2 = cards[2]
+        local card1ogarea = card1.area
+        local card2ogarea = card2.area
+        if card1 and card2 and card1.area and card2.area then
+            if not AKYRS.is_playing_card(card1) then
+                AKYRS.apply_random_p_attrib(card1)
+            end
+            if not AKYRS.is_playing_card(card2) then
+                AKYRS.apply_random_p_attrib(card2)
+            end
+            AKYRS.draw_cards_back_to_hand({card1}, card2ogarea)
+            AKYRS.draw_cards_back_to_hand({card2}, card1ogarea)
+        end
+
+    end
+}
+

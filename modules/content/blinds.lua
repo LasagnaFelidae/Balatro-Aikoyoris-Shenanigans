@@ -901,7 +901,7 @@ SMODS.Blind{
         }
     end,
     calculate = function (self, blind, context)
-        if context.modify_scoring_hand then
+        if context.modify_scoring_hand and not blind.disabled then
             if SMODS.pseudorandom_probability(self, "akyrs_bonsai_blind",self.config.numer, self.config.denum) and context.other_card:is_face() then
                 return {
                     remove_from_hand = true

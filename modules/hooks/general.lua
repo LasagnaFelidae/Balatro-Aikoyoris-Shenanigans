@@ -1200,6 +1200,10 @@ function AKYRS.change_base_set_card(self)
                 if self and not (self.config.center.set == "Enhanced" or self.config.center.set == "Default") then
                     local card = pseudorandom_element(G.P_CARDS,pseudoseed("akyrsmodcard"))
                     self:set_base(card)
+                    if self.children and self.children.front then
+                        self.children.front:remove()
+                        self.children.front = nil
+                    end
                     --print(self.base)
                     --print("TS IS SO ASS" ,suit.key,rank.key)
                     --print(self.base)

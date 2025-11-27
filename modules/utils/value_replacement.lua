@@ -331,3 +331,27 @@ AKYRS.mod_playing_cards = function(self)
         end
     end
 end
+
+function AKYRS.defeated_by_center_ui(center_key) 
+    label = localize('k_defeated_by')
+    local center = G.P_CENTERS[center_key]
+    local c = SMODS.create_card{ key = center_key, set = center.set, skip_materialize = true }
+    local area = AKYRS.card_area_preview( G.akyrs_lose, nil, {
+        override = true,
+        w = 1,
+        h = 0.9,
+        ml = 0,
+        mb = 0.5,
+        scale = 0.8,
+        cards = {c},
+        type = "akyrs_credits",
+    })
+    
+    return {
+        {n=G.UIT.R, config={align = "cm", minh = 0.6}, nodes={
+        {n=G.UIT.O, config={object = DynaText({string = localize{type ='name_text', key = center_key, set = center.set}, colours = {G.C.WHITE},shadow = true, float = true,maxw = 2.2, scale = 0.45})}}
+        }},
+        {n=G.UIT.R, config={align = "cm", padding = 0.1}, nodes={area}
+        },
+    }, label
+end

@@ -63,3 +63,20 @@ payload = """elseif G.GAME.blind_on_deck == "akyrs_Solo" then
     --G.GAME.current_boss_streak = 0
     blhash = 'akyrs_Solo'"""
 match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = """  if score == 'defeated_by' then """
+position = "before"
+payload = """if score == 'defeated_by' and G.GAME.akyrs_defeated_by_center then 
+    score_tab, label = AKYRS.defeated_by_center_ui(G.GAME.akyrs_defeated_by_center)
+else"""
+match_indent = true
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = """    local label_scale = 0.5"""
+position = "before"
+payload = """end"""
+match_indent = true

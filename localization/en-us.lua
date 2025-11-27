@@ -976,7 +976,7 @@ return {
                 name = "Insolate Card",
                 text = {
                     "This card gains {C:white,X:mult} X#1# {} Mult when played",
-                    "if played hand {C:attention}contains{} a suit more than {C:attention}once",
+                    "if played hand {C:attention}contains NO{} repeating {C:attention}enhancements",
                     "{C:inactive}(Currently {C:white,X:mult} X#2# {C:inactive} Mult){}" 
                 }
             },
@@ -3306,6 +3306,22 @@ return {
                     "then {C:attention}Attention{} stickers",
                     "are applied to selected cards",
                     "{C:inactive}(Selecting {C:attention}#1#{C:inactive})",
+                }
+            },
+            c_akyrs_replicant_music_streaming = {
+                name = "Music Streaming",
+                text = {
+                    "Up to {C:attention}#1#{} Jokers may be selected",
+                    "to be {C:attention}apply Rental{}",
+                    "then creates {C:attention}equal{} amount of",
+                    "{C:dark_edition}Negative{} {C:spectral}Spectral{} Cards",
+                }
+            },
+            c_akyrs_replicant_file_sharing = {
+                name = "File Sharing",
+                text = {
+                    "Exactly {C:attention}#1#{} cards are selected",
+                    "to swap places",
                 }
             },
         }
