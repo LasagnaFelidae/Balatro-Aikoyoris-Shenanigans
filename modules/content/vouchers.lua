@@ -68,3 +68,60 @@ SMODS.Voucher {
         return not G.GAME.akyrs_mathematics_enabled
     end
 }
+
+SMODS.Voucher {
+    key = "banquet",
+    atlas = 'aikoyoriVouchers', pos = { x = 0, y = 0 } ,
+    cost = 10,
+    config = {
+        extras = {
+            addentum = 1
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.addentum
+            }
+        }
+    end,
+    redeem = function (self, card) 
+        SMODS.change_play_limit(card.ability.extras.addentum)
+        SMODS.change_discard_limit(card.ability.extras.addentum)
+        G.hand:change_size(card.ability.extras.addentum)
+    end,
+    unredeem = function (self, card) 
+        SMODS.change_play_limit(-card.ability.extras.addentum)
+        SMODS.change_discard_limit(-card.ability.extras.addentum)
+        G.hand:change_size(-card.ability.extras.addentum)
+    end,
+}
+
+SMODS.Voucher {
+    key = "worlds_end",
+    atlas = 'aikoyoriVouchers', pos = { x = 1, y = 0 } ,
+    cost = 10,
+    config = {
+        extras = {
+            addentum = 2
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.addentum
+            }
+        }
+    end,
+    requires = { "v_akyrs_banquet" },
+    redeem = function (self, card) 
+        SMODS.change_play_limit(card.ability.extras.addentum)
+        SMODS.change_discard_limit(card.ability.extras.addentum)
+        G.hand:change_size(card.ability.extras.addentum)
+    end,
+    unredeem = function (self, card) 
+        SMODS.change_play_limit(-card.ability.extras.addentum)
+        SMODS.change_discard_limit(-card.ability.extras.addentum)
+        G.hand:change_size(-card.ability.extras.addentum)
+    end,
+}

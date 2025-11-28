@@ -47,9 +47,7 @@ assert(SMODS.load_file("./modules/content/back.lua"))()
 assert(SMODS.load_file("./modules/content/rarity.lua"))()
 assert(SMODS.load_file("./modules/content/alphabet_cards.lua"))()
 assert(SMODS.load_file("./modules/content/umbral.lua"))()
-if AKYRS.config.experimental_features then
-    assert(SMODS.load_file("./modules/content/replicancy.lua"))()
-end
+assert(SMODS.load_file("./modules/content/replicancy.lua"))()
 assert(SMODS.load_file("./modules/content/planets.lua"))()
 assert(SMODS.load_file("./modules/content/constellation.lua"))()
 assert(SMODS.load_file("./modules/content/boosters.lua"))()
@@ -71,6 +69,7 @@ end
 assert(SMODS.load_file("./modules/challenges_ui.lua"))()
 assert(SMODS.load_file("./modules/content/jokers.lua"))()
 assert(SMODS.load_file("./modules/content/letterjokers.lua"))()
+assert(SMODS.load_file("./modules/content/legendaries.lua"))()
 assert(SMODS.load_file("./modules/content/achievements.lua"))()
 
 assert(SMODS.load_file("./modules/content/challenges.lua"))()

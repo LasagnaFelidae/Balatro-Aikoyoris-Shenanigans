@@ -1038,6 +1038,27 @@ return {
                     "{C:red}+#3#{} Discard when discarded",
                 }
             },
+            m_akyrs_semibreve_card = {
+                name = "Semibreve Card",
+                text = {
+                    "{C:chips}+#1#{} Chips",
+                    "{C:mult}+#2#{} Mult",
+                }
+            },
+            m_akyrs_minim_card = {
+                name = "Minim Card",
+                text = {
+                    "{C:white,X:chips}X#1#{} Chips",
+                    "{C:mult}+#2#{} Mult",
+                }
+            },
+            m_akyrs_crotchet_card = {
+                name = "Crotchet Card",
+                text = {
+                    "{C:white,X:chips}X#1#{} Chips",
+                    "{C:white,X:mult}X#2#{} Mult",
+                }
+            },
         },
         Joker={
             -- toga
@@ -2431,6 +2452,15 @@ return {
                     "learn what it does",
                 },
             },
+            undiscovered_replicant = {
+                name="Not Discovered",
+                text={
+                    "Purchase or use",
+                    "this card in an",
+                    "unseeded run to",
+                    "learn what it does",
+                },
+            },
             pinned_left={
                 name="Pinned",
                 text={
@@ -2512,6 +2542,30 @@ return {
                 text={
                     "Choose {C:attention}#1#{} of up to",
                     "{C:attention}#2# {C:akyrs_umbral_p,X:akyrs_umbral_y} Umbral {} cards to",
+                    "be used immediately",
+                },
+            },
+            p_akyrs_replica_pack_normal = {
+                name="Replica Pack",
+                text={
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2# {C:akyrs_replicant_o}Replicant{} cards to",
+                    "be used immediately",
+                },
+            },
+            p_akyrs_replica_pack_jumbo = {
+                name="Jumbo Replica Pack",
+                text={
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2# {C:akyrs_replicant_o}Replicant{} cards to",
+                    "be used immediately",
+                },
+            },
+            p_akyrs_replica_pack_mega = {
+                name="Mega Replica Pack",
+                text={
+                    "Choose {C:attention}#1#{} of up to",
+                    "{C:attention}#2# {C:akyrs_replicant_o}Replicant{} cards to",
                     "be used immediately",
                 },
             },
@@ -2902,6 +2956,20 @@ return {
                     "{C:attention}Letters{} give {C:mult}Mult{}",
                     "based on their {C:attention}Scrabble value{}",
                     "{C:akyrs_playable}+#1#{} Card Selection"
+                },
+            },
+            v_akyrs_banquet={
+                name="Banquet",
+                text={
+                    "{C:akyrs_playable}+#1#{} Card Selection",
+                    "{C:blue}+#1#{} Hand Size",
+                },
+            },
+            v_akyrs_worlds_end={
+                name="World's End",
+                text={
+                    "{C:akyrs_playable}+#1#{} Card Selection",
+                    "{C:blue}+#1#{} Hand Size",
                 },
             },
         },
@@ -3311,8 +3379,8 @@ return {
             c_akyrs_replicant_music_streaming = {
                 name = "Music Streaming",
                 text = {
-                    "Up to {C:attention}#1#{} Jokers may be selected",
-                    "to be {C:attention}apply Rental{}",
+                    "Up to {C:attention}#1#{} Joker may be selected",
+                    "to be {C:attention}applied Perishable{}",
                     "then creates {C:attention}equal{} amount of",
                     "{C:dark_edition}Negative{} {C:spectral}Spectral{} Cards",
                 }
@@ -3322,6 +3390,23 @@ return {
                 text = {
                     "Exactly {C:attention}#1#{} cards are selected",
                     "to swap places",
+                }
+            },
+            c_akyrs_replicant_ota = {
+                name = "Over-the-air",
+                text = {
+                    "{C:attention}#1#{} random Jokers are selected",
+                    "to be {C:attention}applied Rental{}",
+                    "then creates {C:attention}equal{} amount of",
+                    "{C:dark_edition}Negative{} {C:spectral}Tarot{} Cards",
+                }
+            },
+            c_akyrs_replicant_daw = {
+                name = "Digital Audio Workstation",
+                text = {
+                    "Enhanced state of all cards in hand",
+                    "are {C:attention}randomised{} into one of {C:attention}Note Cards",
+                    "{C:inactive}(It is more likely to get longer notes)",
                 }
             },
         }
@@ -3380,7 +3465,7 @@ return {
         collabs={},
         dictionary={
             b_umbral_cards = "Umbral Cards",
-            b_replicant_cards = "Replicant Cards (WIP)",
+            b_replicant_cards = "Replicant Cards",
             k_umbral = "Umbral",
             k_replicant = "Replicant",
 
@@ -3578,7 +3663,7 @@ return {
             k_akyrs_unique = "Unique",
             k_akyrs_alphabet_pack = "Alphabets",
             k_akyrs_umbral_pack = "Umbral Pack",
-            k_akyrs_replicant_pack = "Replicant Pack",
+            k_akyrs_replica_pack = "Replica Pack",
         },
         high_scores={},
         labels={

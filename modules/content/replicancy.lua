@@ -4,7 +4,7 @@ SMODS.ConsumableType{
     secondary_colour = HEX("ff9a56"),
     collection_rows = { 5, 5 },
     shop_rate = 0,
-    default = "c_akyrs_replicant_forecast"
+    default = "c_akyrs_replicant_music_streaming"
 }
 
 SMODS.UndiscoveredSprite{
@@ -138,6 +138,7 @@ SMODS.Consumable{
         return G.GAME.blind.in_blind
     end,
     use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
         local to_return = (math.max(G.GAME.starting_params.play_limit,G.GAME.starting_params.play_limit) + card.ability.extras.add)
         local cards = AKYRS.pseudorandom_elements(G.hand.cards,to_return,pseudoseed("akyrs_replicant_db_select"))
         table.sort(cards, AKYRS.hand_sort_function)
@@ -283,10 +284,10 @@ SMODS.Consumable{
     pos = {x=6, y=0},
     config = {
         min_highlighted = 0,
-        max_highlighted = 2,
+        max_highlighted = 1,
     },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = { key = "rental", set = "Other", vars = { G.GAME.rental_rate } }
+        info_queue[#info_queue+1] = { key = "perishable", set = "Other", vars = { G.GAME.rental_rate } }
         return {
             vars = {
                 card.ability.max_highlighted,
@@ -297,12 +298,13 @@ SMODS.Consumable{
         return #G.jokers.highlighted > card.ability.min_highlighted and #G.jokers.highlighted <= card.ability.max_highlighted
     end,
     use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
         local filtered = AKYRS.filter_table(G.jokers.highlighted, function (ca)
-            return not ca.ability.rental
+            return not ca.ability.perishable
         end, true, true)
         AKYRS.do_things_to_card(filtered,
             function (cx)
-                SMODS.Stickers.rental:apply(cx, true)
+                SMODS.Stickers.perishable:apply(cx, true)
                 SMODS.add_card{ set = "Spectral", edition = "e_negative" }
             end
         )
@@ -316,13 +318,11 @@ SMODS.Consumable{
     atlas = "replicant",
     pos = {x=7, y=0},
     config = {
-        min_highlighted = 2,
-        max_highlighted = 2,
     },
     loc_vars = function (self, info_queue, card)
         return {
             vars = {
-                card.ability.max_highlighted,
+                2,
             }
         }
     end,
@@ -331,9 +331,10 @@ SMODS.Consumable{
         function (ca)
             return ca ~= card
         end, true, true)
-        return #cards >= card.ability.min_highlighted and #cards <= card.ability.max_highlighted
+        return #cards == 2
     end,
     use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
         local cards = AKYRS.filter_table(AKYRS.combine_table(G.jokers.highlighted, G.consumeables.highlighted, G.hand.highlighted),
         function (ca)
             return ca ~= card
@@ -352,7 +353,80 @@ SMODS.Consumable{
             AKYRS.draw_cards_back_to_hand({card1}, card2ogarea)
             AKYRS.draw_cards_back_to_hand({card2}, card1ogarea)
         end
+    end
+}
 
+
+
+SMODS.Consumable{
+    key = "replicant_ota",
+    set = "Replicant",
+    atlas = "replicant",
+    pos = {x=8, y=0},
+    config = {
+        extras = {
+            select = 2
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = { key = "rental", set = "Other", vars = { G.GAME.rental_rate } }
+        return {
+            vars = {
+                card.ability.extras.select,
+            }
+        }
+    end,
+    can_use = function (self, card)
+        local filtered = AKYRS.filter_table(G.jokers.cards, function (ca)
+            return not ca.ability.rental
+        end, true, true)
+        return #filtered >= card.ability.extras.select
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        local filtered = AKYRS.filter_table(G.jokers.cards, function (ca)
+            return not ca.ability.rental
+        end, true, true)
+        local selected = AKYRS.pseudorandom_elements(filtered, card.ability.extras.select, "akyrs_replicant_ota_jkr_select")
+        AKYRS.do_things_to_card(selected,
+            function (cx)
+                SMODS.Stickers.rental:apply(cx, true)
+                SMODS.add_card{ set = "Tarot", edition = "e_negative" }
+            end
+        )
+    end
+}
+
+
+SMODS.Consumable{
+    key = "replicant_daw",
+    set = "Replicant",
+    atlas = "replicant",
+    pos = {x=9, y=0},
+    config = {
+    },
+    loc_vars = function (self, info_queue, card)
+        for _,ct in ipairs(G.P_CENTER_POOLS.Enhanced) do
+            if ct.akyrs_note_card then
+                info_queue[#info_queue+1] = ct
+            end
+        end
+    end,
+    can_use = function (self, card)
+        return #G.hand.cards >= 0
+    end,
+    use = function (self, card, area, copier)
+        local filtered = AKYRS.map(AKYRS.filter_table(G.P_CENTER_POOLS.Enhanced, function (ct)
+            return ct.akyrs_note_card
+        end, true, true), function (v, k)
+            return { value = v.key, weight = v.akyrs_note_card.weight }
+        end)
+        AKYRS.do_things_to_card(G.hand.cards,
+            function (cx)
+                local selected = AKYRS.weighted_randomiser(filtered, "akyrs_replicant_daw_select")
+                cx:set_ability(G.P_CENTERS[selected])
+            end
+        )
     end
 }
 

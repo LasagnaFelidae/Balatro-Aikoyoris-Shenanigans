@@ -502,3 +502,88 @@ SMODS.Enhancement{
         end
     end
 }
+
+
+SMODS.Enhancement{
+    key = "semibreve_card",
+    atlas = 'cardUpgrades',
+    pos = {x = 3, y = 1},
+    config = {
+        bonus = 10,
+        mult = 3,
+    },
+    akyrs_note_card = {
+        weight = 8
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.bonus,
+                card.ability.mult,
+            }
+        }
+    end,
+}
+
+
+SMODS.Enhancement{
+    key = "minim_card",
+    atlas = 'cardUpgrades',
+    pos = {x = 4, y = 1},
+    config = {
+        extras = {
+            bonus_X_chips = 1.2,
+            mult = 5,
+        }
+    },
+    akyrs_note_card = {
+        weight = 3
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.bonus_X_chips,
+                card.ability.extras.mult,
+            }
+        }
+    end,
+    calculate = function (self, card, context)
+        if context.main_scoring and card.area == G.play then
+            return {
+                xchips = card.ability.extras.bonus_X_chips,
+                mult = card.ability.extras.mult,
+            }
+        end
+    end
+}
+
+SMODS.Enhancement{
+    key = "crotchet_card",
+    atlas = 'cardUpgrades',
+    pos = {x = 5, y = 1},
+    config = {
+        extras = {
+            bonus_X_chips = 1.41,
+            bonus_X_mult = 1.41,
+        }
+    },
+    akyrs_note_card = {
+        weight = 1
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.bonus_X_chips,
+                card.ability.extras.bonus_X_mult,
+            }
+        }
+    end,
+    calculate = function (self, card, context)
+        if context.main_scoring and card.area == G.play then
+            return {
+                xchips = card.ability.extras.bonus_X_chips,
+                xmult = card.ability.extras.bonus_X_mult,
+            }
+        end
+    end
+}

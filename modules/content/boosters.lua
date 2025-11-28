@@ -11,13 +11,24 @@ local alphabet_digital_hallucinations_compat = {
 }
 local umbral_digital_hallucinations_compat = {
 	colour = G.C.AKYRS_UMBRAL_P,
-	loc_key = "k_akyrs_plus_alphabet",
+	loc_key = "k_akyrs_plus_umbral",
 	create = function()
 		SMODS.add_card{ set = "Umbral", edition = "e_negative" }
 	end,
 }
+local replicant_digital_hallucinations_compat = {
+	colour = G.C.AKYRS_UMBRAL_P,
+	loc_key = "k_akyrs_plus_replicant",
+	create = function()
+		SMODS.add_card{ set = "Replicant", edition = "e_negative" }
+	end,
+}
 local ease_bg_umbral = function(self)
     ease_background_colour({ new_colour = G.C.AKYRS_UMBRAL_P, special_colour = G.C.AKYRS_UMBRAL_P})
+end
+
+local ease_bg_replicant = function(self)
+    ease_background_colour({ new_colour = G.C.AKYRS_REPLICANT_O, special_colour = G.C.AKYRS_REPLICANT_C})
 end
 
 
@@ -439,4 +450,107 @@ SMODS.Booster{
     end,
     ease_background_colour = ease_bg_umbral,
     cry_digital_hallucinations = umbral_digital_hallucinations_compat,
+}
+
+
+
+SMODS.Booster{
+    key = "replica_pack_1",
+    set = "Booster",
+    config = { extra = 2, choose = 1 },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.choose,
+                card.ability.extra,
+            },
+            key = "p_akyrs_replica_pack_normal"
+        }
+    end,
+    atlas = 'aikoyoriBoosterPack', pos = { x = 0, y = 2 },
+    group_key = "k_akyrs_replica_pack",
+    cost = 4,
+    weight = 0.2,
+    draw_hand = true,
+    kind = "replica_pack",
+    create_card = function (self, card, i) 
+        return SMODS.create_card{ set = "Replicant", area = G.pack_cards, skip_materialize = true }
+    end,
+    ease_background_colour = ease_bg_replicant,
+    cry_digital_hallucinations = replicant_digital_hallucinations_compat,
+}
+SMODS.Booster{
+    key = "replica_pack_2",
+    set = "Booster",
+    config = { extra = 2, choose = 1 },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.choose,
+                card.ability.extra,
+            },
+            key = "p_akyrs_replica_pack_normal"
+        }
+    end,
+    atlas = 'aikoyoriBoosterPack', pos = { x = 1, y = 2 },
+    group_key = "k_akyrs_replica_pack",
+    cost = 4,
+    weight = 0.2,
+    draw_hand = true,
+    kind = "replica_pack",
+    create_card = function (self, card, i) 
+        return SMODS.create_card{ set = "Replicant", area = G.pack_cards, skip_materialize = true }
+    end,
+    ease_background_colour = ease_bg_replicant,
+    cry_digital_hallucinations = replicant_digital_hallucinations_compat,
+}
+SMODS.Booster{
+    key = "jumbo_replica_pack_1",
+    set = "Booster",
+    config = { extra = 3, choose = 1 },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.choose,
+                card.ability.extra,
+            },
+            key = "p_akyrs_replica_pack_jumbo"
+        }
+    end,
+    atlas = 'aikoyoriBoosterPack', pos = { x = 2, y = 2 },
+    group_key = "k_akyrs_replica_pack",
+    cost = 6,
+    weight = 0.2,
+    draw_hand = true,
+    kind = "replica_pack",
+    create_card = function (self, card, i) 
+        return SMODS.create_card{ set = "Replicant", area = G.pack_cards, skip_materialize = true }
+    end,
+    ease_background_colour = ease_bg_replicant,
+    cry_digital_hallucinations = replicant_digital_hallucinations_compat,
+}
+SMODS.Booster{
+    key = "mega_replica_pack_1",
+    set = "Booster",
+    config = { extra = 4, choose = 1 },
+    loc_vars = function(self, info_queue, card)
+        return {
+            vars = {
+                card.ability.choose,
+                card.ability.extra,
+            },
+            key = "p_akyrs_replica_pack_mega"
+        }
+    end,
+    atlas = 'aikoyoriBoosterPack', pos = { x = 3, y = 2 },
+    group_key = "k_akyrs_replica_pack",
+    cost = 8,
+    weight = 0.04,
+    draw_hand = true,
+    kind = "replica_pack",
+    create_card = function (self, card, i) 
+        return SMODS.create_card{ set = "Replicant", area = G.pack_cards, skip_materialize = true }
+    end,
+    ease_background_colour = ease_bg_replicant,
+    cry_digital_hallucinations = replicant_digital_hallucinations_compat,
 }

@@ -731,34 +731,6 @@ AKYRS.is_in_pool = function(card,pool)
 end
 
 
-function AKYRS.filter_table(tbl, predicate, ordered_in, ordered_out) 
-    if not tbl or not predicate then return {} end
-    if #tbl == 0 and ordered_in then return {} end
-    local table_out = {}
-    if ordered_in then
-        for k,v in ipairs(tbl) do
-            if predicate(v) then
-                if ordered_out then
-                    table.insert(table_out,v)
-                else
-                    table_out[k] = v
-                end
-            end
-        end
-    else
-        for k,v in pairs(tbl)  do
-            if predicate(v) then
-                if ordered_out then
-                    table.insert(table_out,v)
-                else
-                    table_out[k] = v
-                end
-            end
-        end 
-    end
-    return table_out
-end
-
 AKYRS.mod_score = function(score_mod)
     AKYRS.simple_event_add(
         function()
@@ -1448,4 +1420,48 @@ function AKYRS.combine_table(...)
         end
     end
     return out
+end
+
+
+
+function AKYRS.filter_table(tbl, predicate, ordered_in, ordered_out) 
+    if not tbl or not predicate then return {} end
+    if #tbl == 0 and ordered_in then return {} end
+    local table_out = {}
+    if ordered_in then
+        for k,v in ipairs(tbl) do
+            if predicate(v, k) then
+                if ordered_out then
+                    table.insert(table_out,v)
+                else
+                    table_out[k] = v
+                end
+            end
+        end
+    else
+        for k,v in pairs(tbl)  do
+            if predicate(v, k) then
+                if ordered_out then
+                    table.insert(table_out,v)
+                else
+                    table_out[k] = v
+                end
+            end
+        end 
+    end
+    return table_out
+end
+
+-- predicate expect a return of new value
+function AKYRS.map(tbl, predicate) 
+    if not tbl or not predicate then return {} end
+    if #tbl == 0 and ordered_in then return {} end
+    local table_out = {}
+    for k,v in ipairs(tbl) do
+        if predicate(v, k) then
+            local nv = predicate(v, k)
+            table_out[k] = nv
+        end
+    end
+    return table_out
 end
