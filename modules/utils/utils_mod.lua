@@ -778,7 +778,7 @@ end
 
 
 AKYRS.is_mp = function()
-    if MP and MP.LOBBY.code or MP.LOBBY.ruleset_preview then return true end
+    if (MP and (MP.LOBBY.code or MP.LOBBY.ruleset_preview)) then return true end
 end
 
 AKYRS.mp_check = function(sp,mp)
