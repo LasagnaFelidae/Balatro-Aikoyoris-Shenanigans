@@ -141,8 +141,10 @@ function AKYRS.word_hand_search(word_hand, hand, length)
     if all_wildcards then
         if AKYRS.example_words[length-2] then
             G.GAME.aiko_current_word = string.lower(AKYRS.example_words[length-2])
+            return { hand }, { valid = true, word = string.lower(AKYRS.example_words[length-2]) }
+        else
+            return {}, {}
         end
-        return { hand }, { valid = true, word = string.lower(AKYRS.example_words[length-2]) }
     end
     local wordData = {}
     --print("CHECK TIME! FOR '"..word_hand_str.."' IS THE WORD")
