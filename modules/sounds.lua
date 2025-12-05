@@ -81,3 +81,10 @@ function play_sound(snd, per, vol)
     end
     return plsnd(snd, per, vol)
 end
+
+
+SMODS.Sound({
+    key = "layer_aikoyori",
+    path = "layer_aikoyori.ogg",
+    pitch = 1,
+})

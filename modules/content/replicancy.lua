@@ -233,53 +233,6 @@ SMODS.Consumable{
 }
 
 SMODS.Consumable{
-    key = "replicant_smart_home",
-    set = "Replicant",
-    atlas = "replicant",
-    pos = {x=5, y=0},
-    config = {
-        extras = 3,
-        min_highlighted = 0,
-        max_highlighted = 99999,
-    },
-    loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = { key = "akyrs_attention", set = "Other" }
-        if not G.hand then return {
-            vars = {
-                "???", "???"
-            }
-        } end
-        local h = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
-        return {
-            vars = {
-                card.ability.extras,
-                localize(h, "poker_hands") ~= "ERROR" and localize(h, "poker_hands") or "???", 
-            }
-        }
-    end,
-    can_use = function (self, card)
-        return #G.hand.highlighted > 0 or AKYRS.is_mod_loaded("Cryptid")
-    end,
-    use = function (self, card, area, copier)
-        AKYRS.simple_event_add(function ()
-            if #G.hand.highlighted > 0 or AKYRS.is_mod_loaded("Cryptid") then
-                table.sort(G.hand.highlighted or {},AKYRS.hand_sort_function_immute)
-                AKYRS.juice_like_tarot(card)
-                local h = G.FUNCS.get_poker_hand_info(G.hand.highlighted)
-                SMODS.smart_level_up_hand(card, h, false, card.ability.extras)
-                AKYRS.do_things_to_card(G.hand.highlighted,
-                    function (cx)
-                        SMODS.Stickers.akyrs_attention:apply(cx, true)
-                    end
-                )
-            end
-            return true 
-        end, 0)
-    end
-}
-
-
-SMODS.Consumable{
     key = "replicant_music_streaming",
     set = "Replicant",
     atlas = "replicant",

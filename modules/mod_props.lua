@@ -357,6 +357,13 @@ SMODS.current_mod.extra_tabs = function ()
                 },
                 {
                   n = G.UIT.R,
+                  nodes = {
+                    { n = G.UIT.C, nodes = {{ n = G.UIT.T, config = { text = "lily.felli", scale = 0.3, colour = G.C.WHITE } }}, },
+                    { n = G.UIT.C, nodes = {{ n = G.UIT.T, config = { text = localize("k_akyrs_please_dont_kill_me"), scale = 0.2, colour = G.C.GREY } }}, },
+                  }
+                },
+                {
+                  n = G.UIT.R,
                   config = {},
                   nodes = {
                     { n = G.UIT.T, config = { text = localize("k_akyrs_sharetest_cred_1"), scale = 0.3, colour = G.C.WHITE } },

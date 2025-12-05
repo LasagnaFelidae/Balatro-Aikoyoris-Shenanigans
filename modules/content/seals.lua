@@ -55,7 +55,7 @@ SMODS.Seal{
     sound = { sound = 'generic1', per = 1.2, vol = 0.4 },
 
     calculate = function(self, card, context)
-        if context.main_scoring and G.jokers and G.jokers.cards then
+        if context.main_scoring and G.jokers and G.jokers.cards and context.area == G.play then
             local copyable = AKYRS.filter_table(G.jokers.cards, function (item)
                 return item.config.center and item.config.center.blueprint_compat
             end, true, true)

@@ -697,6 +697,12 @@ return {
                     "Create a {C:dark_edition}Negative{} {C:sgt_divinatio}Divinatio{}",
                 },
             },
+            dd_akyrs_qualatro_ability={
+                name="Qualatro Ability",
+                text={
+                    "{C:attention}Rip{} gains 1 {C:attention}Quality",
+                },
+            },
             dd_akyrs_mukuroju_en = {
                 name = "Mukuroju no Hakamori",
                 text = { 
@@ -3486,7 +3492,7 @@ return {
             ach_akyrs_happy_ghast_grown = "Grow a Happy Ghast from its dried form",
             ach_akyrs_both_pickaxe = "Get both pickaxes!",
             ach_akyrs_win_klondike = "Win the Klondike!",
-            ach_akyrs_spell_very_long_word = "Spell a valid very long words (25+ letters)",
+            ach_akyrs_spell_very_long_word = "Spell a valid very long words (25+ letters) (Full Dictionary Required)",
             ach_akyrs_spell_long_word = "Spell a valid long words (12+ letters)",
             ach_akyrs_we_no_speak_americano = "Win a run of Letter Deck without spelling a single word",
             ach_akyrs_resist_the_temptation = "Win a run of Freedom Deck without the freedom part",
@@ -3569,6 +3575,7 @@ return {
             k_akyrs_drmonty_help = "for helping with balancing",
             k_akyrs_special_thanks = "Special Thanks",
             k_akyrs_cross_mods_creds = "Cross-Mod Art Credits",
+            k_akyrs_please_dont_kill_me = "pleasedontkillmepleasedontkillmepleasedontkillme",
             k_akyrs_sharetest_cred_1 = "everyone who played, helped test, shared",
             k_akyrs_sharetest_cred_2 = "and made content about the mod",
             k_akyrs_thanks_you_for_playing = "and you!",

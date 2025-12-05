@@ -222,6 +222,9 @@ SMODS.Joker {
         if AKYRS.is_mod_loaded("Sagatro") then
             info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_sagatro_ability"}
         end
+        if AKYRS.is_mod_loaded("Qualatro") then
+            info_queue[#info_queue+1] = {set = "DescriptionDummy", key = "dd_akyrs_qualatro_ability"}
+        end
         return {
         }
     end,
