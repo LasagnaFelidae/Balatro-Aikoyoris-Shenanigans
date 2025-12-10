@@ -58,6 +58,7 @@ SMODS.Edition{
     end,
     loc_vars = function (self, info_queue, card)
         return {
+            key = self.key .. AKYRS.edition_loc_center_key_getter(card),
             vars = {
                 self.config.card_limit,
                 self.config.extra.x_mult,

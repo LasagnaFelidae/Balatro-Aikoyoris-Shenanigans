@@ -1890,6 +1890,7 @@ SMODS.Joker{
                     _c:flip()
                     delay(1)
                     AKYRS.simple_event_add(function ()
+                        unlock_achievement("ach_akyrs_average_daily_scrandle")
                         _c:set_ability(G.P_CENTERS.j_popcorn)
                         _c:flip()
                         return true
@@ -2093,6 +2094,16 @@ SMODS.Joker{
     },
     add_to_deck = function (self, card, from_debuff)
         G.GAME.akyrs_has_capability_to_trade = true
+        AKYRS.simple_event_add(function ()
+            local emerald_list = AKYRS.filter_table(G.jokers.cards, function (cd, ind)
+                return cd.config.center.key == self.key
+            end, true, true)
+            print(#emerald_list, G.jokers.config.card_limit, #emerald_list == G.jokers.config.card_limit)
+            if #emerald_list == G.jokers.config.card_limit then
+                check_for_unlock({ type = "full_emerald_in_slot" })
+            end
+            return true
+        end, 0, "akyrs_desc")
     end,
     loc_vars = function (self, info_queue, card)
         if AKYRS.bal("absurd") then
@@ -3581,7 +3592,7 @@ SMODS.Joker {
         }
     end,
     rarity = 4,
-    cost = 5,
+    cost = 30,
     config = {
         extra = 1
     },

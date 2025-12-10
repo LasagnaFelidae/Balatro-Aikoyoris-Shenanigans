@@ -2,7 +2,7 @@
 
 AKYRS.replenishLetters = function()
     if (G.GAME and G.GAME.letters_to_give) then
-        for _, k in ipairs(aiko_alphabets_no_wilds) do
+        for _, k in ipairs(G.GAME.akyrs_mathematics_enabled and AKYRS.math_deck_characters or aiko_alphabets_no_wilds ) do
             table.insert(G.GAME.letters_to_give, k)
         end
     end

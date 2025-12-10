@@ -956,3 +956,110 @@ end
 function AKYRS.should_show_card_previews()
     return AKYRS.config.show_joker_preview and not G.DENY_DYNAMIC_TEXT -- mainly for slay the jokers
 end
+function AKYRS.edition_loc_center_key_getter(card)
+    -- noire has card limit shemamigans sooooo
+    if card.area then
+        if card.area == G.jokers then
+            return "_joker"
+        end
+        if card.area == G.consumeables then
+            return "_joker"
+        end
+        if card.area == G.hand or card.area == G.play then
+            return "_hand"
+        end
+    end
+    if card.ability or card.config.center then
+        local ct = (card.ability or card.config.center or {})
+        local set = ct.set 
+        
+        if set == "Joker" then
+            return "_joker"
+        end
+        if ct.consumeable then
+            return "_consumable"
+        end
+        if set == "Default" or set == "Enhanced" then
+            return "_hand"
+        end
+    end
+    return ""
+end
+
+function AKYRS.blocking_unlock_achievement(achievement_name)
+    if G.PROFILES[G.SETTINGS.profile].all_unlocked and (G.ACHIEVEMENTS and G.ACHIEVEMENTS[achievement_name] and not G.ACHIEVEMENTS[achievement_name].bypass_all_unlocked and SMODS.config.achievements < 3) or (SMODS.config.achievements < 3 and (G.GAME.seeded or G.GAME.challenge)) then return true end
+    G.E_MANAGER:add_event(Event({
+        no_delete = true,
+        blockable = true,
+        blocking = true,
+        func = function()
+            if G.STATE ~= G.STATES.HAND_PLAYED then 
+                if G.PROFILES[G.SETTINGS.profile].all_unlocked and (G.ACHIEVEMENTS and G.ACHIEVEMENTS[achievement_name] and not G.ACHIEVEMENTS[achievement_name].bypass_all_unlocked and SMODS.config.achievements < 3) or (SMODS.config.achievements < 3 and (G.GAME.seeded or G.GAME.challenge)) then return true end
+                local achievement_set = false
+                if not G.ACHIEVEMENTS then fetch_achievements() end
+                G.SETTINGS.ACHIEVEMENTS_EARNED[achievement_name] = true
+                G:save_progress()
+                
+                if G.ACHIEVEMENTS[achievement_name] and G.ACHIEVEMENTS[achievement_name].mod then 
+                    if not G.ACHIEVEMENTS[achievement_name].earned then
+                        --|THIS IS THE FIRST TIME THIS ACHIEVEMENT HAS BEEN EARNED
+                        achievement_set = true
+                        G.FILE_HANDLER.force = true
+                    end
+                    G.ACHIEVEMENTS[achievement_name].earned = true
+                end
+                
+                if achievement_set then 
+                    notify_alert(achievement_name)
+                    return true
+                end
+                if G.F_NO_ACHIEVEMENTS and not (G.ACHIEVEMENTS[achievement_name] or {}).mod then return true end
+
+                --|LOCAL SETTINGS FILE
+                --|-------------------------------------------------------
+                if not G.ACHIEVEMENTS then fetch_achievements() end
+
+                G.SETTINGS.ACHIEVEMENTS_EARNED[achievement_name] = true
+                G:save_progress()
+                if G.ACHIEVEMENTS[achievement_name] and not G.STEAM then 
+                    if not G.ACHIEVEMENTS[achievement_name].earned then
+                        --|THIS IS THE FIRST TIME THIS ACHIEVEMENT HAS BEEN EARNED
+                        achievement_set = true
+                        G.FILE_HANDLER.force = true
+                    end
+                    G.ACHIEVEMENTS[achievement_name].earned = true
+                end
+                --|-------------------------------------------------------
+
+
+                --|STEAM ACHIEVEMENTS
+                --|-------------------------------------------------------
+                if G.STEAM then 
+                    if G.ACHIEVEMENTS[achievement_name] then 
+                        if not G.ACHIEVEMENTS[achievement_name].earned then
+                            --|THIS IS THE FIRST TIME THIS ACHIEVEMENT HAS BEEN EARNED
+                            achievement_set = true
+                            G.FILE_HANDLER.force = true
+                            local achievement_code = G.ACHIEVEMENTS[achievement_name].steamid
+                            local success, achieved = G.STEAM.userStats.getAchievement(achievement_code)
+                            if not success or not achieved then
+                                G.STEAM.send_control.update_queued = true
+                                G.STEAM.userStats.setAchievement(achievement_code)
+                            end
+                        end
+                        G.ACHIEVEMENTS[achievement_name].earned = true
+                    end
+                end
+                --|-------------------------------------------------------
+
+                --|Other platforms
+                --|-------------------------------------------------------
+
+                --|-------------------------------------------------------
+
+                if achievement_set then notify_alert(achievement_name) end
+                return true
+            end
+        end
+        }), 'achievement')
+end

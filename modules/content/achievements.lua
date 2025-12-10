@@ -104,3 +104,32 @@ SMODS.Achievement{
         end
     end
 }
+
+SMODS.Achievement{
+    key = "thatll_be_5_wheat",
+    bypass_all_unlocked = true,
+    unlock_condition = function (self, args)
+        if args and (args.type == "full_emerald_in_slot") then
+            return true
+        end
+    end
+}
+
+SMODS.Achievement{
+    key = "div_0_math",
+    bypass_all_unlocked = true,
+    hidden_name = false,
+    hidden_text = true,
+    unlock_condition = function (self, args)
+        if args and (args.type == "akyrs_division_by_zero") then
+            return true
+        end
+    end
+}
+
+SMODS.Achievement{
+    key = "average_daily_scrandle",
+    bypass_all_unlocked = true,
+    unlock_condition = function (self, args)
+    end
+}

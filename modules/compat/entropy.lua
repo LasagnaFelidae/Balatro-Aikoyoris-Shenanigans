@@ -2,6 +2,9 @@ if Entropy then
     local derivative_part_func = SMODS.PokerHandParts.entr_derivative_part.func
     SMODS.PokerHandPart:take_ownership("entr_derivative_part",{
         func = function (hand)
+            local cards = AKYRS.filter_table(hand, function (item, key)
+                return not card.is_null
+            end, true, true)
             if AKYRS.should_calculate_word() then
                 local normal_calculate = false
                 local s = AKYRS.word_hand_combine(hand)
@@ -16,7 +19,9 @@ if Entropy then
                     return {}
                 end
             end
-            return derivative_part_func(hand)
+            if #cards == 0 then
+                return derivative_part_func(hand)
+            end
         end
     } )
 end

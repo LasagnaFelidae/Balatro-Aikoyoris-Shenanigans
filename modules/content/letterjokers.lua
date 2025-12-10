@@ -299,7 +299,6 @@ AKYRS.LetterJoker {
     pos = { x = 4, y = 6 },
     pools = { ["Letter"] = true, ["Meme"] = true },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = AKYRS.DescriptionDummies["dd_akyrs_credit_gud"]
         return {
             vars = {
                 card.ability.extras.mult

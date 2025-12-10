@@ -266,7 +266,7 @@ AKYRS.base_cm_mod = function(hand,poker_info,b_chip,b_mult,already_ran)
         local hand_name = localize{ type = "variable", key = "k_akyrs_pure", vars = {poker_info[2]}}
         mult = mod_mult(final_mult)
         hand_chips = mod_chips(final_chips)
-        update_hand_text({immediate = true, delay = 0 }, {handname=hand_name, chips = hand_chips, mult = mult})
+        update_hand_text({delay = 0, immediate = true}, {handname= not already_ran and hand_name, chips = hand_chips, mult = mult})
         return true
     end
 end

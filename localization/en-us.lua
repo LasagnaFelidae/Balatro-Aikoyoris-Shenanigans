@@ -891,10 +891,31 @@ return {
                     "{C:white,X:mult}X#2#{} Mult"
                 }
             },
+            e_akyrs_noire_joker = {
+                name = "Noire",
+                text = {
+                    "{C:dark_edition}+#1#{} Joker Slots",
+                    "{C:white,X:mult}X#2#{} Mult"
+                }
+            },
+            e_akyrs_noire_consumable = {
+                name = "Noire",
+                text = {
+                    "{C:dark_edition}+#1#{} Consumable Slots",
+                    "{C:white,X:mult}X#2#{} Mult"
+                }
+            },
+            e_akyrs_noire_hand = {
+                name = "Noire",
+                text = {
+                    "{C:dark_edition}+#1#{} Hand Size",
+                    "{C:white,X:mult}X#2#{} Mult"
+                }
+            },
             e_akyrs_noire = {
                 name = "Noire",
                 text = {
-                    "{C:dark_edition}+#1#{} Card Limit",
+                    "{C:dark_edition}+#1#{} Maximum Slot Size",
                     "{C:white,X:mult}X#2#{} Mult"
                 }
             },
@@ -3485,6 +3506,10 @@ return {
             ach_akyrs_spell_long_word = "Long Live The New Fresh",
             ach_akyrs_we_no_speak_americano = "We No Speak Americano",
             ach_akyrs_resist_the_temptation = "Resist the Temptation",
+            ach_akyrs_thatll_be_5_wheat = "That'll be 5 Wheat, please",
+            ach_akyrs_literally_cryptid = "Literally Cryptid",
+            ach_akyrs_div_0_math = "#ERR# ach_akyrs_div_0_math not found",
+            ach_akyrs_average_daily_scrandle = "Average Daily Scrandle",
         },
         achievement_descriptions={
             ach_akyrs_spell_aikoyori = "Spell Aikoyori",
@@ -3496,6 +3521,10 @@ return {
             ach_akyrs_spell_long_word = "Spell a valid long words (12+ letters)",
             ach_akyrs_we_no_speak_americano = "Win a run of Letter Deck without spelling a single word",
             ach_akyrs_resist_the_temptation = "Win a run of Freedom Deck without the freedom part",
+            ach_akyrs_thatll_be_5_wheat = "Fill your Joker slots with Emeralds",
+            ach_akyrs_literally_cryptid = "Use Public Transport on cards with no ranks",
+            ach_akyrs_div_0_math = "What did you think was going to happen?",
+            ach_akyrs_average_daily_scrandle = "Turn a Food Joker into a Popcorn",
         },
         blind_states={},
         akyrs_balancing_wizard = {

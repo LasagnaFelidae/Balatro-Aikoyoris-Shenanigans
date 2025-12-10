@@ -755,6 +755,8 @@ G.FUNCS.evaluate_play = function(e)
         end
     end
     if G.GAME.aikoyori_evaluation_value ~= G.GAME.aikoyori_evaluation_value then
+        AKYRS.blocking_unlock_achievement("ach_akyrs_div_0_math")
+        AKYRS.simple_event_add(function ()
         error([[Galaxy Collapse!
 
 
@@ -811,6 +813,8 @@ Obviously this is not a real crash LMAO don't bother reporting.
 
 
         ]],4)
+        return true
+        end, 0,"achievement")
         return {}
     end
     if G.GAME.aikoyori_evaluation_value and G.GAME.akyrs_mathematics_enabled and G.GAME.akyrs_character_stickers_enabled then

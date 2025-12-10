@@ -116,13 +116,66 @@ payload = """end"""
 overwrite = true
 match_indent = true
 
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = """        mult, hand_chips = mod_mult(mult), mod_chips(hand_chips)"""
+position = "before"
+payload = """local akyrs_no_default_update = AKYRS.base_cm_mod(G.play.cards, {text,disp_text,poker_hands,scoring_hand,non_loc_disp_text}, hand_chips, mult, already_ran)"""
+overwrite = true
+match_indent = true
+
+
+
 
 [[patches]]
 [patches.pattern]
 target = "functions/state_events.lua"
-pattern = """        hand_chips = mod_chips(G.GAME.hands[text].chips)"""
+pattern = """    if G.GAME.current_round.current_hand.handname ~= disp_text then delay(0.3) end"""
+position = "before"
+payload = """local akyrs_no_default_update = AKYRS.base_cm_mod(G.play.cards, {text,disp_text,poker_hands,scoring_hand,non_loc_disp_text}, hand_chips, mult, already_ran)"""
+overwrite = true
+match_indent = true
+
+
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = """    update_hand_text({sound = G.GAME.current_round.current_hand.handname ~= disp_text and 'button' or nil, volume = 0.4, immediate = true, nopulse = nil,"""
+position = "before"
+payload = """if not akyrs_no_default_update then"""
+overwrite = true
+match_indent = true
+
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = """    SMODS.displayed_hand = text; SMODS.displaying_scoring = true"""
+position = "before"
+payload = """end"""
+overwrite = true
+match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = """        if modded then update_hand_text({sound = 'chips2', modded = modded}, {chips = hand_chips, mult = mult}) end"""
+position = "before"
+payload = """if not akyrs_no_default_update then"""
+overwrite = true
+match_indent = true
+
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = """        if modded then update_hand_text({sound = 'chips2', modded = modded}, {chips = hand_chips, mult = mult}) end"""
 position = "after"
-payload = """AKYRS.base_cm_mod(G.play.cards, {text,disp_text,poker_hands,scoring_hand,non_loc_disp_text}, hand_chips, mult, already_ran)"""
+payload = """end"""
 overwrite = true
 match_indent = true
 
