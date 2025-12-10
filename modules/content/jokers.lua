@@ -518,7 +518,7 @@ SMODS.Joker {
     generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
         SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
         
-        if AKYRS.config.show_joker_preview then
+        if AKYRS.should_show_card_previews() then
             local cards = {}
             for i = 1,5 do
                 local carder = AKYRS.create_random_card("netheritepick")

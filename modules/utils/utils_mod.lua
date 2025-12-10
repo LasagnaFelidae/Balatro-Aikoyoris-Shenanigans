@@ -952,3 +952,7 @@ function AKYRS.end_round_event()
         return true
     end, 0)
 end
+
+function AKYRS.should_show_card_previews()
+    return AKYRS.config.show_joker_preview and not G.DENY_DYNAMIC_TEXT -- mainly for slay the jokers
+end

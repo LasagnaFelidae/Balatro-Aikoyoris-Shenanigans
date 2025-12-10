@@ -44,6 +44,56 @@ AKYRS.example_words = {
     "############################################",
     "pneumonoultramicroscopicsilicovolcanoconiosis",
 }
+
+AKYRS.aiko_word_hand_values = {
+    -- starts at 3
+    { chips = 2.5, mult = 25, upgrade_chips = 1, upgrade_mult = 10 }, -- 3 letter
+    { chips = 3, mult = 35, upgrade_chips = 1.5, upgrade_mult = 15 }, -- 4 letter
+    { chips = 3.5, mult = 45, upgrade_chips = 3, upgrade_mult = 20 }, -- 5 letter
+    { chips = 4.5, mult = 65, upgrade_chips = 4, upgrade_mult = 25 }, -- 6 le- you get the point im not doing this
+    { chips = 5.5, mult = 80, upgrade_chips = 6, upgrade_mult = 35 }, -- 7, tho i have to go up to like 45 because the table above lol
+    { chips = 7, mult = 95, upgrade_chips = 7, upgrade_mult = 45 },
+    { chips = 8, mult = 125, upgrade_chips = 9, upgrade_mult = 55 },
+    { chips = 10, mult = 140, upgrade_chips = 11, upgrade_mult = 70 },
+    { chips = 12, mult = 160, upgrade_chips = 13, upgrade_mult = 80 },
+    { chips = 14, mult = 185, upgrade_chips = 15, upgrade_mult = 95 },
+    { chips = 16, mult = 200, upgrade_chips = 17, upgrade_mult = 110 },
+    { chips = 19, mult = 230, upgrade_chips = 20, upgrade_mult = 130 },
+    { chips = 22, mult = 260, upgrade_chips = 23, upgrade_mult = 150 },
+    { chips = 25, mult = 300, upgrade_chips = 26, upgrade_mult = 175 },
+    { chips = 50, mult = 500, upgrade_chips = 40, upgrade_mult = 300 },
+    { chips = 55, mult = 550, upgrade_chips = 45, upgrade_mult = 325 },
+    { chips = 60, mult = 600, upgrade_chips = 50, upgrade_mult = 350 },
+    { chips = 65, mult = 675, upgrade_chips = 55, upgrade_mult = 375 },
+    { chips = 70, mult = 750, upgrade_chips = 60, upgrade_mult = 400 },
+    { chips = 150, mult = 1500, upgrade_chips = 100, upgrade_mult = 800 },
+    { chips = 165, mult = 1650, upgrade_chips = 110, upgrade_mult = 900 },
+    { chips = 180, mult = 1800, upgrade_chips = 120, upgrade_mult = 1000 },
+    { chips = 200, mult = 2000, upgrade_chips = 135, upgrade_mult = 1100 },
+    { chips = 220, mult = 2250, upgrade_chips = 150, upgrade_mult = 1200 },
+    { chips = 400, mult = 4000, upgrade_chips = 300, upgrade_mult = 2500 },
+    { chips = 450, mult = 4500, upgrade_chips = 325, upgrade_mult = 2750 },
+    { chips = 500, mult = 5000, upgrade_chips = 350, upgrade_mult = 3000 },
+    { chips = 575, mult = 6000, upgrade_chips = 400, upgrade_mult = 3500 },
+    { chips = 650, mult = 7000, upgrade_chips = 450, upgrade_mult = 4000 },
+    { chips = 1200, mult = 12000, upgrade_chips = 800, upgrade_mult = 7500 },
+    { chips = 1350, mult = 13500, upgrade_chips = 900, upgrade_mult = 8500 },
+    { chips = 1500, mult = 15000, upgrade_chips = 1000, upgrade_mult = 9500 },
+    { chips = 1750, mult = 17500, upgrade_chips = 1200, upgrade_mult = 11000 },
+    { chips = 2000, mult = 20000, upgrade_chips = 1400, upgrade_mult = 12500 },
+    { chips = 4000, mult = 50000, upgrade_chips = 3000, upgrade_mult = 30000 },
+    { chips = 4500, mult = 55000, upgrade_chips = 3500, upgrade_mult = 35000 },
+    { chips = 5000, mult = 60000, upgrade_chips = 4000, upgrade_mult = 40000 },
+    { chips = 6000, mult = 70000, upgrade_chips = 4500, upgrade_mult = 45000 },
+    { chips = 7000, mult = 80000, upgrade_chips = 5000, upgrade_mult = 55000 },
+    { chips = 15000, mult = 200000, upgrade_chips = 10000, upgrade_mult = 120000 },
+    { chips = 17500, mult = 225000, upgrade_chips = 12000, upgrade_mult = 140000 },
+    { chips = 20000, mult = 250000, upgrade_chips = 14000, upgrade_mult = 160000 },
+    { chips = 25000, mult = 300000, upgrade_chips = 18000, upgrade_mult = 200000 },
+    { chips = 30000, mult = 350000, upgrade_chips = 22000, upgrade_mult = 250000 },
+    { chips = 75000, mult = 1000000, upgrade_chips = 50000, upgrade_mult = 600000 },
+}
+
 local function replace_char(pos, str, r)
     return str:sub(1, pos-1) .. r .. str:sub(pos+1)
 end
@@ -167,6 +217,7 @@ end
 
 AKYRS.words_hand = {}
 for i = 3, 45 do
+    local hv = AKYRS.aiko_word_hand_values[i-1]
     local exampler = {}
     for j = 1, #AKYRS.example_words[i-2] do
         local c = AKYRS.example_words[i-2]:sub(j,j)
@@ -191,10 +242,10 @@ for i = 3, 45 do
             --print(hand_return)
             return hand_return
         end,
-        chips = 3 * i + (i-1.8) ^ (1 + i * 0.25),
-        mult = 2*1.5^i + 3,
-        l_chips = 5*1.5^i + 3,
-        l_mult = 2*1.45^i + 3,
+        chips = hv.chips,
+        mult = hv.mult,
+        l_chips = hv.upgrade_chips,
+        l_mult = hv.upgrade_mult,
     }
 end
 

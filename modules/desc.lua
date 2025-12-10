@@ -1,23 +1,23 @@
 AKYRS.DescriptionDummy{
     key = "maxwell_example",
     generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-        local cards = {}
-        table.insert(cards, AKYRS.create_random_card("maxwellui") )
-        table.insert(cards, AKYRS.create_random_card("maxwellui") )
-        table.insert(cards, AKYRS.create_random_card("maxwellui") )
-        table.insert(cards, AKYRS.create_random_card("maxwellui") )
-        table.insert(cards, AKYRS.create_random_card("maxwellui") )
-        table.insert(cards, AKYRS.create_random_card("maxwellui") )
-        table.insert(cards, AKYRS.create_random_card("maxwellui") )
-        table.insert(cards, AKYRS.create_random_card("maxwellui") )
-        local letters = {'s','p','e','c','t','r','a','l'}
-        for index, value in ipairs(cards) do
-            value.ability.forced_letter_render = true
-            value.is_null = true
-            value:set_letters(letters[index])
-        end
         SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-        if desc_nodes ~= full_UI_table.main then
+        if desc_nodes ~= full_UI_table.main and AKYRS.should_show_card_previews() then
+            local cards = {}
+            table.insert(cards, AKYRS.create_random_card("maxwellui") )
+            table.insert(cards, AKYRS.create_random_card("maxwellui") )
+            table.insert(cards, AKYRS.create_random_card("maxwellui") )
+            table.insert(cards, AKYRS.create_random_card("maxwellui") )
+            table.insert(cards, AKYRS.create_random_card("maxwellui") )
+            table.insert(cards, AKYRS.create_random_card("maxwellui") )
+            table.insert(cards, AKYRS.create_random_card("maxwellui") )
+            table.insert(cards, AKYRS.create_random_card("maxwellui") )
+            local letters = {'s','p','e','c','t','r','a','l'}
+            for index, value in ipairs(cards) do
+                value.ability.forced_letter_render = true
+                value.is_null = true
+                value:set_letters(letters[index])
+            end
             AKYRS.card_area_preview(G.akyrsCardsPrev, desc_nodes, {
                 cards = cards,
                 override = true,
@@ -73,43 +73,45 @@ AKYRS.DescriptionDummy{
 AKYRS.DescriptionDummy{
     key = "yona_yona_ex",
     generate_ui = function(self, info_queue, cardd, desc_nodes, specific_vars, full_UI_table)
-        local cards = {}
-        local card = AKYRS.create_random_card("yona")
-        card:set_base(G.P_CARDS["S_4"], true)
-        table.insert(cards,card)
-        local card = AKYRS.create_random_card("yona")
-        card:set_base(G.P_CARDS["C_7"], true)
-        table.insert(cards,card)
         SMODS.Joker.super.generate_ui(self, info_queue, cardd, desc_nodes, specific_vars, full_UI_table)
-        AKYRS.card_area_preview(G.yonacards,desc_nodes,{
-            override = true,
-            cards = cards,
-            w = 1.2,
-            h = 0.6,
-            ml = 0,
-            scale = 0.5,
-            func_delay = 0.5,
-            func_list = {
-                function (ca) if ca and ca.cards then ca.cards[1]:juice_up() end end,
-                function (ca) if ca and ca.cards then ca.cards[1]:juice_up() end end,
-                function (ca) if ca and ca.cards then ca.cards[2]:juice_up() end end,
-                function (ca) if ca and ca.cards then ca.cards[2]:juice_up() end end,
-            }
-        })
+        if AKYRS.should_show_card_previews() then
+            local cards = {}
+            local card = AKYRS.create_random_card("yona")
+            card:set_base(G.P_CARDS["S_4"], true)
+            table.insert(cards,card)
+            local card = AKYRS.create_random_card("yona")
+            card:set_base(G.P_CARDS["C_7"], true)
+            table.insert(cards,card)
+            AKYRS.card_area_preview(G.yonacards,desc_nodes,{
+                override = true,
+                cards = cards,
+                w = 1.2,
+                h = 0.6,
+                ml = 0,
+                scale = 0.5,
+                func_delay = 0.5,
+                func_list = {
+                    function (ca) if ca and ca.cards then ca.cards[1]:juice_up() end end,
+                    function (ca) if ca and ca.cards then ca.cards[1]:juice_up() end end,
+                    function (ca) if ca and ca.cards then ca.cards[2]:juice_up() end end,
+                    function (ca) if ca and ca.cards then ca.cards[2]:juice_up() end end,
+                }
+            })
+        end
     end,
 }
 
 AKYRS.DescriptionDummy{
     key = "2fa_example",
     generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-        local cards = {}
-        table.insert(cards, AKYRS.create_random_card("2faui") )
-        table.insert(cards, AKYRS.create_random_card("2faui") )
-        table.insert(cards, AKYRS.create_random_card("2faui") )
-        table.insert(cards, AKYRS.create_random_card("2faui") )
-        table.insert(cards, AKYRS.create_random_card("2faui") )
         SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-        if desc_nodes ~= full_UI_table.main then
+        if desc_nodes ~= full_UI_table.main and AKYRS.should_show_card_previews() then
+            local cards = {}
+            table.insert(cards, AKYRS.create_random_card("2faui") )
+            table.insert(cards, AKYRS.create_random_card("2faui") )
+            table.insert(cards, AKYRS.create_random_card("2faui") )
+            table.insert(cards, AKYRS.create_random_card("2faui") )
+            table.insert(cards, AKYRS.create_random_card("2faui") )
             AKYRS.card_area_preview(G.akyrsCardsPrev2fa, desc_nodes, {
                 cards = cards,
                 override = true,
@@ -177,7 +179,7 @@ AKYRS.DescriptionDummy{
                         },"akyrs_desc")
                     end
                 end,
-            })            
+            })
         end
 
     end,
@@ -301,12 +303,12 @@ AKYRS.DescriptionDummy{
     key = "break_up_tip",
     loc_vars=function (self, info_queue, card)
         return {
-            key = AKYRS.config.show_joker_preview and self.key or self.key.."_no_preview"
+            key = AKYRS.should_show_card_previews() and self.key or self.key.."_no_preview"
         }
     end,
     generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
         SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-        if AKYRS.config.show_joker_preview then
+        if AKYRS.should_show_card_previews() then
             local cards = {
             }
             for i = 1,5 do
@@ -331,7 +333,7 @@ AKYRS.DescriptionDummy{
     key = "letter_puzzle_umbral_expl",
     generate_ui = function(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
         SMODS.Center.generate_ui(self, info_queue, card, desc_nodes, specific_vars, full_UI_table)
-        if AKYRS.config.show_joker_preview then
+        if AKYRS.should_show_card_previews() then
             local cards = {
             }
             for i = 1,2 do
