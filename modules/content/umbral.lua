@@ -313,10 +313,11 @@ SMODS.Consumable{
         for _,_c in ipairs(G.hand.highlighted) do
             for i = 1, card.ability.akyrs_create do
                 local c2 = AKYRS.copy_p_card(_c, nil, nil, G.playing_card)
+                if SMODS.has_no_rank(c2) then
+                    unlock_achievement("ach_akyrs_literally_cryptid")
+                end
                 if not c2.is_null then
                     c2 = SMODS.modify_rank(c2, ud*i)
-                else
-                    unlock_achievement("ach_akyrs_literally_cryptid")
                 end
                 SMODS.calculate_context({ playing_card_added = true, cards = { c2 } })
                 if c2 then c2:juice_up(0.3,0.3) end
