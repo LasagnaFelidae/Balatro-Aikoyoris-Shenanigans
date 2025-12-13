@@ -20,7 +20,7 @@ SMODS.Back{
         akyrs_start_with_no_cards = true,
         akyrs_letters_mult_enabled = true,
         akyrs_hide_normal_hands = true,
-        ante_scaling = 1.25,
+        ante_scaling = 2,
         hand_size = 2,
         vouchers = {'v_akyrs_alphabet_soup','v_akyrs_crossing_field'}
     },

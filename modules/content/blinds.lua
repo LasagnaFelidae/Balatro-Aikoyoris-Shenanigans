@@ -574,23 +574,21 @@ AKYRS.picker_initial_action = function()
         trigger = "before",
         func = function ()
             G.hand:unhighlight_all()
+            local cards_to_pick = AKYRS.pseudorandom_elements(G.hand.cards,G.hand.config.highlighted_limit, "akyrpickerseed")
+            table.sort(cards_to_pick, AKYRS.hand_sort_function)
             
             G.E_MANAGER:add_event(Event({
                 trigger = "after",
                 delay = 0.2,
                 func = function ()
                     local i=1
-                    while i <= G.hand.config.highlighted_limit do
-                        if i > #G.hand.cards then
-                            break
-                        end
-                        ---@type Card
-                        local card = pseudorandom_element(G.hand.cards,pseudoseed("akyrpickerseed"))
-                        if card and not card.highlighted then
-                            card:highlight(true)
-                            G.hand:add_to_highlighted(card)
-                            i = i + 1
-                        end
+                    ---@type table
+                    for i,v in ipairs(cards_to_pick) do                        
+                        AKYRS.simple_event_add(function ()
+                            v:highlight(true)
+                            G.hand:add_to_highlighted(v)
+                            return true
+                        end)
                     end
                     
                     G.E_MANAGER:add_event(Event({

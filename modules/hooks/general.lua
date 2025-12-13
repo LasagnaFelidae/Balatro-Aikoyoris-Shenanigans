@@ -260,6 +260,11 @@ function AKYRS.expensive_calculation()
             G.GAME.blind.debuff.akyrs_scoring_set = true
         end
     end
+    if G.STATE == G.STATES.BLIND_SELECT then
+        if G.GAME.blind and G.GAME.blind.debuff and G.GAME.blind.debuff.initial_action_acted then
+            G.GAME.blind.debuff.initial_action_acted = nil
+        end
+    end
     if G.STATE == G.STATES.SELECTING_HAND then
         
         if AKYRS.should_calculate_word() and G.GAME.blind.debuff.akyrs_is_puzzle_blind then
@@ -273,7 +278,6 @@ function AKYRS.expensive_calculation()
             G.GAME.blind.debuff.initial_action_acted = false
             G.GAME.blind.debuff.initial_action_act_set = true
         end
-
         if  G.GAME.blind.debuff.akyrs_pick_cards and not G.GAME.blind.disabled then
             if AKYRS.picker_initial_action and not G.GAME.blind.debuff.initial_action_acted then
                 AKYRS.picker_initial_action()
