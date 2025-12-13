@@ -154,8 +154,8 @@ match_indent = true
 [[patches]]
 [patches.pattern]
 target = "functions/state_events.lua"
-pattern = """    SMODS.displayed_hand = text; SMODS.displaying_scoring = true"""
-position = "before"
+pattern = """                delay = G.GAME.current_round.current_hand.handname ~= disp_text and 0.4 or 0}, {handname=disp_text, level=G.GAME.hands[text].level, mult = G.GAME.hands[text].mult, chips = G.GAME.hands[text].chips})"""
+position = "after"
 payload = """end"""
 overwrite = true
 match_indent = true
