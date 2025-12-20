@@ -285,6 +285,20 @@ function Card:akyrs_get_perma_h_score()
     -- TARGET: akyrs_get_perma_h_score
     return ret
 end
+function Card:akyrs_get_perma_xscore()
+    
+    if self.debuff then return 1 end
+    local ret = (self.ability.akyrs_perma_xscore or 1)
+    -- TARGET: akyrs_get_perma_xscore
+    return ret
+end
+function Card:akyrs_get_perma_h_xscore()
+    
+    if self.debuff then return 1 end
+    local ret = (self.ability.akyrs_perma_h_xscore or 1)
+    -- TARGET: akyrs_get_perma_h_xscore
+    return ret
+end
 
 local smods_eternal = SMODS.is_eternal
 function SMODS.is_eternal(card,trigger)

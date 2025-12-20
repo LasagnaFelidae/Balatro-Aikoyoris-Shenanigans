@@ -127,6 +127,17 @@ SMODS.PokerHand:take_ownership("High Card",{
     end
 })
 
+-- if not G.GAME.akyrs_win_checked then
+--     AKYRS.simple_event_add(
+--         function ()
+--             if not G.GAME.akyrs_win_checked and not AKYRS.is_mod_loaded("NotJustYet") then
+--                 AKYRS.force_check_win({ force_draw = true})
+--             end
+--             return true
+--         end, 0
+--     )
+-- end
+
 local calc_indiv_fx = SMODS.calculate_individual_effect
 SMODS.calculate_individual_effect = function(effect, scored_card, key, amount, from_edition)
     local aaa = {calc_indiv_fx(effect, scored_card, key, amount, from_edition)}
@@ -136,31 +147,20 @@ SMODS.calculate_individual_effect = function(effect, scored_card, key, amount, f
             G.GAME.akyrs_no_calculate = true
         end
         if (key == 'akyrs_score' or key == "akyrs_h_score") and amount ~= 0 then
-            AKYRS.simple_event_add(
-                function ()
-                    if effect.card and effect.card ~= scored_card then juice_card(effect.card) end
-                    AKYRS.simple_event_add(
-                        function ()
-                            AKYRS.mod_score_instant({ add = amount, card = effect.card or scored_card })
-                            if not G.GAME.akyrs_win_checked then
-                                AKYRS.simple_event_add(
-                                    function ()
-                                        if not G.GAME.akyrs_win_checked and not AKYRS.is_mod_loaded("NotJustYet") then
-                                            AKYRS.force_check_win({ force_draw = true})
-                                        end
-                                        return true
-                                    end, 0
-                                )
-                            end
-                            return true
-                        end, 1, "base", { trigger = "after" }
-                    )
-                return true
-                end, 0
-            )
-
+            if effect.card and effect.card ~= scored_card then juice_card(effect.card) end
+            AKYRS.mod_score_instant({ add = amount, card = effect.card or scored_card })
             return true
-    end
+        end
+        if (key == 'akyrs_xscore' or key == "akyrs_h_xscore") and amount ~= 0 then
+            if effect.card and effect.card ~= scored_card then juice_card(effect.card) end
+            AKYRS.mod_score_instant({ mult = amount, card = effect.card or scored_card })
+            return true
+        end
+        if (key == 'akyrs_escore' or key == "akyrs_h_escore") and amount ~= 0 then
+            if effect.card and effect.card ~= scored_card then juice_card(effect.card) end
+            AKYRS.mod_score_instant({ pow = amount, card = effect.card or scored_card })
+            return true
+        end
     return unpack(aaa)
 end
 

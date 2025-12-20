@@ -35,6 +35,7 @@ function Game:init_game_object()
 
     }
     AKYRS.replenishLetters()
+    ret.current_round.akyrs_picked_poker_hands = "High Card"
     ret.current_round.akyrs_round_played_cards = {}
     ret.current_round.aiko_round_played_words = {}
     ret.current_round.aiko_round_correct_letter = {}
@@ -95,6 +96,13 @@ function SMODS.current_mod.reset_game_globals(run_start)
     G.GAME.current_round.aiko_played_ranks = {}
     G.GAME.current_round.aiko_played_ench = {}
     G.GAME.current_round.akyrs_hands_played = {}
+    local candidate_hands = AKYRS.filter_table(AKYRS.keyvalue_to_list(G.GAME.hands), function (hand_info, ind)
+        return hand_info[2].played > 0
+    end, false, true)
+    if #candidate_hands > 0 then
+        local hand_to_set = pseudorandom_element(candidate_hands, "akyrs_candidate_hand_for_bosses")
+        if G.GAME.current_round.akyrs_picked_poker_hands then G.GAME.current_round.akyrs_picked_poker_hands = hand_to_set[1] end
+    end
 end
 
 
@@ -300,7 +308,9 @@ end
 
 local startRunHook = Game.start_run
 function Game:start_run(args)
+    G.AKYRS_DISPLAY_QUEUE = nil
     local ret = startRunHook(self, args)
+    
     AKYRS.reset_math_parser({
         vars = G.GAME.akyrs_parser_var or AKYRS.math_default_const,
     })
@@ -649,7 +659,7 @@ local dcfhHook = G.FUNCS.discard_cards_from_highlighted
 G.FUNCS.discard_cards_from_highlighted = function (e,hook)
     
     if G.GAME.starting_params.akyrs_inversion_deck then
-        AKYRS.invert_selection(G.hand)
+        AKYRS.invert_selection(G.hand, hook)
     end
 
     if AKYRS.checkBlindKey("bl_akyrs_the_picker") and not G.GAME.blind.disabled then

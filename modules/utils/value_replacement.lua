@@ -226,6 +226,17 @@ function AKYRS.getBlindText(key, collection)
         return {localize("ph_aiko_beat_puzzle"),localize("ph_word_puzzle")}
     elseif (key == "bl_akyrs_the_bomb") and ((G.GAME.blind and not G.GAME.blind.disabled) or collection) then
         return {localize("ph_aiko_defuse"),localize("ph_aiko_bomb")}
+    elseif (key == "bl_akyrs_the_bent") and ((G.GAME.blind and not G.GAME.blind.disabled) or collection) then
+        local blind_config = G.P_BLINDS[key].config
+        local live_blind = (G.GAME.blind and G.GAME.blind.effect or { times_left = blind_config.times_left })
+        local times_left = 2
+        if collection then
+            times_left = blind_config.times_left
+        else
+            times_left = live_blind.times_left
+        end
+        --print(collection, times_left)
+        return {localize("ph_akyrs_play_for"),localize({ type = "variable", vars = { times_left }, key = "ph_akyrs_hand" .. (times_left ~= 1 and "s" or "") })}
     else
         return {nil,nil}
     end

@@ -570,6 +570,7 @@ AKYRS.force_check_win = function (config)
                 G.STATE = config.state_to_go or G.STATES.SELECTING_HAND
                 if config.force_draw then
                     G.FUNCS.draw_from_deck_to_hand()
+                    AKYRS.force_save()
                 end
             end
             G.STATE_COMPLETE = false
@@ -724,8 +725,8 @@ AKYRS.create_hover_tooltip = function(args)
     }
 end
 
-function AKYRS.invert_selection(area)
-    if not area or not area.cards then return end
+function AKYRS.invert_selection(area, is_boss)
+    if (not area or not area.cards) or is_boss then return end
     local tobe_hilight = {}
     local tobe_unhilight = {}
     for _, c in ipairs(area.cards) do
@@ -739,6 +740,10 @@ function AKYRS.invert_selection(area)
         c:highlight(false)
     end
     area.highlighted = {}
+    if #tobe_hilight ==  0 then
+        local cd = pseudorandom_element(area.cards, "AKYRS.invert_selection")
+        table.insert(tobe_hilight, cd)
+    end
     for _, c in ipairs(tobe_hilight) do
         c.highlighted = true
         table.insert(area.highlighted, c)

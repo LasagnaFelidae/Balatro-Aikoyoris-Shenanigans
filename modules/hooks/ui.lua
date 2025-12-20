@@ -860,7 +860,7 @@ function create_UIBox_blind_choice(type, run_info)
     local bl = G.P_BLINDS[G.GAME.round_resets.blind_choices[type]]
     local elem = AKYRS.search_UIT_for_id(x, "blind_desc")
     if bl and elem then
-        local blindloc = AKYRS.getBlindText(G.GAME.round_resets.blind_choices[type] or "nololxd")
+        local blindloc = AKYRS.getBlindText(G.GAME.round_resets.blind_choices[type] or "nololxd", "blind_select")
         local stake_sprite = get_stake_sprite(G.GAME.stake or 1, 0.5)
         if blindloc[1] then
             pcall(function ()

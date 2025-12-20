@@ -198,6 +198,8 @@ pattern = """        perma_h_dollars = self.ability and self.ability.perma_h_dol
 position = "after"
 payload = """akyrs_perma_score = self.ability and self.ability.akyrs_perma_score or 0,
 akyrs_perma_h_score = self.ability and self.ability.akyrs_perma_h_score or 0,
+akyrs_perma_xscore = self.ability and self.ability.akyrs_perma_xscore or 1,
+akyrs_perma_h_xscore = self.ability and self.ability.akyrs_perma_h_xscore or 1,
 """
 overwrite = true
 match_indent = true
@@ -211,6 +213,8 @@ pattern = """                    bonus_x_chips = self.ability.perma_x_chips ~= 0
 position = "after"
 payload = """akyrs_perma_score = self.ability.akyrs_perma_score ~= 0 and (self.ability.akyrs_perma_score) or nil,
 akyrs_perma_h_score = self.ability.akyrs_perma_h_score ~= 0 and (self.ability.akyrs_perma_h_score) or nil,
+akyrs_perma_xscore = self.ability.akyrs_perma_xscore ~= 1 and (self.ability.akyrs_perma_xscore) or nil,
+akyrs_perma_h_xscore = self.ability.akyrs_perma_h_xscore ~= 1 and (self.ability.akyrs_perma_h_xscore) or nil,
 """
 overwrite = true
 match_indent = true
@@ -231,6 +235,12 @@ end
 if specific_vars and specific_vars.akyrs_perma_h_score then
     localize{type = 'other', key = 'akyrs_perma_h_score', nodes = desc_nodes, vars = {SMODS.signed(specific_vars.akyrs_perma_h_score)}}
 end
+if specific_vars and specific_vars.akyrs_perma_xscore then
+    localize{type = 'other', key = 'akyrs_perma_xscore', nodes = desc_nodes, vars = {(specific_vars.akyrs_perma_xscore)}}
+end
+if specific_vars and specific_vars.akyrs_perma_h_xscore then
+    localize{type = 'other', key = 'akyrs_perma_h_xscore', nodes = desc_nodes, vars = {(specific_vars.akyrs_perma_h_xscore)}}
+end
 """
 overwrite = true
 match_indent = true
@@ -250,6 +260,12 @@ end
 if specific_vars and specific_vars.akyrs_perma_h_score then
     localize{type = 'other', key = 'akyrs_perma_h_score', nodes = desc_nodes, vars = {SMODS.signed(specific_vars.akyrs_perma_h_score)}}
 end
+if specific_vars and specific_vars.akyrs_perma_xscore then
+    localize{type = 'other', key = 'akyrs_perma_xscore', nodes = desc_nodes, vars = {(specific_vars.akyrs_perma_xscore)}}
+end
+if specific_vars and specific_vars.akyrs_perma_h_xscore then
+    localize{type = 'other', key = 'akyrs_perma_h_xscore', nodes = desc_nodes, vars = {(specific_vars.akyrs_perma_h_xscore)}}
+end
 """
 overwrite = true
 match_indent = true
@@ -267,6 +283,10 @@ local akyrs_score = card:akyrs_get_perma_score()
 if akyrs_score ~= 0 then
     ret.playing_card.akyrs_score = akyrs_score
 end
+local akyrs_xscore = card:akyrs_get_perma_xscore()
+if akyrs_xscore ~= 1 then
+    ret.playing_card.akyrs_xscore = akyrs_xscore
+end
 """
 overwrite = true
 match_indent = true
@@ -283,6 +303,10 @@ local akyrs_h_score = card:akyrs_get_perma_h_score()
 if akyrs_h_score ~= 0 then
     ret.playing_card.akyrs_h_score = akyrs_h_score
 end
+local akyrs_h_score = card:akyrs_get_perma_h_xscore()
+if akyrs_h_xscore ~= 1 then
+    ret.playing_card.akyrs_h_xscore = akyrs_h_xscore
+end
 """
 overwrite = true
 match_indent = true
@@ -297,6 +321,42 @@ position = "before"
 payload = """
 if extra.akyrs_no_sound then
     sound = nil
+end
+if extra.akyrs_set_sound then
+    sound = extra.akyrs_set_sound
+end
+if extra.akyrs_update_score then
+    akyrs_update_score = true
+end
+"""
+overwrite = true
+match_indent = true
+
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = """    local trigger = 'before'"""
+position = "before"
+payload = """
+local akyrs_update_score = nil
+"""
+overwrite = true
+match_indent = true
+
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = """play_sound(sound, 0.8+percent*0.2, volume)"""
+position = "before"
+payload = """
+if akyrs_update_score then
+    G.AKYRS_DISPLAY_QUEUE = G.AKYRS_DISPLAY_QUEUE or {}
+    table.remove(G.AKYRS_DISPLAY_QUEUE, 1)
+    G.HUD:get_UIE_by_ID('chip_UI_count'):juice_up(0.3, 0.3)
 end
 """
 overwrite = true
@@ -361,6 +421,25 @@ pattern = """    -- TARGET: effects after hand evaluation"""
 position = "after"
 payload = """G.GAME.current_round.akyrs_hands_played = G.GAME.current_round.akyrs_hands_played or {}
 G.GAME.current_round.akyrs_hands_played[text] = true
+"""
+overwrite = true
+match_indent = true
+
+
+
+[[patches]]
+[patches.pattern]
+target = 'functions/button_callbacks.lua'
+pattern = """  local new_chips_text = number_format(G.GAME.chips)"""
+position = "after"
+payload = """if G.AKYRS_DISPLAY_QUEUE and G.AKYRS_DISPLAY_QUEUE[1] then 
+    new_chips_text = number_format(G.AKYRS_DISPLAY_QUEUE[1])
+    if G.GAME.chips_text ~= new_chips_text then
+        e.config.scale = math.min(0.8, scale_number(G.AKYRS_DISPLAY_QUEUE[1], 1.1))
+        G.GAME.chips_text = new_chips_text
+    end
+    return
+end
 """
 overwrite = true
 match_indent = true

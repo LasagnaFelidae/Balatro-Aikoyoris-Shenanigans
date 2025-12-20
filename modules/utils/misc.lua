@@ -738,41 +738,51 @@ AKYRS.mod_score = function(score_mod)
         function()
             AKYRS.mod_score_instant(score_mod)
             return true
-        end, 0
+        end, 0.2
     )
 end
 
 AKYRS.mod_score_instant = function(score_mod)
 
     score_mod = score_mod or {}
-    local pow = score_mod.pow or 1
-    local mult = score_mod.mult or 1
-    local add = score_mod.add or 0
+    local score_fx = {}
     local score_cal = score_mod.set or G.GAME.chips
-    score_cal = score_cal ^ pow
-    score_cal = score_cal * mult
-    score_cal = score_cal + add
     local old = G.GAME.chips
+    G.AKYRS_DISPLAY_QUEUE = G.AKYRS_DISPLAY_QUEUE or {}
+    if score_mod.pow then
+        score_cal = score_cal ^ score_mod.pow
+        table.insert(G.AKYRS_DISPLAY_QUEUE, old)
+        table.insert(score_fx, {"k_akyrs_score_exp", score_mod.pow, "akyrs_xscore"})
+    end
+    if score_mod.mult then
+        score_cal = score_cal * score_mod.mult
+        table.insert(G.AKYRS_DISPLAY_QUEUE, old)
+        table.insert(score_fx, {"k_akyrs_score_x", score_mod.mult, "akyrs_xscore"})
+    end
+    if score_mod.add and score_mod.add ~= 0 then
+        score_cal = score_cal + score_mod.add
+        table.insert(G.AKYRS_DISPLAY_QUEUE, old)
+        table.insert(score_fx, {AKYRS.compare(score_mod.add, "<", 0) and "k_akyrs_score_minus" or "k_akyrs_score_add", score_mod.add, "gong"})
+    end
     if Talisman then
         score_cal = to_big(score_cal)
     end
     -- TODO: jank, will fix later
     G.GAME.chips = score_cal
-    local amount = score_cal - old
-    local comp
-    if Talisman then
-        comp = amount > to_big(0)
-    else
-        comp = amount > 0
-    end
-    G.HUD:get_UIE_by_ID('chip_UI_count'):juice_up(0.3, 0.3)
+    
+    --print(G.GAME.chips)
     if score_mod.card then
-        card_eval_status_text(score_mod.card, 'jokers', nil, percent, nil, {message = localize{type='variable',key= comp and 'k_akyrs_score_add' or 'k_akyrs_score_minus',vars={amount}}, akyrs_no_sound = true, colour =  G.C.PURPLE, instant = true})
+        for _, values in ipairs(score_fx) do
+            card_eval_status_text(score_mod.card, 'jokers', nil, percent, nil, {message = localize{type='variable',key= values[1],vars={values[2]}}, akyrs_update_score = true, volume = 0.5, akyrs_set_sound = values[3], colour =  G.C.PURPLE})
+        end
+    else
+        G.AKYRS_DISPLAY_QUEUE = nil
     end
-    percent = percent or 1
-    play_sound('gong', 0.5 + percent, 0.5)
+    --percent = percent or 1
+    --play_sound('gong', 0.5 + percent, 0.5)
     -- 12 equal temperament moment :heart:
-    percent = percent * 1.05946309436
+    --percent = percent * 1.05946309436
+    delay(0.2)
 end
 
 AKYRS.get_most_played = function()
@@ -1455,7 +1465,7 @@ function AKYRS.filter_table(tbl, predicate, ordered_in, ordered_out)
 end
 
 -- predicate expect a return of new value
-function AKYRS.map(tbl, predicate) 
+function AKYRS.map(tbl, predicate, ordered_in) 
     if not tbl or not predicate then return {} end
     if #tbl == 0 and ordered_in then return {} end
     local table_out = {}
@@ -1464,6 +1474,15 @@ function AKYRS.map(tbl, predicate)
             local nv = predicate(v, k)
             table_out[k] = nv
         end
+    end
+    return table_out
+end
+
+function AKYRS.keyvalue_to_list(tbl) 
+    if not tbl then return {} end
+    local table_out = {}
+    for k,v in pairs(tbl) do
+        table.insert(table_out, {k, v})
     end
     return table_out
 end
@@ -1520,3 +1539,5 @@ end
 AKYRS.get_true_original_blind_amount = function(mult)
     return get_blind_amount(G.GAME.round_resets.ante)*mult*G.GAME.starting_params.ante_scaling
 end
+
+-- apparently i have to do filo

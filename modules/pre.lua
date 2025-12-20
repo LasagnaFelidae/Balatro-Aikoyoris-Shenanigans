@@ -105,6 +105,8 @@ AKYRS.emplace_funcs.always_placeable = function(ca,card) return G.OVERLAY_MENU a
 
 table.insert(SMODS.other_calculation_keys, "akyrs_score")
 table.insert(SMODS.other_calculation_keys, "akyrs_h_score")
+table.insert(SMODS.other_calculation_keys, "akyrs_xscore")
+table.insert(SMODS.other_calculation_keys, "akyrs_h_xscore")
 
 
 function AKYRS.apply_pool(center, pool)

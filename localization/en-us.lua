@@ -26,10 +26,7 @@ return {
                 text = 
                 { 
                     'Letters-Only Deck',
-                    "with Scrabble Distribution", 
-                    "and its {C:mult}Mult{} Enabled", 
-                    "Play {C:akyrs_playable}as many{} cards", 
-                    "as you want per hand",
+                    "Letters give C:mult}Mult{}", 
                     "{C:red}X#1#{} base Blind Size",
                     "{C:red}+#2#{} Discards",
                     "{C:attention}+#3#{} Hand Size",
@@ -425,14 +422,40 @@ return {
             bl_akyrs_the_sinusoidal= {
                 name = "The Sinusoidal",
                 text = {
-                    "Last 2 cards are drawn face down",
-                    "when any hand is drawn",
+                    "Last 2 cards drawn are",
+                    "drawn face down",
                 }
             },
             bl_akyrs_the_saw= {
                 name = "The Saw",
                 text = {
                     "First scored card is destroyed",
+                }
+            },
+            bl_akyrs_the_saw= {
+                name = "The Saw",
+                text = {
+                    "First scored card is destroyed",
+                }
+            },
+            bl_akyrs_the_selfish= {
+                name = "The Selfish",
+                text = {
+                    "#1# in #2# of vowels",
+                    "are debuffed",
+                }
+            },
+            bl_akyrs_the_polite= {
+                name = "The Polite",
+                text = {
+                    "Vowels will not score",
+                }
+            },
+            bl_akyrs_the_bent= {
+                name = "The Bent",
+                text = {
+                    "Play a #1#",
+                    "#2# times",
                 }
             },
         },
@@ -2612,6 +2635,16 @@ return {
                     "{C:purple}#1#{} Score if held in hand",
                 },
             },
+            akyrs_perma_xscore = {
+                text = {
+                    "{X:purple,C:white}X#1#{} Score",
+                },
+            },
+            akyrs_perma_h_xscore = {
+                text = {
+                    "{X:purple,C:white}X#1#{} Score if held in hand",
+                },
+            },
             -- booster packs
             p_akyrs_letter_pack_normal = { 
                 name = "Letter Pack",
@@ -3622,6 +3655,8 @@ return {
             ph_word_puzzle = "Word Puzzle",
             ph_aiko_defuse = "Get rid of",
             ph_aiko_bomb = "Word Bomb!",
+            ph_akyrs_play_for = "Play for",
+            k_akyrs_random_played_hand = "random played Poker Hand",
             k_akyrs_must_pay_attention = "Must have Attention Card in hand!",
             k_akyrs_must_contain_word = "Hand must contain word!",
             ph_puzzle_clear = "Puzzle Clear!",
@@ -3865,6 +3900,9 @@ return {
             k_akyrs_pure="Pure #1#",
             k_akyrs_score_add="+#1# Score",
             k_akyrs_score_x="X#1# Score",
+            k_akyrs_score_exp="^#1# Score",
+            ph_akyrs_hand="#1# Hand",
+            ph_akyrs_hands="#1# Hands",
             k_akyrs_score_minus="-#1# Score",
             k_akyrs_word_check_valid="#1# is a VALID word!",
             k_akyrs_word_check_invalid="#1# is NOT a VALID word.",

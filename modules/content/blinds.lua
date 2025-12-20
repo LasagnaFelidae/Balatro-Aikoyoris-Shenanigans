@@ -1,367 +1,5 @@
 
 
-SMODS.Blind{
-    key = "the_thought",
-    dollars = 5,
-    mult = 2,
-    boss_colour =HEX('95df3e'),
-    atlas = 'aikoyoriBlindsChips', 
-    boss = {min = 1, max = 10},
-    pos = { x = 0, y = 0 },
-    debuff = {
-        special_blind = true,
-        infinite_discards = true,
-        akyrs_is_word_blind = true,
-        akyrs_is_puzzle_blind = true,
-    },
-    vars = {},
-    set_blind = function(self)
-        G.GAME.aiko_puzzle_win = false
-        G.GAME.current_round.advanced_blind = true
-        G.GAME.word_todo = AKYRS.aiko_pickRandomInTable(AKYRS.puzzle_words)
-        
-        
-        for _,c in ipairs(G.playing_cards) do
-            c:set_sprites(c.config.center,c.config.card)
-        end
-        
-        --print ("Word is "..G.GAME.word_todo)
-        G.E_MANAGER:add_event(
-            Event({
-                delay = 10,
-                func = function()
-                    G.hand:change_size(3)                    
-                    G.GAME.current_round.discards_sub = G.GAME.current_round.discards_left + 1
-                    self.discards_sub = G.GAME.current_round.discards_left + 1 -- math.max(G.GAME.current_round.discards_left, 0)
-                    ease_discard(-self.discards_sub)
-                    
-                    G.GAME.current_round.hand_sub = G.GAME.round_resets.hands-math.max(G.GAME.round_resets.hands,6)
-                    self.hands_sub = G.GAME.round_resets.hands-math.max(G.GAME.round_resets.hands,6)
-                    ease_hands_played(-self.hands_sub)
-                    ease_background_colour{new_colour = HEX('95df3e'), special_colour = HEX('ffd856'), tertiary_colour = G.C.BLACK, contrast = 3}
-                    
-                    return true
-                end
-            })
-        )
-        G.E_MANAGER:add_event(
-            Event({
-                delay = 10,
-                func = function()
-                    recalculateHUDUI()
-                    recalculateBlindUI()
-                    return true
-                end
-            })
-        )
-        -- add 5 temp wilds to hand so players don't get fucked royally
-        AKYRS.simple_event_add(
-            function ()
-                G.FUNCS.draw_from_deck_to_hand()
-                for i = 1, 5 do
-                    AKYRS.simple_event_add(
-                        function ()
-                            local wldcrd = Card(11.5,15,G.CARD_W,G.CARD_H,pseudorandom_element(G.P_CARDS,pseudoseed("thethoughtblind")),G.P_CENTERS['c_base'],{playing_card = G.playing_card})
-                            wldcrd.is_null = true
-                            wldcrd.ability.akyrs_self_destructs = true
-                            AKYRS.change_letter_to(wldcrd,"#")
-                            G.hand:emplace(wldcrd)
-                            return true
-                        end, 0.1
-                    )
-                end
-                return true
-            end, 0
-        )
-    end,
-    drawn_to_hand = function(self)
-        AKYRS.simple_event_add(
-            function()
-                G.deck:shuffle("akyrsthought")
-                G.FUNCS.draw_from_discard_to_deck()
-                return true
-            end,0.2
-        )
-    end,
-    in_pool = function(self)
-        return (G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled)
-    end,
-    disable = function(self)
-        G.GAME.current_round.advanced_blind = false
-        G.hand:change_size(-3)
-        
-        ease_hands_played(self.hands_sub or G.GAME.current_round.hand_sub)
-        ease_discard(self.discards_sub or G.GAME.current_round.discards_sub)
-        
-        recalculateHUDUI()
-        recalculateBlindUI()
-        
-    end,
-    defeat = function(self)
-        G.GAME.current_round.advanced_blind = false
-        G.hand:change_size(-3)
-        
-        for _,c in ipairs(G.playing_cards) do
-            c:set_sprites(c.config.center,c.config.card)
-        end
-        recalculateHUDUI()
-        recalculateBlindUI()
-    end,
-    calculate = function (self, blind, context)
-        if context.after then
-            return {
-                func =function ()
-                    
-                    if true then
-                        AKYRS.simple_event_add(
-                            function()
-                                AKYRS.force_check_win({ force_draw = true})
-                                return true
-                            end, 0
-                        )
-                    end
-                end
-            }
-        end
-    end
-
-}
-
-SMODS.Blind{
-    key = "the_bomb",
-    dollars = 5,
-    mult = 2,
-    boss_colour = HEX('FF6F4B'),
-    atlas = 'aikoyoriBlindsChips2', 
-    boss = {min = 1, max = 10},
-    pos = { x = 0, y = 14 },
-    debuff = {
-        special_blind = true,
-        infinite_discards = true,
-        akyrs_is_word_blind = true,
-        akyrs_is_puzzle_blind = true,
-        akyrs_cannot_be_disabled = true,
-    },
-    vars = {},
-    set_blind = function(self)
-        G.GAME.aiko_puzzle_win = false
-        G.GAME.current_round.advanced_blind = true
-        
-        
-        for _,c in ipairs(G.playing_cards) do
-            c:set_sprites(c.config.center,c.config.card)
-        end
-        
-        --print ("Word is "..G.GAME.word_todo)
-        G.E_MANAGER:add_event(
-            Event({
-                delay = 10,
-                func = function()
-                    --ease_background_colour{new_colour = HEX('95df3e'), special_colour = HEX('ffd856'), tertiary_colour = G.C.BLACK, contrast = 3}
-                    G.hand:change_size(9)
-                    SMODS.change_play_limit(1e4)
-                    SMODS.change_discard_limit(1e4)
-                    
-                    for _, _c in ipairs(G.jokers.cards) do
-                        ---@type Card
-                        _c = _c
-                        _c:set_debuff(true)
-                    end
-                    for _, _c in ipairs(G.consumeables.cards) do
-                        ---@type Card
-                        _c = _c
-                        _c:set_debuff(true)
-                    end
-                    return true
-                end
-            })
-        )
-        G.E_MANAGER:add_event(
-            Event({
-                delay = 10,
-                func = function()
-                    recalculateHUDUI()
-                    recalculateBlindUI()
-                    return true
-                end
-            })
-        )
-        -- add 5 temp wilds to hand so players don't get fucked royally
-        AKYRS.simple_event_add(
-            function ()
-                
-                G.FUNCS.draw_from_deck_to_hand()
-                for i = 2, 5 do
-                    AKYRS.simple_event_add(
-                        function ()
-                            local prompt_card = Card(11.5,15,G.CARD_W,G.CARD_H,pseudorandom_element(G.P_CARDS,pseudoseed("thebombblind")),G.P_CENTERS['c_base'],{playing_card = G.playing_card})
-                            prompt_card.is_null = true
-                            prompt_card.ability.akyrs_attention = true
-                            AKYRS.simple_event_add(
-                                function ()
-                                    local ante = Talisman and to_number(G.GAME.round_resets.ante) or G.GAME.round_resets.ante
-                                    local fct = 2 * (i - 1) - 1
-                                    local max_freq = (70000/(fct))/ante^1.5 / (AKYRS.config.full_dictionary and 1 or 10)
-                                    local min_freq = (15000/(fct))/ante^1.03 / (AKYRS.config.full_dictionary and 1 or 10)
-                                    local prompt, freq = AKYRS.get_bomb_prompt(
-                                    {
-                                        min_freq = min_freq, 
-                                        max_freq = max_freq, 
-                                        min_length = i, 
-                                        max_length = i, 
-                                        seed = "thebombblind_carder"
-                                    })
-                                    if prompt then
-                                        AKYRS.change_letter_to(prompt_card,prompt)
-                                        prompt_card.ability.akyrs_word_freq = freq
-                                        G.hand:emplace(prompt_card)
-                                        table.insert(G.playing_cards, prompt_card)
-                                    end
-                                    return true
-                                end, 0)
-                            return true
-                        end, 0.2
-                    )
-                end
-                return true
-            end, 0
-        )
-    end,
-    drawn_to_hand = function(self)
-        AKYRS.simple_event_add(
-            function()
-                G.deck:shuffle("akyrsthought")
-                G.FUNCS.draw_from_discard_to_deck()
-                return true
-            end,0.2
-        )
-    end,
-    in_pool = function(self)
-        return (G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled)
-    end,
-    disable = function(self)
-        G.GAME.current_round.advanced_blind = false
-        
-        for _, _c in ipairs(G.jokers.cards) do
-            ---@type Card
-            _c = _c
-            _c:set_debuff(false)
-        end
-        for _, _c in ipairs(G.consumeables.cards) do
-            ---@type Card
-            _c = _c
-            _c:set_debuff(false)
-        end
-        for _,c in ipairs(G.playing_cards) do
-            c:set_sprites(c.config.center,c.config.card)
-        end
-        G.hand:change_size(-9)
-        SMODS.change_play_limit(-1e4)
-        SMODS.change_discard_limit(-1e4)
-        
-        recalculateHUDUI()
-        recalculateBlindUI()
-        
-    end,
-    defeat = function(self)
-        G.GAME.current_round.advanced_blind = false
-        for _,c in ipairs(G.playing_cards) do
-            c:set_sprites(c.config.center,c.config.card)
-        end
-        G.hand:change_size(-9)
-        SMODS.change_play_limit(-1e4)
-        SMODS.change_discard_limit(-1e4)
-        recalculateHUDUI()
-        recalculateBlindUI()
-        for _, _c in ipairs(G.consumeables.cards) do
-            ---@type Card
-            _c = _c
-            _c:set_debuff(false)
-        end
-    end,
-    press_play = function(self)
-        
-    end,
-    calculate = function (self, blind, context)
-        if context.debuff_hand then 
-            
-            local hand = context.full_hand
-            table.sort(hand, AKYRS.hand_sort_function)
-            local s = AKYRS.word_hand_combine(hand)
-            local hand_return, word_data = AKYRS.word_hand_search(s, hand, #s)
-            if not ((word_data or {}).valid) then
-            return {
-                debuff = true,
-                debuff_text = localize("k_akyrs_must_contain_word"),
-                func = function ()
-                    AKYRS.simple_event_add(
-                        function()
-                            if G.STATE == G.STATES.HAND_PLAYED then
-                                G.FUNCS.akyrs_force_draw_from_discard_to_hand()
-                            else
-                        end
-                        return true
-                    end, 0)
-                end
-                }
-            end
-            
-        end
-        if context.after then
-            return {
-                func = function ()
-                    
-                    for _, _c in ipairs(G.jokers.cards) do
-                        ---@type Card
-                        _c = _c
-                        _c:set_debuff(true)
-                    end
-                    for _, _c in ipairs(G.consumeables.cards) do
-                        ---@type Card
-                        _c = _c
-                        _c:set_debuff(true)
-                    end
-                    
-                    AKYRS.simple_event_add(
-                        function()
-                            G.deck:shuffle("akyrsbombblind")
-                            G.FUNCS.draw_from_discard_to_deck()
-                            return true
-                        end,0.2
-                    )
-                    AKYRS.simple_event_add(
-                        function()
-                            if not G.GAME.akyrs_win_checked then
-                                
-                                AKYRS.simple_event_add(
-                                function()
-                                    local attention_no_longer_in_hand = true
-                                    for _,_c in ipairs(G.playing_cards) do
-                                        if _c.ability.akyrs_attention then
-                                            attention_no_longer_in_hand = false
-                                        end
-                                    end
-                                    G.GAME.aiko_puzzle_win = attention_no_longer_in_hand
-                                    if true then
-                                        AKYRS.simple_event_add(
-                                            function()
-                                                AKYRS.force_check_win({ force_draw = true})
-                                                return true
-                                            end, 0
-                                        )
-                                    end
-                                    return true
-                                end, 0.2)
-                            end
-                            return true
-                        end,0.2
-                    )
-                end
-            }
-        end
-    end
-
-}
 
 local function talismanCheck(v,big,omega,jen)
     if Talisman then
@@ -516,6 +154,84 @@ SMODS.Blind{
     
 }
 
+local vowels_list = {
+    a = true,
+    e = true,
+    i = true,
+    o = true,
+    u = true,
+}
+
+SMODS.Blind{
+    key = "the_selfish",
+    dollars = 5,
+    mult = 2,
+    boss_colour = HEX("5dd6ff"),
+    atlas = 'aikoyoriBlindsChips2',
+    debuff = {
+        akyrs_is_word_blind = true,
+        akyrs_num = 1, akyrs_denom = 3
+    },
+    boss = {min = 2, max = 10},
+    pos = { x = 0, y = 1 },
+    in_pool = function(self)
+        return (G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled)
+    end,
+    loc_vars = function (self)
+        local n, d = SMODS.get_probability_vars(self, self.debuff.akyrs_num,  self.debuff.akyrs_denom, "akyrs_the_selfish_flip")
+        return {
+            vars = {
+                n, d
+            }
+        }
+    end,
+    collection_loc_vars = function (self)
+        local n, d = SMODS.get_probability_vars(self, self.debuff.akyrs_num,  self.debuff.akyrs_denom, "akyrs_the_selfish_flip")
+        return {
+            vars = {
+                n, d
+            }
+        }
+    end,
+    recalc_debuff = function (self, card, from_blind)
+        if card and (card:get_letter_with_pretend()) and vowels_list[string.lower(card:get_letter_with_pretend())] then
+            if SMODS.pseudorandom_probability(self, "akyrs_the_selfish_flip", self.debuff.akyrs_num,  self.debuff.akyrs_denom) then
+                return true
+            end
+        end
+    end
+}
+
+SMODS.Blind{
+    key = "the_polite",
+    dollars = 5,
+    mult = 2,
+    boss_colour = HEX("ff9430"),
+    atlas = 'aikoyoriBlindsChips2',
+    debuff = {
+        akyrs_is_word_blind = true,
+    },
+    boss = {min = 2, max = 10},
+    pos = { x = 0, y = 2 },
+    in_pool = function(self)
+        return (G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled)
+    end,
+    calculate = function (self, blind, context)
+        if not blind.disabled then
+            if context.modify_scoring_hand then
+                ---@type Card
+                local oth = context.other_card
+                if oth and oth:get_letter_with_pretend() and vowels_list[string.lower(oth:get_letter_with_pretend())] then
+                    return {
+                        remove_from_hand = true
+                    }
+                end
+            end
+        end
+    end,
+}
+
+
 local to_big = to_big or function(x) return x end
 
 SMODS.Blind{
@@ -598,7 +314,7 @@ end
 SMODS.Blind{
     key = "the_picker",
     dollars = 5,
-    mult = 1.5,
+    mult = 1.25,
     boss_colour = HEX('67e38b'),
     atlas = 'aikoyoriBlindsChips', 
     boss = {min = 2, max = 10},
@@ -1894,4 +1610,437 @@ SMODS.Blind {
 
         end
     end
+}
+
+
+SMODS.Blind{
+    key = "the_thought",
+    dollars = 5,
+    mult = 2,
+    boss_colour =HEX('95df3e'),
+    atlas = 'aikoyoriBlindsChips', 
+    boss = {min = 1, max = 10},
+    pos = { x = 0, y = 0 },
+    debuff = {
+        special_blind = true,
+        infinite_discards = true,
+        akyrs_is_word_blind = true,
+        akyrs_is_puzzle_blind = true,
+    },
+    vars = {},
+    set_blind = function(self)
+        G.GAME.aiko_puzzle_win = false
+        G.GAME.current_round.advanced_blind = true
+        G.GAME.word_todo = AKYRS.aiko_pickRandomInTable(AKYRS.puzzle_words)
+        
+        
+        for _,c in ipairs(G.playing_cards) do
+            c:set_sprites(c.config.center,c.config.card)
+        end
+        
+        --print ("Word is "..G.GAME.word_todo)
+        G.E_MANAGER:add_event(
+            Event({
+                delay = 10,
+                func = function()
+                    G.hand:change_size(3)                    
+                    G.GAME.current_round.discards_sub = G.GAME.current_round.discards_left + 1
+                    self.discards_sub = G.GAME.current_round.discards_left + 1 -- math.max(G.GAME.current_round.discards_left, 0)
+                    ease_discard(-self.discards_sub)
+                    
+                    G.GAME.current_round.hand_sub = G.GAME.round_resets.hands-math.max(G.GAME.round_resets.hands,6)
+                    self.hands_sub = G.GAME.round_resets.hands-math.max(G.GAME.round_resets.hands,6)
+                    ease_hands_played(-self.hands_sub)
+                    ease_background_colour{new_colour = HEX('95df3e'), special_colour = HEX('ffd856'), tertiary_colour = G.C.BLACK, contrast = 3}
+                    
+                    return true
+                end
+            })
+        )
+        G.E_MANAGER:add_event(
+            Event({
+                delay = 10,
+                func = function()
+                    recalculateHUDUI()
+                    recalculateBlindUI()
+                    return true
+                end
+            })
+        )
+        -- add 5 temp wilds to hand so players don't get fucked royally
+        AKYRS.simple_event_add(
+            function ()
+                G.FUNCS.draw_from_deck_to_hand()
+                for i = 1, 5 do
+                    AKYRS.simple_event_add(
+                        function ()
+                            local wldcrd = Card(11.5,15,G.CARD_W,G.CARD_H,pseudorandom_element(G.P_CARDS,pseudoseed("thethoughtblind")),G.P_CENTERS['c_base'],{playing_card = G.playing_card})
+                            wldcrd.is_null = true
+                            wldcrd.ability.akyrs_self_destructs = true
+                            AKYRS.change_letter_to(wldcrd,"#")
+                            G.hand:emplace(wldcrd)
+                            return true
+                        end, 0.1
+                    )
+                end
+                return true
+            end, 0
+        )
+    end,
+    drawn_to_hand = function(self)
+        AKYRS.simple_event_add(
+            function()
+                G.deck:shuffle("akyrsthought")
+                G.FUNCS.draw_from_discard_to_deck()
+                return true
+            end,0.2
+        )
+    end,
+    in_pool = function(self)
+        return (G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled)
+    end,
+    disable = function(self)
+        G.GAME.current_round.advanced_blind = false
+        G.hand:change_size(-3)
+        
+        ease_hands_played(self.hands_sub or G.GAME.current_round.hand_sub)
+        ease_discard(self.discards_sub or G.GAME.current_round.discards_sub)
+        
+        recalculateHUDUI()
+        recalculateBlindUI()
+        
+    end,
+    defeat = function(self)
+        G.GAME.current_round.advanced_blind = false
+        G.hand:change_size(-3)
+        
+        for _,c in ipairs(G.playing_cards) do
+            c:set_sprites(c.config.center,c.config.card)
+        end
+        recalculateHUDUI()
+        recalculateBlindUI()
+    end,
+    calculate = function (self, blind, context)
+        if context.after then
+            return {
+                func =function ()
+                    
+                    if true then
+                        AKYRS.simple_event_add(
+                            function()
+                                AKYRS.force_check_win({ force_draw = true})
+                                return true
+                            end, 0
+                        )
+                    end
+                end
+            }
+        end
+    end
+
+}
+
+SMODS.Blind{
+    key = "the_bomb",
+    dollars = 5,
+    mult = 2,
+    boss_colour = HEX('FF6F4B'),
+    atlas = 'aikoyoriBlindsChips2', 
+    boss = {min = 1, max = 10},
+    pos = { x = 0, y = 14 },
+    debuff = {
+        special_blind = true,
+        infinite_discards = true,
+        akyrs_is_word_blind = true,
+        akyrs_is_puzzle_blind = true,
+        akyrs_cannot_be_disabled = true,
+    },
+    vars = {},
+    set_blind = function(self)
+        G.GAME.aiko_puzzle_win = false
+        G.GAME.current_round.advanced_blind = true
+        
+        
+        for _,c in ipairs(G.playing_cards) do
+            c:set_sprites(c.config.center,c.config.card)
+        end
+        
+        --print ("Word is "..G.GAME.word_todo)
+        G.E_MANAGER:add_event(
+            Event({
+                delay = 10,
+                func = function()
+                    --ease_background_colour{new_colour = HEX('95df3e'), special_colour = HEX('ffd856'), tertiary_colour = G.C.BLACK, contrast = 3}
+                    G.hand:change_size(9)
+                    SMODS.change_play_limit(1e4)
+                    SMODS.change_discard_limit(1e4)
+                    
+                    for _, _c in ipairs(G.jokers.cards) do
+                        ---@type Card
+                        _c = _c
+                        _c:set_debuff(true)
+                    end
+                    for _, _c in ipairs(G.consumeables.cards) do
+                        ---@type Card
+                        _c = _c
+                        _c:set_debuff(true)
+                    end
+                    return true
+                end
+            })
+        )
+        G.E_MANAGER:add_event(
+            Event({
+                delay = 10,
+                func = function()
+                    recalculateHUDUI()
+                    recalculateBlindUI()
+                    return true
+                end
+            })
+        )
+        -- add 5 temp wilds to hand so players don't get fucked royally
+        AKYRS.simple_event_add(
+            function ()
+                
+                G.FUNCS.draw_from_deck_to_hand()
+                for i = 2, 5 do
+                    AKYRS.simple_event_add(
+                        function ()
+                            local prompt_card = Card(11.5,15,G.CARD_W,G.CARD_H,pseudorandom_element(G.P_CARDS,pseudoseed("thebombblind")),G.P_CENTERS['c_base'],{playing_card = G.playing_card})
+                            prompt_card.is_null = true
+                            prompt_card.ability.akyrs_attention = true
+                            AKYRS.simple_event_add(
+                                function ()
+                                    local ante = Talisman and to_number(G.GAME.round_resets.ante) or G.GAME.round_resets.ante
+                                    local fct = 2 * (i - 1) - 1
+                                    local max_freq = (70000/(fct))/ante^1.5 / (AKYRS.config.full_dictionary and 1 or 10)
+                                    local min_freq = (15000/(fct))/ante^1.03 / (AKYRS.config.full_dictionary and 1 or 10)
+                                    local prompt, freq = AKYRS.get_bomb_prompt(
+                                    {
+                                        min_freq = min_freq, 
+                                        max_freq = max_freq, 
+                                        min_length = i, 
+                                        max_length = i, 
+                                        seed = "thebombblind_carder"
+                                    })
+                                    if prompt then
+                                        AKYRS.change_letter_to(prompt_card,prompt)
+                                        prompt_card.ability.akyrs_word_freq = freq
+                                        G.hand:emplace(prompt_card)
+                                        table.insert(G.playing_cards, prompt_card)
+                                    end
+                                    return true
+                                end, 0)
+                            return true
+                        end, 0.2
+                    )
+                end
+                return true
+            end, 0
+        )
+    end,
+    drawn_to_hand = function(self)
+        AKYRS.simple_event_add(
+            function()
+                G.deck:shuffle("akyrsthought")
+                G.FUNCS.draw_from_discard_to_deck()
+                return true
+            end,0.2
+        )
+    end,
+    in_pool = function(self)
+        return (G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled)
+    end,
+    disable = function(self)
+        G.GAME.current_round.advanced_blind = false
+        
+        for _, _c in ipairs(G.jokers.cards) do
+            ---@type Card
+            _c = _c
+            _c:set_debuff(false)
+        end
+        for _, _c in ipairs(G.consumeables.cards) do
+            ---@type Card
+            _c = _c
+            _c:set_debuff(false)
+        end
+        for _,c in ipairs(G.playing_cards) do
+            c:set_sprites(c.config.center,c.config.card)
+        end
+        G.hand:change_size(-9)
+        SMODS.change_play_limit(-1e4)
+        SMODS.change_discard_limit(-1e4)
+        
+        recalculateHUDUI()
+        recalculateBlindUI()
+        
+    end,
+    defeat = function(self)
+        G.GAME.current_round.advanced_blind = false
+        for _,c in ipairs(G.playing_cards) do
+            c:set_sprites(c.config.center,c.config.card)
+        end
+        G.hand:change_size(-9)
+        SMODS.change_play_limit(-1e4)
+        SMODS.change_discard_limit(-1e4)
+        recalculateHUDUI()
+        recalculateBlindUI()
+        for _, _c in ipairs(G.consumeables.cards) do
+            ---@type Card
+            _c = _c
+            _c:set_debuff(false)
+        end
+    end,
+    press_play = function(self)
+        
+    end,
+    calculate = function (self, blind, context)
+        if context.debuff_hand then 
+            
+            local hand = context.full_hand
+            table.sort(hand, AKYRS.hand_sort_function)
+            local s = AKYRS.word_hand_combine(hand)
+            local hand_return, word_data = AKYRS.word_hand_search(s, hand, #s)
+            if not ((word_data or {}).valid) then
+            return {
+                debuff = true,
+                debuff_text = localize("k_akyrs_must_contain_word"),
+                func = function ()
+                    AKYRS.simple_event_add(
+                        function()
+                            if G.STATE == G.STATES.HAND_PLAYED then
+                                G.FUNCS.akyrs_force_draw_from_discard_to_hand()
+                            else
+                        end
+                        return true
+                    end, 0)
+                end
+                }
+            end
+            
+        end
+        if context.after then
+            return {
+                func = function ()
+                    
+                    for _, _c in ipairs(G.jokers.cards) do
+                        ---@type Card
+                        _c = _c
+                        _c:set_debuff(true)
+                    end
+                    for _, _c in ipairs(G.consumeables.cards) do
+                        ---@type Card
+                        _c = _c
+                        _c:set_debuff(true)
+                    end
+                    
+                    AKYRS.simple_event_add(
+                        function()
+                            G.deck:shuffle("akyrsbombblind")
+                            G.FUNCS.draw_from_discard_to_deck()
+                            return true
+                        end,0.2
+                    )
+                    AKYRS.simple_event_add(
+                        function()
+                            if not G.GAME.akyrs_win_checked then
+                                
+                                AKYRS.simple_event_add(
+                                function()
+                                    local attention_no_longer_in_hand = true
+                                    for _,_c in ipairs(G.playing_cards) do
+                                        if _c.ability.akyrs_attention then
+                                            attention_no_longer_in_hand = false
+                                        end
+                                    end
+                                    G.GAME.aiko_puzzle_win = attention_no_longer_in_hand
+                                    if true then
+                                        AKYRS.simple_event_add(
+                                            function()
+                                                AKYRS.force_check_win({ force_draw = true})
+                                                return true
+                                            end, 0
+                                        )
+                                    end
+                                    return true
+                                end, 0.2)
+                            end
+                            return true
+                        end,0.2
+                    )
+                end
+            }
+        end
+    end
+
+}
+
+
+SMODS.Blind{
+    key = "the_bent",
+    dollars = 5,
+    mult = 2,
+    boss_colour = HEX("ff5454"),
+    atlas = 'aikoyoriBlindsChips2',
+    debuff = {
+        special_blind = true,
+        akyrs_is_puzzle_blind = true,
+    },
+    config = {
+        times_left = 2,
+    },
+    boss = {min = 2, max = 10},
+    pos = { x = 0, y = 0 },
+    in_pool = function(self)
+        return (G.GAME.akyrs_character_stickers_enabled and G.GAME.akyrs_wording_enabled) and G.GAME.round_resets.hands > 1
+    end,
+    loc_vars = function (self)
+        return {
+            vars = {
+                G.GAME.current_round.akyrs_picked_poker_hands,
+                self.config.times_left,
+            }
+        }
+    end,
+    collection_loc_vars = function (self)
+        return {
+            vars = {
+                localize("k_akyrs_random_played_hand"),
+                self.config.times_left,
+            }
+        }
+    end,
+    set_blind = function (self)
+        G.GAME.aiko_puzzle_win = false
+        G.GAME.current_round.advanced_blind = true
+        recalculateBlindUI()
+    end,
+    disable = function(self)
+        G.GAME.current_round.advanced_blind = false
+        recalculateBlindUI()
+    end,
+    calculate = function (self, blind, context)
+        if not blind.disabled then
+            if context.before then
+                if context.scoring_name == G.GAME.current_round.akyrs_picked_poker_hands then
+                    return {
+                        func = function ()
+                            blind.effect.times_left = (blind.effect.times_left) - 1
+                            if blind.effect.times_left <= 0 then
+                                G.GAME.aiko_puzzle_win = true
+                            end                            
+                            AKYRS.simple_event_add(
+                                function()
+                                    AKYRS.force_check_win({ force_draw = true})
+                                    return true
+                                end, 0
+                            )
+                            recalculateBlindUI()
+                        end
+                    }
+                end
+            end
+        end
+    end,
 }

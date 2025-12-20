@@ -2901,7 +2901,13 @@ SMODS.Joker{
     calculate = function (self, card, context)
         if AKYRS.bal_val(context.joker_main,context.individual and context.cardarea == G.play) or context.forcetrigger then
             return {
-                mult = hand_chips * card.ability.extras.percent
+                mult = hand_chips * card.ability.extras.percent,
+                func = function ()
+                    AKYRS.simple_event_add(function ()
+                        play_sound('akyrs_don',percent or 1, 0.6)
+                        return true
+                    end)
+                end,
             }
         end
     end,
@@ -2933,7 +2939,13 @@ SMODS.Joker{
     calculate = function (self, card, context)
         if AKYRS.bal_val(context.joker_main,context.individual and context.cardarea == G.play) or context.forcetrigger then
             return {
-                chips = mult * card.ability.extras.percent
+                chips = mult * card.ability.extras.percent,
+                func = function ()
+                    AKYRS.simple_event_add(function ()
+                        play_sound('akyrs_katsu',percent or 1, 0.6)
+                        return true
+                    end)
+                end,
             }
         end
     end,

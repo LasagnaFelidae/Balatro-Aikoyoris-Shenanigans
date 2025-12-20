@@ -591,15 +591,15 @@ target = '''functions/UI_definitions.lua'''
 pattern = '''    local stake_sprite = get_stake_sprite(G.GAME.stake or 1, 0.4)
     blind_text[#blind_text + 1] ='''
 position = 'after'
-payload = '''AKYRS.getBlindText(blind.key, true)[1] and
+payload = '''AKYRS.getBlindText(blind.key, "collection")[1] and
 {n=G.UIT.R, config={align = "cm", emboss = 0.05, r = 0.1, minw = 2.5, padding = 0.07, colour = G.C.WHITE}, nodes={
     {n=G.UIT.R, config={align = "cm", maxw = 2.4}, nodes={
-        {n=G.UIT.T, config={text = AKYRS.getBlindText(blind.key, true)[1], scale = 0.35, colour = G.C.UI.TEXT_DARK}},
+        {n=G.UIT.T, config={text = AKYRS.getBlindText(blind.key, "collection")[1], scale = 0.35, colour = G.C.UI.TEXT_DARK}},
     }},
 {n=G.UIT.R, config={align = "cm"}, nodes={
     {n=G.UIT.O, config={object = stake_sprite}},
     AKYRS.mod_blind_display(blind) or
-    {n=G.UIT.T, config={text = AKYRS.getBlindText(blind.key, true)[2], scale = 0.4, colour = G.C.RED}},
+    {n=G.UIT.T, config={text = AKYRS.getBlindText(blind.key, "collection")[2], scale = 0.4, colour = G.C.RED}},
 }},
 {n=G.UIT.R, config={align = "cm"}, nodes={
     {n=G.UIT.T, config={text = localize('ph_blind_reward'), scale = 0.35, colour = G.C.UI.TEXT_DARK}},

@@ -73,6 +73,21 @@ SMODS.Sound({
     path = "piano.ogg",
 })
 
+SMODS.Sound({
+    key = "don",
+    path = "don.ogg",
+})
+
+SMODS.Sound({
+    key = "katsu",
+    path = "katsu.ogg",
+})
+
+SMODS.Sound({
+    key = "xscore",
+    path = "xscore.ogg",
+})
+
 -- hook to play randomized sounds 
 local plsnd = play_sound
 function play_sound(snd, per, vol)
