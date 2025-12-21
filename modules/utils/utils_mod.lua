@@ -569,7 +569,7 @@ AKYRS.force_check_win = function (config)
             elseif not new_round then
                 G.STATE = config.state_to_go or G.STATES.SELECTING_HAND
                 if config.force_draw then
-                    G.FUNCS.draw_from_deck_to_hand()
+                    SMODS.draw_cards() 
                     AKYRS.force_save()
                 end
             end
@@ -974,7 +974,7 @@ function AKYRS.edition_loc_center_key_getter(card)
             return "_hand"
         end
     end
-    if card.ability or card.config.center then
+    if card.ability or (card.config or {}).center then
         local ct = (card.ability or card.config.center or {})
         local set = ct.set 
         

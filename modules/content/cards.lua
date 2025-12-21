@@ -548,7 +548,7 @@ SMODS.Enhancement{
         }
     end,
     calculate = function (self, card, context)
-        if context.main_scoring and card.area == G.play then
+        if context.main_scoring and context.cardarea == G.play then
             return {
                 xchips = card.ability.extras.bonus_X_chips,
                 mult = card.ability.extras.mult,
@@ -579,10 +579,35 @@ SMODS.Enhancement{
         }
     end,
     calculate = function (self, card, context)
-        if context.main_scoring and card.area == G.play then
+        if context.main_scoring and context.cardarea == G.play then
             return {
                 xchips = card.ability.extras.bonus_X_chips,
                 xmult = card.ability.extras.bonus_X_mult,
+            }
+        end
+    end
+}
+
+SMODS.Enhancement{
+    key = "wafer_card",
+    atlas = 'cardUpgrades',
+    pos = {x = 6, y = 1},
+    config = {
+        extras = {
+            xscore = 2,
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.xscore,
+            }
+        }
+    end,
+    calculate = function (self, card, context)
+        if context.main_scoring and context.cardarea == G.play and G.GAME.current_round.hands_played == 0 then
+            return {
+                akyrs_xscore = card.ability.extras.xscore,
             }
         end
     end

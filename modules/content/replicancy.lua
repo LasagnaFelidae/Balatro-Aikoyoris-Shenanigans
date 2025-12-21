@@ -2,7 +2,7 @@ SMODS.ConsumableType{
     key = "Replicant",
     primary_colour = HEX("a30262"),
     secondary_colour = HEX("ff9a56"),
-    collection_rows = { 5, 5 },
+    collection_rows = { 4, 4 },
     shop_rate = 0,
     default = "c_akyrs_replicant_music_streaming"
 }
@@ -148,7 +148,7 @@ SMODS.Consumable{
         AKYRS.simple_event_add(function ()
             ease_discard(card.ability.extras.disca)
             G.deck:shuffle("akyrs_shuffled_db_replicant")
-            G.FUNCS.draw_from_deck_to_hand()
+            SMODS.draw_cards() 
             return true
         end)
     end,
@@ -242,7 +242,7 @@ SMODS.Consumable{
         max_highlighted = 1,
     },
     loc_vars = function (self, info_queue, card)
-        info_queue[#info_queue+1] = { key = "perishable", set = "Other", vars = { G.GAME.rental_rate } }
+        info_queue[#info_queue+1] = { key = "perishable", set = "Other", vars = { G.GAME.perishable_rounds, G.GAME.perishable_rounds } }
         return {
             vars = {
                 card.ability.max_highlighted,
@@ -371,6 +371,7 @@ SMODS.Consumable{
         return #G.hand.cards >= 0
     end,
     use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
         local filtered = AKYRS.map(AKYRS.filter_table(G.P_CENTER_POOLS.Enhanced, function (ct)
             return ct.akyrs_note_card
         end, true, true), function (v, k)
@@ -382,6 +383,192 @@ SMODS.Consumable{
                 cx:set_ability(G.P_CENTERS[selected])
             end
         )
+    end
+}
+
+
+
+SMODS.Consumable{
+    key = "replicant_instant_messaging",
+    set = "Replicant",
+    atlas = "replicant",
+    pos = {x=0, y=1},
+    config = {
+    },
+    loc_vars = function (self, info_queue, card)
+    end,
+    can_use = function (self, card)
+        return #G.hand.cards >= 0
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        local candidates = AKYRS.filter_table(G.hand.cards, function (ct)
+            return not SMODS.has_no_rank(ct) and not SMODS.has_no_suit(ct) 
+        end, true, true)
+        local ranks = AKYRS.map(candidates, function (v, k)
+            return v.config.card
+        end)
+        local shuffled = AKYRS.scramble_list(ranks, "akyrs_replicant_im")
+        AKYRS.do_things_to_card(candidates,
+            function (cx, inde)
+                cx:set_base(shuffled[inde])
+            end
+        )
+    end
+}
+
+
+SMODS.Consumable{
+    key = "replicant_enshittification",
+    set = "Replicant",
+    atlas = "replicant",
+    pos = {x=1, y=1},
+    config = {
+    },
+    loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = { key = "eternal", set = "Other" }
+        info_queue[#info_queue+1] = { key = "rental", set = "Other", vars = { G.GAME.rental_rate } }
+
+    end,
+    can_use = function (self, card)
+        return true
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        local cd = SMODS.add_card({ edition = "e_negative", set = "Joker"})
+        SMODS.Stickers.eternal:apply(cd, true)
+        SMODS.Stickers.rental:apply(cd, true)
+    end
+}
+
+SMODS.Consumable{
+    key = "replicant_digital_art",
+    set = "Replicant",
+    atlas = "replicant",
+    pos = {x=2, y=1},
+    config = {
+        extras = {
+            gain = 1,
+            give_away = -1,
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.give_away,
+                card.ability.extras.gain,
+            }
+        }
+    end,
+    can_use = function (self, card)
+        return G.GAME.starting_params.discard_limit > 1
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        SMODS.change_discard_limit(card.ability.extras.give_away)
+        G.hand:change_size(card.ability.extras.gain)
+        if #G.hand.cards > 0 then
+            SMODS.draw_cards(0)
+        end
+    end
+}
+
+
+SMODS.Consumable{
+    key = "replicant_common_scam",
+    set = "Replicant",
+    atlas = "replicant",
+    pos = {x=3, y=1},
+    config = {
+        extras = {
+            gain = 1,
+            give_away = -1,
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                card.ability.extras.give_away,
+                card.ability.extras.gain,
+            }
+        }
+    end,
+    can_use = function (self, card)
+        return G.GAME.starting_params.play_limit > 1
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        SMODS.change_play_limit(card.ability.extras.give_away)
+        G.E_MANAGER:add_event(Event({func = function()
+            if G.jokers then 
+                G.jokers.config.card_limit = G.jokers.config.card_limit + 1
+            end
+        return true end }))
+    end
+}
+
+
+SMODS.Consumable{
+    key = "replicant_third_party_cookies",
+    set = "Replicant",
+    atlas = "replicant",
+    pos = {x=4, y=1},
+    config = {
+        extras = {
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = { key = "akyrs_latticed", set = "Other" }
+    end,
+    can_use = function (self, card)
+        return G.jokers.config.card_limit - #G.jokers.cards > 0
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        local to_create = G.jokers.config.card_limit - #G.jokers.cards
+        local food_jokers = AKYRS.map(AKYRS.filter_table(G.P_CENTER_POOLS.Joker, function (val, ind)
+            return val.pools and val.pools.Food
+        end, true, true), function (val, index)
+            return val.key
+        end)
+        local candidates = AKYRS.pseudorandom_elements(food_jokers, to_create, "akyrs_replicant_3rdparty")
+        for _, key in ipairs(candidates) do
+            local cdx = SMODS.add_card({key = key, set = "Joker"})
+            SMODS.Stickers.akyrs_latticed:apply(cdx, true)
+        end
+    end
+}
+
+
+SMODS.Consumable{
+    key = "replicant_silicon_fabrication",
+    set = "Replicant",
+    atlas = "replicant",
+    pos = {x=5, y=1},
+    config = {
+        extras = {
+            gain = 1,
+            give_away = -1,
+        }
+    },
+    loc_vars = function (self, info_queue, card)
+        info_queue[#info_queue+1] = G.P_CENTERS.m_akyrs_wafer_card
+    end,
+    can_use = function (self, card)
+        local eligible_cards = AKYRS.filter_table(G.hand.cards, function (cfx, ind)
+            return cfx.config.center.key ~= "m_akyrs_wafer_card"
+        end, true, true)
+        return #G.hand.cards > 0 and #eligible_cards > 0
+    end,
+    use = function (self, card, area, copier)
+        AKYRS.juice_like_tarot(card)
+        local eligible_cards = AKYRS.filter_table(G.hand.cards, function (cfx, ind)
+            return cfx.config.center.key ~= "m_akyrs_wafer_card"
+        end, true, true)
+        local candidates = AKYRS.pseudorandom_elements(eligible_cards, 1, "akyrs_replicant_3rdparty")
+        AKYRS.do_things_to_card(candidates, function (cardx, index)
+            cardx:set_ability(G.P_CENTERS.m_akyrs_wafer_card)
+        end)
     end
 }
 

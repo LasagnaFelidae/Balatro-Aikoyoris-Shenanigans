@@ -1836,7 +1836,7 @@ SMODS.Blind{
         -- add 5 temp wilds to hand so players don't get fucked royally
         AKYRS.simple_event_add(
             function ()
-                G.FUNCS.draw_from_deck_to_hand()
+                SMODS.draw_cards() 
                 for i = 1, 5 do
                     AKYRS.simple_event_add(
                         function ()
@@ -1968,8 +1968,7 @@ SMODS.Blind{
         -- add 5 temp wilds to hand so players don't get fucked royally
         AKYRS.simple_event_add(
             function ()
-                
-                G.FUNCS.draw_from_deck_to_hand()
+                SMODS.draw_cards() 
                 for i = 2, 5 do
                     AKYRS.simple_event_add(
                         function ()

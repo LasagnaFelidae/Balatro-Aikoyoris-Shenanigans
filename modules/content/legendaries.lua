@@ -361,13 +361,7 @@ SMODS.Joker {
             if context.after then
                 local cards_below_hand = math.max(G.hand.config.card_limit - #G.play.cards ,1)
                 if cards_below_hand > 1 then
-                    SMODS.calculate_effect ({
-                        message = localize("k_akyrs_score_mult_pre")..cards_below_hand..localize("k_akyrs_score_mult_append"),
-                        colour = G.C.PURPLE,
-                        func = function ()
-                            AKYRS.mod_score({mult = cards_below_hand})
-                        end
-                    }, card)
+                    SMODS.calculate_effect({akyrs_xscore = cards_below_hand}, card)
                 end
             end
         end

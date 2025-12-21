@@ -1187,6 +1187,13 @@ return {
                     "{C:white,X:mult}X#2#{} Mult",
                 }
             },
+            m_akyrs_wafer_card = {
+                name = "Wafer Card",
+                text = {
+                    "{C:white,X:purple}X#1#{} Score",
+                    "on first hand of round",
+                }
+            },
         },
         Joker={
             -- toga
@@ -3581,6 +3588,47 @@ return {
                     "Enhanced state of all cards in hand",
                     "are {C:attention}randomised{} into one of {C:attention}Note Cards",
                     "{C:inactive}(It is more likely to get longer notes)",
+                }
+            },
+            c_akyrs_replicant_instant_messaging = {
+                name = "Instant Messaging",
+                text = {
+                    "{C:attention}All cards{} in hand",
+                    "will have its rank and suit {C:attention}shuffled{}",
+                }
+            },
+            c_akyrs_replicant_enshittification = {
+                name = "Enshittification",
+                text = {
+                    "Create a {C:dark_edition}Negative{} {C:money}Rental {C:purple}Eternal{} Joker",
+                }
+            },
+            c_akyrs_replicant_digital_art = {
+                name = "Digital Art",
+                text = {
+                    "Give up {C:red}#1#{} Discard Size",
+                    "for permanent {C:blue}+#2#{} Hand Size",
+                }
+            },
+            c_akyrs_replicant_common_scam = {
+                name = "Common Scam",
+                text = {
+                    "Give up {C:red}#1#{} Play Size",
+                    "for permanent {C:dark_edition}+#2#{} Joker Slot",
+                }
+            },
+            c_akyrs_replicant_third_party_cookies = {
+                name = "Third Party Cookies",
+                text = {
+                    "Fill your Joker slots",
+                    "with {C:purple}Latticed{} Food Joker",
+                }
+            },
+            c_akyrs_replicant_silicon_fabrication = {
+                name = "Silicon Fabrication",
+                text = {
+                    "A random card in hand is",
+                    "converted into {C:attention}Wafer Card{}",
                 }
             },
         }

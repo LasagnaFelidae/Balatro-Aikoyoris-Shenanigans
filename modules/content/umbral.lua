@@ -115,7 +115,7 @@ SMODS.Consumable{
         max_highlighted = 99999,
     },
     can_use = function (self, card)
-        return true
+        return (G.hand.highlighted and #G.hand.highlighted > 0) or AKYRS.is_mod_loaded("Cryptid")
     end,
     loc_vars = function (self, info_queue, card)
         if not G.hand then return {
@@ -1079,16 +1079,8 @@ SMODS.Consumable{
     can_use = function (self, card)
         if G.GAME.blind and G.GAME.blind.in_blind then
             return true
-        elseif card.area ~= G.consumeables and AKYRS.has_room(G.consumeables, card) then
-            return true
         end
         return false
-    end,
-    keep_on_use = function (self, card)
-        if G.GAME.blind and G.GAME.blind.in_blind then
-            return false
-        end
-        return true
     end,
     use = function (self, card, area, copier)
         if G.GAME.blind and G.GAME.blind.in_blind then

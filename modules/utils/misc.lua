@@ -976,11 +976,17 @@ function AKYRS.do_nothing(...)
     return ...
 end
 
+-- function AKYRS.has_room(cardarea, card, extra, buffer, count)
+--     extra = extra or 0
+--     if not cardarea.cards then return true end
+--     if buffer then buffer = buffer + (count or 1) end
+--     return #cardarea.cards + extra < cardarea.config.card_limit + (card and AKYRS.edition_extend_card_limit(card) or 0)
+-- end
+
+
+-- ok so they added this new things
 function AKYRS.has_room(cardarea, card, extra, buffer, count)
-    extra = extra or 0
-    if not cardarea.cards then return true end
-    if buffer then buffer = buffer + (count or 1) end
-    return #cardarea.cards + extra < cardarea.config.card_limit + (card and AKYRS.edition_extend_card_limit(card) or 0)
+    return #cardarea.cards + (extra or 0) < cardarea.config.card_limit
 end
 
 function AKYRS.force_save()
@@ -1541,3 +1547,23 @@ AKYRS.get_true_original_blind_amount = function(mult)
 end
 
 -- apparently i have to do filo
+
+
+AKYRS.scramble_list = function(tblx, seed)
+    local keys = {}
+    local values = {}
+    local output = {}
+    for k, v in pairs(tblx) do
+        table.insert(keys, k)
+        table.insert(values, v)
+    end
+    local count = #keys
+    for i = 1, count do
+        local k2i = pseudorandom_element(keys, seed .. "_key")
+        local v2i = pseudorandom_element(values, seed .. "_value")
+        output[k2i] = v2i
+        AKYRS.remove_value_from_table(keys, k2i)
+        AKYRS.remove_value_from_table(values, v2i)
+    end
+    return output
+end
