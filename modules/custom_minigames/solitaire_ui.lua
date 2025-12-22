@@ -28,9 +28,11 @@ end
 AKYRS.SOL.get_UI_definition = function(params)
     if AKYRS.SOL.cardarea_initialized then
         AKYRS.SOL.reset_card_areas()
-
     end
-    AKYRS.SOL.fill_stock_with_fresh_cards()
+    AKYRS.simple_event_add(function ()
+        AKYRS.SOL.fill_stock_with_fresh_cards()
+        return true
+    end, 0, "akyrs_misc")
     params = params or {}
     local width = params.width or 8
     local height = params.height or 6

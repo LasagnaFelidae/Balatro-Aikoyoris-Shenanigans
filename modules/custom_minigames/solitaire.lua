@@ -79,13 +79,15 @@ AKYRS.SOL.fill_stock_with_fresh_cards = function()
         local a = AKYRS.SOL.stockCardArea.T
         for i, proto in ipairs(AKYRS.SOL.cards_protos) do
             local card = SolitaireCard(a.X,a.Y,G.CARD_W,G.CARD_H, G.P_CARDS[proto], G.P_CENTERS['c_base'])
-            card.sprite_facing = 'back'
-            card.facing = 'back'
-            card.states.release_on.can = true
-            card.states.collide.can = true
-            card.ability.akyrs_part_of_solitaire = true
-            card.states.collide.can = false
-            AKYRS.SOL.stockCardArea:emplace(card)
+            if card then
+                card.sprite_facing = 'back'
+                card.facing = 'back'
+                card.states.release_on.can = true
+                card.states.collide.can = true
+                card.ability.akyrs_part_of_solitaire = true
+                card.states.collide.can = false
+                AKYRS.SOL.stockCardArea:emplace(card)
+            end
         end
         AKYRS.SOL.stockCardArea:shuffle(pseudoseed('aikoyorisoiltaires'..tostring(G.TIMERS.REAL)))
     end
@@ -165,7 +167,6 @@ function AKYRS.SOL.initialize_card_area(cardarea, destroy)
         AKYRS.SOL.stockCardArea.states.click.can = true
         AKYRS.SOL.stockCardArea.states.hover.can = true
         AKYRS.SOL.stockCardArea.states.collide.can = true
-        AKYRS.SOL.fill_stock_with_fresh_cards()
         return AKYRS.SOL.stockCardArea
     end
 
