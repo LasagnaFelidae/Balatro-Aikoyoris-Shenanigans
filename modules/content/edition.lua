@@ -131,3 +131,48 @@ SMODS.Edition{
     end,
     weight = 0,
 }
+
+
+SMODS.Edition{
+    key = "dyed",
+    shader = "akyrs_dyed",
+    config = {
+        extra = {
+            score = 100,
+            score_gain = 20,
+        },
+    },
+    sound = { sound = "akyrs_dyed", per = 0.8, vol = 0.3 },
+    in_shop = true,
+    loc_vars = function (self, info_queue, card)
+        return {
+            vars = {
+                (card.edition or self.config).extra.score,
+                (card.edition or self.config).extra.score_gain,
+            }
+        }
+    end,
+    calculate =  function (self, card, context)
+        if context.main_scoring and (context.cardarea == G.play)  then
+            SMODS.calculate_effect({
+                akyrs_score = card.edition.extra.score
+            }, card)
+            return {
+                func = function ()
+                    card.edition.extra.score = card.edition.extra.score + card.edition.extra.score_gain
+                end
+            }
+        end
+        if context.pre_joker and (context.cardarea == G.jokers)  then
+            SMODS.calculate_effect({
+                akyrs_score = card.edition.extra.score
+            }, card)
+            return {
+                func = function ()
+                    card.edition.extra.score = card.edition.extra.score + card.edition.extra.score_gain
+                end
+            }
+        end
+    end,
+    weight = 5,
+}

@@ -343,3 +343,7 @@ SMODS.Shader{
     key = "aiko_splash",
     path = "aiko_splash.fs"
 }
+SMODS.Shader{
+    key = "dyed",
+    path = "dyed.fs"
+}

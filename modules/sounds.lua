@@ -88,6 +88,11 @@ SMODS.Sound({
     path = "xscore.ogg",
 })
 
+SMODS.Sound({
+    key = "dyed",
+    path = "dyed.ogg",
+})
+
 -- hook to play randomized sounds 
 local plsnd = play_sound
 function play_sound(snd, per, vol)

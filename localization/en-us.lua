@@ -998,6 +998,13 @@ return {
                     "{C:white,X:mult}X#2#{} Mult"
                 }
             },
+            e_akyrs_dyed = {
+                name = "Dyed",
+                text = {
+                    "{C:purple}+#1#{} Score",
+                    "Gain {C:purple}+#2#{} every trigger",
+                }
+            },
             e_akyrs_sliced = {
                 name = "Sliced",
                 text = {
@@ -3625,7 +3632,7 @@ return {
                 name = "Digital Art",
                 text = {
                     "Give up {C:red}#1#{} Discard Size",
-                    "for permanent {C:blue}+#2#{} Hand Size",
+                    "for permanent {C:attention}+#2#{} Hand Size",
                 }
             },
             c_akyrs_replicant_common_scam = {
@@ -3647,6 +3654,8 @@ return {
                 text = {
                     "A random card in hand is",
                     "converted into {C:attention}Wafer Card{}",
+                    "Another random card in hand will have",
+                    "{C:dark_edition}Dyed{} applied to it",
                 }
             },
         }
@@ -3942,6 +3951,7 @@ return {
             akyrs_noire = "Noire",
             akyrs_sliced = "Sliced",
             akyrs_burnt = "Burnt",
+            akyrs_dyed = "Dyed",
             akyrs_enchanted = "Enchanted",
             k_akyrs_emerald = "Emerald",
             k_akyrs_supercommon = "Supercommon",

@@ -546,10 +546,6 @@ SMODS.Consumable{
     atlas = "replicant",
     pos = {x=5, y=1},
     config = {
-        extras = {
-            gain = 1,
-            give_away = -1,
-        }
     },
     loc_vars = function (self, info_queue, card)
         info_queue[#info_queue+1] = G.P_CENTERS.m_akyrs_wafer_card
@@ -565,9 +561,16 @@ SMODS.Consumable{
         local eligible_cards = AKYRS.filter_table(G.hand.cards, function (cfx, ind)
             return cfx.config.center.key ~= "m_akyrs_wafer_card"
         end, true, true)
-        local candidates = AKYRS.pseudorandom_elements(eligible_cards, 1, "akyrs_replicant_3rdparty")
+        local candidates = AKYRS.pseudorandom_elements(eligible_cards, 1, "akyrs_replicant_3rdparty_wafer")
+        for _, v in ipairs(candidates) do
+            AKYRS.remove_value_from_table(eligible_cards,v)
+        end
+        local candidates_edition = AKYRS.pseudorandom_elements(eligible_cards, 1, "akyrs_replicant_3rdparty_edition")
         AKYRS.do_things_to_card(candidates, function (cardx, index)
             cardx:set_ability(G.P_CENTERS.m_akyrs_wafer_card)
+        end)
+        AKYRS.do_things_to_card(candidates_edition, function (cardx, index)
+            cardx:set_edition('e_akyrs_dyed')
         end)
     end
 }
