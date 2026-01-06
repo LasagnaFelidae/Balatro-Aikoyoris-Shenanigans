@@ -641,7 +641,7 @@ SMODS.Blind{
     },
     calculate = function (self, blind, context)
         if not blind.disabled then
-            if context.individual then
+            if context.individual and context.cardarea == G.play then
                 if context.other_card:is_face(true) then
                     return {
                         dollars = -blind.debuff.akyrs_deduct_play

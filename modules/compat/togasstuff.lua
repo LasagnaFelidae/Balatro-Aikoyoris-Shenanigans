@@ -32,7 +32,7 @@ if AKYRS.is_mod_loaded("TOGAPack") then
                     return {
                         func = function ()
                             if AKYRS.has_room(G.consumeables) then
-                                SMODS.add_card({area = G.consumeables, set = 'Alphabet', key = 'c_akyrs_'..most_common_letter})
+                                SMODS.add_card({area = G.consumeables, set = 'Alphabet', key = 'c_akyrs_alphabet_'..most_common_letter})
                             end
                         end
                     }

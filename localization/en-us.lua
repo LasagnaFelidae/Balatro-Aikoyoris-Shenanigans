@@ -9,6 +9,32 @@ for i = 3, 45 do
     }
     poker_hands_name["akyrs_"..i.."-letter Word"] = i.."-letter Word"
 end
+
+
+local aiko_alphabets_no_wilds = {}
+for i = 97, 122 do
+    table.insert(aiko_alphabets_no_wilds, string.char(i))
+end
+local word_letter = {
+    "Apple", "Bee", "Cat", "Dog", "Earth", "Fire", "Ghost", "Hat", "Ice", "Jar", 
+    "Kite", "Lemon", "Mushroom", "Night", "Onion", "Pie", "Quill", "Rat", "Spoon", "Tea", 
+    "Umbrella", "Vase", "Water", "Xylophone", "Yarn", "Zoom"
+}
+local alphabets_cards_loc = {}
+
+for k, v in ipairs(aiko_alphabets_no_wilds) do
+    local upper = string.upper(v)
+    alphabets_cards_loc["c_akyrs_alphabet_"..v] = {
+        name = upper.." for "..word_letter[k],
+        text = { "Convert all selected cards'","letter to {C:red}#1#{}"},
+    }
+end 
+
+alphabets_cards_loc["c_akyrs_alphabet_wild"] = {
+    name = "#",
+    text = { "Convert up to #2# selected card's","letter to {C:red}Wild (#1#){}" },
+}
+
 poker_hands_name["akyrs_expression"] = "Expression"
 poker_hands_name["akyrs_modification"] = "Modification"
 poker_hands_name["akyrs_assignment"] = "Assignment"
@@ -17,9 +43,7 @@ poker_hand_desc["akyrs_modification"] = {'Modify current chip value'}
 poker_hand_desc["akyrs_assignment"] = {'Assign a value to a variable'}
 return {
     descriptions = {
-        Alphabets = {
-            
-        },
+        Alphabet = alphabets_cards_loc,
         Back={
             b_akyrs_letter_deck = {
                 name = 'Letter Deck',
@@ -462,7 +486,7 @@ return {
             bl_akyrs_ultima_lost_umbrella = {
                 name = "Lost Umbrella",
                 text = {
-                    "All Joker debuffed until",
+                    "All Jokers debuffed until",
                     "#1# playing cards destroyed",
                 }
             },
@@ -2640,6 +2664,14 @@ return {
                     "learn what it does",
                 },
             },
+            undiscovered_alphabet = {
+                name="Not Discovered",
+                text={
+                    "Purchase or use this card",
+                    "in a unseeded Letter mode run",
+                    "to discover what it does",
+                },
+            },
             pinned_left={
                 name="Pinned",
                 text={
@@ -3729,8 +3761,10 @@ return {
         dictionary={
             b_umbral_cards = "Umbral Cards",
             b_replicant_cards = "Replicant Cards",
+            b_alphabet_cards = "Alphabet Cards",
             k_umbral = "Umbral",
             k_replicant = "Replicant",
+            k_alphabet = "Alphabet",
 
             b_akyrs_alphabets="Alphabet Cards",
             k_aikoyoriextrabases = "Extra Base",
@@ -3860,7 +3894,7 @@ return {
             k_akyrs_textbox_notice = "Due to how the game works, you'll have to",
             k_akyrs_textbox_notice_2 = "interact with the textbox for text to show up",
 
-            k_akyrs_plus_alphabet = "+1 Alphabet",
+            k_akyrs_plus_alphabet = "+1 Alphabet Card",
             k_akyrs_plus_umbral = "+1 Umbral Card",
             k_akyrs_plus_replicant = "+1 Replicant Card",
 
@@ -3963,7 +3997,8 @@ return {
             k_akyrs_supercommon = "Supercommon",
             k_akyrs_unique = "Unique",
             umbral = "Umbral",
-            replicant = "Replicant"
+            replicant = "Replicant",
+            alphabet = "Alphabet",
         },
         poker_hand_descriptions=poker_hand_desc,
         poker_hands=poker_hands_name,

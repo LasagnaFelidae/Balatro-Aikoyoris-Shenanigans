@@ -12,22 +12,7 @@ SMODS.ConsumableType{
     secondary_colour = HEX("3e63c2"),
     collection_rows = {6,6,6},
     shop_rate = 0,
-    default = "c_akyrs_a",
-    loc_txt = {
-        collection = "Alphabet Cards",
-        name = "Alphabet",
-
-        undiscovered = { -- description for undiscovered cards in the collection
-            name = 'Unknown Alphabet',
-            text = { 'Find this card when', 'letters are enabled' },
-        },
-    },
-}
-
-local word_letter = {
-    "Apple", "Bee", "Cat", "Dog", "Earth", "Fire", "Ghost", "Hat", "Ice", "Jar", 
-    "Kite", "Lemon", "Mushroom", "Night", "Onion", "Pie", "Quill", "Rat", "Spoon", "Tea", 
-    "Umbrella", "Vase", "Water", "Xylophone", "Yarn", "Zoom"
+    default = "c_akyrs_alphabet_a",
 }
 
 
@@ -35,14 +20,10 @@ for k, v in ipairs(aiko_alphabets_no_wilds) do
     local upper = string.upper(v)
     
     SMODS.Consumable{
-        key = v,
+        key = "alphabet_"..v,
         set = "Alphabet",
         atlas = 'consumablesAlphabetPacks',
         pos = { x = math.fmod(k-1,20), y = math.floor((k-1)/20) } ,
-        loc_txt = {
-            name = upper.." for "..word_letter[k],
-            text = { "Convert all selected cards'","letter to {C:red}#1#{}","{C:inactive,s:0.75}(up to #2# cards){}" },
-        },
         loc_vars = function(self, info_queue, card)
             info_queue[#info_queue+1] = {key = 'letters'..string.upper(card.ability.extra.letter), set = 'AikoyoriExtraBases' ,vars = {
                 card.ability.extra.letter,
@@ -52,7 +33,6 @@ for k, v in ipairs(aiko_alphabets_no_wilds) do
             return {
                 vars = {
                     string.upper(card.ability.extra.letter),
-                    card.ability.extra.max_selected,
                 },
             }
         end,
@@ -60,7 +40,7 @@ for k, v in ipairs(aiko_alphabets_no_wilds) do
         config = {extra = {letter = v, max_selected = 999999}},
         
         can_use = function(self, card)
-            return #G.hand.highlighted <= card.ability.extra.max_selected and #G.hand.highlighted > 0
+            return #G.hand.highlighted > 0
         end,
         use = function(self, card, area, copier)
             for i=1, #G.hand.highlighted do
@@ -88,15 +68,11 @@ end
 
 -- Letters
 SMODS.Consumable{
-    key = "Wild",
+    key = "alphabet_wild",
     set = "Alphabet",
     atlas = 'consumablesAlphabetPacks',
     pos = { x = 6, y = 1 } ,
     cost = 6,
-    loc_txt = {
-        name = "? for ????",
-        text = { "Convert up to #2# selected card's","letter to {C:red}Wild (#1#){}" },
-    },
     loc_vars = function(self, info_queue, card)
         info_queue[#info_queue+1] = {key = 'letters'..string.upper(card.ability.extra.letter), set = 'AikoyoriExtraBases' ,vars = {
             card.ability.extra.letter,
