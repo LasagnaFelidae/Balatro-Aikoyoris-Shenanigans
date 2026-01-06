@@ -63,7 +63,7 @@ poker_hands_name["akyrs_twinflush"] = "Twin Flush"
 poker_hand_desc["akyrs_twinflush"] = {'Two sets of Flushes'}
 
 poker_hands_name["akyrs_flushbung"] = "Flushbung"
-poker_hand_desc["akyrs_flushbung"] = {'Two sets of Flushes'}
+poker_hand_desc["akyrs_flushbung"] = {'A double-sized Flush'}
 
 poker_hands_name["akyrs_twinstraight"] = "Twin Straight"
 poker_hand_desc["akyrs_twinstraight"] = {'Two sets of Straights', 'with no duplicating ranks'}
