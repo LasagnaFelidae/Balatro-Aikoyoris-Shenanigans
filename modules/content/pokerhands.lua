@@ -455,7 +455,7 @@ SMODS.PokerHand {
     end
 }
 SMODS.PokerHand {
-    key = "Triplush",
+    key = "triplush",
     visible = false,
     chips = 240, mult = 18,
     l_chips = 65, l_mult = 9,
@@ -475,24 +475,215 @@ SMODS.PokerHand {
         return parts._all_pairs
     end
 }
+
+SMODS.PokerHandPart {
+    key = 'all_triples',
+    func = function(hand)
+        local _3 = get_X_same(3, hand, true)
+        if not next(_3) then return {} end
+        return {SMODS.merge_lists(_3)}
+    end
+}
+
 SMODS.PokerHand {
-    key = "Three of a Pair",
+    key = "twintriple",
     visible = false,
     chips = 140, mult = 10,
     l_chips = 40, l_mult = 5,
 
     example = {
-        {"C_A", true},
-        {"C_A", true},
-        {"C_T", true},
-        {"C_T", true},
-        {"C_8", true},
-        {"S_8", true},
+        {"C_7", true},
+        {"S_7", true},
+        {"H_7", true},
+        {"C_3", true},
+        {"S_3", true},
+        {"H_3", true},
     },
     evaluate = function (parts, hand)
-        if #parts._2 < 3 or #parts._flush < 1 then
+        if #parts._3 < 2 then
             return {}
         end
-        return parts._all_pairs
+        return parts.akyrs_all_triples
+    end
+}
+SMODS.PokerHand {
+    key = "twinflupple",
+    visible = false,
+    chips = 300, mult = 15,
+    l_chips = 60, l_mult = 8,
+
+    example = {
+        {"C_5", true},
+        {"C_5", true},
+        {"C_5", true},
+        {"C_4", true},
+        {"C_4", true},
+        {"H_4", true},
+    },
+    evaluate = function (parts, hand)
+        if #parts._3 < 2 or #parts._flush < 1 then
+            return {}
+        end
+        return parts.akyrs_all_triples
+    end
+}
+
+function AKYRS.get_multi_flush(hand)
+    local ret = {}
+    local counted_cards = {}
+    local four_fingers = SMODS.four_fingers('flush')
+    local suits = SMODS.Suit.obj_buffer
+    if #hand < four_fingers then 
+        --print("asd")
+        return ret 
+    else
+        for j = 1, #suits do
+            local t = {}
+            local suit = suits[j]
+            local flush_count = 0
+            for i=1, #hand do
+                local card = hand[i]
+                if not AKYRS.is_in_table(counted_cards, card) then
+                    if card:is_suit(suit, nil, true) then 
+                        --print("suit found "..suit)
+                        flush_count = flush_count + 1;  
+                        t[#t+1] = card 
+                        table.insert(counted_cards, card)
+                    end 
+                end
+            end
+            if flush_count >= four_fingers then
+                --print("flush found")
+                table.insert(ret, t)
+                t = {}
+                flush_count = 0
+            end
+        end
+        return ret
+    end
+end
+
+SMODS.PokerHandPart {
+    key = 'mflush',
+    func = function(hand)
+        return AKYRS.get_multi_flush(hand)
+    end
+}
+SMODS.PokerHandPart {
+    key = 'all_flushes',
+    func = function(hand)
+        local _flush = AKYRS.get_multi_flush(hand)
+        if not next(_flush) then return {} end
+        return {SMODS.merge_lists(_flush)}
+    end
+}
+SMODS.PokerHandPart {
+    key = 'all_straight',
+    func = function(hand)
+        local straight = get_straight(hand, SMODS.four_fingers('straight') , SMODS.shortcut(), SMODS.wrap_around_straight())
+        if not next(straight) then return {} end
+        return {SMODS.merge_lists(straight)}
+    end
+}
+
+SMODS.PokerHand {
+    key = "twinflush",
+    visible = false,
+    chips = 700, mult = 10,
+    l_chips = 40, l_mult = 15,
+
+    example = {
+        {"C_A", true},
+        {"C_K", true},
+        {"C_K", true},
+        {"C_T", true},
+        {"C_9", true},
+        {"D_8", true},
+        {"D_5", true},
+        {"D_5", true},
+        {"D_4", true},
+        {"D_2", true},
+    },
+    evaluate = function (parts, hand)
+        if #parts.akyrs_mflush < 2 then
+            return {}
+        end
+        local cards_counted = {}
+        for _, part in ipairs(parts._flush) do
+            for _, card in ipairs(part) do
+                if not AKYRS.is_in_table(cards_counted, card) then
+                    table.insert(cards_counted, card)
+                else 
+                    return {}
+                end
+            end
+        end
+        return parts.akyrs_all_flushes
+    end
+}
+
+
+SMODS.PokerHand {
+    key = "twinstraight",
+    visible = false,
+    chips = 900, mult = 8,
+    l_chips = 45, l_mult = 17,
+
+    example = {
+        {"C_A", true},
+        {"H_K", true},
+        {"S_Q", true},
+        {"D_J", true},
+        {"D_T", true},
+        {"H_8", true},
+        {"S_7", true},
+        {"D_6", true},
+        {"C_5", true},
+        {"C_4", true},
+    },
+    evaluate = function (parts, hand)
+        if #parts._straight < 2 then
+            return {}
+        end
+        local cards_counted = {}
+        for _, part in ipairs(parts._straight) do
+            for _, card in ipairs(part) do
+                if not AKYRS.is_in_table(cards_counted, card) then
+                    table.insert(cards_counted, card)
+                else 
+                    return {}
+                end
+            end
+        end
+        return parts.akyrs_all_straight
+    end
+}
+
+SMODS.PokerHandPart {
+    key = 'doublestraight',
+    func = function(hand) return get_straight(hand, SMODS.four_fingers('straight') * 2, SMODS.shortcut(), SMODS.wrap_around_straight()) end
+}
+SMODS.PokerHand {
+    key = "direstraight",
+    visible = false,
+    chips = 900, mult = 6,
+    l_chips = 30, l_mult = 25,
+    example = {
+        {"C_A", true},
+        {"H_K", true},
+        {"S_Q", true},
+        {"D_J", true},
+        {"D_T", true},
+        {"C_9", true},
+        {"H_8", true},
+        {"S_7", true},
+        {"D_6", true},
+        {"C_5", true},
+    },
+    evaluate = function (parts, hand)
+        if #parts.akyrs_doublestraight < 1 then
+            return {}
+        end
+        return parts.akyrs_all_straight
     end
 }

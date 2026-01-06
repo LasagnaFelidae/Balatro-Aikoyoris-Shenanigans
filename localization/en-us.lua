@@ -51,8 +51,22 @@ poker_hands_name["akyrs_tripair"] = "Tripair"
 poker_hand_desc["akyrs_tripair"] = {'Three sets of Pairs of different ranks'}
 
 poker_hands_name["akyrs_triplush"] = "Triplush"
-poker_hand_desc["akyrs_triplush"] = {'Three sets of Pairs of different ranks','And also containing a Flush'}
+poker_hand_desc["akyrs_triplush"] = {'Three sets of Pairs of different ranks','that also contains a Flush'}
 
+poker_hands_name["akyrs_twintriple"] = "Twin Triple"
+poker_hand_desc["akyrs_twintriple"] = {'Two sets of Three of a Kind'}
+
+poker_hands_name["akyrs_twinflupple"] = "Twin Flupple"
+poker_hand_desc["akyrs_twinflupple"] = {'Twin Triple that also contains a Flush'}
+
+poker_hands_name["akyrs_twinflush"] = "Twin Flush"
+poker_hand_desc["akyrs_twinflush"] = {'Two sets of Flushes'}
+
+poker_hands_name["akyrs_twinstraight"] = "Twin Straight"
+poker_hand_desc["akyrs_twinstraight"] = {'Two sets of Straight', 'with no duplicating ranks'}
+
+poker_hands_name["akyrs_direstraight"] = "Dire Straight"
+poker_hand_desc["akyrs_direstraight"] = {'Straight with at least double the length'}
 
 return {
     descriptions = {

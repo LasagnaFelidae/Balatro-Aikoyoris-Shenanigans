@@ -205,3 +205,13 @@ ease_dollars = function(amnt, insta)
     end
     return easedol(amnt, insta)
 end
+
+
+-- detect animation skip
+local cardevalstat = card_eval_status_text
+function card_eval_status_text(...)
+	local args = { ... }
+    G.AKYRS_CARD_EVAL_RAN = true
+    local r = {cardevalstat(...)}
+    return unpack(r)
+end

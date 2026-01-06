@@ -342,6 +342,7 @@ if extra.akyrs_set_sound then
     sound = extra.akyrs_set_sound
 end
 if extra.akyrs_update_score then
+    G.AKYRS_CARD_EVAL_RAN = nil
     akyrs_update_score = true
 end
 """

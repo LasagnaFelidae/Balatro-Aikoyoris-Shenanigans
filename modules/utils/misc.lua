@@ -554,7 +554,7 @@ AKYRS.check_type = function(d)
 end
 
 function AKYRS.is_in_table(table, value)
-    for _, v in ipairs(table) do
+    for _, v in pairs(table) do
         if v == value then
             return true
         end
@@ -774,6 +774,9 @@ AKYRS.mod_score_instant = function(score_mod)
     if score_mod.card then
         for _, values in ipairs(score_fx) do
             card_eval_status_text(score_mod.card, 'jokers', nil, percent, nil, {message = localize{type='variable',key= values[1],vars={values[2]}}, akyrs_update_score = true, volume = 0.5, akyrs_set_sound = values[3], colour =  G.C.PURPLE})
+            if G.AKYRS_CARD_EVAL_RAN then
+                G.AKYRS_DISPLAY_QUEUE = nil
+            end
         end
     else
         G.AKYRS_DISPLAY_QUEUE = nil
