@@ -1422,3 +1422,4 @@ G.FUNCS.akyrs_your_collection_letter_jokers = function(e)
         definition = create_UIBox_your_collection_aikoshen_jokers(true),
     }
 end
+

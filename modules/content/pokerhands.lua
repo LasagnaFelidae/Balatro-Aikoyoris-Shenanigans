@@ -232,6 +232,7 @@ for i = 3, 45 do
     
     table.insert(AKYRS.words_hand, i.."-letter Word")
     SMODS.PokerHand {
+        no_collection = true,
         key = i.."-letter Word",
         visible = false,
         example = exampler,
@@ -249,6 +250,32 @@ for i = 3, 45 do
     }
 end
 
+SMODS.PokerHand {
+    key = "Word Hand",
+    visible = false,
+    example = {
+        { AKYRS.randomCard(), true, nil, akyrs_letter = "E", is_null = true},
+        { AKYRS.randomCard(), true, nil, akyrs_letter = "x", is_null = true},
+        { AKYRS.randomCard(), true, nil, akyrs_letter = "a", is_null = true},
+        { AKYRS.randomCard(), true, nil, akyrs_letter = "m", is_null = true},
+        { AKYRS.randomCard(), true, nil, akyrs_letter = "p", is_null = true},
+        { AKYRS.randomCard(), true, nil, akyrs_letter = "l", is_null = true},
+        { AKYRS.randomCard(), true, nil, akyrs_letter = "e", is_null = true},
+    },
+    evaluate = function(parts, hand_in)
+        return {}
+    end,
+    akyrs_visual_chips = function(self)
+        return "???"
+    end,
+    akyrs_visual_mult = function(self)
+        return "???"
+    end,
+    chips = 0,
+    mult = 0,
+    l_chips = 0,
+    l_mult = 0,
+}
 
 SMODS.PokerHand{
     key = "expression",
@@ -403,4 +430,48 @@ SMODS.PokerHand{
         G.GAME.aikoyori_value_to_set_to_variable = value
         return {hand}
     end,
+}
+
+-- actual poker hands here
+SMODS.PokerHand {
+    key = "tripair",
+    visible = false,
+    chips = 120, mult = 12,
+    l_chips = 35, l_mult = 3,
+
+    example = {
+        {"S_A", true},
+        {"H_A", true},
+        {"C_T", true},
+        {"S_T", true},
+        {"D_8", true},
+        {"C_8", true},
+    },
+    evaluate = function (parts, hand)
+        if #parts._2 < 3 then
+            return {}
+        end
+        return parts._all_pairs
+    end
+}
+SMODS.PokerHand {
+    key = "Triplush",
+    visible = false,
+    chips = 240, mult = 18,
+    l_chips = 65, l_mult = 9,
+
+    example = {
+        {"C_A", true},
+        {"C_A", true},
+        {"C_T", true},
+        {"C_T", true},
+        {"C_8", true},
+        {"S_8", true},
+    },
+    evaluate = function (parts, hand)
+        if #parts._2 < 3 or not parts._flush then
+            return {}
+        end
+        return parts._all_pairs
+    end
 }

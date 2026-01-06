@@ -1,0 +1,24 @@
+[manifest]
+version = "1.2"
+dump_lua = true
+priority = 0
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = """          {n=G.UIT.T, config={text = number_format(G.GAME.hands[handname].chips, 1000000), scale = 0.45, colour = G.C.UI.TEXT_LIGHT}},"""
+position = "before"
+payload = """SMODS.PokerHands[handname].akyrs_visual_chips and {n=G.UIT.T, config={text = SMODS.PokerHands[handname]:akyrs_visual_chips(), scale = 0.45, colour = G.C.UI.TEXT_LIGHT}} or"""
+overwrite = true
+match_indent = true
+
+
+[[patches]]
+[patches.pattern]
+target = "functions/UI_definitions.lua"
+pattern = """          {n=G.UIT.T, config={text = number_format(G.GAME.hands[handname].mult, 1000000), scale = 0.45, colour = G.C.UI.TEXT_LIGHT}}"""
+position = "before"
+payload = """SMODS.PokerHands[handname].akyrs_visual_mult and {n=G.UIT.T, config={text = SMODS.PokerHands[handname]:akyrs_visual_mult(), scale = 0.45, colour = G.C.UI.TEXT_LIGHT}} or"""
+overwrite = true
+match_indent = true
+

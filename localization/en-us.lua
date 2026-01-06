@@ -35,12 +35,25 @@ alphabets_cards_loc["c_akyrs_alphabet_wild"] = {
     text = { "Convert up to #2# selected card's","letter to {C:red}Wild (#1#){}" },
 }
 
+poker_hands_name["akyrs_Word Hand"] = "Word Hand"
+poker_hand_desc["akyrs_Word Hand"] = {'Play a valid dictionary word'}
+
 poker_hands_name["akyrs_expression"] = "Expression"
-poker_hands_name["akyrs_modification"] = "Modification"
-poker_hands_name["akyrs_assignment"] = "Assignment"
 poker_hand_desc["akyrs_expression"] = {'Create a valid mathematical expression'}
+
+poker_hands_name["akyrs_modification"] = "Modification"
 poker_hand_desc["akyrs_modification"] = {'Modify current chip value'}
+
+poker_hands_name["akyrs_assignment"] = "Assignment"
 poker_hand_desc["akyrs_assignment"] = {'Assign a value to a variable'}
+
+poker_hands_name["akyrs_tripair"] = "Tripair"
+poker_hand_desc["akyrs_tripair"] = {'Three sets of Pairs of different ranks'}
+
+poker_hands_name["akyrs_triplush"] = "Triplush"
+poker_hand_desc["akyrs_triplush"] = {'Three sets of Pairs of different ranks','And also containing a Flush'}
+
+
 return {
     descriptions = {
         Alphabet = alphabets_cards_loc,
