@@ -432,6 +432,7 @@ SMODS.PokerHand{
     end,
 }
 
+if AKYRS.config.experimental_features then
 -- actual poker hands here
 SMODS.PokerHand {
     key = "tripair",
@@ -779,3 +780,4 @@ SMODS.PokerHand {
         return SMODS.merge_lists(parts.akyrs_all_straight, parts.akyrs_all_flushes)
     end
 }
+end
