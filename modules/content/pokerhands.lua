@@ -609,7 +609,7 @@ SMODS.PokerHand {
             return {}
         end
         local cards_counted = {}
-        for _, part in ipairs(parts._flush) do
+        for _, part in ipairs(parts.akyrs_mflush) do
             for _, card in ipairs(part) do
                 if not AKYRS.is_in_table(cards_counted, card) then
                     table.insert(cards_counted, card)
@@ -622,12 +622,53 @@ SMODS.PokerHand {
     end
 }
 
+SMODS.PokerHand {
+    key = "flushbung",
+    visible = false,
+    chips = 700, mult = 12,
+    l_chips = 35, l_mult = 12,
+
+    example = {
+        {"C_A", true},
+        {"C_K", true},
+        {"C_K", true},
+        {"C_T", true},
+        {"C_9", true},
+        {"C_8", true},
+        {"C_5", true},
+        {"C_5", true},
+        {"C_4", true},
+        {"C_2", true},
+    },
+    evaluate = function (parts, hand)
+        if #parts.akyrs_mflush < 1 then
+            return {}
+        end
+        local cards_counted = {}
+        for _, part in ipairs(parts.akyrs_mflush) do
+            local count = 0
+            for _, card in ipairs(part) do
+                if not AKYRS.is_in_table(cards_counted, card) then
+                    count = count + 1
+                    table.insert(cards_counted, card)
+                else 
+                    return {}
+                end
+                if count >= SMODS.four_fingers('flush') * 2 then
+                    return parts.akyrs_mflush
+                end
+            end
+        end
+        return {}
+    end
+}
+
 
 SMODS.PokerHand {
     key = "twinstraight",
     visible = false,
     chips = 900, mult = 8,
-    l_chips = 45, l_mult = 17,
+    l_chips = 65, l_mult = 17,
 
     example = {
         {"C_A", true},
@@ -663,11 +704,12 @@ SMODS.PokerHandPart {
     key = 'doublestraight',
     func = function(hand) return get_straight(hand, SMODS.four_fingers('straight') * 2, SMODS.shortcut(), SMODS.wrap_around_straight()) end
 }
+
 SMODS.PokerHand {
     key = "direstraight",
     visible = false,
     chips = 900, mult = 6,
-    l_chips = 30, l_mult = 25,
+    l_chips = 50, l_mult = 25,
     example = {
         {"C_A", true},
         {"H_K", true},
@@ -685,5 +727,55 @@ SMODS.PokerHand {
             return {}
         end
         return parts.akyrs_all_straight
+    end
+}
+
+SMODS.PokerHand {
+    key = "twinstraightflush",
+    visible = false,
+    chips = 1600, mult = 60,
+    l_chips = 140, l_mult = 40,
+    example = {
+        {"C_A", true},
+        {"C_K", true},
+        {"C_Q", true},
+        {"S_J", true},
+        {"S_T", true},
+        {"S_7", true},
+        {"S_6", true},
+        {"S_5", true},
+        {"C_4", true},
+        {"C_3", true},
+    },
+    evaluate = function (parts, hand)
+        if #parts._straight < 2 or #parts.akyrs_mflush < 2 then
+            return {}
+        end
+        return SMODS.merge_lists(parts.akyrs_all_straight, parts.akyrs_all_flushes)
+    end
+}
+
+SMODS.PokerHand {
+    key = "twinstraightflush",
+    visible = false,
+    chips = 2400, mult = 90,
+    l_chips = 210, l_mult = 60,
+    example = {
+        {"C_A", true},
+        {"C_K", true},
+        {"C_Q", true},
+        {"S_J", true},
+        {"S_T", true},
+        {"S_7", true},
+        {"S_6", true},
+        {"S_5", true},
+        {"C_4", true},
+        {"C_3", true},
+    },
+    evaluate = function (parts, hand)
+        if #parts._straight < 2 or #parts.akyrs_mflush < 2 then
+            return {}
+        end
+        return SMODS.merge_lists(parts.akyrs_all_straight, parts.akyrs_all_flushes)
     end
 }
