@@ -469,7 +469,28 @@ SMODS.PokerHand {
         {"S_8", true},
     },
     evaluate = function (parts, hand)
-        if #parts._2 < 3 or not parts._flush then
+        if #parts._2 < 3 or #parts._flush < 1 then
+            return {}
+        end
+        return parts._all_pairs
+    end
+}
+SMODS.PokerHand {
+    key = "Three of a Pair",
+    visible = false,
+    chips = 140, mult = 10,
+    l_chips = 40, l_mult = 5,
+
+    example = {
+        {"C_A", true},
+        {"C_A", true},
+        {"C_T", true},
+        {"C_T", true},
+        {"C_8", true},
+        {"S_8", true},
+    },
+    evaluate = function (parts, hand)
+        if #parts._2 < 3 or #parts._flush < 1 then
             return {}
         end
         return parts._all_pairs
