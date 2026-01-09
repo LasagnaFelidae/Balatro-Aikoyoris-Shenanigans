@@ -1,5 +1,5 @@
 if Entropy then
-    local derivative_part_func = SMODS.PokerHandParts.entr_derivative_part.func
+    local derivative_part_func = (SMODS.PokerHandParts.entr_derivative_part or {}).func
     SMODS.PokerHandPart:take_ownership("entr_derivative_part",{
         func = function (hand)
             local cards = AKYRS.filter_table(hand, function (item, key)
