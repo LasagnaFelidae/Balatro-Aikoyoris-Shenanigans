@@ -1,0 +1,23 @@
+[manifest]
+version = "1.2"
+dump_lua = true
+priority = 1073741823
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = """            if add and not G.GAME.banned_keys[v.key] then """
+position = "before"
+payload = """-- print("they key is "..v.key.. " and " .. (add and "added" or "FUCK YOU"))
+"""
+overwrite = true
+match_indent = true
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = """            if add and not G.GAME.banned_keys[v.key] then """
+position = "after"
+payload = """--   print(v.key .. " is added congratualtuions")
+"""
+overwrite = true
+match_indent = true

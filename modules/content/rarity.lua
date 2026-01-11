@@ -2,6 +2,7 @@ SMODS.Rarity{
     key = "emerald",
     default_weight = 0.3,
     badge_colour = HEX('73ff33'),
+    disable_if_empty = true,
     pools = {
         ["Joker"] = true
     },
@@ -16,6 +17,7 @@ SMODS.Rarity{
     key = "supercommon",
     default_weight = 0,
     badge_colour = HEX('8c94a3'),
+    disable_if_empty = true,
     pools = {
         ["Joker"] = true
     },
