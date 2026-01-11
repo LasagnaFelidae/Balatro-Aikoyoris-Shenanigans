@@ -354,11 +354,6 @@ AKYRS.card_area_preview = function(cardArea, desc_nodes, config)
     return uiEX, cardarea
 end
 
-AKYRS.temp_card_area = CardArea(
-    -99990,-99990,0,0,
-    {card_limit = 999999, type = 'title', highlight_limit = 0, collection = true}
-)
-
 AKYRS.create_random_card = function(seed)
     return Card(0,0, G.CARD_W, G.CARD_H, pseudorandom_element(G.P_CARDS,pseudoseed(seed)), G.P_CENTERS.c_base)
 end
