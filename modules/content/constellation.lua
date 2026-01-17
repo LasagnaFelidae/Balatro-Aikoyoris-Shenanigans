@@ -76,7 +76,7 @@ end
 
 local hands_multi = {}
 local hands_multi_rev = {}
-for i = 12 ,31 do
+for i = 12 ,45 do
     table.insert(hands_multi,AKYRS.prefix.."_"..(i).."-letter Word")
     hands_multi_rev[AKYRS.prefix.."_"..(i).."-letter Word"] = true
 end
@@ -123,5 +123,6 @@ SMODS.Planet{
     end,
 
 }
+
 
 
