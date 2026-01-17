@@ -804,8 +804,8 @@ AKYRS.get_planet_for_hand = function(_hand)
             _planet = v.key
         end
         if v.config.akyrs_hand_types then
-            for i,v2 in ipairs(v.config.akyrs_hand_types) do
-                if v2 == v then
+            for i, v2 in ipairs(v.config.akyrs_hand_types) do
+                if v2 == _hand then
                     _planet = v.key
                 end
             end
