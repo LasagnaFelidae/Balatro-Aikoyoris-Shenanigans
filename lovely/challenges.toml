@@ -347,6 +347,18 @@ match_indent = true
 
 
 
+
+[[patches]]
+[patches.pattern]
+target = "functions/common_events.lua"
+pattern = """        --if pool is empty"""
+position = "before"
+payload = """-- print("POOL SIZE IS " .. _pool_size)"""
+overwrite = true
+match_indent = true
+
+
+
 [[patches]]
 [patches.pattern]
 target = "functions/UI_definitions.lua"

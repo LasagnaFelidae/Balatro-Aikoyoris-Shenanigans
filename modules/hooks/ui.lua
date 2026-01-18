@@ -101,12 +101,20 @@ end
 
 function recalculateBlindUI()
     if G.HUD_blind then
+        local blind_hud_ui_function = create_UIBox_HUD_blind
+        local config = G.HUD_blind.config
+        -- for blindside
+        if G.GAME.selected_back.effect.center.config.extra and G.GAME.selected_back.effect.center.config.extra.blindside then
+            blind_hud_ui_function = create_UIBox_HUD_jokerblind
+            --config = {major = G.HUD:get_UIE_by_ID('row_blind_bottom'), align = 'bmi', offset = {x=0,y=-10}, bond = 'Weak'}
+        end
+        -- note!!!! blind HUD are recalculated for proper popups!
+        -- target your blind HUD thingiest here
         AKYRS.do_not_remove_blind = true
-        local conf = (G.HUD_blind.config)
         G.HUD_blind:remove()
         G.HUD_blind = UIBox{
-            definition = create_UIBox_HUD_blind(),
-            config = conf
+            definition = blind_hud_ui_function(),
+            config = config
         }
     
         --AKYRS.remove_all(G.HUD_blind.children,function(v) print("A") return v and v.config and (v.config.object ~= G.GAME.blind) end)

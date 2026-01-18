@@ -287,6 +287,22 @@ function AKYRS.blind_handler()
     if G.GAME.blind_on_deck == 'Boss' then
         G.GAME.current_round.voucher = SMODS.get_next_vouchers()
         G.GAME.round_resets.blind_states.Boss = 'Defeated'
+        if AKYRS.is_mod_loaded("Cryptid") then
+            -- thanks cryptid
+            if G.GAME.current_round.cry_voucher_stickers.pinned == false then
+                G.GAME.current_round.voucher = SMODS.get_next_vouchers()
+                G.GAME.current_round.cry_voucher_stickers = Cryptid.next_voucher_stickers()
+                G.GAME.current_round.cry_voucher_edition = cry_get_next_voucher_edition() or {}
+                G.GAME.current_round.cry_bonusvouchers = {}
+                G.GAME.cry_bonusvouchersused = {}
+                for i = 1, G.GAME.cry_bonusvouchercount do
+                    G.GAME.current_round.cry_bonusvouchers[i] = SMODS.get_next_vouchers()
+                end
+                if G.GAME.modifiers.cry_no_vouchers then
+                    very_fair_quip = pseudorandom_element(G.localization.misc.very_fair_quips, pseudoseed("cry_very_fair"))
+                end
+            end
+        end
         G.GAME.GB_BLINDS_SKIPPED_THIS_ANTE = 0
         for k, v in ipairs(G.playing_cards) do
             v.ability.played_this_ante = nil

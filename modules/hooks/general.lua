@@ -309,7 +309,9 @@ local startRunHook = Game.start_run
 function Game:start_run(args)
     G.AKYRS_DISPLAY_QUEUE = nil
     G.AKYRS_CARD_EVAL_RAN = nil
+    -- print("PRE RUN")
     local ret = startRunHook(self, args)
+    -- print("POST RUN")
     
     AKYRS.reset_math_parser({
         vars = G.GAME.akyrs_parser_var or AKYRS.math_default_const,
