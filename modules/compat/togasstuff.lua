@@ -9,7 +9,7 @@ if AKYRS.is_mod_loaded("TOGAPack") then
             return G.GAME.akyrs_character_stickers_enabled
         end,
         set_badges = function (self, card, badges)
-            SMODS.create_mod_badges({ mod = togabalatro },badges)
+            SMODS.create_mod_badges({  mod = SMODS.find_mod('TOGAPack')[1] },badges)
         end,
         config = {
             extras = { money = 1 }
@@ -49,7 +49,7 @@ if AKYRS.is_mod_loaded("TOGAPack") then
             return G.GAME.akyrs_character_stickers_enabled
         end,
         set_badges = function (self, card, badges)
-            SMODS.create_mod_badges({ mod = togabalatro },badges)
+            SMODS.create_mod_badges({  mod = SMODS.find_mod('TOGAPack')[1] },badges)
         end,
         loc_vars = function (self, info_queue, card)
             return {
@@ -84,4 +84,5 @@ if AKYRS.is_mod_loaded("TOGAPack") then
         blueprint_compat = true
         
     }
+
 end
